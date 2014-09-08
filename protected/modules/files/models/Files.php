@@ -14,7 +14,8 @@
 class Files extends CActiveRecord
 {
     private $table_options=array('badges'=>array('name'=>array('width'=>150,'height'=>150),'name_middle'=>array('width'=>100,'height'=>100),'name_little'=>array('width'=>75,'height'=>75)),
-'photo'=>array('name'=>array('width'=>150,'height'=>150),'name_middle'=>array('width'=>100,'height'=>100),'name_little'=>array('width'=>75,'height'=>75)));
+                                 'photo'=>array('name'=>array('width'=>150,'height'=>150),'name_middle'=>array('width'=>100,'height'=>100),'name_little'=>array('width'=>75,'height'=>75)),
+        'store'=>array('name'=>array('width'=>150,'height'=>150),'name_middle'=>array('width'=>100,'height'=>100),'name_little'=>array('width'=>75,'height'=>75)));
 
     /**
 	 * @return string the associated database table name

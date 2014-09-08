@@ -258,12 +258,12 @@ class YumUser extends YumActiveRecord
     }
     else
     {
-//        $start_month=array(0,0.5);
+        $start_month=array(0,0.5);
 //        for($i=1;$i<=100;$i++)
 //            $start_month[]=$i;
     }
 
-    $rules[] = array('start_month', 'in', 'range' => $start_month);
+//    $rules[] = array('start_month', 'in', 'range' => $start_month);
     if(!(Yum::hasModule('registration') && Yum::module('registration')->registration_by_email))
       $rules[] = array('username', 'required');
 
@@ -271,7 +271,7 @@ class YumUser extends YumActiveRecord
     $rules[] = array('notifyType, avatar, job_type, job_title, day_count, work_count, activationKey', 'safe');
     $rules[] = array('password', 'required', 'on' => array('insert', 'registration'));
     $rules[] = array('createtime, lastvisit, lastaction, superuser, status,  was_flag , level, failedloginattempts', 'numerical', 'integerOnly' => true);
-    $rules[] = array('start_month', 'length', 'max' => 5);
+    $rules[] = array('start_month', 'length', 'max' => 6);
 
     if (Yum::hasModule('avatar')) {
       // require an avatar image in the avatar upload screen

@@ -217,8 +217,6 @@ class UserModule extends CWebModule {
       'user.models.*',
       'user.components.*',
       'user.core.*',
-      'gamificationmanager.models.*',
-      'gamificationmanager.controllers.*',
     ));
   }
 

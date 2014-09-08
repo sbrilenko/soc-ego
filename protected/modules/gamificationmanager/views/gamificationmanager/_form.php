@@ -27,15 +27,16 @@ $form = $this->beginWidget('CActiveForm', array(
     //            }
     //            echo CHtml::submitButton(Yum::t('Update'));
     //        }
-        $trainee_low=$trainee_normal=$trainee_hight=
-        $junior_low=$junior_normal=$junior_hight=
-        $junior_middle_low=$junior_middle_normal=$junior_middle_hight=
-        $middle_low=$middle_normal=$middle_hight=
-        $middle_senior_low=$middle_senior_normal=$middle_senior_hight=
-        $senior_low=$senior_normal=$senior_hight=
-        $senior_lead_low=$senior_lead_normal=$senior_lead_hight=
-        $lead_low=$lead_normal=$lead_hight=
-        $tech_officer_low=$tech_officer_normal=$tech_officer_hight=null;
+        $trainee_low=$trainee_normal=$trainee_high=
+        $junior_low=$junior_normal=$junior_high=
+        $junior_middle_low=$junior_middle_normal=$junior_middle_high=
+        $middle_low=$middle_normal=$middle_high=
+        $middle_senior_low=$middle_senior_normal=$middle_senior_high=
+        $senior_low=$senior_normal=$senior_high=
+        $senior_lead_low=$senior_lead_normal=$senior_lead_high=
+        $lead_low=$lead_normal=$lead_high=
+        $tech_officer_low=$tech_officer_normal=$tech_officer_high=null;
+        if($model)
         foreach($model as $index=>$gam)
         {
             switch($gam->level)

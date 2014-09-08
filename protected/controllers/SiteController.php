@@ -20,6 +20,11 @@ class SiteController extends Controller
 			),
 		);
 	}
+    public function actionLevelsmessages()
+    {
+        $this->layout = Yum::module('admin')->adminLayout;
+        $this->render('levelsmessages');
+    }
 
 	/**
 	 * This is the default 'index' action that is invoked

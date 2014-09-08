@@ -1,6 +1,6 @@
 <?php
 
-echo CHtml::link(Yum::t('Create new User'), array(
+echo CHtml::link(Yum::t('Create new badge'), array(
     '//badgemanager/badges/create'), array('class' => 'btn'));
 $allbadgesBadges=Badges::model()->findAll();
 if($allbadgesBadges)
@@ -66,8 +66,8 @@ if($allbadgesBadges)
                     foreach($users as $index=>$user)
                     {
                         $badges_on_user=BadgeUser::model()->findByAttributes(array('user_id'=>$user->id,'badge_id'=>$badge->id));
-                        if($badges_on_user && $badges_on_user->count>0)
-                            $dropdownusers[$user->id]=$user->username." (".$badges_on_user->count.")";
+                        if($badges_on_user && $badges_on_user->count_active>0)
+                            $dropdownusers[$user->id]=$user->username." (".$badges_on_user->count_active.")";
                         else $dropdownusers[$user->id]=$user->username;
                     }
                     $badge_user=new BadgeUser();

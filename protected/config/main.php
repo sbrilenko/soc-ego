@@ -71,6 +71,8 @@ return array(
         'gamificationmanager'=>array(
             'gamificationmanagerTable' => 'gamificationmanager',
         ),
+        'store'=>array(
+        ),
     ),
     // uncomment the following to enable the Gii tool
 

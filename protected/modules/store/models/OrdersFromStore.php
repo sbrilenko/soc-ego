@@ -1,22 +1,24 @@
 <?php
 
 /**
- * This is the model class for table "badge_user".
+ * This is the model class for table "orders_from_store".
  *
- * The followings are the available columns in table 'badge_user':
+ * The followings are the available columns in table 'orders_from_store':
  * @property string $id
- * @property integer $badge_id
  * @property integer $user_id
- * @property integer $count
+ * @property integer $store_item_id
+ * @property integer $approved
+ * @property integer $time
+ * @property integer $user
  */
-class BadgeUser extends CActiveRecord
+class OrdersFromStore extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'badge_user';
+		return 'orders_from_store';
 	}
 
 	/**
@@ -27,11 +29,11 @@ class BadgeUser extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('badge_id, user_id, count_active, count_all', 'required'),
-			array('badge_id, user_id, count_active, count_all', 'numerical', 'integerOnly'=>true),
+			array('user_id, store_item_id, approved, time, user', 'required'),
+			array('user_id, store_item_id, approved, time, user', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, badge_id, user_id, count_active, count_all', 'safe', 'on'=>'search'),
+			array('id, user_id, store_item_id, approved, time, user', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -53,9 +55,11 @@ class BadgeUser extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'badge_id' => 'Badge',
 			'user_id' => 'User',
-			'count_active' => 'Count',
+			'store_item_id' => 'Store Item',
+			'approved' => 'Approved',
+			'time' => 'Time',
+			'user' => 'User',
 		);
 	}
 
@@ -78,9 +82,11 @@ class BadgeUser extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id,true);
-		$criteria->compare('badge_id',$this->badge_id);
 		$criteria->compare('user_id',$this->user_id);
-		$criteria->compare('count_active',$this->count);
+		$criteria->compare('store_item_id',$this->store_item_id);
+		$criteria->compare('approved',$this->approved);
+		$criteria->compare('time',$this->time);
+		$criteria->compare('user',$this->user);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -91,7 +97,7 @@ class BadgeUser extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return BadgeUser the static model class
+	 * @return OrdersFromStore the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

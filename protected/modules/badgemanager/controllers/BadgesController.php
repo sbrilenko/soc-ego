@@ -14,19 +14,21 @@ class BadgesController extends Controller
                     $fid_user=BadgeUser::model()->findByAttributes(array('user_id'=>$_POST['BadgeUser']['user_id'],'badge_id'=>$_POST['BadgeUser']['badge_id']));
                     if($fid_user)
                     {
-                        $fid_user->count=$fid_user->count+1;
-                        if($fid_user->save())
+                        $fid_user->count_active=$fid_user->count_active+1;
+                        $fid_user->count_all=$fid_user->count_all+1;
+                        $user_points_add=YumUser::model()->findByPk($_POST['BadgeUser']['user_id']);
+                        if($user_points_add)
                         {
-                            $user_points_add=YumUser::model()->findByPk($_POST['BadgeUser']['user_id']);
-                            if($user_points_add)
+                            /*find badge cost*/
+                            $badge_cost=Badges::model()->findByPk($_POST['BadgeUser']['badge_id']);
+                            if($badge_cost)
                             {
-                                /*find badge cost*/
-                                $badge_cost=Badges::model()->findByPk($_POST['BadgeUser']['badge_id']);
-                                if($badge_cost)
+                                $user_points_add->points=(float)($user_points_add->points+$badge_cost->cost);
+                                if($user_points_add->save())
                                 {
-                                    $user_points_add->points=$user_points_add->points+$badge_cost->cost;
-                                    $user_points_add->save();
+                                    $fid_user->save();
                                 }
+                                else die(var_dump($user_points_add->getErrors()));
                             }
                         }
                     }
@@ -35,30 +37,33 @@ class BadgesController extends Controller
                         $fid_user=new BadgeUser();
                         $fid_user->user_id=$_POST['BadgeUser']['user_id'];
                         $fid_user->badge_id=$_POST['BadgeUser']['badge_id'];
-                        $fid_user->count=1;
-                        if($fid_user->save())
+                        $fid_user->count_active=1;
+                        $fid_user->count_all=1;
+                        $user_points_add=YumUser::model()->findByPk($_POST['BadgeUser']['user_id']);
+                        if($user_points_add)
                         {
-                            $user_points_add=YumUser::model()->findByPk($_POST['BadgeUser']['user_id']);
-                            if($user_points_add)
+                            /*find badge cost*/
+                            $badge_cost=Badges::model()->findByPk($_POST['BadgeUser']['badge_id']);
+                            if($badge_cost)
                             {
-                                /*find badge cost*/
-                                $badge_cost=Badges::model()->findByPk($_POST['BadgeUser']['badge_id']);
-                                if($badge_cost)
+                                $user_points_add->points=(float)($user_points_add->points+$badge_cost->cost);
+                                if($user_points_add->save())
                                 {
-                                    $user_points_add->points=$user_points_add->points+$badge_cost->cost;
-                                    $user_points_add->save();
+                                    $fid_user->save();
                                 }
+                                else die(var_dump($user_points_add->getErrors()));
                             }
                         }
+
 
                     }
                 }
                 elseif(isset($_POST['badgeusersubmit2'])) //remove
                 {
                     $fid_user=BadgeUser::model()->findByAttributes(array('user_id'=>$_POST['BadgeUser']['user_id'],'badge_id'=>$_POST['BadgeUser']['badge_id']));
-                    if($fid_user && $fid_user->count>0)
+                    if($fid_user && $fid_user->count_active>0)
                     {
-                        $fid_user->count=$fid_user->count-1;
+                        $fid_user->count_active=$fid_user->count_active-1;
                         $fid_user->save();
                     }
                 }
@@ -91,7 +96,7 @@ class BadgesController extends Controller
             {
                 $badge=new Badges();
                 $badge->attributes=$_POST['Badges'];
-                if(isset($_FILES['Badges']) && !empty($_FILES['Badges']))
+                if(isset($_FILES['Badges']) && !empty($_FILES['Badges']['image']))
                 {
                     $file_ret=Files::model()->create($_FILES['Badges'],$title='test',Badges::model()->tableName());
                     if(is_array($file_ret))
@@ -135,7 +140,7 @@ class BadgesController extends Controller
                     $local=Badges::model()->findByPk($_POST['Badges']['id']);
                     if($local)
                     {
-                        if(isset($_FILES['Badges']) && !empty($_FILES['Badges']))
+                        if(isset($_FILES['Badges']) && !empty($_FILES['Badges']['name']['image']))
                         {
                             $file_ret=Files::model()->create($_FILES['Badges'],$title='test',Badges::model()->tableName(),$local->image);
                             if(is_array($file_ret))
@@ -244,7 +249,8 @@ class BadgesController extends Controller
                               `id` int unsigned NOT NULL auto_increment,
                               `badge_id` int(11) NOT NULL,
                               `user_id` int(11) NOT NULL,
-                              `count` int(11) NOT NULL,
+                              `count_active` int(11) NOT NULL,
+                              `count_all` int(11) NOT NULL,
                               PRIMARY KEY  (`id`)
                             ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;";
                         $db->createCommand($sql)->execute();

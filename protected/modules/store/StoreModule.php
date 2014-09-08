@@ -1,8 +1,12 @@
 <?php
 
-class AdminModule extends CWebModule
+class StoreModule extends CWebModule
 {
-    public $adminLayout = 'admin.views.layouts.index';
+    public $installUrl="/store/store/install";
+    public $installrenderUrl="/store/install";
+    public $updateUrl="/store/store/update";
+    public $deleteUrl="/store/store/delete";
+//    public $badgeusermanagerUrl="/store/store/badgeusermanager";
 	public function init()
 	{
 		// this method is called when the module is being created
@@ -10,9 +14,10 @@ class AdminModule extends CWebModule
 
 		// import the module-level models and components
 		$this->setImport(array(
-			'admin.models.*',
-			'admin.components.*',
-            'store.models',
+            'store.models.*',
+			'store.components.*',
+            'files.models.*',
+            'files.components.*',
 		));
 	}
 

@@ -3,6 +3,7 @@
 class LocationmanagerModule extends CWebModule
 {
     public $installUrl='/locationmanager/locationmanager/install';
+    public $installrenderUrl='/locationmanager/install';
     public $rendermanagerUrl='/locationmanager/manager';
     public $managerUrl='/locationmanager/locationmanager/manager';
     public $locationmanagerTable='{{locationmanager}}';

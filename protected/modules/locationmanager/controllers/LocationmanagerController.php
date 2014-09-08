@@ -117,7 +117,7 @@ class LocationManagerController extends Controller
             if(Yii::app()->request->isPostRequest)
             {
                 if(Yii::app()->db->getSchema()->getTable('locationmanager'))
-                    $this->render(Yum::module('locationmanager')->installUrl,array('message'=>'Location manager table is already installed. Please remove it manually to continue'));
+                    $this->render(Yum::module('locationmanager')->installrenderUrl,array('message'=>'Location manager table is already installed. Please remove it manually to continue'));
 //                    throw new CHttpException(403,'Location manager table is already installed. Please remove it manually to continue');
                 if (isset($_POST['installLocationmanager']) && $_POST['installLocationmanager']==1) {
                    $sql = "CREATE TABLE IF NOT EXISTS `" . $_POST['locationManagerTable']. "` (
@@ -129,14 +129,14 @@ class LocationManagerController extends Controller
                     $this->redirect(Yum::module('locationmanager')->managerUrl);
 
                 }
-              else $this->render(Yum::module('locationmanager')->installUrl);
+              else $this->render(Yum::module('locationmanager')->installrenderUrl);
             }
             else
             {
                 if(Yii::app()->db->getSchema()->getTable('locationmanager'))
-                    $this->render(Yum::module('locationmanager')->installUrl,array('message'=>'Location manager table is already installed. Please remove it manually to continue'));
+                    $this->render(Yum::module('locationmanager')->installrenderUrl,array('message'=>'Location manager table is already installed. Please remove it manually to continue'));
                 else
-                    $this->render(Yum::module('locationmanager')->installUrl,array('message'=>''));
+                    $this->render(Yum::module('locationmanager')->installrenderUrl,array('message'=>''));
             }
 	}
     else throw new CException('Yii User management module is not in Debug Mode');
