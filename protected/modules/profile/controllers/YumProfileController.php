@@ -141,7 +141,7 @@ class YumProfileController extends YumController {
 
 	public function actionAdmin()
 	{
-		$this->layout = Yum::module('profile')->adminLayout;
+        $this->layout = Yum::module('admin')->adminLayout;
 		$model = new YumProfile;
 
 		$dataProvider=new CActiveDataProvider('YumProfile', array(
@@ -156,6 +156,6 @@ class YumProfileController extends YumController {
 		$this->render('admin',array(
 					'dataProvider'=>$dataProvider,
 					'model'=>$model,
-					));
+	    ));
 	}
 }

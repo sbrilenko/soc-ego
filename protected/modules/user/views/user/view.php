@@ -21,22 +21,38 @@ if(Yii::app()->user->isAdmin()) {
 		$attributes[] = 'username';
 
 	if($profiles && $model->profile) 
-		foreach(YumProfile::getProfileFields() as $field) 
-			array_push($attributes, array(
-						'label' => Yum::t($field),
-						'type' => 'raw',
-						'value' => $model->profile->getAttribute($field)
-						));
+		foreach(YumProfile::getProfileFields() as $field)
+        {
+            if($field=="sex" || $field=="user_location") continue;
+            else
+            {
+                array_push($attributes, array(
+                    'label' => Yum::t($field),
+                    'type' => 'raw',
+                    'value' => $model->profile->getAttribute($field)
+                ));
+            }
+        }
 
-	array_push($attributes,
+    $locations=LocationManager::model()->findByPk($model->profile->user_location);
+	$locationname=($locations)?$locations->locationname:'';
+    array_push($attributes,
 		/*
 		There is no added value to showing the password/salt/activationKey because 
 		these are all encrypted 'password', 'salt', 'activationKey',*/
+        array(
+            'name' => Yum::t("User location"),
+            'value' => $locationname
+        ),
+        array(
+            'name' => Yum::t('Sex'),
+            'value' => $model->profile->sex==0?"Female":"Male"
+        ),
 		array(
 			'name' => 'createtime',
 			'value' => date(UserModule::$dateFormat,$model->createtime),
 			),
-		array(
+        array(
 			'name' => 'lastvisit',
 			'value' => date(UserModule::$dateFormat,$model->lastvisit),
 			),

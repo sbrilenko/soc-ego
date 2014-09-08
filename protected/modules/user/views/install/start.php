@@ -5,7 +5,9 @@ td td { border: 1px dotted; }
 input { width: 100px; } 
 </style>
 <div style="width: 800px;">
-
+<?php if(isset($message))
+    echo "<div class='alert alert-danger'>",$message,"</div>";
+ ?>
 <?php echo CHtml::beginForm(array('install')); ?>
 	<p> You are about to install the Yii User management Module version
 <em><?php echo Yii::app()->getModule('user')->version; ?> </em>

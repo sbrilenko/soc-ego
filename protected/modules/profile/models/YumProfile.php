@@ -83,6 +83,7 @@ class YumProfile extends YumActiveRecord
 		$labels = array(
 				'id' => Yum::t('Profile ID'),
 				'user_id' => Yum::t('User ID'),
+                'user_location' => Yum::t('User location'),
 				);
 
 		foreach (YumProfile::getProfileFields() as $field)

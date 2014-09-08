@@ -226,32 +226,58 @@ class YumUser extends YumActiveRecord
           'Username length needs to be between {minLen} and {maxlen} characters', array(
             '{minLen}' => $usernameRequirements['minLen'],
             '{maxLen}' => $usernameRequirements['maxLen'])));
-      $rules[] = array(
-        'username',
-        'match',
-        'pattern' => $usernameRequirements['match'],
-        'message' => Yum::t($usernameRequirements['dontMatchMessage']));
+//      $rules[] = array(
+//        'username',
+//        'match',
+//        'pattern' => $usernameRequirements['match'],
+//        'message' => Yum::t($usernameRequirements['dontMatchMessage']));
     }
 
     $rules[] = array('username', 'unique',
       'message' => Yum::t('This username already exists'));
-
-    $rules[] = array('status', 'in', 'range' => array(0, 1, 2, 3, -1, -2));
+    $rules[] = array('status', 'in', 'range' => array(0, 1, -1, -2));
     $rules[] = array('superuser', 'in', 'range' => array(0, 1));
+    $rules[] = array('was_flag', 'in', 'range' => array(0, 1));
+    $rules[] = array('level', 'in', 'range' => array(1, 2, 3));
+    $start_month=array();
+    if(Yum::hasModule('GamificationManager'))
+    {
+        $level_array=array("Trainee","Junior","Junior_Middle","Middle","Middle_Senior","Senior","Senior_Lead","Lead","Tech_Officer");
+        $level_seniority_array=array("Low","Normal","High");
+        $all_gamif=GamificationManager::model()->findAll();
+        if($all_gamif)
+        {
+            foreach($all_gamif as $gam)
+            {
+                if(in_array($gam->level,$level_array) && in_array($gam->seniority,$level_seniority_array))
+                {
+                    $start_month[]=$gam->start_month;
+                }
+            }
+        }
+    }
+    else
+    {
+//        $start_month=array(0,0.5);
+//        for($i=1;$i<=100;$i++)
+//            $start_month[]=$i;
+    }
 
+    $rules[] = array('start_month', 'in', 'range' => $start_month);
     if(!(Yum::hasModule('registration') && Yum::module('registration')->registration_by_email))
       $rules[] = array('username', 'required');
 
     $rules[] = array('createtime, lastvisit, lastpasswordchange, superuser, status', 'required');
-    $rules[] = array('notifyType, avatar', 'safe');
+    $rules[] = array('notifyType, avatar, job_type, job_title, day_count, work_count, activationKey', 'safe');
     $rules[] = array('password', 'required', 'on' => array('insert', 'registration'));
-    $rules[] = array('createtime, lastvisit, lastaction, superuser, status', 'numerical', 'integerOnly' => true);
+    $rules[] = array('createtime, lastvisit, lastaction, superuser, status,  was_flag , level, failedloginattempts', 'numerical', 'integerOnly' => true);
+    $rules[] = array('start_month', 'length', 'max' => 5);
 
     if (Yum::hasModule('avatar')) {
       // require an avatar image in the avatar upload screen
       $rules[] = array('avatar', 'required', 'on' => 'avatarUpload');
 
-      // if automatic scaling is deactivated, require the exact size	
+      // if automatic scaling is deactivated, require the exact size
       $rules[] = array('avatar', 'EPhotoValidator',
         'allowEmpty' => true,
         'mimeType' => array('image/jpeg', 'image/png', 'image/gif'),
@@ -261,7 +287,6 @@ class YumUser extends YumActiveRecord
         'minHeight' => 50,
         'on' => 'avatarSizeCheck');
     }
-
 
     if (Yum::hasModule('role'))
       $rules[] = array('filter_role', 'safe');
@@ -683,6 +708,13 @@ class YumUser extends YumActiveRecord
 				'superuser' => Yum::t("Superuser"),
 				'status' => Yum::t("Status"),
 				'avatar' => Yum::t("Avatar image"),
+                'day_count' => Yum::t("Counter of days worked in the company"),
+                'was_flag' => Yum::t("User already work?"),
+                'work_count' => Yum::t("Count from number"),
+                'job_type' => Yum::t("Job type"),
+                'job_title' => Yum::t("Job Title"),
+                'level' => Yum::t("Job level"),
+                'start_month' => Yum::t("Started month"),
 				);
 	}
 
@@ -711,6 +743,32 @@ class YumUser extends YumActiveRecord
 
 	public static function itemAlias($type, $code = NULL)
 	{
+        $start_month=array();
+        if(Yum::hasModule('gamificationmanager'))
+        {
+            $level_array=array("Trainee","Junior","Junior_Middle","Middle","Middle_Senior","Senior","Senior_Lead","Lead","Tech_Officer");
+            $level_seniority_array=array("Low","Normal","High");
+            $all_gamif=GamificationManager::model()->findAll();
+            if($all_gamif)
+            {
+                foreach($all_gamif as $gam)
+                {
+                    if(in_array($gam->level,$level_array) && in_array($gam->seniority,$level_seniority_array))
+                    {
+                        $start_month[]=$gam->start_month;
+                    }
+                }
+            }
+        }
+        if(empty($start_month))
+        {
+            $start_month[]="Gamification manager module is not installed, please ask to your programmer";
+//            $start_month=array("0"=>"0","0.5"=>"0.5");
+//            for($i=1;$i<=100;$i++)
+//                $start_month[$i]=$i;
+        }
+
+
 		$_items = array(
 				'UserStatus' => array(
 					'0' => Yum::t('Not active'),
@@ -722,21 +780,49 @@ class YumUser extends YumActiveRecord
 					'0' => Yum::t('No'),
 					'1' => Yum::t('Yes'),
 					),
-				);
-		if (isset($code))
-			return isset($_items[$type][$code]) ? $_items[$type][$code] : false;
-		else
-			return isset($_items[$type]) ? $_items[$type] : false;
-	}
+                'AlreadyWork' => array(
+                    '0' => Yum::t('No'),
+                    '1' => Yum::t('Yes'),
+                ),
+                'JobType'=> array(
+                    'Developers'=>'Developers',
+                    'PM'=>'PM',
+                    'Designer'=>'Designer',
+                    'QA'=>'QA',
+                    'Sales managers'=>'Sales managers'
+                ),
+                'JobTitle'=> array(
+                    'Youngling'=>'Youngling',
+                    'Padawan'=>'Padawan',
+                    'Jedi'=>'Jedi',
+                    'Jedi Survivor'=>'Jedi Survivor',
+                    'Jedi Knight'=>'Jedi Knight',
+                    'Master Jedi'=>'Master Jedi',
+                    'The Chosen One'=>'The Chosen One',
+                    'Yoda'=>'Yoda',
+                    'Darth Vader'=>'Darth Vader'
+                ),
+                'Level'=> array(
+                    '1'=>'Low',
+                    '2'=>'Normal',
+                    '3'=>'High',
+                ),
+                'StartMonth'=> $start_month,
+            );
+       if (isset($code))
+           return isset($_items[$type][$code]) ? $_items[$type][$code] : false;
+       else
+           return isset($_items[$type]) ? $_items[$type] : false;
+   }
 
-	/**
-	 * Get all users with a specified role.
-	 * @param string $roleTitle title of role to be searched
-	 * @return array users with specified role. Null if none are found.
-	 */
-	public static function getUsersByRole($roleTitle)
-	{
-		Yii::import('role.models.*');
+   /**
+    * Get all users with a specified role.
+    * @param string $roleTitle title of role to be searched
+    * @return array users with specified role. Null if none are found.
+    */
+   public static function getUsersByRole($roleTitle)
+   {
+       Yii::import('role.models.*');
 		$role = YumRole::model()->findByAttributes(array('title' => $roleTitle));
 		return $role ? $role->users : null;
 	}

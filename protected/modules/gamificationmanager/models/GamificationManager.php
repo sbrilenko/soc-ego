@@ -1,24 +1,24 @@
 <?php
 
 /**
- * This is the model class for table "levellist".
+ * This is the model class for table "gamificationmanager".
  *
- * The followings are the available columns in table 'levellist':
+ * The followings are the available columns in table 'gamificationmanager':
  * @property string $id
- * @property string $position
- * @property string $description
- * @property integer $priority
- * @property integer $timecreated
- * @property integer $user_id
+ * @property string $level
+ * @property string $seniority
+ * @property string $start_month
+ * @property integer $time
+ * @property integer $user
  */
-class Levellist extends CActiveRecord
+class GamificationManager extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'levellist';
+		return 'gamificationmanager';
 	}
 
 	/**
@@ -29,12 +29,13 @@ class Levellist extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('position, description, priority, timecreated, user_id', 'required'),
-			array('priority, timecreated, user_id', 'numerical', 'integerOnly'=>true),
-			array('position', 'length', 'max'=>512),
+			array('level, seniority, start_month, time, user', 'required'),
+			array('time, user', 'numerical', 'integerOnly'=>true),
+			array('level, seniority', 'length', 'max'=>512),
+			array('start_month', 'length', 'max'=>6),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, position, description, priority, timecreated, user_id', 'safe', 'on'=>'search'),
+			array('id, level, seniority, start_month, time, user', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -56,11 +57,11 @@ class Levellist extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'position' => 'Position',
-			'description' => 'Description',
-			'priority' => 'Priority',
-			'timecreated' => 'Timecreated',
-			'user_id' => 'User',
+			'level' => 'Level',
+			'seniority' => 'Seniority',
+			'start_month' => 'Start Month',
+			'time' => 'Time',
+			'user' => 'User',
 		);
 	}
 
@@ -83,11 +84,11 @@ class Levellist extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id,true);
-		$criteria->compare('position',$this->position,true);
-		$criteria->compare('description',$this->description,true);
-		$criteria->compare('priority',$this->priority);
-		$criteria->compare('timecreated',$this->timecreated);
-		$criteria->compare('user_id',$this->user_id);
+		$criteria->compare('level',$this->level,true);
+		$criteria->compare('seniority',$this->seniority,true);
+		$criteria->compare('start_month',$this->start_month,true);
+		$criteria->compare('time',$this->time);
+		$criteria->compare('user',$this->user);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -98,7 +99,7 @@ class Levellist extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Levellist the static model class
+	 * @return Gamificationmanager the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

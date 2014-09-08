@@ -38,9 +38,8 @@ class YumFriendshipController extends YumController {
 					}
 		}
 
-//		$user = YumUser::model()->findByPk(Yii::app()->user->id);
-        $user = YumUser::model()->findByAttributes(array('username'=>Yii::app()->user->id));
-        $this->render('myfriends', array('friends' =>YumUser::model()->getFriendships()));
+		$user = YumUser::model()->findByPk(Yii::app()->user->id);
+		$this->render('myfriends', array('friends' => $user->getFriendships()));
 	}
 
 	public function actionAdmin() {
@@ -59,7 +58,8 @@ class YumFriendshipController extends YumController {
 
 	public function actionInvite($user_id = null) {
 		if(isset($_POST['user_id']))
-            $user_id = $_POST['user_id'];
+			$user_id = $_POST['user_id'];
+
 		if($user_id == null)
 			return false;
 
@@ -139,11 +139,11 @@ class YumFriendshipController extends YumController {
 					));
 	}
 
-	public static function invitationLink($inviter, $invited) {;
+	public static function invitationLink($inviter, $invited) {
 		if($inviter === $invited)
 			return false;
 		if(!is_object($inviter))
-			$inviter = YumUser::model()->findByAttributes(array('username'=>$inviter));
+			$inviter = YumUser::model()->findByPk($inviter);
 		if(!is_object($invited))
 			$invited = YumUser::model()->findByPk($invited);
 

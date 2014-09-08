@@ -83,7 +83,7 @@ class YumRoleController extends YumController {
 	}
 
 	public function actionAdmin() {
-		$this->layout = Yum::module()->adminLayout;
+		$this->layout = Yum::module('admin')->adminLayout;
 		$dataProvider = new CActiveDataProvider('YumRole', array(
 					'pagination' => array(
 						'pageSize' => Yum::module()->pageSize,

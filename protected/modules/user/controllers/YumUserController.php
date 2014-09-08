@@ -68,6 +68,7 @@ class YumUserController extends YumController {
 	public function actionIndex() {
 		// If the user is not logged in, so we redirect to the actionLogin,
 		// which will render the login Form
+
 		if(Yii::app()->user->isGuest)
 			$this->actionLogin();
 		else
@@ -167,6 +168,7 @@ class YumUserController extends YumController {
 	 */
 	public function actionView()
 	{
+        $this->layout = Yum::module('admin')->adminLayout;
 		$model = $this->loadUser();
 		$this->render('view',array(
 					'model'=>$model,
@@ -178,6 +180,7 @@ class YumUserController extends YumController {
 	 */
 	public function actionCreate() {
 		$user = new YumUser;
+        $this->layout = Yum::module('admin')->adminLayout;
 		if(Yum::hasModule('profile'))
 			$profile = new YumProfile;
 		$passwordform = new YumUserChangePassword;
@@ -189,7 +192,16 @@ class YumUserController extends YumController {
 
 		if(isset($_POST['YumUser'])) {
 			$user->attributes=$_POST['YumUser'];
-
+            if(isset($_POST['YumUser']['day_count']) && !empty($_POST['YumUser']['day_count']))
+            {
+                $day_count_explode=explode('/',$_POST['YumUser']['day_count']);
+                $user->day_count=strtotime(date($day_count_explode[1]."-".$day_count_explode[0]."-".$day_count_explode[2]));
+            }
+            if(isset($_POST['YumUser']['work_count']) && !empty($_POST['YumUser']['work_count']))
+            {
+                $work_count_explode=explode('/',$_POST['YumUser']['work_count']);
+                $user->work_count=strtotime(date($work_count_explode[1]."-".$work_count_explode[0]."-".$work_count_explode[2]));
+            }
 			if(isset($_POST['YumUserChangePassword'])) {
 				if($_POST['YumUserChangePassword']['password'] == '') {
 					Yii::import('user.components.EPasswordGenerator');
@@ -243,21 +255,34 @@ class YumUserController extends YumController {
 		$this->render('create',array(
 					'user' => $user,
 					'passwordform' => $passwordform,
-					'profile' => isset($profile) ? $profile : null,
+					'profile' => isset($profile) ? $profile : null
 					));
 	}
 
 	public function actionUpdate($id) {
+        $this->layout = Yum::module('admin')->adminLayout;
 		$user = $this->loadUser($id);
 		$profile = false;
 		if(Yum::hasModule('profile'))
 			$profile = $user->profile;
+
 		$passwordform = new YumUserChangePassword();
 
 		if(isset($_POST['YumUser'])) {
-			$user->attributes = $_POST['YumUser'];
+            $user->attributes = $_POST['YumUser'];
+            if(isset($_POST['YumUser']['day_count']) && !empty($_POST['YumUser']['day_count']))
+            {
+                $day_count_explode=explode('/',$_POST['YumUser']['day_count']);
+                $user->day_count=strtotime(date($day_count_explode[1]."-".$day_count_explode[0]."-".$day_count_explode[2]));
+            }
+            if(isset($_POST['YumUser']['work_count']) && !empty($_POST['YumUser']['work_count']))
+            {
+                $work_count_explode=explode('/',$_POST['YumUser']['work_count']);
+                $user->work_count=strtotime(date($work_count_explode[1]."-".$work_count_explode[0]."-".$work_count_explode[2]));
+            }
+            $user->validate();
 
-			$user->validate();
+
 			if($profile && isset($_POST['YumProfile']) )
 				$profile->attributes = $_POST['YumProfile'];
 
@@ -376,7 +401,7 @@ class YumUserController extends YumController {
 		if(Yum::hasModule('role'))
 			Yii::import('role.models.*');
 
-		$this->layout = Yum::module()->adminLayout;
+        $this->layout = Yum::module('admin')->adminLayout;
 
 		$model = new YumUser('search');
 

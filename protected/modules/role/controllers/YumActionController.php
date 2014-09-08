@@ -99,7 +99,7 @@ class YumActionController extends YumController {
 
 	public function actionAdmin()
 	{
-		$this->layout = Yum::module()->adminLayout;
+        $this->layout = Yum::module('admin')->adminLayout;
 		$model=new YumAction('search');
 		$model->unsetAttributes();  
 		if(isset($_GET['YumAction']))

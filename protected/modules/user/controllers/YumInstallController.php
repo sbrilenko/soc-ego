@@ -100,6 +100,14 @@ class YumInstallController extends YumController
             `status` int(1) NOT NULL default '0',
             `avatar` varchar(255) default NULL,
             `notifyType` enum('None', 'Digest', 'Instant', 'Threshold') default 'Instant',
+            `day_count` int(11) NOT NULL default '0',
+            `points` decimal(10,2) NOT NULL default '0',
+            `was_flag` int(1) NOT NULL default '0',
+            `work_count` int(11) NOT NULL default '0',
+            `job_type` varchar(512) NOT NULL default '',
+            `job_title` varchar(512) NOT NULL default '',
+            `level` int(1) NOT NULL default '1',
+            `start_month` decimal(5,2) NOT NULL default '0',
             PRIMARY KEY  (`id`),
             UNIQUE KEY `username` (`username`),
             KEY `status` (`status`),
@@ -230,6 +238,9 @@ class YumInstallController extends YumController
               `street` varchar(255),
               `city` varchar(255),
               `about` text,
+              `phone` varchar(512) NOT NULL default '',
+              `sex` int(1) NOT NULL default '0',
+              `user_location` int(11) NOT NULL default '0',
               PRIMARY KEY  (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;";
 
@@ -402,9 +413,10 @@ class YumInstallController extends YumController
       }
       else {
         if(Yii::app()->db->getSchema()->getTable('user'))
+//            $message="Yii-user-management is already installed. If you push 'Install module' button than you update some fields if their added";
           throw new CHttpException(403,
             'Yii-user-management is already installed. Please remove it manually to continue');
-
+        else $message="";
         $this->render('start', array(
           'userTable' => 'user',
           'roleTable' => 'role',
@@ -422,6 +434,7 @@ class YumInstallController extends YumController
           'permissionTable' => 'permission',
           'friendshipTable' => 'friendship',
           'actionTable' => 'action',
+          'message'=>$message
         ));
       }
     } else {

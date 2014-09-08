@@ -34,6 +34,7 @@
                 array('label'=>'Roles', 'url'=>array('/role/role/admin'),'active' => Yii::app()->controller->getId() == 'role'),
                 array('label'=>'Location manager', 'url'=>array('/locationmanager/locationmanager/manager'),'active' => Yii::app()->controller->getId() == 'locationmanager'),
                 array('label'=>'Badges manager', 'url'=>array('/badgemanager/badges/index'),'active' => Yii::app()->controller->getId() == 'badges' ),
+                array('label'=>'Gamification manager', 'url'=>array('/gamificationmanager/gamificationmanager/index'),'active' => Yii::app()->controller->getId() == 'gamificationmanager' ),
                 array('label'=>'Level list', 'url'=>array('/levellist/levellist/index'),'active' => Yii::app()->controller->getId() == 'levellist' ),
                 array('label'=>'Files module', 'url'=>array('/files/files/index'),'active' => Yii::app()->controller->getId() == 'files'),
                 array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),

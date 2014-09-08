@@ -1,4 +1,4 @@
-<div class="tooltip" id="tooltip_<?php echo $data->id; ?>"> 
+<div class="tooltip" id="tooltip_<?php echo $data->id; ?>">
 	<?php $this->renderPartial('_tooltip', array('data' =>  $data)); ?>
 </div>
 

@@ -30,6 +30,7 @@ if(!$profile = @$model->profile)
 	}
 echo '</div><!-- friends -->';
 
-Yii::import('friendship.controllers.YumFriendshipController');
+Yii::import(
+		'friendship.controllers.YumFriendshipController');
 echo YumFriendshipController::invitationLink(Yii::app()->user->id, $model->id);
 ?>

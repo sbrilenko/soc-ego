@@ -58,6 +58,8 @@ class ProfileModule extends CWebModule {
       'user.models.*',
       'profile.components.*',
       'profile.models.*',
+      'locationmanager.components.*',
+      'locationmanager.models.*',
     ));
   }
 }

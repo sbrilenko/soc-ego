@@ -9,14 +9,14 @@ Yum::renderFlash();
 ?>
 
 <div id="profile">
-
 <?php echo $model->getAvatar(); ?>
 <?php $this->renderPartial(Yum::module('profile')->publicFieldsView, array(
 			'profile' => $model->profile)); ?>
 <br />
 <?php
 if(Yum::hasModule('friendship'))
-$this->renderPartial('friendship.views.friendship.friends', array(
+$this->renderPartial(
+		'friendship.views.friendship.friends', array(
 			'model' => $model)); ?>
 <br />
 <?php
@@ -33,8 +33,7 @@ if(Yum::module('profile')->enableProfileComments
  </div>
 
 <?php
-;
-if(!Yii::app()->user->isGuest && YumUser::model()->findByAttributes(array('username'=>Yii::app()->user->id))->id == $model->id) {
+if(!Yii::app()->user->isGuest && Yii::app()->user->id == $model->id) {
   echo CHtml::link(Yum::t('Edit profile'), array('//profile/profile/update'), array('class' => 'btn'));
   if(Yum::hasModule('avatar')) {
     echo '&nbsp;';

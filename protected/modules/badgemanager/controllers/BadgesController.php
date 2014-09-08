@@ -15,7 +15,20 @@ class BadgesController extends Controller
                     if($fid_user)
                     {
                         $fid_user->count=$fid_user->count+1;
-                        $fid_user->save();
+                        if($fid_user->save())
+                        {
+                            $user_points_add=YumUser::model()->findByPk($_POST['BadgeUser']['user_id']);
+                            if($user_points_add)
+                            {
+                                /*find badge cost*/
+                                $badge_cost=Badges::model()->findByPk($_POST['BadgeUser']['badge_id']);
+                                if($badge_cost)
+                                {
+                                    $user_points_add->points=$user_points_add->points+$badge_cost->cost;
+                                    $user_points_add->save();
+                                }
+                            }
+                        }
                     }
                     else
                     {
@@ -23,7 +36,21 @@ class BadgesController extends Controller
                         $fid_user->user_id=$_POST['BadgeUser']['user_id'];
                         $fid_user->badge_id=$_POST['BadgeUser']['badge_id'];
                         $fid_user->count=1;
-                        $fid_user->save();
+                        if($fid_user->save())
+                        {
+                            $user_points_add=YumUser::model()->findByPk($_POST['BadgeUser']['user_id']);
+                            if($user_points_add)
+                            {
+                                /*find badge cost*/
+                                $badge_cost=Badges::model()->findByPk($_POST['BadgeUser']['badge_id']);
+                                if($badge_cost)
+                                {
+                                    $user_points_add->points=$user_points_add->points+$badge_cost->cost;
+                                    $user_points_add->save();
+                                }
+                            }
+                        }
+
                     }
                 }
                 elseif(isset($_POST['badgeusersubmit2'])) //remove
