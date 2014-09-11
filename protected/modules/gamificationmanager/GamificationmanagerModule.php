@@ -1,11 +1,14 @@
 <?php
 
-class GamificationmanagerModule extends CWebModule
+class GamificationManagerModule extends CWebModule
 {
     public $installUrl='/gamificationmanager/gamificationmanager/install';
     public $installrenderUrl='/gamificationmanager/install';
     public $renderindexUrl='/gamificationmanager/index';
     public $indexUrl='/gamificationmanager/gamificationmanager/index';
+    public $updateUrl='/gamificationmanager/gamificationmanager/update';
+    public $addpositionUrl='/gamificationmanager/gamificationmanager/addposition';
+    public $deleteUrl='/gamificationmanager/gamificationmanager/delete';
     public $gamificationmanagerTable='{{gamificationmanager}}';
 	public function init()
 	{

@@ -1,6 +1,6 @@
 <?php
 $form = $this->beginWidget('CActiveForm', array(
-    'id'=>'user-form',
+    'id'=>'gamification-form',
     'enableAjaxValidation'=>false,
     'enableClientValidation'=>true,
 ));
