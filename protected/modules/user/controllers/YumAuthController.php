@@ -198,7 +198,7 @@ class YumAuthController extends YumController {
 	}
 
 	public function actionLogin($hybridauth = false) {
-		// If the user is already logged in send them to the return Url
+        // If the user is already logged in send them to the return Url
 		if (!Yii::app()->user->isGuest)
 			$this->redirect(Yum::module()->returnUrl);
 
@@ -208,7 +208,6 @@ class YumAuthController extends YumController {
 			$this->loginByHybridAuth($hybridauth);
 
 		$this->loginForm = new YumUserLogin('login');
-
     if(!Yum::module()->debug &&
       Yum::module()->captchaAfterUnsuccessfulLogins &&
 				Yii::app()->user->getState('yum-login-attempts') >= Yum::module()->captchaAfterUnsuccessfulLogins)
@@ -217,9 +216,10 @@ class YumAuthController extends YumController {
 		$success = false;
 		$action = 'login';
 		$login_type = null;
+//        if (isset($_POST['YumUser'])) {
 		if (isset($_POST['YumUserLogin'])) {
 			$this->loginForm->attributes = $_POST['YumUserLogin'];
-			$t = Yum::module()->loginType;
+            $t = Yum::module()->loginType;
 
       if(Yum::module()->debug) {
         $success = $this->loginByDebug();
@@ -270,10 +270,11 @@ class YumAuthController extends YumController {
       Yii::app()->user->getState('yum-login-attempts')
 				>= Yum::module()->captchaAfterUnsuccessfulLogins)
 		$this->loginForm->scenario = 'captcha';
-
-    $this->render(Yum::module()->debug
+    $this->render(
+        Yum::module()->debug
       ? Yum::module()->loginDebugView
-      : Yum::module()->loginView, array(
+      : Yum::module()->loginView,
+        array(
         'model' => $this->loginForm));
 	}
 

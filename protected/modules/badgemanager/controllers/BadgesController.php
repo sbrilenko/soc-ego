@@ -75,6 +75,8 @@ class BadgesController extends Controller
     }
 	public function actionIndex()
 	{
+        if(Yum::module()->enableBootstrap)
+            Yum::register('css/bootstrap.min.css');
         $this->layout = Yum::module('admin')->adminLayout;
         if(Yii::app()->user->isAdmin())
         {
@@ -89,6 +91,8 @@ class BadgesController extends Controller
     /*create*/
     public function actionCreate()
     {
+        if(Yum::module()->enableBootstrap)
+            Yum::register('css/bootstrap.min.css');
         $this->layout = Yum::module('admin')->adminLayout;
         if(Yii::app()->user->isAdmin())
         {
@@ -96,9 +100,9 @@ class BadgesController extends Controller
             {
                 $badge=new Badges();
                 $badge->attributes=$_POST['Badges'];
-                if(isset($_FILES['Badges']) && !empty($_FILES['Badges']['image']))
+                if(isset($_FILES['Badges']) && !empty($_FILES['Badges']['name']['image']))
                 {
-                    $file_ret=Files::model()->create($_FILES['Badges'],$title='test',Badges::model()->tableName());
+                    $file_ret=Files::model()->create($_FILES['Badges'],'image',$title='test',Badges::model()->tableName());
                     if(is_array($file_ret))
                     {
                         $this->render('create',array('message'=>$file_ret[0]));
@@ -132,53 +136,60 @@ class BadgesController extends Controller
     /*update*/
     public function actionUpdate()
     {
+        if(Yum::module()->enableBootstrap)
+            Yum::register('css/bootstrap.min.css');
         $this->layout = Yum::module('admin')->adminLayout;
         if(Yii::app()->user->isAdmin())
         {
-                if(Yii::app()->request->isPostRequest)
+            if(Yii::app()->request->isPostRequest)
+            {
+                $local=Badges::model()->findByPk($_POST['Badges']['id']);
+                if($local)
                 {
-                    $local=Badges::model()->findByPk($_POST['Badges']['id']);
-                    if($local)
+                    if(isset($_FILES['Badges']) && !empty($_FILES['Badges']['name']['image']))
                     {
-                        if(isset($_FILES['Badges']) && !empty($_FILES['Badges']['name']['image']))
+                        $file_ret=Files::model()->create($_FILES['Badges'],'image',$title='test',Badges::model()->tableName(),$local->image);
+                        if(is_array($file_ret))
                         {
-                            $file_ret=Files::model()->create($_FILES['Badges'],$title='test',Badges::model()->tableName(),$local->image);
-                            if(is_array($file_ret))
-                            {
-                                $this->render('update'.$_POST['Badges']['id'],array('message'=>$file_ret[0]));
-                                exit();
-                            }
-                            else
-                            {
-                                $local->image=$file_ret;
-                                if($local->save())
-                                {
-                                    $this->redirect('index');
-                                }
-                                else
-                                {
-                                    $this->render('index',array('message'=>'badges model not saved! Please ask your specialist'));
-                                }
-                            }
+                            $this->render('update'.$_POST['Badges']['id'],array('message'=>$file_ret[0]));
+                            exit();
                         }
                         else
                         {
-                            $this->render('index',array('message'=>'please put the image'));
+                            $local->attributes=$_POST['Badges'];
+                            $local->image=$file_ret;
+                            if($local->save())
+                            {
+                                $this->redirect('index');
+                            }
+                            else
+                            {
+                                $this->render('index',array('message'=>'Store model not saved! Please ask your specialist'));
+                            }
                         }
-                        $local->attributes=$_POST['Badges'];
-                        $local->save();
                     }
-                    $this->redirect('index');
+                    else
+                    {
+                        $image=$local->image;
+                        $local->attributes=$_POST['Badges'];
+                        $local->image=$image;
+                        $local->save();
+                        $this->render('index',array('message'=>'please put the image'));
+                    }
+                    $local->attributes=$_POST['Badges'];
+                    $local->save();
                 }
-                else
+                $this->redirect('index');
+            }
+            else
                 if(!empty($_GET['id']) && $_GET['id']>0)
                 {
                     $local=Badges::model()->findByPk($_GET['id']);
                     if($local) $this->render('update',array('badges'=>$local));
                     else $this->redirect('index');
                 }
-            else
-            $this->redirect('index');
+                else
+                    $this->redirect('index');
         }
         else
             $this->redirect('/');

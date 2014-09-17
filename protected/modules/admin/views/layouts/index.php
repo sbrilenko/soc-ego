@@ -27,18 +27,41 @@
     </div><!-- header -->
 
     <div id="mainmenu">
+        <?php
+        $users=YumUser::model()->findAll();
+        $today_day=date("d");
+        $count_bool=false;
+        if($users)
+        {
+            foreach($users as $user)
+            {
+                if($user->work_count>0)
+                {
+                    $work_count=date("d",$user->work_count);
+                    if($work_count==$today_day)
+                    {
+                        $count_bool=true;
+                        break;
+                    }
+
+                }
+
+            }
+        }
+        ?>
         <?php $this->widget('zii.widgets.CMenu',array(
             'items'=>array(
-                array('label'=>'Admin', 'url'=>array('/admin')),
+                array('label'=>'Admin', 'url'=>array('/admin'),'active' => Yii::app()->controller->getId() == 'admin' ||  Yii::app()->controller->getId() == 'site'),
                 array('label'=>'Users', 'url'=>array('/user/user/admin'),'active' => Yii::app()->controller->getId() == 'user'),
                 array('label'=>'Roles', 'url'=>array('/role/role/admin'),'active' => Yii::app()->controller->getId() == 'role'),
                 array('label'=>'Location manager', 'url'=>array('/locationmanager/locationmanager/manager'),'active' => Yii::app()->controller->getId() == 'locationmanager'),
                 array('label'=>'Badges manager', 'url'=>array('/badgemanager/badges/index'),'active' => Yii::app()->controller->getId() == 'badges' ),
                 array('label'=>'Gamification manager', 'url'=>array('/gamificationmanager/gamificationmanager/index'),'active' => Yii::app()->controller->getId() == 'gamificationmanager' ),
                 array('label'=>'Store', 'url'=>array('/store/store/index'),'active' => Yii::app()->controller->getId() == 'store' ),
-                array('label'=>'Orders from store', 'url'=>array('/store/orders/index'),'active' => Yii::app()->controller->getId() == 'orders',/*'visible'=>(Yii::app()->db->getSchema()->getTable('orders_from_store') && count(OrdersFromStore::model()->findAllByAttributes(array("approved"=>0)))>0)*/),
-                array('label'=>'New levels page', 'url'=>array('/site/levelsmessages')),
+                array('label'=>'Orders from store', 'url'=>array('/store/orders/index'),'active' => Yii::app()->controller->getId() == 'orders','visible'=>(Yii::app()->db->getSchema()->getTable('orders_from_store') && count(OrdersFromStore::model()->findAllByAttributes(array("approved"=>0)))>0)),
+                array('label'=>'New levels page', 'url'=>array('/site/levelsmessages'),'visible'=>$count_bool),
                 array('label'=>'Level list', 'url'=>array('/levellist/levellist/index'),'active' => Yii::app()->controller->getId() == 'levellist' ),
+                array('label'=>'Groups', 'url'=>array('/usergroup/groups/index'),'active' => Yii::app()->controller->getId() == 'usergroup' ),
                 array('label'=>'Files module', 'url'=>array('/files/files/index'),'active' => Yii::app()->controller->getId() == 'files'),
                 array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
                 array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
@@ -62,6 +85,6 @@
     </div><!-- footer -->
 
 </div><!-- page -->
-
+<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/admin.css" media="screen, projection">
 </body>
 </html>

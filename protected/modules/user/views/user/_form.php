@@ -82,16 +82,7 @@ echo $form->error($user, 'superuser'); ?>
             });
             $('.was-flag').change(function()
             {
-                if($(this).val()==1) {
-                    $(".work-count").datepicker('option',{disabled: false});
-                    $(".work-count").datepicker({
-                        format: "dd MM yyyy",
-                        autoclose: true,
-                        todayBtn: true,
-                        pickerPosition: "bottom-left"
-                    });
-                }
-                else $(".work-count").val('').datepicker( "option", { disabled: true } );
+                $(this).val()==1?$(".work-count").val('01/07/2014'):$(".work-count").val('');
             })
         })
     </script>

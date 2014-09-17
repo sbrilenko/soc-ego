@@ -3,6 +3,8 @@ class StoreController extends Controller
 {
     public function actionIndex()
 	{
+        if(Yum::module()->enableBootstrap)
+            Yum::register('css/bootstrap.min.css');
         $this->layout = Yum::module('admin')->adminLayout;
         if(Yii::app()->user->isAdmin())
         {
@@ -17,6 +19,8 @@ class StoreController extends Controller
     /*create*/
     public function actionCreate()
     {
+        if(Yum::module()->enableBootstrap)
+            Yum::register('css/bootstrap.min.css');
         $this->layout = Yum::module('admin')->adminLayout;
         if(Yii::app()->user->isAdmin())
         {
@@ -24,9 +28,9 @@ class StoreController extends Controller
             {
                 $store=new Store();
                 $store->attributes=$_POST['Store'];
-                if(isset($_FILES['Store']) && !empty($_FILES['Store']))
+                if(isset($_FILES['Store']) && !empty($_FILES['Store']['name']['image']))
                 {
-                    $file_ret=Files::model()->create($_FILES['Store'],$title='test',Store::model()->tableName());
+                    $file_ret=Files::model()->create($_FILES['Store'],'image',$title='test',Store::model()->tableName());
                     if(is_array($file_ret))
                     {
                         $this->render('create',array('message'=>$file_ret[0]));
@@ -62,6 +66,8 @@ class StoreController extends Controller
     /*update*/
     public function actionUpdate()
     {
+        if(Yum::module()->enableBootstrap)
+            Yum::register('css/bootstrap.min.css');
         $this->layout = Yum::module('admin')->adminLayout;
         if(Yii::app()->user->isAdmin())
         {
@@ -72,7 +78,7 @@ class StoreController extends Controller
                     {
                         if(isset($_FILES['Store']) && !empty($_FILES['Store']['name']['image']))
                         {
-                            $file_ret=Files::model()->create($_FILES['Store'],$title='test',Store::model()->tableName(),$local->image);
+                            $file_ret=Files::model()->create($_FILES['Store'],'image',$title='test',Store::model()->tableName(),$local->image);
                             if(is_array($file_ret))
                             {
                                 $this->render('update'.$_POST['Store']['id'],array('message'=>$file_ret[0]));

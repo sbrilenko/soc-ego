@@ -21,12 +21,12 @@ class YumProfileController extends YumController {
 	}
 
 	public function actionUpdate($id = null) {
-		if(!$id)
-			$id = Yii::app()->user->id;
+        if(!$id)
+            $id = Yii::app()->user->id;
+        $user = $this->loadModel($id);
 
-		$user = $this->loadModel($id);
-		$profile = $user->profile;
-
+        $profile = $user->profile;
+        $was_avatar=(int)$profile->avatar;
 		if(isset($_POST['YumUser']) || isset($_POST['YumProfile'])) {
 			$user->attributes=@$_POST['YumUser'];
 			$profile->attributes = @$_POST['YumProfile'];
@@ -35,13 +35,32 @@ class YumProfileController extends YumController {
 			$profile->validate();
 			$user->validate();
 
+            if(isset($_FILES['YumProfile']) && !empty($_FILES['YumProfile']['name']['avatar']))
+            {
+                $file_ret=Files::model()->create($_FILES['YumProfile'],'avatar',$title='test',YumProfile::model()->tableName(),$profile->avatar);
+                if(is_array($file_ret))
+                {
+                    $this->render('update',array('message'=>$file_ret[0]));
+                    exit();
+                }
+                else
+                {
+                    Files::model()->delete($was_avatar);
+                    $profile->avatar=$file_ret;
+                }
+            }
+            else
+            {
+                $image=$profile->avatar;
+                $profile->avatar=$image;
+            }
 			if(!$user->hasErrors() && !$profile->hasErrors()) {
 				if($user->save() && $profile->save()) {
 					Yum::setFlash('Your changes have been saved');
-					$this->redirect(array('//profile/profile/view', 'id'=>$user->id));
+					$this->redirect(array('//profile/profile/view', 'id'=>$id));
 				}
 			}
-		}
+        }
 
 		if(Yii::app()->request->isAjaxRequest)
 			$this->renderPartial(Yum::module('profile')->profileEditView,array(

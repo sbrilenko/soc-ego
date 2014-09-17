@@ -1,9 +1,9 @@
 <?php
-$this->breadcrumbs=array(
-	Yum::t('Usergroups')=>array('index'),
-        $model->title=>array('view','id'=>$model->id),
-        Yum::t('Update')
-);
+//$this->breadcrumbs=array(
+//	Yum::t('Usergroups')=>array('index'),
+//        $model->title=>array('view','id'=>$model->id),
+//        Yum::t('Update')
+//);
 
 $this->menu=array(
 	array('label'=>Yum::t('List Usergroup'), 'url'=>array('index')),

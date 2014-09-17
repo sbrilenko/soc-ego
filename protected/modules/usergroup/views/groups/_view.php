@@ -1,7 +1,7 @@
 <div class="view">
 
 <h3> <?php echo CHtml::encode($data->title); ?> </h3> 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('owner_id')); ?>:</b>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('image')); ?>:</b>
 <?php if(isset($data->owner))
 	echo CHtml::encode($data->owner->username); ?>
 	<br />

@@ -9,6 +9,7 @@ $this->title = Yum::t('Edit profile');
 
 <?php $form=$this->beginWidget('CActiveForm', array(
     'id'=>'profile-form',
+    'htmlOptions' => array('enctype' => 'multipart/form-data')
 )); ?>
 
 <?php echo Yum::requiredFieldNote(); ?>

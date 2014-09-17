@@ -7,6 +7,8 @@ $form = $this->beginWidget('CActiveForm', array(
     'htmlOptions' => array('enctype' => 'multipart/form-data')
 ));
 ?>
+<fieldset class="badge-add-form">
+    <legend>Update store item</legend>
 <div class="row">
     <div class="span6">
         <div>
@@ -68,12 +70,14 @@ $form = $this->beginWidget('CActiveForm', array(
         echo $form->error($store_item, 'hide'); ?>
         </div>
     </div>
-    <?php echo CHtml::submitButton($store_item->isNewRecord
-        ? Yum::t('Create')
-        : Yum::t('Save')); ?>
+
 
 </div>
-
-
+</fieldset>
+<div class="button-center">
+<?php echo CHtml::submitButton($store_item->isNewRecord
+    ? Yum::t('Create')
+    : Yum::t('Save')); ?>
+</div>
 <?php $this->endWidget(); ?>
 

@@ -1,7 +1,8 @@
 <?php
-
+echo "<div class='badge-add-b'>";
 echo CHtml::link(Yum::t('Create new badge'), array(
     '//badgemanager/badges/create'), array('class' => 'btn'));
+echo "</div>";
 $allbadgesBadges=Badges::model()->findAll();
 if($allbadgesBadges)
 {
@@ -19,10 +20,10 @@ if($allbadgesBadges)
                     ?>
                 </a>
                 <br />
+                <br />
                 <a class="badge-delete" href="<?php echo Yum::module('badgemanager')->deleteUrl;?>/id/<?php echo $badge->id;?>" title="Delete badge">
                 <?php
-                    echo CHtml::image(
-                        Yii::app()->getAssetManager()->publish(
+                    echo CHtml::image(Yii::app()->getAssetManager()->publish(
                             Yii::getPathOfAlias('zii.widgets.assets.gridview').'/delete.png'));
                     ?>
                 </a>
@@ -50,7 +51,7 @@ if($allbadgesBadges)
                 <br />
                 Cost: <?php echo $badge->cost; ?>
             </td>
-            <td>
+            <td style="width: 369px;">
                 <?php
                 $users=YumUser::model()->findAll();
                 if(count($users)>0)
@@ -71,20 +72,23 @@ if($allbadgesBadges)
                         else $dropdownusers[$user->id]=$user->username;
                     }
                     $badge_user=new BadgeUser();
-                    echo $form->dropDownList($badge_user,'user_id',$dropdownusers);
+                    echo $form->dropDownList($badge_user,'user_id',$dropdownusers,array("style"=>"margin: 0;"));
                     echo $form->hiddenField($badge_user,"badge_id", array("value" => $badge->id));
                     echo "</td><td style='vertical-align: middle;text-align: center'>";
 
                     echo CHtml::submitButton(Yum::t('Add'),array('name' => 'badgeusersubmit1'));
-                    echo CHtml::submitButton(Yum::t('remove'),array('name' => 'badgeusersubmit2'));
+                    echo "</td>";
+                    echo "<td>",CHtml::submitButton(Yum::t('remove'),array('name' => 'badgeusersubmit2'));
                     echo "</td></table>";
 
                 $this->endWidget();
                 }
-
                 ?>
             </td>
         </tr>
+        <tr><td colspan="4">
+        <hr style="margin:10px 0;"/>
+        </td></tr>
     <?php
     }
     echo "</table>";

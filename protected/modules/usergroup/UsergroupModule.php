@@ -2,6 +2,7 @@
 Yii::setPathOfAlias('UsergroupModule' , dirname(__FILE__));
 
 class UsergroupModule extends CWebModule {
+    public $createUrl='/usergroup/groups/create';
 	public $usergroupTable = '{{usergroup}}';
 	public $usergroupMessageTable = '{{usergroup_message}}';
 	public $userparticipationTable = '{{user_usergroup}}';
@@ -20,6 +21,8 @@ class UsergroupModule extends CWebModule {
 					'user.models.*',
 					'usergroup.controllers.*',
 					'usergroup.models.*',
+                    'files.controllers.*',
+                    'files.models.*',
 					));
 	}
 

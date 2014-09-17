@@ -26,7 +26,7 @@ class OrdersController extends Controller
                     {
                         if(isset($_FILES['Store']) && !empty($_FILES['Store']['name']['image']))
                         {
-                            $file_ret=Files::model()->create($_FILES['Store'],$title='test',Store::model()->tableName(),$local->image);
+                            $file_ret=Files::model()->create($_FILES['Store'],'image',$title='test',Store::model()->tableName(),$local->image);
                             if(is_array($file_ret))
                             {
                                 $this->render('update'.$_POST['Store']['id'],array('message'=>$file_ret[0]));

@@ -11,8 +11,8 @@
         </div>
     
         <div class="row">
-                <?php echo $form->label($model,'owner_id'); ?>
-                <?php echo $form->textField($model,'owner_id'); ?>
+                <?php echo $form->label($model,'image'); ?>
+                <?php echo $form->textField($model,'image'); ?>
         </div>
     
         <div class="row">

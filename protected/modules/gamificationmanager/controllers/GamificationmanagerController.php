@@ -244,8 +244,8 @@ class GamificationManagerController extends Controller
                   `id` int unsigned NOT NULL auto_increment,
                   `gamificationfactors_positions_id` int(11) NOT NULL,
                   `gamificationmanager_id` int(11) NOT NULL,
-                  `seniority_factor` decimal(10,2) NOT NULL,
-                  `experience_factor` decimal(10,2) NOT NULL,
+                  `seniority_factor` decimal(10,3) NOT NULL,
+                  `experience_factor` decimal(10,3) NOT NULL,
                   `time` int(11) NOT NULL,
                   `user` int(11) NOT NULL,
                   PRIMARY KEY  (`id`)

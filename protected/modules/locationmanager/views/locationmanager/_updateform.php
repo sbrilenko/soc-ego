@@ -8,7 +8,7 @@ $form = $this->beginWidget('CActiveForm', array(
 ?>
 
 <div class="row">
-    <div class="span6">
+    <div class="span6 updates-locations">
 
         <?php
             if(isset($message) and !empty($message))
@@ -28,7 +28,7 @@ $form = $this->beginWidget('CActiveForm', array(
                         echo $form->textField($location, '['.$location->id.']locationname',array('value'=>$location->locationname)),"&nbsp;&nbsp;&nbsp;<a href='".Yum::module('locationmanager')->deleteUrl."/id/$location->id' class='delete-location' title='Delete location'>".$remove_link."</a></div>";
 
                     }
-                    echo CHtml::submitButton(Yum::t('Update'));
+                    echo CHtml::submitButton(Yum::t('Update'),array('title'=>'Update locations'));
                 }
 
             }

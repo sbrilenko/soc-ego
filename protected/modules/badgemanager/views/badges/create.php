@@ -6,12 +6,14 @@ $form = $this->beginWidget('CActiveForm', array(
     'htmlOptions' => array('enctype' => 'multipart/form-data')
 ));
 ?>
+<fieldset class="badge-add-form">
+    <legend>Add new badge</legend>
 <?php $badges=new Badges(); ?>
 <div class="row">
     <div class="span6">
         <div>
         <?php echo $form->labelEx($badges, 'title');
-        echo $form->textField($badges, 'title');
+        echo $form->textField($badges, 'title',array('class'=>'width-80'));
         echo $form->error($badges, 'title'); ?>
         </div>
         <div>
@@ -26,16 +28,18 @@ $form = $this->beginWidget('CActiveForm', array(
         </div>
         <div>
         <?php echo $form->labelEx($badges, 'description');
-        echo $form->textArea($badges, 'description');
+        echo $form->textArea($badges, 'description',array('class'=>'width-80 textarea-min-height'));
         echo $form->error($badges, 'description'); ?>
         </div>
     </div>
-    <?php echo CHtml::submitButton($badges->isNewRecord
-        ? Yum::t('Create')
-        : Yum::t('Save')); ?>
+
 
 </div>
-
-
+    </fieldset>
+<div class="button-center">
+<?php echo CHtml::submitButton($badges->isNewRecord
+    ? Yum::t('Create')
+    : Yum::t('Save')); ?>
+</div>
 <?php $this->endWidget(); ?>
 

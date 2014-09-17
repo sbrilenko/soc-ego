@@ -197,11 +197,17 @@ class YumUserController extends YumController {
                 $day_count_explode=explode('/',$_POST['YumUser']['day_count']);
                 $user->day_count=strtotime(date($day_count_explode[1]."-".$day_count_explode[0]."-".$day_count_explode[2]));
             }
-            if(isset($_POST['YumUser']['work_count']) && !empty($_POST['YumUser']['work_count']))
+            if(isset($_POST['YumUser']['day_count']) && !empty($_POST['YumUser']['day_count']))
+            {
+                $work_count_explode=explode('/',$_POST['YumUser']['day_count']);
+                $user->work_count=strtotime(date($work_count_explode[1]."-".$work_count_explode[0]."-".$work_count_explode[2]));
+            }
+            elseif(isset($_POST['YumUser']['work_count']) && !empty($_POST['YumUser']['work_count']))
             {
                 $work_count_explode=explode('/',$_POST['YumUser']['work_count']);
                 $user->work_count=strtotime(date($work_count_explode[1]."-".$work_count_explode[0]."-".$work_count_explode[2]));
             }
+
 			if(isset($_POST['YumUserChangePassword'])) {
 				if($_POST['YumUserChangePassword']['password'] == '') {
 					Yii::import('user.components.EPasswordGenerator');
@@ -275,13 +281,18 @@ class YumUserController extends YumController {
                 $day_count_explode=explode('/',$_POST['YumUser']['day_count']);
                 $user->day_count=strtotime(date($day_count_explode[1]."-".$day_count_explode[0]."-".$day_count_explode[2]));
             }
-            if(isset($_POST['YumUser']['work_count']) && !empty($_POST['YumUser']['work_count']))
+            if($_POST['YumUser']['was_flag']==0 && isset($_POST['YumUser']['day_count']) && !empty($_POST['YumUser']['day_count']))
+            {
+                $work_count_explode=explode('/',$_POST['YumUser']['day_count']);
+                $user->work_count=strtotime(date($work_count_explode[1]."-".$work_count_explode[0]."-".$work_count_explode[2]));
+            }
+            elseif(isset($_POST['YumUser']['work_count']) && !empty($_POST['YumUser']['work_count']))
             {
                 $work_count_explode=explode('/',$_POST['YumUser']['work_count']);
                 $user->work_count=strtotime(date($work_count_explode[1]."-".$work_count_explode[0]."-".$work_count_explode[2]));
             }
-            $user->validate();
 
+            $user->validate();
 
 			if($profile && isset($_POST['YumProfile']) )
 				$profile->attributes = $_POST['YumProfile'];

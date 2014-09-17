@@ -15,7 +15,10 @@ class Files extends CActiveRecord
 {
     private $table_options=array('badges'=>array('name'=>array('width'=>150,'height'=>150),'name_middle'=>array('width'=>100,'height'=>100),'name_little'=>array('width'=>75,'height'=>75)),
                                  'photo'=>array('name'=>array('width'=>150,'height'=>150),'name_middle'=>array('width'=>100,'height'=>100),'name_little'=>array('width'=>75,'height'=>75)),
-        'store'=>array('name'=>array('width'=>150,'height'=>150),'name_middle'=>array('width'=>100,'height'=>100),'name_little'=>array('width'=>75,'height'=>75)));
+                                 'store'=>array('name'=>array('width'=>150,'height'=>150),'name_middle'=>array('width'=>100,'height'=>100),'name_little'=>array('width'=>75,'height'=>75)),
+                                 'usergroup'=>array('name'=>array('width'=>150,'height'=>150),'name_middle'=>array('width'=>100,'height'=>100),'name_little'=>array('width'=>75,'height'=>75)),
+                                 'profile'=>array('name'=>array('width'=>150,'height'=>150),'name_middle'=>array('width'=>100,'height'=>100),'name_little'=>array('width'=>75,'height'=>75)),
+                                 'comments'=>array('name'=>array('width'=>150,'height'=>150),'name_middle'=>array('width'=>100,'height'=>100),'name_little'=>array('width'=>75,'height'=>75)));
 
     /**
 	 * @return string the associated database table name
@@ -130,16 +133,16 @@ class Files extends CActiveRecord
         }
     }
     /*create file record in DB*/
-    public function create($post,$title='',$table,$image_id=null)
+    public function create($post,$name_field,$title='',$table,$image_id=null)
     {
         define ("MAX_SIZE","1000");
         $errors_messages=array();
-        $image =$post["name"]['image'];
-        $uploadedfile = $post['tmp_name']['image'];
+        $image =$post["name"][$name_field];
+        $uploadedfile = $post['tmp_name'][$name_field];
         $id=null;
         if ($image)
         {
-            $extension = strtolower(substr($post["name"]['image'],strripos($post["name"]['image'],'.'),strlen($post["name"]['image'])));
+            $extension = strtolower(substr($post["name"][$name_field],strripos($post["name"][$name_field],'.'),strlen($post["name"][$name_field])));
             if (($extension != ".jpg") && ($extension != ".jpeg")
                 && ($extension != ".png") && ($extension != ".gif"))
             {
@@ -147,7 +150,7 @@ class Files extends CActiveRecord
             }
             else
             {
-                $size=filesize($post['tmp_name']['image']);
+                $size=filesize($post['tmp_name'][$name_field]);
 
                 if ($size > MAX_SIZE*1024)
                 {
@@ -184,7 +187,7 @@ class Files extends CActiveRecord
                            $newwidth=$image['width'];
                            $newheight=$image['height'];
                            $tmp=imagecreatetruecolor($newwidth,$newheight);
-                           $uploadedfile = $post['tmp_name']['image'];
+                           $uploadedfile = $post['tmp_name'][$name_field];
                            if($extension==".jpg" || $extension==".jpeg" )
                                $src = imagecreatefromjpeg($uploadedfile);
                            else if($extension==".png")
@@ -214,6 +217,8 @@ class Files extends CActiveRecord
                                    $save_flag=true;
                                }
                                else {
+
+                                   die(var_dump($file));
                                    $errors_messages[]='Not saved';
                                    $save_flag=true;
                                    break;

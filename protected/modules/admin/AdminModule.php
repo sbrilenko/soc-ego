@@ -2,6 +2,7 @@
 
 class AdminModule extends CWebModule
 {
+    public $indexUrl="/admin/default/index";
     public $adminLayout = 'admin.views.layouts.index';
 	public function init()
 	{
@@ -12,7 +13,8 @@ class AdminModule extends CWebModule
 		$this->setImport(array(
 			'admin.models.*',
 			'admin.components.*',
-            'store.models',
+            'store.models.*',
+            'gamificationmanager.models.*'
 		));
 	}
 

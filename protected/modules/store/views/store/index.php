@@ -1,7 +1,8 @@
 <?php
-
+echo "<div class='badge-add-b'>";
 echo CHtml::link(Yum::t('Create new store item'), array(
     '//store/store/create'), array('class' => 'btn'));
+echo "</div>";
 $allStoreitem=Store::model()->findAll();
 if($allStoreitem)
 {
@@ -18,6 +19,7 @@ if($allStoreitem)
                             Yii::getPathOfAlias('zii.widgets.assets.gridview').'/update.png'));
                     ?>
                 </a>
+                <br />
                 <br />
                 <a class="store-delete" href="<?php echo Yum::module('store')->deleteUrl;?>/id/<?php echo $item->id;?>" title="Delete store item">
                 <?php
@@ -46,11 +48,18 @@ if($allStoreitem)
             } ?>
             <td>
 
-                Title: <?php echo $item->title; ?>
+                <?php echo $item->title; ?>
                 <br />
-                Price: <?php echo $item->price; ?>
+                <?php echo $item->price; ?>
+                <br />
+                Count: <?php echo $item->count; ?>
+                <br />
+                Display: <?php echo $item->hide==1?"hide":"show"; ?>
             </td>
         </tr>
+        <tr><td colspan="3">
+        <hr style="margin: 10px 0" />
+        </td></tr>
     <?php
     }
     echo "</table>";

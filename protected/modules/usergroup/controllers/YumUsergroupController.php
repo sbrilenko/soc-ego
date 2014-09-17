@@ -46,53 +46,68 @@ class YumUsergroupController extends YumController {
 
 	}	
 
-	public function actionJoin($id = null) {
-		if($id !== null) {
-			$p = YumUsergroup::model()->findByPk($id);
+	public function actionJoin($id,$user_id) {
+        if(Yii::app()->user->isAdmin())
+        {
+            if($id !== null) {
+                $p = YumUsergroup::model()->findByPk($id);
 
-			$participants = $p->participants;
-			if(in_array(Yii::app()->user->id, $participants)) {
-				Yum::setFlash(Yum::t('You are already participating in this group'));
-			} else {
-				$participants[] = Yii::app()->user->id;
-				$p->participants = $participants;
+                $participants = empty($p->participants)?array():explode(",",$p->participants);
+                if(in_array($user_id, $participants)) {
+//                    Yum::setFlash(Yum::t('You are already participating in this group'));
+                } else {
+                    if(count($participants)>0)
+                    {
+                        $p->participants =$p->participants.",".$user_id;
+                    }
+                    else
+                    {
+                        $p->participants=$user_id;
+                    }
 
-				if($p->save(array('participants'))) {
-					Yum::setFlash(Yum::t('You have joined this group'));
-					Yum::log(Yum::t('User {username} joined group id {id}', array(
-									'{username}' => Yii::app()->user->data()->username,
-									'{id}' => $id)));
+                    if($p->save(array('participants'))) {
+//                        Yum::setFlash(Yum::t('You have joined this group'));
+//                        Yum::log(Yum::t('User {username} joined group id {id}', array(
+//                                        '{username}' => YumUser::model()->findByPk($user_id)->username,
+//                                        '{id}' => $id)));
 
-				}
-			}
-			$this->redirect(array('//usergroup/groups/view', 'id' => $id));
-		} else throw new CHttpException(404);
+                    }
+                }
+//                $this->redirect(array('//usergroup/groups/view', 'id' => $id));
+            }
+//            else throw new CHttpException(404);
+        }
 	}
 
 	public function actionLeave($id = null) {
-		if($id !== null) {
-			$p = YumUsergroup::model()->findByPk($id);
+        if(Yii::app()->user->isAdmin())
+        {
+            if($id !== null) {
+                $p = YumUsergroup::model()->findByPk($id);
 
-			$participants = $p->participants;
-			if(!in_array(Yii::app()->user->id, $participants)) {
-				Yum::setFlash(Yum::t('You are not participating in this group'));
-			} else {
-				$participants = $p->participants;
-				foreach($participants as $key => $participant)
-					if($participant == Yii::app()->user->id)
-						unset($participants[$key]);
-				$p->participants = $participants;
+                $participants = $p->participants;
+                if(!in_array(Yii::app()->user->id, $participants)) {
+                    Yum::setFlash(Yum::t('You are not participating in this group'));
+                } else {
+                    $participants = $p->participants;
+                    foreach($participants as $key => $participant)
+                        if($participant == Yii::app()->user->id)
+                            unset($participants[$key]);
+                    $p->participants = $participants;
 
-				if($p->save(array('participants'))) {
-					Yum::setFlash(Yum::t('You have left this group'));
-					Yum::log(Yum::t('User {username} left group id {id}', array(
-									'{username}' => Yii::app()->user->data()->username,
-									'{id}' => $id)));
+                    if($p->save(array('participants'))) {
+                        Yum::setFlash(Yum::t('You have left this group'));
+                        Yum::log(Yum::t('User {username} left group id {id}', array(
+                            '{username}' => Yii::app()->user->data()->username,
+                            '{id}' => $id)));
 
-				}
-			}
-			$this->redirect(array('//usergroup/groups/index'));
-		} else throw new CHttpException(404);
+                    }
+                }
+                $this->redirect(array('//usergroup/groups/index'));
+            } else throw new CHttpException(404);
+        }
+        else $this->redirect("index");
+
 	}
 
 	public function actionView($id) {
@@ -119,42 +134,142 @@ class YumUsergroupController extends YumController {
 	}
 
 	public function actionCreate() {
-		$model = new YumUsergroup;
+        if(Yum::module()->enableBootstrap)
+            Yum::register('css/bootstrap.min.css');
+        $this->layout = Yum::module('admin')->adminLayout;
+        if(Yii::app()->user->isAdmin())
+        {
+            //		$model = new YumUsergroup;
+            //
+            //		$this->performAjaxValidation($model, 'usergroup-form');
+            //
+            //		if(isset($_POST['YumUsergroup'])) {
+            //			$model->attributes = $_POST['YumUsergroup'];
+            //			$model->owner_id = Yii::app()->user->id;
+            //			$model->participants = array($model->owner_id);
+            //			if($model->save())
+            //				$this->redirect(array('view','id'=>$model->id));
+            //		}
+            //		$this->render('create',array( 'model'=>$model));
+            if(Yii::app()->request->isPostRequest)
+            {
+                if(Yii::app()->request->isPostRequest && isset($_POST['YumUsergroup']))
+                {
+                    $group=new YumUsergroup();
+                    $group->attributes=$_POST['YumUsergroup'];
+                    if(isset($_FILES['YumUsergroup']) && !empty($_FILES['YumUsergroup']['name']['image']))
+                    {
+                        $file_ret=Files::model()->create($_FILES['YumUsergroup'],'image',$title='test',YumUsergroup::model()->tableName(),null);
 
-		$this->performAjaxValidation($model, 'usergroup-form');
+                        if(is_array($file_ret))
+                        {
+                            $this->render('create',array('message'=>$file_ret[0]));
+                        }
+                        else
+                        {
+                            /*participants*/
+                            $participants="";
+                            if(count($group->participants)>0)
+                            {
+                                foreach($group->participants as $index=>$part)
+                                {
+                                    if($part=="1")
+                                    {
+                                        if(!empty($participants)) $participants.=",";
+                                        $participants.=$index;
+                                    }
+                                }
+                            }
+                            $group->image=$file_ret;
+                            $group->participants=$participants;
+                            $group->time_create=strtotime(date("Y-m-d H:i:s"));
+                            $group->user_create=Yii::app()->user->id;
+                            if($group->save())
+                            {
+                                $this->redirect('index');
+                            }
+                            else
+                            {
+                                $this->redirect('create');
+                            }
+                        }
+                    }
+                    else
+                        $this->render('create',array("messages"=>"Fields with * are required."));
+                }
+                else
+                    $this->render('create',array("messages"=>"Fields with * are required."));
+            }
+            else
+            {
+                $model = new YumUsergroup;
+                $this->render('create',array( 'model'=>$model));
+            }
+        }
+    }
 
-		if(isset($_POST['YumUsergroup'])) {
-			$model->attributes = $_POST['YumUsergroup'];
-			$model->owner_id = Yii::app()->user->id;
-			$model->participants = array($model->owner_id);
-
-			if($model->save()) 
-				$this->redirect(array('view','id'=>$model->id));
-		}
-
-		$this->render('create',array( 'model'=>$model));
-	}
-
-	public function actionUpdate()
+	public function actionUpdate($id = false)
 	{
-		$model = $this->loadModel();
+        if(Yum::module()->enableBootstrap)
+            Yum::register('css/bootstrap.min.css');
+        $this->layout = Yum::module('admin')->adminLayout;
+        if(Yii::app()->user->isAdmin())
+        {
+            if(Yii::app()->request->isPostRequest)
+            {
+                if(Yii::app()->request->isPostRequest && isset($_POST['YumUsergroup']))
+                {
+                    $group=YumUsergroup::model()->findByPk($_GET['id']);
+                    $group->attributes=$_POST['YumUsergroup'];
+                    if(isset($_FILES['YumUsergroup']) && !empty($_FILES['YumUsergroup']['name']['image']))
+                    {
+                        $file_ret=Files::model()->create($_FILES['YumUsergroup'],'image',$title='test',YumUsergroup::model()->tableName(),null);
 
-		$this->performAjaxValidation($model, 'usergroup-form');
-
-		if(isset($_POST['YumUsergroup']))
-		{
-			$model->attributes = $_POST['YumUsergroup'];
-
-
-			if($model->save()) {
-
-				$this->redirect(array('view','id'=>$model->id));
-			}
-		}
-
-		$this->render('update',array(
-					'model'=>$model,
-					));
+                        if(is_array($file_ret))
+                        {
+                            $this->render('update',array('message'=>$file_ret[0]));
+                        }
+                        else
+                        {
+                            /*participants*/
+                            $participants="";
+                            if(count($group->participants)>0)
+                            {
+                                foreach($group->participants as $index=>$part)
+                                {
+                                    if($part=="1")
+                                    {
+                                        if(!empty($participants)) $participants.=",";
+                                        $participants.=$index;
+                                    }
+                                }
+                            }
+                            $group->image=$file_ret;
+                            $group->participants=$participants;
+                            $group->time_create=strtotime(date("Y-m-d H:i:s"));
+                            $group->user_create=Yii::app()->user->id;
+                            if($group->save())
+                            {
+                                $this->redirect('index');
+                            }
+                            else
+                            {
+                                $this->redirect('update',array("model"=>$group));
+                            }
+                        }
+                    }
+                    else
+                        $this->render('update',array("model"=>$group,"messages"=>"Fields with * are required."));
+                }
+                else
+                    $this->render('update',array("model"=>YumUsergroup::model()->findByPk($_GET['id']),"messages"=>"Fields with * are required."));
+            }
+            else
+            {
+                $model =YumUsergroup::model()->findByPk($_GET['id']);
+                $this->render('update',array('model'=>$model));
+            }
+        }
 	}
 
 	public function actionDelete()
@@ -178,21 +293,18 @@ class YumUsergroupController extends YumController {
 
 	public function actionIndex($owner_id = null)
 	{
-		$criteria = new CDbCriteria;
-
-		if($owner_id != null) {
-			$uid = Yii::app()->user->id;
-			$criteria->addCondition( array(
-						'condition' => "owner_id = {$uid}"));
-		}
-
-		$dataProvider=new CActiveDataProvider('YumUsergroup', array(
-					'criteria' => $criteria)
-				);
-
-		$this->render('index',array(
-					'dataProvider'=>$dataProvider,
-					));
+        if(Yum::module()->enableBootstrap)
+            Yum::register('css/bootstrap.min.css');
+        $this->layout = Yum::module('admin')->adminLayout;
+        $model=YumUsergroup::model()->findAll();
+        $model=new YumUsergroup('search');
+        $model->unsetAttributes();
+//
+        if(isset($_GET['YumUsergroup']))
+            $model->attributes = $_GET['YumUsergroup'];
+        $this->render('admin',array(
+            'model'=>$model,
+        ));
 	}
 
 	public function actionBrowse()
@@ -210,12 +322,15 @@ class YumUsergroupController extends YumController {
 
 	public function actionAdmin()
 	{
+        if(Yum::module()->enableBootstrap)
+            Yum::register('css/bootstrap.min.css');
+        $this->layout = Yum::module('admin')->adminLayout;
+        $model=YumUsergroup::model()->findAll();
 		$model=new YumUsergroup('search');
 		$model->unsetAttributes();
-
+//
 		if(isset($_GET['YumUsergroup']))
 			$model->attributes = $_GET['YumUsergroup'];
-
 		$this->render('admin',array(
 					'model'=>$model,
 					));

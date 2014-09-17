@@ -6,9 +6,9 @@
 	echo $form->errorSummary($model);
 ?>
 <div class="row">
-<?php echo $form->labelEx($model,'owner_id'); ?>
-<?php echo $form->textField($model,'owner_id'); ?>
-<?php echo $form->error($model,'owner_id'); ?>
+<?php echo $form->labelEx($model,'image'); ?>
+<?php echo $form->textField($model,'image'); ?>
+<?php echo $form->error($model,'image'); ?>
 </div>
 
 <div class="row">

@@ -37,25 +37,29 @@ $columns = array(
 
 if(Yum::hasModule('profile') && isset($profile))
 foreach(Yum::module('profile')->gridColumns as $column)
-$columns[] = array(
-		'header' => Yum::t($column),
-		'filter' => CHtml::textField('YumProfile['.$column.']', $profile->$column),
-		'name' => 'profile.'.$column,
-		'headerHtmlOptions' => array('class' => 'span1'),
-		);
-
+{
+    $columns[] = array(
+        'header' => Yum::t($column),
+        'filter' => CHtml::textField('YumProfile['.$column.']', $profile->$column),
+        'name' => 'profile.'.$column,
+        'headerHtmlOptions' => array('class' => 'span1'),
+    );
+}
 $columns[] = array(
 		'name'=>'createtime',
 		'filter' => false,
 		'value'=>'date(UserModule::$dateFormat,$data->createtime)',
 		'headerHtmlOptions' => array('class' => 'span1'),
 		);
+
 $columns[] = array(
 		'name'=>'lastvisit',
 		'filter' => false,
 		'value'=>'date(UserModule::$dateFormat,$data->lastvisit)',
 		'headerHtmlOptions' => array('class' => 'span1'),
 		);
+
+
 $columns[] = array(
 		'name'=>'status',
 		'filter' => array(
@@ -91,8 +95,6 @@ $this->widget('zii.widgets.grid.CGridView',array(
 			'htmlOptions' => array('class' => 'table table-striped table-condensed admin-user'),
 			)
 		); ?>
-
-
 
 </div>
 </div>

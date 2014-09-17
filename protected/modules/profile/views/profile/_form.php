@@ -20,6 +20,23 @@ if($profile)
             echo $form->dropDownList($profile, $field,$locations_array);
             echo $form->error($profile,$field);
         }
+        elseif($field=="avatar")
+        {
+            echo $form->labelEx($profile, 'avatar');
+            echo $form->fileField($profile, $field);
+            echo $form->error($profile,$field);
+            if(!is_null($profile->avatar) && $profile->avatar>0)
+            {
+                $avatar=Files::model()->findByPk($profile->avatar);
+                if($avatar && file_exists(Yii::app()->basePath."/../files/".$avatar->image))
+                {
+                    echo "<div><img src='/files/".$avatar->image."'/></div>";
+                }
+                else
+                    echo "<div><img src='/default.png'/></div>";
+            }
+            else echo "<div><img src='/default.png'/></div>";
+        }
         else
         {
             echo $form->labelEx($profile, $field);

@@ -12,18 +12,18 @@ $this->breadcrumbs=array(
 
 <?php
 
-if($model->owner)
-	printf('%s: %s',
-			Yum::t('Owner'),
-			CHtml::link($model->owner->username, array(
-					'//profile/profile/view', 'id' => $model->owner_id)));
+//if($model->owner)
+//	printf('%s: %s',
+//			Yum::t('user_create'),
+//			CHtml::link($model->user_create->username, array(
+//					'//profile/profile/view', 'id' => $model->pm)));
 
 printf('<h4> %s </h4>', Yum::t('Participants'));
 
 $this->widget('zii.widgets.CListView', array(
     'dataProvider'=>$model->getParticipantDataProvider(),
-    'itemView'=>'_participant', 
-)); 
+    'itemView'=>'_participant',
+));
 
 ?>
 

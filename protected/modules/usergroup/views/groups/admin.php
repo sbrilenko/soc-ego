@@ -1,8 +1,12 @@
 <?php
-$this->breadcrumbs=array(
-	Yum::t('Usergroups')=>array(Yii::t('app', 'index')),
-	Yum::t( 'Manage'),
-);
+echo "<div class='badge-add-b'>";
+echo CHtml::link(Yum::t('Create new group'), array(
+    '//usergroup/groups/create'), array('class' => 'btn'));
+echo "</div>";
+//$this->breadcrumbs=array(
+//	Yum::t('Usergroups')=>array(Yii::t('app', 'index')),
+//	Yum::t( 'Manage'),
+//);
 
 $this->menu=array(
 		array('label'=>Yii::t('app', 'List') . ' Usergroup',
@@ -27,12 +31,12 @@ data: $(this).serialize()
 
 <h1> <?php echo Yii::t('app', 'Manage'); ?> Usergroups</h1>
 
-<?php echo CHtml::link(Yii::t('app', 'Advanced Search'),'#',array('class'=>'search-button')); ?>
-<div class="search-form" style="display:none">
-<?php $this->renderPartial('_search',array(
-	'model'=>$model,
-)); ?>
-</div>
+<?php //echo CHtml::link(Yii::t('app', 'Advanced Search'),'#',array('class'=>'search-button')); ?>
+<!--<div class="search-form" style="display:none">-->
+<?php //$this->renderPartial('_search',array(
+//	'model'=>$model,
+//)); ?>
+<!--</div>-->
 
 <?php
 $locale = CLocale::getInstance(Yii::app()->language);
@@ -43,7 +47,7 @@ $locale = CLocale::getInstance(Yii::app()->language);
 	'filter'=>$model,
 	'columns'=>array(
 		'id',
-		'owner_id',
+		'image',
 		'title',
 		'description',
 		array(

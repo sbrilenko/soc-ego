@@ -1,7 +1,8 @@
 <?php
-
+echo "<div class='badge-add-b'>";
 echo CHtml::link(Yum::t('Create new level'), array(
     '//levellist/levellist/create'), array('class' => 'btn'));
+echo "</div>";
 $alllevellist=Levellist::model()->findAll();
 if($alllevellist)
 {
@@ -34,6 +35,9 @@ if($alllevellist)
                 Priority: <?php echo $level->priority; ?>
             </td>
         </tr>
+        <tr><td colspan="2">
+            <hr style="margin:10px 0"/>
+        </td></tr>
     <?php
     }
     echo "</table>";

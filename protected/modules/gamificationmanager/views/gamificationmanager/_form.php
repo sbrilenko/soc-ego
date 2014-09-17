@@ -843,11 +843,11 @@
                                             $factor_for_middle_senior_high=Gamificationfactors::model()->findByAttributes(array("gamificationfactors_positions_id"=>$pos->id,'gamificationmanager_id'=>$middle_senior_high->id));
                                             if($factor_for_middle_senior_high && $factor_for_middle_senior_high->experience_factor>0)
                                             {
-                                                echo "<div>".Chtml::textField($pos->position.'[middle_senior_high_experience_factor]',$factor_for_middle_senior_high->experience_factor)."</div>";
+                                                echo "<div>".Chtml::textField($pos->position.'[middle_senior_high_seniority_factor]',$factor_for_middle_senior_high->experience_factor)."</div>";
                                             }
                                             else
                                             {
-                                                echo "<div>".Chtml::textField($pos->position.'[middle_senior_high_experience_factor]','')."</div>";
+                                                echo "<div>".Chtml::textField($pos->position.'[middle_senior_high_seniority_factor]','')."</div>";
                                             }
                                             echo "<div>".Chtml::hiddenField($pos->position.'[middle_senior_high_id]',$middle_senior_high->id)."</div>";
                                         }

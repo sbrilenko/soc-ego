@@ -1,0 +1,151 @@
+#page
+{
+    margin: 0 auto;
+    background: white;
+}
+
+#header
+{
+    margin: 0;
+    padding: 0;
+    /*border-top: 3px solid #C9E0ED;*/
+}
+
+#content
+{
+    padding: 20px;
+}
+
+#sidebar
+{
+    padding: 20px 20px 20px 0;
+}
+.under-header
+{
+    border-bottom:1px solid #C9E0ED;
+}
+#footer
+{
+    padding: 10px;
+    margin: 10px 20px;
+    font-size: 0.8em;
+    text-align: center;
+    border-top: 1px solid #C9E0ED;
+}
+.text-center
+{
+    text-align: center;
+}
+#logo
+{
+    padding: 8px 20px;
+    font-size: 200%;
+    float:left;
+}
+.clear
+{
+    clear:both;
+}
+.top-fixed
+{
+    position: fixed;
+    width:inherit;
+    top:0;
+}
+.top-height
+{
+    height:46px;
+}
+.header-pos-rel
+{
+    position: relative;
+    width:inherit;
+}
+.float-left
+{
+    float:left;
+}
+.float-right
+{
+    float:right;
+}
+.right-block
+{
+    float:right;
+    width:180px;
+    margin: 0 10px;
+}
+.main
+{
+    width:710px;
+}
+.main .name
+{
+    font-size: 30px;
+    text-decoration: underline;
+}
+#mainmenu
+{
+    background:white url(bg.gif) repeat-x left top;
+    float:right;
+    padding: 10px 20px;
+}
+.title-class
+{
+    background-color: #ef6e0e;
+    padding:5px 10px;
+    margin: 10px 0;
+    font-size: 16px;
+    color: #2940ff;
+}
+.groups-list,.badges-list,.friends-list
+{
+    margin: 0;
+    padding: 0;
+}
+.groups-list li,.badges-list li,.friends-list li
+{
+    list-style: none;
+}
+.groups-list li div.img
+{
+    border:1px solid #000099;
+    padding: 5px;
+}
+.groups-list li div.group-name
+{
+    text-align: center;
+}
+.group-padd
+{
+    margin: 0 15px 0 0;
+}
+.new-comment
+{
+
+}
+.new-comment .new-comment-file-b
+{
+    width:50px;
+    height:50px;
+    margin: 2px;
+    overflow: hidden;
+    position: relative;
+    background-color: #ff090a;
+    cursor: pointer;
+}
+.new-comment .new-comment-file-b input[type="file"]
+{
+    width:50px;
+    height:50px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+.new-comment textarea
+{
+    width:100%;
+}
+

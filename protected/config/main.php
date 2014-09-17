@@ -7,7 +7,8 @@
 // CWebApplication properties can be configured here.
 return array(
     'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-    'name'=>'Ego network',
+    'name'=>'Giraffe network',
+    'defaultController' => 'site',
 
     // preloading 'log' component
     'preload'=>array('log'),
@@ -27,7 +28,7 @@ return array(
         'admin'=>array(
         ),
         'user' => array(
-            'debug' => true,
+            'debug' => false,
             'userTable' => 'user',
             'translationTable' => 'translation',
         ),
@@ -35,10 +36,10 @@ return array(
             'usergroupTable' => 'usergroup',
             'usergroupMessageTable' => 'user_group_message',
         ),
-        'membership' => array(
-            'membershipTable' => 'membership',
-            'paymentTable' => 'payment',
-        ),
+//        'membership' => array(
+//            'membershipTable' => 'membership',
+//            'paymentTable' => 'payment',
+//        ),
         'friendship' => array(
             'friendshipTable' => 'friendship',
         ),
@@ -63,15 +64,14 @@ return array(
         'badgemanager'=>array(
         ),
         'files'=>array(
-
         ),
         'levellist'=>array(
-
         ),
         'gamificationmanager'=>array(
-            'gamificationmanagerTable' => 'gamificationmanager',
         ),
         'store'=>array(
+        ),
+        'comments'=>array(
         ),
     ),
     // uncomment the following to enable the Gii tool
@@ -101,10 +101,13 @@ return array(
             'showScriptName'=>false,
             'caseSensitive'=>false,
             'rules'=>array(
+                '<controller:(foo|bar)>/<action>'                                 => 'module/<controller>/<action>',
                 '/install/default/<action:\w+>'                                   => '/install/default/<action>',
                 '/gii/<controller:\w+>/<action:\w+>'                              => 'gii/<controller>/<action>',
                 '/<action:\w+>'                                                   => 'site/<action>',
-                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
+                '<controller:\w+>/<action:\w+>'                                   => '<controller>/<action>',
+//                '/login'=>'/user/auth/login',
+
             ),
         ),
 

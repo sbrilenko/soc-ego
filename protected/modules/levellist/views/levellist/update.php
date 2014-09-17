@@ -6,6 +6,8 @@ $form = $this->beginWidget('CActiveForm', array(
     'enableClientValidation'=>true,
 ));
 ?>
+<fieldset class="badge-add-form">
+    <legend>Add new level</legend>
 <div class="row">
     <div class="span6">
         <div>
@@ -13,13 +15,13 @@ $form = $this->beginWidget('CActiveForm', array(
             echo $form->hiddenField($levellist, 'id');
         ?>
         <?php echo $form->labelEx($levellist, 'position');
-        echo $form->textField($levellist, 'position');
+        echo $form->textField($levellist, 'position',array("class"=>"width-80"));
         echo $form->error($levellist, 'position'); ?>
         </div>
 
         <div>
         <?php echo $form->labelEx($levellist, 'description');
-        echo $form->textArea($levellist, 'description');
+        echo $form->textArea($levellist, 'description',array('class'=>'width-80 textarea-min-height'));
         echo $form->error($levellist, 'description'); ?>
         </div>
         <div>
@@ -28,12 +30,13 @@ $form = $this->beginWidget('CActiveForm', array(
             echo $form->error($levellist, 'priority'); ?>
         </div>
     </div>
-    <?php echo CHtml::submitButton($levellist->isNewRecord
-        ? Yum::t('Create')
-        : Yum::t('Save')); ?>
 
 </div>
-
-
+</fieldset>
+<div class="button-center">
+<?php echo CHtml::submitButton($levellist->isNewRecord
+    ? Yum::t('Create')
+    : Yum::t('Save')); ?>
+</div>
 <?php $this->endWidget(); ?>
 

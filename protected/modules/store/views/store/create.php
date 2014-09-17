@@ -6,17 +6,19 @@ $form = $this->beginWidget('CActiveForm', array(
     'htmlOptions' => array('enctype' => 'multipart/form-data')
 ));
 ?>
+<fieldset class="badge-add-form">
+    <legend>Add store item</legend>
 <?php $store_item=new Store(); ?>
 <div class="row">
     <div class="span6">
         <div>
         <?php echo $form->labelEx($store_item, 'title');
-        echo $form->textField($store_item, 'title');
+        echo $form->textField($store_item, 'title',array('class'=>'width-80'));
         echo $form->error($store_item, 'title'); ?>
         </div>
         <div>
         <?php echo $form->labelEx($store_item, 'price');
-        echo $form->textField($store_item, 'price');
+        echo $form->textField($store_item, 'price',array('class'=>'width-80'));
         echo $form->error($store_item, 'price'); ?>
         </div>
         <div>
@@ -26,7 +28,7 @@ $form = $this->beginWidget('CActiveForm', array(
         </div>
         <div>
         <?php echo $form->labelEx($store_item, 'description');
-        echo $form->textArea($store_item, 'description');
+        echo $form->textArea($store_item, 'description',array('class'=>'width-80 textarea-min-height'));
         echo $form->error($store_item, 'description'); ?>
         </div>
         <div>
@@ -45,12 +47,14 @@ $form = $this->beginWidget('CActiveForm', array(
         echo $form->error($store_item, 'hide'); ?>
         </div>
     </div>
-    <?php echo CHtml::submitButton($store_item->isNewRecord
-        ? Yum::t('Create')
-        : Yum::t('Save')); ?>
 
 </div>
 
-
+</fieldset>
+<div class="button-center">
+<?php echo CHtml::submitButton($store_item->isNewRecord
+    ? Yum::t('Create')
+    : Yum::t('Save')); ?>
+</div>
 <?php $this->endWidget(); ?>
 

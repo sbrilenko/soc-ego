@@ -22,8 +22,8 @@ class LocationManager extends YumActiveRecord {
 
 	public function scopes() {
 		return array(
-				'possible_memberships' => array(
-					'condition' => 'membership_priority > 0'),
+//				'possible_memberships' => array(
+//					'condition' => 'membership_priority > 0'),
 				);
 	}
 

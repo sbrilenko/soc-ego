@@ -1,4 +1,5 @@
 <?php
+
 $form = new CForm(array(
   'elements'=>array(
     'username'=>array(
@@ -21,7 +22,6 @@ $form = new CForm(array(
     ),
   ),
 ), $model);
-
 
 $this->pageTitle = Yum::t('Login');
 $this->title = Yum::t('Login');
@@ -73,11 +73,11 @@ if(Yum::module()->loginType & UserModule::LOGIN_BY_EMAIL)
 
 </div>
 
-<?php if(Yum::module()->loginType & UserModule::LOGIN_BY_HYBRIDAUTH 
+<?php if(Yum::module()->loginType & UserModule::LOGIN_BY_HYBRIDAUTH
 && Yum::module()->hybridAuthProviders) { ?>
   <div class="span6 hybridauth">
-<?php echo Yum::t('You can also login by') . ': <br />'; 
-foreach(Yum::module()->hybridAuthProviders as $provider) 
+<?php echo Yum::t('You can also login by') . ': <br />';
+foreach(Yum::module()->hybridAuthProviders as $provider)
   echo CHtml::link(
     CHtml::image(
       Yii::app()->getAssetManager()->publish(
@@ -85,7 +85,7 @@ foreach(Yum::module()->hybridAuthProviders as $provider)
           'user.assets.images').'/'.strtolower($provider).'.png'),
       $provider) . $provider, $this->createUrl(
         '//user/auth/login', array('hybridauth' => $provider)), array(
-          'class' => 'social')) . '<br />'; 
+          'class' => 'social')) . '<br />';
 ?>
 </div>
 </div>
@@ -98,16 +98,16 @@ foreach(Yum::module()->hybridAuthProviders as $provider)
 <div class="span12">
 
   <p class="hint">
-<?php 
+<?php
 if(Yum::hasModule('registration') && Yum::module('registration')->enableRegistration)
   echo CHtml::link(Yum::t("Registration"),
     Yum::module('registration')->registrationUrl);
-if(Yum::hasModule('registration') 
+if(Yum::hasModule('registration')
   && Yum::module('registration')->enableRegistration
   && Yum::module('registration')->enableRecovery)
   echo ' | ';
-if(Yum::hasModule('registration') 
-  && Yum::module('registration')->enableRecovery) 
+if(Yum::hasModule('registration')
+  && Yum::module('registration')->enableRecovery)
   echo CHtml::link(Yum::t("Lost password?"),
     Yum::module('registration')->recoveryUrl);
 ?>
@@ -121,7 +121,7 @@ if(Yum::hasModule('registration')
 <div class="buttons">
 <p><?php echo CHtml::submitButton(Yum::t('Login'), array('class' => 'btn')); ?></p>
 </div>
-<div class="alert alert-danger"> You can register <?php echo CHtml::link('here', Yum::module('registration')->registrationUrl);?></div>
+<!--<div class="alert alert-danger"> You can register --><?php //echo CHtml::link('here', Yum::module('registration')->registrationUrl);?><!--</div>-->
 </div>
 </div>
 

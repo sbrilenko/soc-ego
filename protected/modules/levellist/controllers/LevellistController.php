@@ -8,6 +8,8 @@ class LevellistController extends Controller
     }
     public function actionIndex()
     {
+        if(Yum::module()->enableBootstrap)
+            Yum::register('css/bootstrap.min.css');
         if(Yii::app()->user->isAdmin())
         {
             if($this->ifTableExist())
@@ -71,6 +73,8 @@ class LevellistController extends Controller
     /*create*/
     public function actionCreate()
     {
+        if(Yum::module()->enableBootstrap)
+            Yum::register('css/bootstrap.min.css');
         $this->layout = Yum::module('admin')->adminLayout;
         if(Yii::app()->user->isAdmin())
         {
@@ -93,6 +97,8 @@ class LevellistController extends Controller
     /*update*/
     public function actionUpdate()
     {
+        if(Yum::module()->enableBootstrap)
+            Yum::register('css/bootstrap.min.css');
         $this->layout = Yum::module('admin')->adminLayout;
         if(Yii::app()->user->isAdmin())
         {

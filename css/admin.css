@@ -1,0 +1,43 @@
+.new-location
+{
+    padding:7px;
+    border:1px solid #555;
+    margin:5px;
+}
+.updates-locations
+{
+    padding: 7px;
+    margin: 5px;
+}
+.badge-add-b
+{
+    margin: 5px;
+}
+.badge-add-form
+{
+    border: 1px solid #555;
+    margin: 5px;
+    padding: 7px;
+}
+.width-80
+{
+    width: 80%;
+}
+.button-center
+{
+    text-align: center;
+}
+.textarea-min-height
+{
+    min-height: 200px;
+}
+legend
+{
+    width:auto;
+    margin-bottom: 0;
+    border-bottom: none;
+}
+.span6
+{
+    width:100%;
+}
