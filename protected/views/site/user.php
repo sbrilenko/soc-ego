@@ -2,97 +2,60 @@
 /* @var $this SiteController */
 
 ?>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script>
-    $(document).ready(function(){
-
-        //Open a WebSocket connection.
-        var wsUri = "ws://soc-ego/socket";
-//        var socket = new WebSocket("ws://localhost:8081");
-
-        websocket = new WebSocket("ws://0.0.0.0:8000");
-
-        //Connected to server
-        websocket.onopen = function(ev) {
-            console.log('Connected to server', ev)
-        }
-
-        //Connection close
-        websocket.onclose = function(ev) {
-            console.log('Disconnected',ev)
-        };
-
-        //Message Receved
-        websocket.onmessage = function(ev) {
-            console.log('Message ',ev)
-        };
-
-        //Error
-        websocket.onerror = function(ev) {
-            console.log('Error ',ev)
-        };
-
-        //Send a Message
-        $('#send').click(function(){
-            var mymessage = 'This is a test message';
-            websocket.send(mymessage);
-        });
-    });
-</script>
 <div class="main float-left">
     <div>
-    <?php
-    if(Yum::hasModule('profile') && Yii::app()->user->id)
-    {
-        $profile=YumProfile::model()->findByAttributes(array("user_id"=>Yii::app()->user->id));
-        if($profile)
+        <?php
+        if(Yum::hasModule('profile') && $id)
         {
-        ?>
-          <div class="name text-center"><?php echo $profile->firstname," ",$profile->lastname ;?></div>
+            $profile=YumProfile::model()->findByAttributes(array("user_id"=>$id));
+            if($profile)
+            {
+                ?>
+                <div class="name text-center"><?php echo $profile->firstname," ",$profile->lastname ;?></div>
 
+            <?php
+            }
+            echo '<div class="text-center">';
+            $job_type=YumUser::model()->findByPk($id);
+            if($job_type)
+            {
+                echo '<span class="name text-center">',$job_type->job_title,"</span>";
+                if(!empty($job_type->work_count) && strtotime(date("Y-m-d H:i:s"))>$job_type->work_count)
+                {
+                    $date_day=strtotime(date("Y-m-d H:i:s"))-$job_type->work_count;
+//                      echo date("Y-m-d H:i:s",$date_day);
+                }
+                echo "<span ><img src='/img/star_.png'/><img src='/img/star_.png'/><img src='/img/star_.png'/></span>";
+            }
+
+            echo '</div>';
+            ?>
         <?php
         }
-        echo '<div class="text-center">';
-              $job_type=YumUser::model()->findByPk(Yii::app()->user->id);
-              if($job_type)
-              {
-                  echo '<span class="name text-center">',$job_type->job_title,"</span>";
-                  if(!empty($job_type->work_count) && strtotime(date("Y-m-d H:i:s"))>$job_type->work_count)
-                  {
-                      $date_day=strtotime(date("Y-m-d H:i:s"))-$job_type->work_count;
-//                      echo date("Y-m-d H:i:s",$date_day);
-                  }
-                  echo "<span ><img src='/img/star_.png'/><img src='/img/star_.png'/><img src='/img/star_.png'/></span>";
-              }
-
-        echo '</div>';
-        ?>
-    <?php
-    }
-    if(Yum::hasModule('usergroup') && Yii::app()->user->id)
-    {
-        $usergroups=YumUsergroup::model()->findAll();
-        if($usergroups)
+        if(Yum::hasModule('usergroup') && $id)
         {
-            $my_group=array();
-            foreach($usergroups as $group)
+            $usergroups=YumUsergroup::model()->findAll();
+            if($usergroups)
             {
-                if(!empty($group->participants))
+                $my_group=array();
+                foreach($usergroups as $group)
                 {
-                    $part=explode(',',$group->participants);
-                    if(in_array(Yii::app()->user->id,$part))
+                    if(!empty($group->participants))
                     {
-                        $my_group[]=$group;
+                        $part=explode(',',$group->participants);
+                        if(in_array($id,$part))
+                        {
+                            $my_group[]=$group;
+                        }
                     }
                 }
-            }
-            if(count($my_group)>0)
-            {
-                echo "<div class='title-class'>Groups (",count($my_group),")</div>";
-                echo "<ul class='groups-list'>";
-                foreach($my_group as $group_m)
+                if(count($my_group)>0)
                 {
-                    echo "<li class='float-left'><div class='group-padd'>";
+                    echo "<div class='title-class'>Groups (",count($my_group),")</div>";
+                    echo "<ul class='groups-list'>";
+                    foreach($my_group as $group_m)
+                    {
+                        echo "<li class='float-left'><div class='group-padd'>";
                         if(!is_null($group_m) && $group_m->image>0)
                         {
                             $group_avatar=Files::model()->findByPk($group_m->image);
@@ -106,56 +69,56 @@
                                 }
                             }
                         }
-                    echo "</div></li>";
+                        echo "</div></li>";
+                    }
+                    echo "</ul>";
                 }
-                echo "</ul>";
-            }
 
+            }
         }
-    }
-    ?>
+        ?>
     </div>
     <div class="clear"></div>
     <?php
 
-if(Yum::hasModule('comments') && Yii::app()->user->id)
-{
-    echo "<div class='title-class'>Wall</div>";
-    echo $this->renderPartial('_addcommentform');
-    $comments=Comments::model()->findAllByAttributes(array("commented_user_id"=>Yii::app()->user->id),array('order'=>'time DESC'));
-    if($comments)
+    if(Yum::hasModule('comments') && $id)
     {
-        echo "<ul class='wall'>";
-        foreach($comments as $com)
+        echo "<div class='title-class'>Wall</div>";
+        echo $this->renderPartial('_addcommentform');
+        $comments=Comments::model()->findAllByAttributes(array("commented_user_id"=>$id),array('order'=>'time DESC'));
+        if($comments)
         {
-            echo "<li>";
-            if(!empty($com->image))
+            echo "<ul class='wall'>";
+            foreach($comments as $com)
             {
-                $comm_image=Files::model()->findByPk($com->image);
-                if($comm_image)
+                echo "<li>";
+                if(!empty($com->image))
                 {
-                    if(file_exists(Yii::app()->basePath."/../files/".$comm_image->image))
+                    $comm_image=Files::model()->findByPk($com->image);
+                    if($comm_image)
                     {
-                        echo "<div class='text-center'><img src='/files/".$comm_image->image."'/></div>";
+                        if(file_exists(Yii::app()->basePath."/../files/".$comm_image->image))
+                        {
+                            echo "<div class='text-center'><img src='/files/".$comm_image->image."'/></div>";
+                        }
                     }
                 }
+                echo "<div>".$com->text."</div>";
+                echo "</li>";
             }
-            echo "<div>".$com->text."</div>";
-            echo "</li>";
-        }
-        echo "</ul>";
+            echo "</ul>";
 //
+        }
     }
-}
-?>
-    </div>
+    ?>
+</div>
 </div>
 
 <div class="right-block">
     <?php
-      if(Yum::hasModule('profile') && Yii::app()->user->id)
-      {
-        $avatar_id=YumProfile::model()->findByAttributes(array("user_id"=>Yii::app()->user->id));
+    if(Yum::hasModule('profile') && $id)
+    {
+        $avatar_id=YumProfile::model()->findByAttributes(array("user_id"=>$id));
         if($avatar_id)
         {
             $file_avatar=Files::model()->findByPk($avatar_id->avatar);
@@ -167,11 +130,11 @@ if(Yum::hasModule('comments') && Yii::app()->user->id)
                 }
             }
         }
-      }
+    }
 
     if(Yum::hasModule('badgemanager'))
     {
-        $user_badge=BadgeUser::model()->findAllByAttributes(array("user_id"=>Yii::app()->user->id));
+        $user_badge=BadgeUser::model()->findAllByAttributes(array("user_id"=>$id));
         if($user_badge)
         {
             echo "<div class='title-class'>Badges (",count($user_badge),")</div>";
@@ -203,7 +166,7 @@ if(Yum::hasModule('comments') && Yii::app()->user->id)
 
     if(Yum::hasModule('friendship'))
     {
-        $user_friends=YumFriendship::model()->findAllBySql("select * from friendship where (inviter_id=:inviter_id OR friend_id=:friend_id) AND status=1 ORDER BY updatetime", array(':inviter_id'=>Yii::app()->user->id,':friend_id'=>Yii::app()->user->id));
+        $user_friends=YumFriendship::model()->findAllBySql("select * from friendship where (inviter_id=:inviter_id OR friend_id=:friend_id) AND status=1 ORDER BY updatetime", array(':inviter_id'=>$id,':friend_id'=>$id));
         if($user_friends)
         {
             echo "<div class='title-class'><a href='/friends'>Friends</a> (",count($user_friends),")</div>";
@@ -211,7 +174,7 @@ if(Yum::hasModule('comments') && Yii::app()->user->id)
             foreach($user_friends as $friend)
             {
                 echo "<li class='float-left'>";
-                if($friend->inviter_id==Yii::app()->user->id)
+                if($friend->inviter_id==$id)
                 {
                     $profile_user=YumProfile::model()->findByPk($friend->friend_id);
                     if($profile_user && !is_null($profile_user->avatar) && $profile_user->avatar>0)
