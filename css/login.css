@@ -1,0 +1,168 @@
+.login-form
+{
+    width:370px;
+    height:476px;
+    position: absolute;
+    top:50%;
+    left:50%;
+    margin-left:-185px;
+    margin-top:-238px;
+    background:#fff;
+    border-radius: 3px;
+}
+.maybe-logo-place
+{
+    height:114px;
+}
+.form-padding
+{
+    padding: 0 20px 20px 20px;
+}
+div.form div.error input,div.form input, div.form textarea, div.form select,div.form div.success input, div.form div.success textarea, div.form div.success select, div.form input.success, div.form textarea.success, div.form select.success
+{
+    padding: 0;
+    margin: 0;
+    border: 1px solid #eee;
+    background: none;
+    width: 100%;
+    font-family: HelveticaNeueCyr-Roman;
+    font-size:18px;
+    line-height: 20px;
+    color: #d9d9d9;
+    border-radius: 10px;
+}
+div.form div.error input, div.form div.error textarea, div.form div.error select, div.form input.error, div.form textarea.error, div.form select.error
+{
+    font-family: HelveticaNeueCyr-Roman;
+    font-size:18px;
+    line-height: 20px;
+    color: #d9d9d9;
+    padding: 0;
+    margin: 0;
+    border: 1px solid red;
+    background: none;
+    width: 100%;
+    border-radius: 10px;
+}
+div.form .row
+{
+    position: relative;
+    margin:20px 0;
+}
+.login-icon,.password-icon
+{
+    background: url('../img/login-icon.png') no-repeat;
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    margin: 20px 20px 20px 17px;
+}
+.password-icon
+{
+    background: url('../img/login-icon.png') no-repeat 0 -18px;
+    width: 19px;
+    height: 22px;
+}
+/**/
+
+#login-form .row.buttons {
+    margin-top: 42px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    -webkit-box-shadow:
+    0 8px 0 #d7821d;
+    -moz-box-shadow:
+    0 8px 0 #d7821d;
+    box-shadow:
+    0 8px 0 #d7821d;
+    -webkit-transition: -webkit-box-shadow .2s ease-in-out;
+    -moz-transition: -moz-box-shadow .2s ease-in-out;
+    -o-transition: -o-box-shadow .2s ease-in-out;
+    transition: box-shadow .2s ease-in-out;
+}
+#login-form .buttons input[type=submit] {
+    padding: 20px;
+    font-family: HelveticaNeueCyr-Roman;
+    font-size: 18px;
+    line-height: 18px;
+    color:#fff;
+    text-shadow: 0 -1px 1px rgba(215, 130, 29, 0.80);
+    background: #f7941e;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    -webkit-box-shadow: inset 0 -1px 1px rgba(255,255,255,.15);
+    -moz-box-shadow: inset 0 -1px 1px rgba(255,255,255,.15);
+    box-shadow: inset 0 -1px 1px rgba(255,255,255,.15);
+    -webkit-transition: -webkit-transform .2s ease-in-out;
+    -moz-transition: -moz-transform .2s ease-in-out;
+    -o-transition: -o-transform .2s ease-in-out;
+    transition: transform .2s ease-in-out;
+    border: 0;
+    margin: 0;
+    width: 100%;
+}
+#login-form .buttons:active input[type=submit] {
+    -webkit-transform: translate(0, 4px);
+    -moz-transform: translate(0, 4px);
+    -o-transform: translate(0, 4px);
+    transform: translate(0, 4px);
+}
+.row input[type=checkbox]
+{
+    position: absolute;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    width: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+}
+div.form .rememberMe label
+{
+    display: inline-block;
+}
+input[type=checkbox] + label
+{
+    font-family: HelveticaNeueCyr-Roman;
+    font-size: 14px;
+    color:#aeaeae;
+    padding-left: 40px;
+    height: 23px;
+    display: inline-block;
+    line-height: 23px;
+    background-repeat: no-repeat;
+    background: url('../img/login-checkbox.png') no-repeat 0 -22.5px;
+    font-size: 15px;
+    vertical-align: middle;
+    cursor: pointer;
+
+}
+.row input[type=checkbox]:checked + label
+{
+    background-position: 0 0;
+}
+a.forgotpass,a.forgotpass:visited
+{
+    font-family: HelveticaNeueCyr-Roman;
+    font-size: 14px;
+    line-height: 23px;
+    color:#aeaeae;
+    padding-left: 40px;
+    height: 23px;
+    text-decoration: underline;
+}
+a.forgotpass:hover
+{
+    text-decoration: none;
+}
+div.form .errorMessage
+{
+    text-align: center;
+    color: #df4949;
+    font-family: HelveticaNeueCyr-Medium;
+    font-size: 14px;
+    line-height: 14px;
+}
