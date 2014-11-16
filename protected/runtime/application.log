@@ -8740,3 +8740,142 @@ Stack trace:
 #3 {main}
 REQUEST_URI=/favicon.ico
 ---
+2014/11/13 23:29:17 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "favicon.ico".' in Z:\home\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 Z:\home\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('favicon.ico')
+#1 Z:\home\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 Z:\home\soc\www\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2014/11/13 23:29:57 [warning] [application] Failed to set unsafe attribute "rememberme" of "User".
+in Z:\home\soc\www\protected\controllers\SiteController.php (45)
+in Z:\home\soc\www\index.php (13)
+2014/11/13 23:30:03 [warning] [application] Failed to set unsafe attribute "rememberme" of "User".
+in Z:\home\soc\www\protected\controllers\SiteController.php (45)
+in Z:\home\soc\www\index.php (13)
+2014/11/13 23:30:11 [warning] [application] Failed to set unsafe attribute "rememberme" of "User".
+in Z:\home\soc\www\protected\controllers\SiteController.php (45)
+in Z:\home\soc\www\index.php (13)
+2014/11/13 23:30:12 [warning] [application] Failed to set unsafe attribute "rememberme" of "User".
+in Z:\home\soc\www\protected\controllers\SiteController.php (45)
+in Z:\home\soc\www\index.php (13)
+2014/11/13 23:30:13 [warning] [application] Failed to set unsafe attribute "rememberme" of "User".
+in Z:\home\soc\www\protected\controllers\SiteController.php (45)
+in Z:\home\soc\www\index.php (13)
+2014/11/13 23:30:58 [warning] [application] Failed to set unsafe attribute "rememberme" of "User".
+in Z:\home\soc\www\protected\controllers\SiteController.php (45)
+in Z:\home\soc\www\index.php (13)
+2014/11/13 23:31:03 [warning] [application] Failed to set unsafe attribute "rememberme" of "User".
+in Z:\home\soc\www\protected\controllers\SiteController.php (45)
+in Z:\home\soc\www\index.php (13)
+2014/11/15 13:22:42 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "favicon.ico".' in Z:\home\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 Z:\home\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('favicon.ico')
+#1 Z:\home\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 Z:\home\soc\www\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2014/11/15 13:22:43 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "favicon.ico".' in Z:\home\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 Z:\home\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('favicon.ico')
+#1 Z:\home\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 Z:\home\soc\www\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2014/11/16 17:55:05 [warning] [application] Failed to set unsafe attribute "rememberme" of "User".
+in Z:\home\soc\www\protected\controllers\SiteController.php (45)
+in Z:\home\soc\www\index.php (13)
+2014/11/16 17:55:07 [warning] [application] Failed to set unsafe attribute "rememberme" of "User".
+in Z:\home\soc\www\protected\controllers\SiteController.php (45)
+in Z:\home\soc\www\index.php (13)
+2014/11/16 17:58:35 [warning] [application] Failed to set unsafe attribute "rememberme" of "User".
+in Z:\home\soc\www\protected\controllers\SiteController.php (45)
+in Z:\home\soc\www\index.php (13)
+2014/11/16 17:58:37 [warning] [application] Failed to set unsafe attribute "rememberme" of "User".
+in Z:\home\soc\www\protected\controllers\SiteController.php (45)
+in Z:\home\soc\www\index.php (13)
+2014/11/16 17:59:17 [warning] [application] Failed to set unsafe attribute "rememberme" of "User".
+in Z:\home\soc\www\protected\controllers\SiteController.php (45)
+in Z:\home\soc\www\index.php (13)
+2014/11/16 18:05:12 [warning] [application] Failed to set unsafe attribute "rememberme" of "User".
+in Z:\home\soc\www\protected\controllers\SiteController.php (45)
+in Z:\home\soc\www\index.php (13)
+2014/11/16 18:07:19 [warning] [application] Failed to set unsafe attribute "rememberme" of "User".
+in Z:\home\soc\www\protected\controllers\SiteController.php (45)
+in Z:\home\soc\www\index.php (13)
+2014/11/16 18:07:56 [warning] [application] Failed to set unsafe attribute "rememberme" of "User".
+in Z:\home\soc\www\protected\controllers\SiteController.php (45)
+in Z:\home\soc\www\index.php (13)
+2014/11/16 18:10:36 [warning] [application] Failed to set unsafe attribute "rememberme" of "User".
+in Z:\home\soc\www\protected\controllers\SiteController.php (45)
+in Z:\home\soc\www\index.php (13)
+2014/11/16 18:11:01 [warning] [application] Failed to set unsafe attribute "rememberme" of "User".
+in Z:\home\soc\www\protected\controllers\SiteController.php (45)
+in Z:\home\soc\www\index.php (13)
+2014/11/16 18:12:12 [warning] [application] Failed to set unsafe attribute "rememberme" of "User".
+in Z:\home\soc\www\protected\controllers\SiteController.php (45)
+in Z:\home\soc\www\index.php (13)
+2014/11/16 18:12:18 [warning] [application] Failed to set unsafe attribute "rememberme" of "User".
+in Z:\home\soc\www\protected\controllers\SiteController.php (45)
+in Z:\home\soc\www\index.php (13)
+2014/11/16 18:12:33 [warning] [application] Failed to set unsafe attribute "rememberme" of "User".
+in Z:\home\soc\www\protected\controllers\SiteController.php (45)
+in Z:\home\soc\www\index.php (13)
+2014/11/16 18:12:43 [warning] [application] Failed to set unsafe attribute "rememberme" of "User".
+in Z:\home\soc\www\protected\controllers\SiteController.php (45)
+in Z:\home\soc\www\index.php (13)
+2014/11/16 18:12:54 [warning] [application] Failed to set unsafe attribute "rememberme" of "User".
+in Z:\home\soc\www\protected\controllers\SiteController.php (45)
+in Z:\home\soc\www\index.php (13)
+2014/11/16 18:13:34 [warning] [application] Failed to set unsafe attribute "rememberme" of "User".
+in Z:\home\soc\www\protected\controllers\SiteController.php (45)
+in Z:\home\soc\www\index.php (13)
+2014/11/16 18:16:40 [warning] [application] Failed to set unsafe attribute "rememberme" of "User".
+in Z:\home\soc\www\protected\controllers\SiteController.php (45)
+in Z:\home\soc\www\index.php (13)
+2014/11/16 18:17:19 [warning] [application] Failed to set unsafe attribute "rememberme" of "User".
+in Z:\home\soc\www\protected\controllers\SiteController.php (45)
+in Z:\home\soc\www\index.php (13)
+2014/11/16 18:17:19 [error] [php] session_regenerate_id() [<a href='function.session-regenerate-id'>function.session-regenerate-id</a>]: Cannot regenerate session id - headers already sent (Z:\home\yii\framework\web\CHttpSession.php:181)
+Stack trace:
+#0 Z:\home\yii\framework\web\auth\CWebUser.php(233): CWebUser->changeIdentity()
+#1 Z:\home\soc\www\protected\models\User.php(213): CWebUser->login()
+#2 Z:\home\soc\www\protected\controllers\SiteController.php(48): User->login()
+#3 Z:\home\yii\framework\web\actions\CInlineAction.php(49): SiteController->actionIndex()
+#4 Z:\home\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 Z:\home\yii\framework\web\CController.php(286): SiteController->runAction()
+#6 Z:\home\yii\framework\web\CController.php(265): SiteController->runActionWithFilters()
+#7 Z:\home\yii\framework\web\CWebApplication.php(282): SiteController->run()
+#8 Z:\home\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#9 Z:\home\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#10 Z:\home\soc\www\index.php(13): CWebApplication->run()
+REQUEST_URI=/
+in Z:\home\soc\www\protected\models\User.php (213)
+in Z:\home\soc\www\protected\controllers\SiteController.php (48)
+in Z:\home\soc\www\index.php (13)
+2014/11/16 18:18:01 [warning] [application] Failed to set unsafe attribute "rememberme" of "User".
+in Z:\home\soc\www\protected\controllers\SiteController.php (45)
+in Z:\home\soc\www\index.php (13)
+2014/11/16 18:18:01 [error] [php] session_regenerate_id() [<a href='function.session-regenerate-id'>function.session-regenerate-id</a>]: Cannot regenerate session id - headers already sent (Z:\home\yii\framework\web\CHttpSession.php:181)
+Stack trace:
+#0 Z:\home\yii\framework\web\auth\CWebUser.php(233): CWebUser->changeIdentity()
+#1 Z:\home\soc\www\protected\models\User.php(213): CWebUser->login()
+#2 Z:\home\soc\www\protected\controllers\SiteController.php(48): User->login()
+#3 Z:\home\yii\framework\web\actions\CInlineAction.php(49): SiteController->actionIndex()
+#4 Z:\home\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 Z:\home\yii\framework\web\CController.php(286): SiteController->runAction()
+#6 Z:\home\yii\framework\web\CController.php(265): SiteController->runActionWithFilters()
+#7 Z:\home\yii\framework\web\CWebApplication.php(282): SiteController->run()
+#8 Z:\home\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#9 Z:\home\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#10 Z:\home\soc\www\index.php(13): CWebApplication->run()
+REQUEST_URI=/
+in Z:\home\soc\www\protected\models\User.php (213)
+in Z:\home\soc\www\protected\controllers\SiteController.php (48)
+in Z:\home\soc\www\index.php (13)
+2014/11/16 18:18:25 [warning] [application] Failed to set unsafe attribute "rememberme" of "User".
+in Z:\home\soc\www\protected\controllers\SiteController.php (45)
+in Z:\home\soc\www\index.php (13)

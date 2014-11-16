@@ -50,6 +50,7 @@ class SiteController extends Controller
                 }
                 else
                 {
+                    $model->addError("error","Incorrect email or password");
                     $this->render("login",array("model"=>$model));
                 }
             }

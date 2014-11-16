@@ -1,6 +1,15 @@
+<?php
+//Yii::app()->clientScript->registerScriptFile('/js/less.min.js', CClientScript::POS_HEAD);
+?>
 <script>
     $(document).ready(function(){
-
+//        $('head style[type="text/css"]').attr('type', 'text/less');
+//        less.refreshStyles();
+        window.randomize = function() {
+            $('.radial-progress').attr('data-progress', Math.floor(0.33*100));
+        }
+        setTimeout(window.randomize, 200);
+        $('.radial-progress').click(window.randomize);
         //Open a WebSocket connection.
         var wsUri = "ws://soc-ego/socket";
 //        var socket = new WebSocket("ws://localhost:8081");
@@ -88,7 +97,7 @@
                         $signs = array("capricorn", "aquarius", "pisces", "aries", "taurus", "gemini", "cancer", "leo", "virgo", "libra", "Scorpio", "Sagittarius");
                         $signsstart = array(1 => 21, 2 => 20, 3 => 20, 4 => 20, 5 => 20, 6 => 20, 7 => 21, 8 => 22, 9 => 23, 10 => 23, 11 => 23, 12 => 23);
                         echo "<img src='/img/";
-                        echo $bday < $signsstart[$bmonth + 1] ? $signs_img[$bmonth - 1] : $signs_img[$bmonth % 12];
+                        echo $bday < $signsstart[$bmonth + 1] ? $signs_img[$bmonth - 1] : $signs_img[$bmonth%12];
                         echo "' />";
                     }
                     echo "</td></tr>";
@@ -104,8 +113,29 @@
                 <table class="margin-zero">
                     <tr><td class="padding-zero"><div class="info-title">level progress</div></td></tr>
                     <?php
-                    echo "<tr><td><div class='info-diagram'><div class='info-diagram-text'>75</div></div></td></tr>";
-                    echo '<tr><td class="padding-zero"><div class="info-black">25%</div></td></tr>';
+                    echo "<tr><td class='padding-zero'>";
+                    ?>
+<!--                    <div class='info-diagram'><div class='info-diagram-text'>75</div></div>-->
+                    <div class="radial-progress" data-progress="0">
+                        <div class="circle">
+                            <div class="mask full">
+                                <div class="fill"></div>
+                            </div>
+                            <div class="mask half">
+                                <div class="fill"></div>
+                                <div class="fill fix"></div>
+                            </div>
+                            <div class="shadow"></div>
+                        </div>
+                        <div class="inset">
+                            <div class="percentage">
+                                <div class="numbers"><span>-</span><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span><span>22</span><span>23</span><span>24</span><span>25</span><span>26</span><span>27</span><span>28</span><span>29</span><span>30</span><span>31</span><span>32</span><span>33</span><span>34</span><span>35</span><span>36</span><span>37</span><span>38</span><span>39</span><span>40</span><span>41</span><span>42</span><span>43</span><span>44</span><span>45</span><span>46</span><span>47</span><span>48</span><span>49</span><span>50</span><span>51</span><span>52</span><span>53</span><span>54</span><span>55</span><span>56</span><span>57</span><span>58</span><span>59</span><span>60</span><span>61</span><span>62</span><span>63</span><span>64</span><span>65</span><span>66</span><span>67</span><span>68</span><span>69</span><span>70</span><span>71</span><span>72</span><span>73</span><span>74</span><span>75</span><span>76</span><span>77</span><span>78</span><span>79</span><span>80</span><span>81</span><span>82</span><span>83</span><span>84</span><span>85</span><span>86</span><span>87</span><span>88</span><span>89</span><span>90</span><span>91</span><span>92</span><span>93</span><span>94</span><span>95</span><span>96</span><span>97</span><span>98</span><span>99</span><span>100</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                    echo "</td></tr>";
+                    echo '<tr><td class="padding-zero"><div class="info-black">25</div></td></tr>';
                     echo '<tr><td class="padding-zero"><div class="info-mini">left to next level</div></td></tr>'
                     ?>
                     </table>
@@ -310,7 +340,7 @@
                         echo (int)User::model()->findByPk(Yii::app()->user->id)->points;
                     }
                     echo '</div></td></tr>';
-                    echo '<tr><tr><div class="info-mini">scored overall</div><td></td>'
+                    echo '<tr><td><div class="info-mini">scored overall</div></td></tr>'
                     ?>
                    </table>
                 </td>
@@ -387,11 +417,11 @@
         <?php } ?>
         <table style="padding: 0;margin: 0;">
             <tr>
-                <td width="51%" style="padding: 0;border:1px solid #eaeaea;border-radius: 6px;height:640px;vertical-align: top;background: #fff;">
+                <td width="51" style="padding: 0;border:1px solid #eaeaea;border-radius: 6px;height:640px;vertical-align: top;background: #fff;">
                     <div class="group-wall-title">Projects</div>
                 </td>
-                <td width="4%" style="padding: 0"></td>
-                <td width="45%" style="position:relative;padding: 0;border:1px solid #eaeaea;border-radius: 6px;height:640px;vertical-align: top;background: #fff;">
+                <td width="4" style="padding: 0"></td>
+                <td width="45" style="position:relative;padding: 0;border:1px solid #eaeaea;border-radius: 6px;height:640px;vertical-align: top;background: #fff;">
                     <div class="group-wall-title">Wall</div>
                     <div class="wall-content" style="padding: 25px 25px 0 25px;">
                         <div style="height: 502px;" class="all-comments">

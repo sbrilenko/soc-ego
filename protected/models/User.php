@@ -33,6 +33,7 @@ class User extends CActiveRecord
     public $confirm_password;
     public $_identify;
     public $rememberme;
+    public $error="";
 
     protected function beforeSave() {
         if ($this->isNewRecord)
@@ -62,7 +63,7 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('username, password, email', 'required'),
+			array('password, email', 'required'),
 			array('createtime, company_id, lastvisit, lastaction, lastpasswordchange, failedloginattempts, superuser, status, day_count, was_flag, work_count, level', 'numerical', 'integerOnly'=>true),
 			array('username', 'length', 'max'=>255),
 			array('password, confirm_password', 'length', 'max'=>64),
@@ -198,15 +199,7 @@ class User extends CActiveRecord
 	{
 		return parent::model($className);
 	}
-    public function authenticate($attribute,$param)
-    {
-        if(!$this->hasErrors())
-        {
-            $this->_identify=new UserIdentity($this->email,$this->password);
-            if(!$this->_identify->authenticate())
-                $this->addError("password","Incorrect email or password");
-        }
-    }
+
     public function login()
     {
         if($this->_identify==null)

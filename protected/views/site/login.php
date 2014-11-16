@@ -32,8 +32,9 @@
             <a href="#" class="forgotpass">Forgot Password?</a>
         </div>
         <div class="clear"></div>
-        <?php echo $form->error($model,'email'); ?>
-        <?php echo $form->error($model,'password'); ?>
+<!--        --><?php //echo $form->error($model,'email'); ?>
+<!--        --><?php //echo $form->error($model,'password'); ?>
+        <?php echo $form->error($model,'error'); ?>
         <?php $this->endWidget(); ?>
 
     </div>
