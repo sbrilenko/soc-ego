@@ -411,6 +411,10 @@ table.day-count-table
     position: absolute;
     padding: 9px 99px;
 }
+.badges-list
+{
+    width:100%;
+}
 .friends-list,.friends-list li,.badges-list,.badges-list li
 {
     margin: 0;
@@ -427,6 +431,31 @@ table.day-count-table
 .friends-list li,.badges-list li
 {
     list-style: none;
+}
+.badges-list li
+{
+    width:67px;
+    float:left;
+    overflow: hidden;
+    margin: 22px 0 0 0;
+}
+.badges-list li img
+{
+    width:50px;
+    height:50px;
+    border-radius: 50px;
+}
+.badges-list li.first
+{
+    text-align: left;
+}
+.badges-list li.middle
+{
+    text-align: center;
+}
+.badges-list li.last
+{
+    text-align: right;
 }
 .friends-list-table
 {
@@ -598,7 +627,6 @@ table.quadro-info td.quadr,table.store-info td.quadr
     padding: 0;
     text-align: center;
     border:1px solid #eee;
-    padding:14px;
 }
 table.quadro-info td.pad,table.store-info td.pad
 {

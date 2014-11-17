@@ -8879,3 +8879,11 @@ in Z:\home\soc\www\index.php (13)
 2014/11/16 18:18:25 [warning] [application] Failed to set unsafe attribute "rememberme" of "User".
 in Z:\home\soc\www\protected\controllers\SiteController.php (45)
 in Z:\home\soc\www\index.php (13)
+2014/11/17 19:53:42 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "favicon.ico".' in Z:\home\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 Z:\home\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('favicon.ico')
+#1 Z:\home\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 Z:\home\soc\www\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---

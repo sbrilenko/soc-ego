@@ -192,9 +192,11 @@
                                 $frie_count_class="friends-title-count-text-more";
                             echo "<div><div class='friends-title-count'><div class='".$frie_count_class."'>".$frie_count."</div></div><div class='friends-title' href='/friends'>Badges</div></div><div class='clear'></div>";
                             echo "<ul class='badges-list'>";
-                            foreach($user_badge as $badge)
+                            foreach($user_badge as $index=>$badge)
                             {
-                                echo "<li>";
+                                if($index%4==0) echo "<li class='first'>";
+                                elseif($index%4==3) echo "<li class='last'>";
+                                else echo "<li class='middle'>";
                                 $badge_id=Badges::model()->findByPk($badge->badge_id);
                                 if($badge_id)
                                 {
