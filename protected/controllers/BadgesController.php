@@ -99,7 +99,7 @@ class BadgesController extends Controller
                     $file_ret=Files::model()->create($_FILES['Badges'],'image',$title='test',Badges::model()->tableName());
                     if(is_array($file_ret))
                     {
-                        $this->render('create',array('message'=>$file_ret[0]));
+                        $this->render('create',array('badges'=>$badge,'message'=>$file_ret[0]));
                     }
                     else
                     {
@@ -110,18 +110,18 @@ class BadgesController extends Controller
                         }
                         else
                         {
-                            $this->render('create',array('message'=>'badges model not saved! Please ask your specialist'));
+                            $this->render('create',array('badges'=>$badge,'message'=>'badges model not saved! Please ask your specialist'));
                         }
                     }
                 }
                 else
                 {
-                    $this->render('create',array('message'=>'please put the image'));
+                    $this->render('create',array('badges'=>$badge,'message'=>'please put the image'));
                 }
                 $this->redirect('index');
             }
             else
-                $this->render('create');
+                $this->render('create',array('badges'=>new Badges(),'message'=>''));
 
         }
         else $this->redirect('/');
@@ -142,7 +142,7 @@ class BadgesController extends Controller
                         $file_ret=Files::model()->create($_FILES['Badges'],'image',$title='test',Badges::model()->tableName(),$local->image);
                         if(is_array($file_ret))
                         {
-                            $this->render('update'.$_POST['Badges']['id'],array('message'=>$file_ret[0]));
+                            $this->render('update',array('badges'=>$local,'message'=>$file_ret[0]));
                             exit();
                         }
                         else

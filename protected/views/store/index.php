@@ -35,12 +35,11 @@ if($allStoreitem)
                 $image_file=Files::model()->findByPk($item->image);
                 if($image_file)
                 {
-                    $little_ph=str_replace('.jpg','',$image_file->image);
-                    if(file_exists(Yii::app()->basePath."/../files/".$little_ph."_little.jpg"))
+                    if(file_exists(Yii::app()->basePath."/../files/".$image_file->image))
                     {
                     ?>
                         <td style="width:75px;">
-                            <img src='/files/<?php echo $little_ph."_little.jpg"; ?>'/>
+                            <img src='/files/<?php echo $image_file->image; ?>'/>
                         </td>
                     <?php
                     }

@@ -73,7 +73,7 @@ class StoreController extends Controller
                             $file_ret=Files::model()->create($_FILES['Store'],'image',$title='test',Store::model()->tableName(),$local->image);
                             if(is_array($file_ret))
                             {
-                                $this->render('/store/update'.$_POST['Store']['id'],array('message'=>$file_ret[0]));
+                                $this->render('/store/update',array("store_item"=>$local,'message'=>$file_ret[0]));
                                 exit();
                             }
                             else

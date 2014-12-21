@@ -5,7 +5,9 @@
 ?>
 
 <div class="form">
-
+<?php if(isset($message)) {?>
+    <div style="color: red"><?php echo $message;?></div>
+<?php }?>
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'company-form',
 	// Please note: When you enable ajax validation, make sure the corresponding

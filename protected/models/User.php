@@ -215,4 +215,19 @@ class User extends CActiveRecord
         }
         else return false;
     }
+
+    /*get all user from company*/
+    public function getAllUsersByCompany($company_id)
+    {
+        if(isset($company_id) && $company_id>0 && Company::model()->findByPk($company_id))
+        {
+            return User::model()->findAllByAttributes(array("company_id"=>$company_id,"status"=>1));
+        }
+        else return array();
+    }
+
+    public function getLevel($user_id)
+    {
+        return User::model()->findByPk($user_id)->level;
+    }
 }

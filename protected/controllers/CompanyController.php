@@ -117,13 +117,12 @@ class CompanyController extends Controller
 
 		if(isset($_POST['Company']))
 		{
-
             if(isset($_FILES['Company']) && !empty($_FILES['Company']['name']['image']))
             {
                 $file_ret=Files::model()->create($_FILES['Company'],'image',$title='test',Company::model()->tableName(),$model->image);
                 if(is_array($file_ret))
                 {
-                    $this->render('update'.$_POST['Company']['id'],array('message'=>$file_ret[0]));
+                    $this->render('update',array('model'=>$model,'message'=>$file_ret[0]));
                     exit();
                 }
                 else
@@ -136,7 +135,7 @@ class CompanyController extends Controller
                     }
                     else
                     {
-                        $this->render('update',array('message'=>'Store model not saved! Please ask your specialist'));
+                        $this->render('update',array('model'=>$model,'message'=>'Store model not saved! Please ask your specialist'));
                     }
                 }
             }
@@ -223,4 +222,5 @@ class CompanyController extends Controller
 			Yii::app()->end();
 		}
 	}
+
 }

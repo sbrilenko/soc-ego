@@ -1,4 +1,7 @@
 <?php
+if(isset($message)){?>
+    <div style="color:red"><?php echo $message;?></div>
+<?php }
 $form = $this->beginWidget('CActiveForm', array(
     'id'=>'badges-form',
     'action'=>'/store/update',

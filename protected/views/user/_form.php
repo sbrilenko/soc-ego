@@ -5,6 +5,12 @@
 /* @var $form CActiveForm */
 ?>
 
+<?php
+if(isset($message)) { ?>
+  <div style="color:red">
+ <?php echo $message; ?>
+ </div>
+<?php } ?>
 <div class="form">
 
 <?php $form=$this->beginWidget('CActiveForm', array(
@@ -14,6 +20,8 @@
 	// There is a call to performAjaxValidation() commented in generated controller code.
 	// See class documentation of CActiveForm for details on this.
 	'enableAjaxValidation'=>false,
+    'htmlOptions' => array('enctype' => 'multipart/form-data')
+
 )); ?>
 
 	<p class="note">Fields with <span class="required">*</span> are required.</p>
@@ -107,27 +115,107 @@
 	<div class="row">
 		<?php
         echo $form->labelEx($model,'job_type'); ?>
-		<?php echo $form->dropDownList($model, 'job_type',array( 'Developers'=>'Developers',
+		<?php echo $form->dropDownList($model, 'job_type',array('Developer'=>'Developer',
             'PM'=>'PM',
             'Designer'=>'Designer',
             'QA'=>'QA',
-            'Sales managers'=>'Sales managers')); ?>
+            'Sales manager'=>'Sales manager',
+            'HR'=>'HR',
+            'V.I.P.'=>'V.I.P.'
+        )); ?>
 		<?php echo $form->error($model,'job_type'); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'job_title'); ?>
-		<?php echo $form->dropDownList($model,'job_title',array(
-            'Youngling'=>'Youngling',
-            'Padawan'=>'Padawan',
-            'Jedi'=>'Jedi',
-            'Jedi Survivor'=>'Jedi Survivor',
-            'Jedi Knight'=>'Jedi Knight',
-            'Master Jedi'=>'Master Jedi',
-            'The Chosen One'=>'The Chosen One',
-            'Yoda'=>'Yoda',
-            'Darth Vader'=>'Darth Vader'
-        )); ?>
+        <?php
+        switch(strtolower($model->job_type))
+        {
+            case 'developer':
+                echo $form->dropDownList($model,'job_title',array(
+                    'Youngling'=>'Youngling',
+                    'Padawan'=>'Padawan',
+                    'Jedi'=>'Jedi',
+                    'Jedi Survivor'=>'Jedi Survivor',
+                    'Jedi Knight'=>'Jedi Knight',
+                    'Master Jedi'=>'Master Jedi',
+                    'The Chosen One'=>'The Chosen One',
+                    'Yoda'=>'Yoda',
+                    'Darth Vader'=>'Darth Vader'
+                ));
+            break;
+            case 'pm':
+                echo $form->dropDownList($model,'job_title',array(
+                    'Pixie'=> 'Pixie',
+                    'Tinker Bell'=>'Tinker Bell',
+                    'Nymph'=>'Nymph',
+                    'Fairy'=>'Fairy',
+                    'Djinni'=>'Djinni',
+                    'Witch'=>'Witch',
+                    'Snow Queen'=>'Snow Queen',
+                    'Cruella De Vil'=>'Cruella De Vil',
+
+                ));
+            break;
+            case 'designer':
+                echo $form->dropDownList($model,'job_title',array(
+                    'Gunter'=>'Gunter',
+                    'Peppermint Butler'=>'Peppermint Butler',
+                    'Jake the Dog'=>'Jake the Dog',
+                    'Fin'=>'Fin',
+                    'Billy'=>'Billy',
+                    'The Ice King'=>'The Ice King',
+                    'The Lich'=>'The Lich',
+                    'Lemongrab'=>'Lemongrab'
+                ));
+            break;
+            case 'qa':
+                echo $form->dropDownList($model,'job_title',array(
+                    'Gremlin'=>'Gremlin',
+                    'Elf'=>'Elf',
+                    'Leprechaun'=>'Leprechaun',
+                    'Warlock'=>'Warlock',
+                    'Whitelighter'=>'Whitelighter',
+                    'Sorcerer'=>'Sorcerer',
+                    'Driad'=>'Driad',
+                    'Merlin'=>'Merlin'
+                ));
+            break;
+            case 'sales manager':
+                echo $form->dropDownList($model,'job_title',array(
+                    'Sleeping Beauty'=>'Sleeping Beauty',
+                    'Thumbelina'=>'Thumbelina',
+                    'Jasmine'=>'Jasmine',
+                    'Cinderella'=>'Cinderella',
+                    'Snow White'=>'Snow White',
+                    'Rapunzel'=>'Rapunzel',
+                    'Ariel'=>'Ariel',
+                    'Pocahontas'=>'Pocahontas'
+                ));
+            break;
+            case 'hr':
+                echo $form->dropDownList($model,'job_title',array(
+                    'Flora'=>'Flora',
+                    'Demeter'=>'Demeter',
+                    'Terra'=>'Terra',
+                    'Aurora'=>'Aurora',
+                    'Luna'=>'Luna',
+                    'Aphrodite'=>'Aphrodite',
+                    'Athena'=>'Athena',
+                    'Artemis'=>'Artemis'
+
+                ));
+            break;
+            case 'v.i.p.':
+                echo $form->dropDownList($model,'job_title',array(
+                'Iron Man'=>'Iron Man',
+                'Captain America'=>'Captain America',
+                'Rogue'=>'Rogue',
+                ));
+            break;
+        }
+        ?>
+
 		<?php echo $form->error($model,'job_title'); ?>
 	</div>
 
@@ -255,6 +343,13 @@
     </div>
 
     <div class="row">
+        <?php echo $form->labelEx($profile, 'about');
+        echo $form->textArea($profile, 'about');
+        echo $form->error($profile, 'about');
+    ?>
+    </div>
+
+    <div class="row">
         <?php echo $form->labelEx($profile,'bday'); ?>
         <?php
         if($profile->bday==0) $bday='';
@@ -270,3 +365,118 @@
 <?php $this->endWidget(); ?>
 
 </div><!-- form -->
+<script>
+    $(document).ready(function()
+    {
+        $(document).on("change","select[name*=job_type]",function()
+        {
+            var job_title=$("select[name*=job_title]");
+            switch ($(this).val())
+            {
+                case 'Developer':
+                {
+                    var newOptions = [
+                        'Youngling',
+                        'Padawan',
+                        'Jedi',
+                        'Jedi Survivor',
+                        'Jedi Knight',
+                        'Master Jedi',
+                        'The Chosen One',
+                        'Yoda',
+                        'Darth Vader',
+                    ];
+                }
+                break;
+                case 'PM':
+                {
+                    var newOptions = [
+                        'Pixie',
+                        'Tinker Bell',
+                        'Nymph',
+                        'Fairy',
+                        'Djinni',
+                        'Witch',
+                        'Snow Queen',
+                        'Cruella De Vil',
+
+                    ];
+                    break;
+                }
+                case 'Designer':
+                {
+                    var newOptions = [
+                        'Gunter',
+                        'Peppermint Butler',
+                        'Jake the Dog',
+                        'Fin',
+                        'Billy',
+                        'The Ice King',
+                        'The Lich',
+                        'Lemongrab',
+                    ];
+                    break;
+                }
+                case 'QA':
+                {
+                    var newOptions = [
+                        'Gremlin',
+                        'Elf',
+                        'Leprechaun',
+                        'Warlock',
+                        'Whitelighter',
+                        'Sorcerer',
+                        'Driad',
+                        'Merlin',
+                    ];
+                    break;
+                }
+                case 'Sales manager':
+                {
+                    var newOptions = [
+                        'Sleeping Beauty',
+                        'Thumbelina',
+                        'Jasmine',
+                        'Cinderella',
+                        'Snow White',
+                        'Rapunzel',
+                        'Ariel',
+                        'Pocahontas',
+
+                    ];
+                    break;
+                }
+                case 'HR':
+                {
+                    var newOptions = [
+                        'Flora',
+                        'Demeter',
+                        'Terra',
+                        'Aurora',
+                        'Luna',
+                        'Aphrodite',
+                        'Athena',
+                        'Artemis',
+                    ];
+                    break;
+                }
+                case 'V.I.P.':
+                {
+                    var newOptions = [
+                        'Iron Man',
+                        'Captain America',
+                        'Magneto',
+                        'Rogue',
+
+                    ];
+                    break;
+                }
+            }
+            job_title.empty()
+            for(var i=0;i<newOptions.length;i++)
+            {
+                $("select[name*=job_title]").append($("<option value='"+newOptions[i]+"'>"+newOptions[i]+"</option>"));
+            }
+        })
+    })
+</script>

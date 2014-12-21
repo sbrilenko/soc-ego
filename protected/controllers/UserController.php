@@ -85,7 +85,7 @@ class UserController extends Controller
                     }
                     else
                     {
-                        $profile->image=$file_ret;
+                        $profile->avatar=$file_ret;
                         if($profile->save())
                         {
                             $this->redirect('index');
@@ -139,29 +139,31 @@ class UserController extends Controller
             $model->work_count=isset($model->work_count) && !empty($model->work_count) ?strtotime($_POST['User']['work_count']):0;
             $model->day_count=isset($model->day_count) && !empty($model->day_count)?strtotime($_POST['User']['day_count']):0;
 
-            $profile->bday=isset($profile->bday)?strtotime($_POST['Profile']['bday']):0;
             if($model->save())
             {
                 $profile->user_id=$model->id;
                 if(isset($_FILES['Profile']) && !empty($_FILES['Profile']['name']['avatar']))
                 {
-                    $file_ret=Files::model()->create($_FILES['Profile'],'avatar',$title='test',Profile::model()->tableName(),$profile->avatar);
+                    $file_ret=Files::model()->create($_FILES['Profile'],'avatar','test',Profile::model()->tableName(),$profile->avatar);
                     if(is_array($file_ret))
                     {
-                        $this->render('update'.$model->id,array('message'=>$file_ret[0]));
+                        $this->render('update',array('model'=>$model,'message'=>$file_ret[0]));
                         exit();
                     }
                     else
                     {
                         $profile->attributes=$_POST['Profile'];
-                        $profile->image=$file_ret;
+                        $profile->avatar=$file_ret;
                         if($profile->save())
                         {
-                            $this->redirect('index');
+                            $this->redirect(array('view','id'=>$model->id));
                         }
                         else
                         {
-                            $this->render('index',array('message'=>'Store model not saved! Please ask your specialist'));
+                            $this->render('update',array(
+                                'model'=>$model,
+                            ));
+                            exit();
                         }
                     }
                 }
@@ -169,26 +171,30 @@ class UserController extends Controller
                 {
                     $image=$profile->avatar;
                     $profile->attributes=$_POST['Profile'];
+                    $profile->bday=isset($profile->bday)?strtotime($profile->bday):0;
                     $profile->avatar=$image;
-                    $profile->save();
-                    $this->render('index',array('message'=>'please put the image'));
-                }
-                if($profile->save())
-                {
-                    $this->redirect(array('view','id'=>$model->id));
-                }
-                else
-                {
-                    $this->render('update',array(
-                        'model'=>$model,
-                        'profile'=>$profile,
-                    ));
+                    if($profile->save())
+                    {
+                        $this->redirect(array('view','id'=>$model->id));
+                    }
+                    else
+                    {
+                        $this->render('update',array(
+                            'model'=>$model,
+                        ));
+                    }
                 }
             }
+            else
+            {
+                $this->render('update',array(
+                    'model'=>$model,
+                ));
+            }
         }
+        else
         $this->render('update',array(
             'model'=>$model,
-            'profile'=>$profile,
         ));
 	}
 

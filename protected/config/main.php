@@ -88,6 +88,14 @@ return array(
 
     // application components
     'components'=>array(
+        'imagemod' => array(
+            //alias to dir, where you unpacked extension
+            'class' => 'application.extensions.imagemodifier.CImageModifier',
+        ),
+        'request'=>array(
+            'enableCsrfValidation'=>true,
+            'enableCookieValidation'=>true,
+        ),
         'cache' => array('class' => 'system.caching.CDummyCache'),
         'user'=>array(
 //            'class' => 'application.models.user',

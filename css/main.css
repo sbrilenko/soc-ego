@@ -48,7 +48,41 @@ body
     padding: 10px 20px;
     font-size: 200%;
 }
+/*admin menu*/
+#mainmenu-admin
+{
+    background:white url(bg.gif) repeat-x left top;
+}
 
+#mainmenu-admin ul
+{
+    padding: 0;
+    margin:0px;
+    float:right;
+    margin: 14px 24px 5px 24px;
+}
+
+#mainmenu-admin ul li
+{
+    display: inline;
+}
+
+#mainmenu-admin ul li a
+{
+    background-color:transparent;
+    font-size:12px;
+    font-weight:bold;
+    text-decoration:none;
+    padding:5px 8px;
+}
+
+#mainmenu-admin ul li a:hover, #mainmenu-admin ul li.active a
+{
+    color: #6399cd;
+    background-color:#EFF4FA;
+    text-decoration:none;
+}
+/**/
 #mainmenu
 {
     background:white url(bg.gif) repeat-x left top;
@@ -59,10 +93,13 @@ body
     /*padding:6px 20px 5px 20px;*/
     padding: 0;
     margin:0px;
-    float:right;
-    margin: 18px 24px;
+    float:left;
 }
-
+#mainmenu ul.f-r
+{
+    float: right;
+    margin-right: 25px;
+}
 #mainmenu ul li
 {
     display: inline;
@@ -73,12 +110,12 @@ body
     color:#ffffff;
     background-color:transparent;
     font-size:12px;
-    font-weight:bold;
+    font-weight:normal;
     text-decoration:none;
     padding:5px 8px;
 }
 
-#mainmenu ul li a:hover, #mainmenu ul li.active a
+#mainmenu ul li a:hover, #mainmenu ul li.active a,
 {
     color: #6399cd;
     background-color:#EFF4FA;

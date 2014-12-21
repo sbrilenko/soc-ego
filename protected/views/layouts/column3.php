@@ -26,7 +26,7 @@
         <div id="logo"><a href="<?php ?>"><?php echo CHtml::encode(Yii::app()->params->adminName); ?></a></div>
     </div><!-- header -->
 
-    <div id="mainmenu">
+    <div id="mainmenu-admin">
         <?php $this->widget('zii.widgets.CMenu',array(
             'items'=>array(
                 array('label'=>'Admin', 'url'=>array('/admin'),'active' => Yii::app()->controller->getId() == 'admin' ||  Yii::app()->controller->getId() == 'site'),

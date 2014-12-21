@@ -33,7 +33,6 @@ class UsergroupController extends Controller {
 		if(isset($_POST['UsergroupMessage'])) {
 			$message->attributes = $_POST['UsergroupMessage'];
 			$message->author_id = Yii::app()->user->id;
-
 			$message->save();
 		}
 
@@ -85,11 +84,11 @@ class UsergroupController extends Controller {
                 if(!in_array(Yii::app()->user->id, $participants)) {
 //                    Yum::setFlash(Yum::t('You are not participating in this group'));
                 } else {
-                    $participants = $p->participants;
+//                    $participants = $p->participants;
                     foreach($participants as $key => $participant)
                         if($participant == Yii::app()->user->id)
                             unset($participants[$key]);
-                    $p->participants = $participants;
+//                    $p->participants = $participants;
 
                     if($p->save(array('participants'))) {
 //                        Yum::setFlash(Yum::t('You have left this group'));
@@ -149,42 +148,41 @@ class UsergroupController extends Controller {
                 if(Yii::app()->request->isPostRequest && isset($_POST['Usergroup']))
                 {
                     $group=new Usergroup();
+                    $old_image=$group->image;
                     $group->attributes=$_POST['Usergroup'];
                     if(isset($_FILES['Usergroup']) && !empty($_FILES['Usergroup']['name']['image']))
                     {
                         $file_ret=Files::model()->create($_FILES['Usergroup'],'image',$title='test',Usergroup::model()->tableName(),null);
-
-                        if(is_array($file_ret))
+                        if(!is_array($file_ret))
                         {
-                            $this->render('create',array('message'=>$file_ret[0]));
+                            $group->image=$file_ret;
                         }
-                        else
+                        else $group->image=$old_image;
+
+                        /*participants*/
+                        $group->time_create=strtotime(date("Y-m-d H:i:s"));
+                        $group->user_create=Yii::app()->user->id;
+                        if($group->save())
                         {
-                            /*participants*/
-                            $participants="";
-                            if(count($group->participants)>0)
+                            if(count($_POST['Usergroup']['participants'])>0)
                             {
-                                foreach($group->participants as $index=>$part)
+                                foreach($_POST['Usergroup']['participants'] as $index=>$part)
                                 {
                                     if($part=="1")
                                     {
-                                        if(!empty($participants)) $participants.=",";
-                                        $participants.=$index;
+                                        $new_particial=new Participants();
+                                        $new_particial->user_id=$index;
+                                        $new_particial->group_id=$group->id;
+                                        $new_particial->time=strtotime(date("Y-m-d H:i:s"));
+                                        $new_particial->save();
                                     }
                                 }
                             }
-                            $group->image=$file_ret;
-                            $group->participants=$participants;
-                            $group->time_create=strtotime(date("Y-m-d H:i:s"));
-                            $group->user_create=Yii::app()->user->id;
-                            if($group->save())
-                            {
-                                $this->redirect('index');
-                            }
-                            else
-                            {
-                                $this->redirect('create');
-                            }
+                            $this->redirect('index');
+                        }
+                        else
+                        {
+                            $this->redirect('create');
                         }
                     }
                     else
@@ -210,46 +208,76 @@ class UsergroupController extends Controller {
                 if(Yii::app()->request->isPostRequest && isset($_POST['Usergroup']))
                 {
                     $group=Usergroup::model()->findByPk($id);
+                    $old_image=$group->image;
                     $group->attributes=$_POST['Usergroup'];
                     if(isset($_FILES['Usergroup']) && !empty($_FILES['Usergroup']['name']['image']))
                     {
                         $file_ret=Files::model()->create($_FILES['Usergroup'],'image',$title='test',Usergroup::model()->tableName(),null);
-
                         if(is_array($file_ret))
                         {
-                            $this->render('update',array('message'=>$file_ret[0]));
+                            $this->render('update',array('model'=>$group,'message'=>$file_ret[0]));
+                            exit();
                         }
-                        else
+                    }
+                    else $group->image=$old_image;
+                    $group->time_create=strtotime(date("Y-m-d H:i:s"));
+                    $group->user_create=Yii::app()->user->id;
+                    if($group->save())
+                    {
+                        $all_part=Participants::model()->findAllByAttributes(array("group_id"=>$group->id));
+                        if($all_part)
                         {
-                            /*participants*/
-                            $participants="";
-                            if(count($group->participants)>0)
+                            foreach($all_part as $index=>$val)
                             {
-                                foreach($group->participants as $index=>$part)
+                                $val->status=0;
+                                $val->save();
+                            }
+                        }
+                        if(count($_POST['Usergroup']['participants'])>0)
+                        {
+                            foreach($_POST['Usergroup']['participants'] as $index=>$part)
+                            {
+                                if($part=="1")
                                 {
-                                    if($part=="1")
+                                    $isset=Participants::model()->findByAttributes(array("user_id"=>$index,"group_id"=>$group->id));
+                                    if($isset)
                                     {
-                                        if(!empty($participants)) $participants.=",";
-                                        $participants.=$index;
+                                        $isset->status=1;
+                                        $isset->time=strtotime(date("Y-m-d H:i:s"));
+                                        if($isset->save())
+                                        {
+                                            $this->redirect('index');
+                                        }
+                                        else{
+                                            $this->render('update',array('model'=>$group,'message'=>"Not saved"));
+                                            exit();
+                                        }
                                     }
+                                    else
+                                    {
+                                        $new_particial=new Participants();
+                                        $new_particial->user_id=$index;
+                                        $new_particial->group_id=$group->id;
+                                        $new_particial->status=1;
+                                        $new_particial->time=strtotime(date("Y-m-d H:i:s"));
+                                        if($new_particial->save())
+                                        {
+
+                                        }
+                                        else{
+
+                                        }
+                                    }
+
                                 }
-                            }
-                            $group->image=$file_ret;
-                            $group->participants=$participants;
-                            $group->time_create=strtotime(date("Y-m-d H:i:s"));
-                            $group->user_create=Yii::app()->user->id;
-                            if($group->save())
-                            {
-                                $this->redirect('index');
-                            }
-                            else
-                            {
-                                $this->redirect('update',array("model"=>$group));
                             }
                         }
                     }
                     else
-                        $this->render('update',array("model"=>$group,"messages"=>"Fields with * are required."));
+                    {
+                        $this->redirect('update',array("model"=>$group));
+                    }
+
                 }
                 else
                     $this->render('update',array("model"=>Usergroup::model()->findByPk($id),"messages"=>"Fields with * are required."));

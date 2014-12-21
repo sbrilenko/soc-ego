@@ -125,4 +125,294 @@ class Profile extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+    public function getLittleAvatar($user_sess)
+    {
+        $return="<img src='/img/default-user.png'/>";
+        if($user_sess)
+        {
+            $avatar_id=Profile::model()->findByAttributes(array("user_id"=>$user_sess));
+            if($avatar_id)
+            {
+                $file_avatar=Files::model()->findByPk($avatar_id->avatar);
+                if($file_avatar)
+                {
+                    if(file_exists(Yii::app()->basePath."/../files/".$file_avatar->image))
+                    {
+                        $return="<img src='/files/".$file_avatar->image."'/>";
+                    }
+                }
+
+            }
+        }
+        return $return;
+    }
+
+    public function getName($user_id)
+    {
+        $user=Profile::model()->findByAttributes(array("user_id"=>$user_id));
+        if($user)
+            return $user->firstname." ".$user->lastname;
+        else return "";
+    }
+
+    /**/
+    public function birthdayImg($user_id)
+    {
+        $ret="";
+        if(isset($user_id))
+        {
+            $profile=Profile::model()->findByAttributes(array('user_id'=>$user_id));
+            $bday=date("d",$profile->bday);
+            $bmonth=date("m",$profile->bday);
+            $signs_img = array("capricorn.png", "aquarius.png", "pisces.png", "aries.png", "taurus.png", "gemini.png", "cancer.png", "leo.png", "virgo.png", "libra.png", "Scorpio.png", "Sagittarius.png");
+            $signsstart = array(1 => 21, 2 => 20, 3 => 20, 4 => 20, 5 => 20, 6 => 20, 7 => 21, 8 => 22, 9 => 23, 10 => 23, 11 => 23, 12 => 23);
+            $ret.="<img src='/img/";
+            $ret.=$bday < $signsstart[$bmonth + 1] ? $signs_img[$bmonth - 1] : $signs_img[$bmonth%12];
+            $ret.="' />";
+        }
+        return $ret;
+
+    }
+
+    /**/
+
+    public function birthdayDate($user_id)
+    {
+        $profile=Profile::model()->findByAttributes(array('user_id'=>$user_id));
+        if($profile)
+            return date("d.m.Y",$profile->bday);
+        else return "";
+    }
+    /**/
+
+    public function birthdayName($user_id)
+    {
+        $profile=Profile::model()->findByAttributes(array('user_id'=>$user_id));
+        if($profile)
+        {
+            $bday=date("d",$profile->bday);
+            $bmonth=date("m",$profile->bday);
+            $signs = array("capricorn", "aquarius", "pisces", "aries", "taurus", "gemini", "cancer", "leo", "virgo", "libra", "Scorpio", "Sagittarius");
+            $signsstart = array(1 => 21, 2 => 20, 3 => 20, 4 => 20, 5 => 20, 6 => 20, 7 => 21, 8 => 22, 9 => 23, 10 => 23, 11 => 23, 12 => 23);
+            return $bday < $signsstart[$bmonth + 1] ? $signs[$bmonth - 1] : $signs[$bmonth % 12];
+        }
+        else return "";
+    }
+    /**/
+    public function rankImgClass($user_id)
+    {
+        $user_rank=User::model()->findByPk($user_id);
+        $rank_class=null;
+        if($user_rank)
+        {
+            switch (strtolower($user_rank->job_type)){
+                case "developer":
+                    switch (strtolower($user_rank->job_title))
+                    {
+                        case "youngling":
+                            $rank_class="developers-rank-1";
+                            break;
+                        case "padawan":
+                            $rank_class="developers-rank-2";
+                            break;
+                        case "jedi":
+                            $rank_class="developers-rank-3";
+                            break;
+                        case "jedi survivor":
+                            $rank_class="developers-rank-4";
+                            break;
+                        case "jedi knight":
+                            $rank_class="developers-rank-5";
+                            break;
+                        case "master jedi":
+                            $rank_class="developers-rank-6";
+                            break;
+                        case "the chosen one":
+                            $rank_class="developers-rank-7";
+                            break;
+                        case "yoda":
+                            $rank_class="developers-rank-8";
+                            break;
+                        case "darth vader":
+                            $rank_class="developers-rank-9";
+                            break;
+                    }
+                    break;
+                case "pm":
+                    switch (strtolower($user_rank->job_title))
+                    {
+                        case "pixie":
+                            $rank_class="pms-rank-1";
+                            break;
+                        case "tinker bell":
+                            $rank_class="pms-rank-2";
+                            break;
+                        case "nymph":
+                            $rank_class="pms-rank-3";
+                            break;
+                        case "fairy":
+                            $rank_class="pms-rank-4";
+                            break;
+                        case "djinni":
+                            $rank_class="pms-rank-5";
+                            break;
+                        case "witch":
+                            $rank_class="pms-rank-6";
+                            break;
+                        case "snow queen":
+                            $rank_class="pms-rank-7";
+                            break;
+                        case "cruella de cil":
+                            $rank_class="pms-rank-8";
+                            break;
+                    }
+                    break;
+                case "designer":
+                    switch (strtolower($user_rank->job_title))
+                    {
+                        case "muggle/gunter":
+                            $rank_class="designers-rank-1";
+                            break;
+                        case "muggle-born/peppermint butler":
+                            $rank_class="designers-rank-2";
+                            break;
+                        case "house-elf/jake the dog":
+                            $rank_class="designers-rank-3";
+                            break;
+                        case "wizard/fin":
+                            $rank_class="designers-rank-4";
+                            break;
+                        case "metamorphmagus/billy":
+                            $rank_class="designers-rank-5";
+                            break;
+                        case "auror the/ice king":
+                            $rank_class="designers-rank-6";
+                            break;
+                        case "albus dumbledore/the lich":
+                            $rank_class="designers-rank-7";
+                            break;
+                        case "lord voldemort/lemongrab":
+                            $rank_class="designers-rank-8";
+                            break;
+                    }
+                    break;
+                case "qa":
+                    switch (strtolower($user_rank->job_title))
+                    {
+                        case "gremlin":
+                            $rank_class="qas-rank-1";
+                            break;
+                        case "elf":
+                            $rank_class="qas-rank-2";
+                            break;
+                        case "leprechaun":
+                            $rank_class="qas-rank-3";
+                            break;
+                        case "warlock":
+                            $rank_class="qas-rank-4";
+                            break;
+                        case "whitelighter":
+                            $rank_class="qas-rank-5";
+                            break;
+                        case "sorcerer":
+                            $rank_class="qas-rank-6";
+                            break;
+                        case "driad":
+                            $rank_class="qas-rank-7";
+                            break;
+                        case "merlin":
+                            $rank_class="qas-rank-8";
+                            break;
+                    }
+                    break;
+                case "hr":
+                    switch (strtolower($user_rank->job_title))
+                    {
+                        case "flora":
+                            $rank_class="hrs-rank-1";
+                            break;
+                        case "demeter":
+                            $rank_class="hrs-rank-2";
+                            break;
+                        case "terra":
+                            $rank_class="hrs-rank-3";
+                            break;
+                        case "aurora":
+                            $rank_class="hrs-rank-4";
+                            break;
+                        case "luna":
+                            $rank_class="hrs-rank-5";
+                            break;
+                        case "aphrodite":
+                            $rank_class="hrs-rank-6";
+                            break;
+                        case "athena":
+                            $rank_class="hrs-rank-7";
+                            break;
+                        case "artemis":
+                            $rank_class="hrs-rank-8";
+                            break;
+                    }
+                    break;
+                case "v.i.p.":
+                    switch (strtolower($user_rank->job_title))
+                    {
+                        case "iron man":
+                            $rank_class="vip-rank-1";
+                            break;
+                        case "captain america":
+                            $rank_class="vip-rank-2";
+                            break;
+                        case "magneto":
+                            $rank_class="vip-rank-3";
+                            break;
+                        case "rogue":
+                            $rank_class="vip-rank-4";
+                            break;
+                    }
+                    break;
+            }
+        }
+        return $rank_class;
+    }
+
+    /**/
+
+    public function jobTitle($user_id)
+    {
+        $user_rank=User::model()->findByPk($user_id);
+        if($user_rank)
+            return $user_rank->job_title;
+        else return "";
+    }
+
+    /**/
+
+    public function jobType($user_id)
+    {
+        $user_rank=User::model()->findByPk($user_id);
+        if($user_rank)
+            return $user_rank->job_type;
+        else return "";
+    }
+
+    /*company*/
+    public function companyImg($user_id)
+    {
+        $ret="";
+        $company_id=Company::model()->findByAttributes(array("id"=>User::model()->findByPk($user_id)->company_id));
+        if($company_id)
+        {
+            $file_company=Files::model()->findByPk($company_id->image);
+            if($file_company)
+            {
+                if(file_exists(Yii::app()->basePath."/../files/".$file_company->image))
+                {
+                    $ret="<img style='padding: 0;' src='/files/".$file_company->image."'/>";
+                }
+            }
+        }
+        return $ret;
+    }
 }

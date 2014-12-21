@@ -1,3 +1,6 @@
+<?php if(isset($message) && !empty($message)) {?>
+    <div style="color: red"><?php echo $message;?></div>
+<?php } ?>
 <?php
 $form = $this->beginWidget('CActiveForm', array(
     'id'=>'badges-form',

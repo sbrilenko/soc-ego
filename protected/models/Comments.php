@@ -107,4 +107,9 @@ class Comments extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+    public function getWallComments($userid,$parent=null)
+    {
+
+    }
 }

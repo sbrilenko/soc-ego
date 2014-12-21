@@ -10,7 +10,7 @@
  * @property string $title
  * @property string $description
  * @property integer $pm
- * @property string $participants
+ * @property integer $company
  * @property integer $time_create
  * @property integer $user_create
  * @property integer $time_update
@@ -18,6 +18,7 @@
  */
 class Usergroup extends CActiveRecord
 {
+    public $participants="";
 	/**
 	 * @return string the associated database table name
 	 */
@@ -34,13 +35,12 @@ class Usergroup extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('image, completed, title, description, pm, time_create, user_create', 'required'),
-			array('image, completed, pm, time_create, user_create, time_update, user_update', 'numerical', 'integerOnly'=>true),
+			array('image, completed, title, description, pm, company, time_create, user_create', 'required'),
+			array('image, completed, pm, company, time_create, user_create, time_update, user_update', 'numerical', 'integerOnly'=>true),
 			array('title', 'length', 'max'=>255),
-			array('participants', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, image, completed, title, description, pm, participants, time_create, user_create, time_update, user_update', 'safe', 'on'=>'search'),
+			array('id, image, completed, title, description, pm, company, time_create, user_create, time_update, user_update', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -67,7 +67,7 @@ class Usergroup extends CActiveRecord
 			'title' => 'Title',
 			'description' => 'Description',
 			'pm' => 'Pm',
-			'participants' => 'Participants',
+            'company'=>'Company',
 			'time_create' => 'Time Create',
 			'user_create' => 'User Create',
 			'time_update' => 'Time Update',
@@ -99,8 +99,8 @@ class Usergroup extends CActiveRecord
 		$criteria->compare('title',$this->title,true);
 		$criteria->compare('description',$this->description,true);
 		$criteria->compare('pm',$this->pm);
-		$criteria->compare('participants',$this->participants,true);
-		$criteria->compare('time_create',$this->time_create);
+        $criteria->compare('pm',$this->company);
+        $criteria->compare('time_create',$this->time_create);
 		$criteria->compare('user_create',$this->user_create);
 		$criteria->compare('time_update',$this->time_update);
 		$criteria->compare('user_update',$this->user_update);
@@ -120,4 +120,6 @@ class Usergroup extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+
 }

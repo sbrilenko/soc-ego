@@ -91,4 +91,18 @@ class Locationmanager extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+    /**/
+
+    public function getLocation($user_id)
+    {
+        $user=Profile::model()->findByAttributes(array("user_id"=>$user_id));
+        if($user)
+        {
+            $location=LocationManager::model()->findByPk($user->user_location);
+            if($location)
+                return $location->locationname;
+        }
+        return "";
+    }
 }

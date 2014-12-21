@@ -117,4 +117,9 @@ class Store extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+    public function getCountAllVisibleItem()
+    {
+        return $this::model()->findAllByAttributes(array("hide"=>0));
+    }
 }

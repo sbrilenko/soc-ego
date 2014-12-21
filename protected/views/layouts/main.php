@@ -23,6 +23,76 @@
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/login.css">
     <?php } ?>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <?php if(isset(Yii::app()->user->id) && Yii::app()->controller->id=="site" && Yii::app()->controller->action->id=="index") { ?>
+<!--        <script src="--><?php //echo Yii::app()->request->baseUrl; ?><!--/js/jquery.jscrollpane.min.js"></script>-->
+<!--        <link href="--><?php //echo Yii::app()->request->baseUrl; ?><!--/css/jquery.jscrollpane.css" rel="stylesheet">-->
+         <link href="<?php echo Yii::app()->request->baseUrl; ?>/css/nanoscroller.css" rel="stylesheet">
+        <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery.nanoscroller.js"></script>
+        <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery.mousewheel.js"></script>
+
+        <script>
+            $(document).ready(function()
+            {
+                function initScrollPanes()
+                {
+                    $(function()
+                    {
+                        $(".nano").nanoScroller({ scroll: 'bottom',flash: true  });
+                    });
+                }
+                setTimeout(initScrollPanes, 100);
+
+//                function initScrollPanes()
+//                {
+//                    $(function()
+//                    {
+//                        $(".scrollbar").jScrollPane();
+//                        var scrollPane = $(".scrollbar").jScrollPane().data('jsp');
+//                        scrollPane.scrollToBottom();
+//                        $('.group-scroll').jScrollPane();
+//                        var scrollPaneGroup = $('.group-scroll').jScrollPane().data('jsp');
+//                        scrollPaneGroup.scrollToBottom();
+//                    });
+//                }
+//                    setTimeout(initScrollPanes, 100);
+            })
+//            $(window).resize(function() {
+//                var scrollPane = $(".scrollbar").jScrollPane().data('jsp');
+//                scrollPane.scrollToBottom();
+//            })
+        </script>
+    <?php }?>
+    <?php if(isset(Yii::app()->user->id)) { ?>
+    <script>
+        $(document).ready(function()
+        {
+            $(document).on('click','.tri',function()
+            {
+
+            }).on('click',function(el)
+            {
+                el.toElement.className=="triangle"?$('.triangle-menu').is(":visible")?$('.triangle-menu').removeAttr("style"):$('.triangle-menu').show():$('.triangle-menu').removeAttr("style");
+            }).on('keydown',function(el)
+            {
+                if(el.keyCode==27)
+                {
+                    $('.triangle-menu').removeAttr("style");
+                }
+            })
+                $('.left-columb-icon').parent().on('click',function()
+                {
+                    if(!$(".left-column").hasClass("close") && !$(".left-column").is(":animated"))
+                    {
+                        $(".left-column").animate({width:0,maxWidth:0,minWidth:0},500,function(){$(".left-column").addClass("close")})
+                    }
+                    else
+                    {
+                        $(".left-column").animate({width:314,maxWidth:314,minWidth:314},500,function(){$(".left-column").removeClass("close")})
+                    }
+                })
+        })
+    </script>
+    <?php } ?>
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
 
@@ -47,35 +117,51 @@
 
     <div class="main-content" style="overflow: visible;padding: 0">
         <div class="left-column">
-                <?php
-                if(Yii::app()->user->id)
-                {
-                    $avatar_id=Profile::model()->findByAttributes(array("user_id"=>Yii::app()->user->id));
-                    if($avatar_id)
-                    {
-                        $file_avatar=Files::model()->findByPk($avatar_id->avatar);
-                        if($file_avatar)
-                        {
-                            if(file_exists(Yii::app()->basePath."/../files/".$file_avatar->image))
-                            {
-                                echo "<div class='avatar-container'><img style='width:100%;' src='/files/".$file_avatar->image."'/></div>";
-                            }
-                            else
-                            {
-                                echo "<div class='avatar-container'><img style='width:100%;' src='/img/default-user.png'/></div>";
-                            }
-                        }
-                        else
-                        {
-                            echo "<div class='avatar-container'><img style='width:100%;' src='/img/default-user.png'/></div>";
-                        }
-                    }
-                    else
-                    {
-                        echo "<div class='avatar-container'><img style='width:100%;' src='/img/default-user.png'/></div>";
-                    }
-                }
+            <div class='avatar-container'>
+            <?php
+                echo Profile::model()->getLittleAvatar(Yii::app()->user->id);
                 ?>
+                <?php if(Yii::app()->controller->id=="site" && Yii::app()->controller->action->id!="index") {?>
+                <div class="avatar-position">
+                    <div class="avatar-name-style">
+                        <?php
+                        if(isset(Yii::app()->user->id))
+                        {
+                            $user=Profile::model()->findByAttributes(array("user_id"=>Yii::app()->user->id));
+                            echo $user->firstname," ",$user->lastname;
+                        }
+                        ?>
+                    </div>
+                    <div class="avatar-type-style"><?php echo User::model()->findByPk(Yii::app()->user->id)->job_title;?></div>
+                    <div class="avatar-levelstarsprogress">
+                    <?php
+                    if(User::model()->findByPk(Yii::app()->user->id)->level==0)
+                    {
+                        ?>
+                        <div class="avatar-levelstars active"></div>
+                        <div class="avatar-levelstars padd"></div>
+                        <div class="avatar-levelstars"></div>
+                    <?php
+                    }elseif(User::model()->findByPk(Yii::app()->user->id)->level==1)
+                    {
+                        ?>
+                        <div class="avatar-levelstars active"></div>
+                        <div class="avatar-levelstars active padd"></div>
+                        <div class="avatar-levelstars"></div>
+                    <?php
+                    }elseif(User::model()->findByPk(Yii::app()->user->id)->level==2)
+                    {
+                        ?>
+                        <div class="avatar-levelstars active"></div>
+                        <div class="avatar-levelstars active padd"></div>
+                        <div class="avatar-levelstars active"></div>
+                    <?php
+                    }
+                    ?>
+                    </div>
+                </div>
+                <?php } ?>
+            </div>
                 <div class="day-count">
                     <?php
                     if(Yii::app()->user->id)
@@ -96,6 +182,7 @@
                     }
                     ?>
                 </div>
+            <?php if(Yii::app()->controller->id=="site" && Yii::app()->controller->action->id=="index") {?>
                 <div class="friends">
                     <?php
 
@@ -153,8 +240,8 @@
                                         {
                                             if(file_exists(Yii::app()->basePath."/../files/".$avatar_image->image))
                                             {
-                                                $name_in_db=str_replace('.jpg','',$avatar_image->image);
-                                                echo "<tr><td class='width'><img title='".$profile_user->firstname." ".$profile_user->lastname."' src='/files/".$name_in_db."_little.jpg"."'/></td>";
+                                                $name_in_db=str_replace('.png','',$avatar_image->image);
+                                                echo "<tr><td class='width'><img title='".$profile_user->firstname." ".$profile_user->lastname."' src='/files/".$name_in_db."_little.png"."'/></td>";
                                                 echo "<td><div class='friends-name'>".$profile_user->firstname." ".$profile_user->lastname."</div><div class='friends-position'>".User::model()->findByPk($profile_user->user_id)->job_type."</div></td></tr>";
                                             }
                                             else
@@ -206,8 +293,8 @@
                                     {
                                         if(file_exists(Yii::app()->basePath."/../files/".$badge_image->image))
                                         {
-                                            $name_in_db=str_replace('.jpg','',$badge_image->image);
-                                            echo "<img title='".$badge_id->title."' src='/files/".$name_in_db."_little.jpg"."'/>";
+//                                            $name_in_db=str_replace('.png','',$badge_image->image);
+                                            echo "<img title='".$badge_id->title."' src='/files/".$badge_image->image."'/>";
                                         }
                                         else
                                         {
@@ -226,6 +313,64 @@
                     ?>
 
                 </div>
+            <?php } else { ?>
+                <div class="friends">
+                    <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+                    <script>
+                        $(document).ready(function()
+                        {
+                            $( "#message-to-user input[name=user]" ).autocomplete({
+                                source: function( request, response ) {
+                                    var arr=$('#message-to-user').serializeArray();
+                                    $.ajax({
+                                        url: "getAllFriends",
+                                        data: arr,
+                                        type:'post',
+                                        success: function( data ) {
+                                            console.log(data)
+                                            response( data );
+                                        }
+                                    });
+                                },
+                                minLength: 2,
+                                select: function( event, ui ) {
+                                    log( ui.item ?
+                                    "Selected: " + ui.item.label :
+                                    "Nothing selected, input was " + this.value);
+                                },
+                                open: function() {
+                                    $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+                                },
+                                close: function() {
+                                    $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+                                }
+                            });
+                        })
+                    </script>
+                <?php
+                $form = $this->beginWidget('CActiveForm', array(
+                    'id'=>'message-to-user',
+                    'enableAjaxValidation'=>true,
+                    'enableClientValidation'=>true,
+                ));
+                ?>
+                <div class="friends-search-bar">
+                    <?php echo Chtml::textField('user');?>
+                    <?php echo Chtml::hiddenField('to_user');?>
+                    <?php echo Chtml::hiddenField('from_user',Yii::app()->user->id);?>
+                </div>
+                <div class="friends-text">
+                    <?php echo Chtml::textArea('text');?>
+                </div>
+                <div class="message-to-user-sub-m f-l"></div>
+                    <div class="message-to-user-sub-m f-r">
+                        <?php echo Chtml::submitButton('Send',array('class'=>'message-to-user'));?>
+                    </div>
+                    <div class="clear"></div>
+                <?php $this->endWidget(); ?>
+                </div>
+
+            <?php }  ?>
         </div>
         <?php require_once "header.php";?>
         <div style="position: relative;display: table-cell;width:100%;">
@@ -237,7 +382,6 @@
 
 <?php } else { ?>
             <?php echo $content; ?>
-<!--        --><?php //$this->render("login"); ?>
 <?php } ?>
 
 </body>

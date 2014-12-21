@@ -2,6 +2,9 @@
 <p class="note">
 <?php echo 'Fields with <span class="required">*</span> are required.';?>
 </p>
+<?php if(isset($message) && !empty($message)) {?>
+    <div style="color: red"><?php echo $message;?></div>
+<?php } ?>
 <?php $form=$this->beginWidget('CActiveForm', array(
 'id'=>'usergroup-form',
     'enableAjaxValidation'=>false,
@@ -13,6 +16,7 @@
 <fieldset class="badge-add-form">
     <legend>Add new group</legend>
 <div class="row">
+<?php echo $form->hiddenField($model,'id'); ?>
 <?php echo $form->labelEx($model,'title'); ?>
 <?php echo $form->textField($model,'title',array('size'=>60,'maxlength'=>255,'class'=>'width-80')); ?>
 <?php echo $form->error($model,'title'); ?>
@@ -63,22 +67,46 @@
 </div>
 
 <div class="row">
+    <?php echo $form->labelEx($model,'company'); ?>
+    <?php
+    $users_company=Company::model()->findAll();
+    $users_comapny_array=array();
+    if($users_company)
+    {
+        foreach($users_company as $company)
+        {
+            $users_comapny_array[$company->id]=$company->title;
+        }
+    }
+    echo $form->dropDownList($model, 'company',$users_comapny_array);
+    if(count($users_comapny_array)==0)
+    {
+        echo "<a href='/company/create'>Add user</a>";
+    }
+    ?>
+    <?php echo $form->error($model,'company'); ?>
+</div>
+
+<div class="row">
     <?php echo $form->labelEx($model,'participants'); ?>
     <?php
-    $users=User::model()->findAll();
+    if(is_null($model->company))
+    {
+        if(Company::model()->findByAttributes(array(),array("order"=>"id ASC")))
+            $model->company=Company::model()->findByAttributes(array(),array("order"=>"id ASC"))->id;
+    }
+    $users=User::model()->findAllByAttributes(array("status"=>1,"company_id"=>$model->company));
     $users_array=array();
-    if(!empty($model->participants))
-    $participants_explode=explode(",",$model->participants);
+    echo "<table class='participants-table'>";
     if($users)
     {
-        echo "<table>";
         foreach($users as $user)
         {
             if($user->job_type!=="PM")
             {
                 echo "<tr>";
                 $user_profile=Profile::model()->findByAttributes(array("user_id"=>$user->id));
-                if(!empty($model->participants) && in_array($user->id,$participants_explode))
+                if(Participants::model()->findAllByAttributes(array("status"=>1,"group_id"=>$model->id,"user_id"=>$user->id)))
                 {
                     echo "<td>",$form->checkBox($model,'participants['.$user->id.']',  array('checked'=>'checked')),"</td>";
                     echo "<td>",$form->labelEx($model,$user_profile->firstname." ".$user_profile->lastname),"</td>";
@@ -91,8 +119,9 @@
                 echo "</tr>";
             }
         }
-        echo "</table>";
     }
+    else echo "<tr><td>No users</td></tr>";
+    echo "</table>";
     ?>
     <?php echo $form->error($model,'participants'); ?>
 </div>
@@ -105,7 +134,7 @@
 
 <div class="row">
     <?php echo $form->labelEx($model,'completed'); ?>
-    <?php  echo $form->dropDownList($model, 'completed',array("0"=>"No","1"=>"Yes")); ?>
+    <?php  echo $form->dropDownList($model, 'completed',array("0"=>"Finished","1"=>"Active","2"=>"Paused")); ?>
     <?php echo $form->error($model,'completed'); ?>
 </div>
 </fieldset>
@@ -117,3 +146,38 @@ echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save');
 echo "</div>";
 $this->endWidget(); ?>
 </div> <!-- form -->
+<script>
+    $(document).ready(function()
+    {
+        $(document).on("change","select[name*=company]",function()
+        {
+            var arr=$(this).parents("form").serializeArray();
+            $.ajax(
+                {
+                    url:"/AllUserByCompany",
+                    type:"POST",
+                    data:arr,
+                    success:function(data, textStatus)
+                    {
+                        console.log(data)
+                        data= $.parseJSON(data);
+                        console.log(data)
+                        if(data.error)
+                        {
+                            alert(data.message)
+                        }
+                        else
+                        {
+                            if(data.html!=="")
+                            {
+                                $('.participants-table').replaceWith(data.html)
+                            }
+                        }
+
+                    }
+                }
+            )
+
+        })
+    })
+</script>

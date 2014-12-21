@@ -2,9 +2,14 @@
 
 class SiteController extends Controller
 {
+    public $message="";
     public function actions()
 	{
 		return array(
+            'index' => array(
+                'class' => 'SiteController',
+                'view' => 'index'
+            ),
 			// captcha action renders the CAPTCHA image displayed on the contact page
 			'captcha'=>array(
 				'class'=>'CCaptchaAction',
@@ -14,6 +19,7 @@ class SiteController extends Controller
 			// They can be accessed via: index.php?r=site/page&view=FileName
 			'page'=>array(
 				'class'=>'CViewAction',
+                'view'=>'message'
 			),
 		);
 	}
@@ -27,26 +33,35 @@ class SiteController extends Controller
                 $this->render('error', $error);
         }
     }
-//    public function beforeAction($e){
-//        if(!isset(Yii::app()->user->id) && Yii::app()->controller->getAction()->getId() == 'admin')
-//        $this->redirect("/contact");
-//    }
     /**
 	 * This is the default 'index' action that is invoked
 	 * when an action is not explicitly requested by users.
 	 */
 	public function actionIndex()
 	{
-        if(!isset(Yii::app()->user->id) && isset($_POST['User']))
+        $model=new User();
+        $user_id=Yii::app()->user->id;
+        if(!isset($user_id) && isset($_POST['User']))
         {
-            $model=new User();
             if(isset($_POST['User']))
             {
                 $model->attributes=$_POST['User'];
-                $model->rememberme=$_POST['User']['rememberme'];
                 if($model->login())
                 {
-                    $this->render("index",array("model"=>new User()));
+                    $this->render('index',array("model"=>new User(),
+                        'avatar'=>Profile::model()->getLittleAvatar($user_id),
+                        'name'=>Profile::model()->getName($user_id),
+                        'location'=>LocationManager::model()->getLocation($user_id),
+                        'birthday'=>$this->renderPartial('birthday',array('img'=>Profile::model()->birthdayImg($user_id),
+                                                                          'date'=>Profile::model()->birthdayDate($user_id),
+                                                                          'name'=>Profile::model()->birthdayName($user_id)),true),
+                        'rank'=>$this->renderPartial('rank',array('img_class'=>Profile::model()->rankImgClass($user_id),
+                                                                  'title'=>Profile::model()->jobTitle($user_id),
+                                                                  'type'=>Profile::model()->jobType($user_id)),true),
+
+                        'store'=>$this->renderPartial('store',array('stores'=>Store::model()->getCountAllVisibleItem()),true),
+                        'company'=>$this->renderPartial('company',array('img'=>Profile::model()->companyImg($user_id)),true),
+                    ));
                 }
                 else
                 {
@@ -58,32 +73,142 @@ class SiteController extends Controller
                 $this->render("login",array("model"=>$model));
         }
         elseif(isset(Yii::app()->user->id))
+            $this->render('index',array("model"=>$model,
+                'avatar'=>Profile::model()->getLittleAvatar($user_id),
+                'name'=>Profile::model()->getName($user_id),
+                'location'=>LocationManager::model()->getLocation($user_id),
+                'birthday'=>$this->renderPartial('birthday',array('img'=>Profile::model()->birthdayImg($user_id),
+                                                                  'date'=>Profile::model()->birthdayDate($user_id),
+                                                                  'name'=>Profile::model()->birthdayName($user_id)),true),
+                'rank'=>$this->renderPartial('rank',array('img_class'=>Profile::model()->rankImgClass($user_id),
+                                                          'title'=>Profile::model()->jobTitle($user_id),
+                                                          'type'=>Profile::model()->jobType($user_id)),true),
+
+                'store'=>$this->renderPartial('store',array('stores'=>Store::model()->getCountAllVisibleItem()),true),
+                'company'=>$this->renderPartial('company',array('img'=>Profile::model()->companyImg($user_id)),true),
+            ));
+        else $this->render("login",array("model"=>$model));
+
+    }
+
+    /*CommentsCommentsAdd*/
+    public function actionCommentsCommentsAdd()
+    {
+        if(Yii::app()->request->isAjaxRequest && isset($_POST) && !empty($_POST))
         {
-            $this->render("index",array("model"=>new User()));
+            if(!empty($_POST['Comments']['text']))
+            {
+                $new_comment=new Comments();
+                $new_comment->attributes=$_POST['Comments'];
+                $new_comment->image=NULL;
+                $text_explode=explode(" ",$new_comment->text);
+                if(count($text_explode)>0)
+                {
+                    $text_new="";
+                    for($i=0;$i<count($text_explode);$i++)
+                    {
+                        if(strpos($text_explode[$i],"www.")===0 || strpos($text_explode[$i],"http://")===0 || strpos($text_explode[$i],"https://")===0)
+                        {
+                            if(strpos($text_explode[$i],"www.")===0) $text_explode[$i]="<a href='{$text_explode[$i]}' target='_blank'>".substr($text_explode[$i], 4, strlen($text_explode[$i]))."</a>";
+                            elseif(strpos($text_explode[$i],"http://")===0) $text_explode[$i]="<a href='{$text_explode[$i]}' target='_blank'>".substr($text_explode[$i], 7, strlen($text_explode[$i]))."</a>";
+                            elseif(strpos($text_explode[$i],"https://")===0) $text_explode[$i]="<a href='{$text_explode[$i]}' target='_blank'>".substr($text_explode[$i], 8, strlen($text_explode[$i]))."</a>";
+                            if($i==0)$text_new .= $text_explode[$i];
+                            else $text_new .=" ".$text_explode[$i];
+                        }
+                        else {
+                            if($i==0)$text_new .= $text_explode[$i];
+                            else $text_new .=" ".$text_explode[$i];
+                        }
+                    }
+                    $new_comment->text=$text_new;
+                }
+                $new_comment->commented_user_id=Yii::app()->user->id; //
+                $new_comment->time=strtotime(date("Y-m-d H:i:s"));
+                if($new_comment->save())
+                {
+                    $html="<table style='width: 95%;'>";
+                    $html.="<tr>";
+                    $html.='<td class="padding-zero wall-avatar-td"></td>';
+                    $html.="<td class='padding-zero'>";
+                    $html.='<div class="message-buble">
+                        <div class="message-buble-triangle-back"></div>
+                        <div class="comment-owner">'.htmlspecialchars(Profile::model()->findByAttributes(array("user_id"=>$new_comment->create_user_id))->firstname." ".Profile::model()->findByAttributes(array("user_id"=>$new_comment->create_user_id))->lastname).'</div>
+                    <div class="comment">'.htmlspecialchars($new_comment->text).'</div>
+                    </div>';
+                    $html.="</td>";
+                    $html.="</tr>";
+
+                    $html.="</table>";
+                    echo json_encode(array("error"=>false,"message"=>"Saved","html"=>$html));
+                    exit();
+                }
+                else
+                {
+                    echo json_encode(array("error"=>true,"message"=>"Not saved","html"=>""));
+                    exit();
+                }
+            }
+            else
+            {
+                echo json_encode(array("error"=>true,"message"=>"Comment cannot be empty","html"=>""));
+                exit();
+            }
         }
         else
         {
-            $this->render("login",array("model"=>new User()));
+            echo json_encode(array("error"=>true,"message"=>"Not a post request","html"=>""));
+            exit();
         }
     }
     /*comment add*/
-    public function actionCommentsadd()
+    public function actionCommentsAdd()
     {
         $text_flag=false;
         $image_flag=false;
         $img_id=null;
         $message='';
-        if(Yii::app()->request->isPostRequest)
+//        if(Yii::app()->request->isAjaxRequest)
+        if(isset($_POST) && !empty($_POST))
         {
-            $new_comment=new Comments();
-            $new_comment->attributes=$_POST['Comments'];
+            if(isset($_POST) && !empty($_POST))
+            {
+                $new_comment=new Comments();
+                $new_comment->attributes=$_POST['Comments'];
+                $text_explode=explode(" ",$new_comment->text);
+                if(count($text_explode)>0)
+                {
+                    $text_new="";
+                    for($i=0;$i<count($text_explode);$i++)
+                    {
+                        if(strpos($text_explode[$i],"www.")===0 || strpos($text_explode[$i],"http://")===0 || strpos($text_explode[$i],"https://")===0)
+                        {
+                            if(strpos($text_explode[$i],"www.")===0) $text_explode[$i]="<a href='{$text_explode[$i]}' target='_blank'>".substr($text_explode[$i], 4, strlen($text_explode[$i]))."</a>";
+                            elseif(strpos($text_explode[$i],"http://")===0) $text_explode[$i]="<a href='{$text_explode[$i]}' target='_blank'>".substr($text_explode[$i], 7, strlen($text_explode[$i]))."</a>";
+                            elseif(strpos($text_explode[$i],"https://")===0) $text_explode[$i]="<a href='{$text_explode[$i]}' target='_blank'>".substr($text_explode[$i], 8, strlen($text_explode[$i]))."</a>";
+                            if($i==0)$text_new .= $text_explode[$i];
+                            else $text_new .=" ".$text_explode[$i];
+                        }
+                        else {
+                            if($i==0)$text_new .= $text_explode[$i];
+                            else $text_new .=" ".$text_explode[$i];
+                        }
+                    }
+                    $new_comment->text=$text_new;
+                }
+            }
+            else{
+                echo json_encode(array("error"=>true,"message"=>"Empty data"));
+                exit();
+            }
+
             if(isset($_FILES['Comments']) && !empty($_FILES['Comments']['tmp_name']))
             {
-                $add_file=Files::model()->create($_FILES['Comments'],'image','test','comments',null);
+                $add_file=Files::model()->create($_FILES['Comments'],'image','test',Comments::model()->tableName(),null);
 
                 if(is_array($add_file))
                 {
-                    $message=$add_file[0];
+                    echo json_encode(array("error"=>false,"message"=>$add_file[0],"html"=>""));
+                    exit();
                 }
                 else
                 {
@@ -98,7 +223,6 @@ class SiteController extends Controller
             }
             if(isset($_POST['Comments']) && !empty($_POST['Comments']['text']))
             {
-
                 $new_comment->image=$img_id;
                 $new_comment->parent=0;
                 if(empty($new_comment->commented_user_id))
@@ -114,7 +238,7 @@ class SiteController extends Controller
                     $comm=Comments::model()->findByPk($new_comment->id);
                     if($comm)
                     {
-                        $create_user_id=YumProfile::model()->findByAttributes(array('user_id'=>$comm->create_user_id));
+                        $create_user_id=Profile::model()->findByAttributes(array('user_id'=>$comm->create_user_id));
                         $image_url="";
                         if(!is_null($comm->image) && !empty($comm->image))
                         {
@@ -127,27 +251,35 @@ class SiteController extends Controller
                                 }
                             }
                         }
-                        echo json_encode(array("image"=>$image_url,"text"=>$comm->text,"user"=>$create_user_id->firstname." ".$create_user_id->lastname,"message"=>$message));
+//                        echo json_encode(array("image"=>$image_url,"text"=>$comm->text,"user"=>$create_user_id->firstname." ".$create_user_id->lastname,"message"=>$message));
+                        echo json_encode(array("error"=>false,"message"=>"","html"=>$this->renderPartial("message",array("index"=>1,"com"=>$comm),true)));
                         exit();
                     }
                 }
                 else
                 {
-                    echo json_encode(array("message"=>"Not saved"));
+                    echo json_encode(array("error"=>true,"message"=>"Not saved"));
                     exit();
                 }
             }
             else
             {
-                echo json_encode(array("message"=>"image or comment is empty"));
+                echo json_encode(array("error"=>true,"message"=>"image or comment is empty"));
                 exit();
             }
         }
-        echo json_encode(array("message"=>"Some error, try again"));
-        exit();
+        else
+        {
+            echo json_encode(array("error"=>true,"message"=>"Some error, try again"));
+            exit();
+        }
 
     }
 
+    public function actionMessages()
+    {
+        $this->render('messages',array("friends"=>Message::model()->getAllFriendsMessages(Yii::app()->user->id)));
+    }
 
     public function actionAdmin()
     {
@@ -183,5 +315,68 @@ class SiteController extends Controller
     {
         Yii::app()->user->logout();
         $this->redirect("/");
+    }
+
+    /*all user by company*/
+    public function actionAllUserByCompany()
+    {
+        if(isset($_POST['Usergroup']['company']))
+        {
+            $html=$this->renderPartial("user-by-company",array("group"=>Usergroup::model()->findByPk($_POST['Usergroup']['id']),"model"=>User::model()->getAllUsersByCompany($_POST['Usergroup']['company'])),true);
+            if(isset($_POST['Usergroup']) && !empty($_POST['Usergroup']) && isset($_POST['Usergroup']['company']) && !empty($_POST['Usergroup']['company']))
+                echo json_encode(array("error"=>false,"message"=>"","html"=>$html));
+            else echo json_encode(array("error"=>true,"message"=>"","html"=>$html));
+        }
+        else
+        {
+            $this->redirect("/");
+        }
+    }
+
+    /*getAllFriends*/
+    public function actionGetAllFriends()
+    {
+        $ret=array();
+        $models=Friendship::model()->findAllBySql("select * from friendship where (inviter_id=:inviter_id OR friend_id=:friend_id) AND status=1 ORDER BY updatetime", array(':inviter_id'=>Yii::app()->user->id,':friend_id'=>Yii::app()->user->id));
+        if($models)
+        {
+            foreach($models as $val)
+            {
+                if($val->inviter_id==Yii::app()->user->id)
+                {
+                    $ret[$val->friend_id]=Profile::model()->getName($val->friend_id);
+                }
+                else
+                    $ret[$val->inviter_id]=Profile::model()->getName($val->inviter_id);
+            }
+        }
+        return  $ret;
+    }
+
+    /*like*/
+    public function actionLike()
+    {
+        if(isset($_POST) && !empty($_POST['Comments']))
+        {
+            $like_search=Likes::model()->findByAttributes(array('user_id'=>Yii::app()->user->id,'comments_id'=>$_POST['Comments']['id']));
+            if($like_search)
+            {
+                if($like_search->like==0)
+                {
+                    $like_search->like=1;
+                }
+                else $like_search->like=0;
+                $like_search->save();
+            }
+            else
+            {
+                $like=new Likes();
+                $like->comments_id=$_POST['Comments']['id'];
+                $like->user_id=Yii::app()->user->id;
+                $like->like=1;
+                $like->save();
+            }
+        }
+        echo json_encode(array('error'=>false,'message'=>count(Likes::model()->findByAttributes(array('like'=>1,'user_id'=>Yii::app()->user->id,'comments_id'=>$_POST['Comments']['id'])))));
     }
 }

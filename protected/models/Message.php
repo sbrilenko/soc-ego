@@ -111,4 +111,9 @@ class Message extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+    public function getAllFriendsMessages($id)
+    {
+        return $this->model()->findAllBySql("SELECT m.* FROM ".$this->tableName()." as m,".Friendship::model()->tableName()." as f WHERE ((f.inviter_id=".$id." OR f.friend_id) AND f.status>0) and (m.from_user_id=".$id." OR m.to_user_id=".$id.") ORDER BY m.timestamp DESC");
+    }
 }
