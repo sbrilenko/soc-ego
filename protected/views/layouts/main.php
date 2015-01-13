@@ -26,7 +26,7 @@
     <?php if(isset(Yii::app()->user->id) && Yii::app()->controller->id=="site" && Yii::app()->controller->action->id=="index") { ?>
 <!--        <script src="--><?php //echo Yii::app()->request->baseUrl; ?><!--/js/jquery.jscrollpane.min.js"></script>-->
 <!--        <link href="--><?php //echo Yii::app()->request->baseUrl; ?><!--/css/jquery.jscrollpane.css" rel="stylesheet">-->
-         <link href="<?php echo Yii::app()->request->baseUrl; ?>/css/nanoscroller.css" rel="stylesheet">
+        <link href="<?php echo Yii::app()->request->baseUrl; ?>/css/nanoscroller.css" rel="stylesheet">
         <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery.nanoscroller.js"></script>
         <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery.mousewheel.js"></script>
 
@@ -317,34 +317,77 @@
                 <div class="friends">
                     <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
                     <script>
-                        $(document).ready(function()
+                        Object.size = function(obj) {
+                            var size = 0, key;
+                            for (key in obj) {
+                                if (obj.hasOwnProperty(key)) size++;
+                            }
+                            return size;
+                        };
+
+                       $(document).ready(function()
                         {
+                            autocomplite_array=[];
                             $( "#message-to-user input[name=user]" ).autocomplete({
+                                minLength: 0,
                                 source: function( request, response ) {
                                     var arr=$('#message-to-user').serializeArray();
                                     $.ajax({
                                         url: "getAllFriends",
                                         data: arr,
                                         type:'post',
+                                        dataType: "json",
                                         success: function( data ) {
-                                            console.log(data)
-                                            response( data );
+//                                            data=$.parseJSON(data)
+                                            console.log(data.data)
+                                            response(data.data)
                                         }
                                     });
                                 },
-                                minLength: 2,
+                                focus: function( event, ui ) {
+                                    $( "#project" ).val( ui.item.label );
+                                    return false;
+                                },
                                 select: function( event, ui ) {
-                                    log( ui.item ?
-                                    "Selected: " + ui.item.label :
-                                    "Nothing selected, input was " + this.value);
+                                    console.log( ui)
+                                    $(this).val(ui.item.value)
+                                    $('form[id=message-to-user]').find('input[name=to_user]').val(ui.item.id);
+                                    $('.quick-message-user-icon').append('<img src="'+ui.item.icon+'" title="'+ui.item.value+'">')
+
+                                    return false;
                                 },
                                 open: function() {
                                     $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
                                 },
                                 close: function() {
+                                    autocomplite_array=[];
                                     $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
                                 }
-                            });
+                            })
+                            $(document).on('submit','#message-to-user',function()
+                            {
+                                var arr=$(this).serializeArray();
+                                console.log(arr)
+                                $.ajax({
+                                    url: "sendQuickMessage",
+                                    data: arr,
+                                    type:'post',
+                                    dataType: "json",
+                                    success: function( data ) {
+                                        console.log(data)
+                                        if(data.error)
+                                        {
+                                           console.log(data.message)
+                                        }
+                                        else
+                                        {
+                                            $('#message-to-user input[name=to_user],#message-to-user input[name=user],#message-to-user textarea').val('')
+                                            $('.quick-message-user-icon').empty();
+                                        }
+                                    }
+                                });
+                                return false
+                            })
                         })
                     </script>
                 <?php
@@ -362,7 +405,7 @@
                 <div class="friends-text">
                     <?php echo Chtml::textArea('text');?>
                 </div>
-                <div class="message-to-user-sub-m f-l"></div>
+                <div class="message-to-user-sub-m f-l quick-message-user-icon"></div>
                     <div class="message-to-user-sub-m f-r">
                         <?php echo Chtml::submitButton('Send',array('class'=>'message-to-user'));?>
                     </div>

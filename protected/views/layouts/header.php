@@ -67,7 +67,7 @@
             </li>
             <li class="tri">
                 <a href="#" class="no-padding">
-                    <div class="menu-padding">
+                    <div class="menu-padding" style=" padding: 22px 0 22px 22px;">
                         <div class="triangle"></div>
                     </div>
                 </a>

@@ -15,6 +15,8 @@
  */
 class Message extends CActiveRecord
 {
+	public $full_name;
+
 	/**
 	 * @return string the associated database table name
 	 */
@@ -114,6 +116,67 @@ class Message extends CActiveRecord
 
     public function getAllFriendsMessages($id)
     {
-        return $this->model()->findAllBySql("SELECT m.* FROM ".$this->tableName()." as m,".Friendship::model()->tableName()." as f WHERE ((f.inviter_id=".$id." OR f.friend_id) AND f.status>0) and (m.from_user_id=".$id." OR m.to_user_id=".$id.") ORDER BY m.timestamp DESC");
+        $arr_id=array();
+        $ret_message=array();
+        $all_messages=$this->model()->findAllBySql("SELECT m.* FROM ".$this->tableName()." as m,".Friendship::model()->tableName()." as f WHERE ((f.inviter_id=".$id." OR f.friend_id) AND f.status>0) and (m.from_user_id=".$id." OR m.to_user_id=".$id.") ORDER BY m.timestamp DESC");
+        foreach($all_messages as $message)
+        {
+            if($message->from_user_id==$id)
+            {
+                if(!in_array($message->to_user_id,$arr_id))
+                {
+					$ret_message[]=$message;
+                    $arr_id[]=$message->to_user_id;
+                }
+            }
+            else
+            {
+                if(!in_array($message->from_user_id,$arr_id))
+                {
+					$ret_message[]=$message;
+                    $arr_id[]=$message->from_user_id;
+                }
+            }
+
+        }
+        return $ret_message;
     }
+	/*get only need field*/
+
+	public function messageStructure($array_message)
+	{
+		$ret=array();
+		if(!empty($array_message))
+		{
+			foreach($array_message as $val)
+			{
+				$user_friends=$val->from_user_id==Yii::app()->user->id?Profile::model()->findByAttributes(array("user_id"=>$val->from_user_id)):Profile::model()->findByAttributes(array("user_id"=>$val->to_user_id));
+				if($user_friends->avatar)
+				{
+					$file_company=Files::model()->findByPk($user_friends->avatar);
+					if($file_company)
+					{
+						if(file_exists(Yii::app()->basePath."/../files/".$file_company->image))
+						{
+							$icon="/files/".$file_company->image;
+						}
+						else
+						{
+							$icon="/img/default-user.png";
+						}
+					}
+					else
+					{
+						$icon="/img/default-user.png";
+					}
+				}
+				else
+				{
+					$icon="/img/default-user.png";
+				}
+				$ret[]=array('icon'=>$icon,'full_name'=>$user_friends->firstname." ".$user_friends->lastname,'job_type'=>User::model()->getJobType($user_friends->id),'time'=>date('H:i',$val->timestamp),'message'=>$val->message,'read'=>$val->message_read);
+			}
+		}
+		return $ret;
+	}
 }

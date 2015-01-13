@@ -1,9 +1,26 @@
+<link href="<?php echo Yii::app()->request->baseUrl; ?>/css/nanoscroller.css" rel="stylesheet">
+<script src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery.nanoscroller.js"></script>
+<script src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery.mousewheel.js"></script>
+<script>
+    $(document).ready(function()
+    {
+        function initScrollPanes()
+        {
+            $(function()
+            {
+                $(".nano").nanoScroller({ scroll: 'bottom',flash: true  });
+            });
+        }
+        setTimeout(initScrollPanes, 100);
+    })
+</script>
 <div class="main">
 <div class="messages-title">Messages</div>
 
     <table style="padding: 0;margin: 0;">
         <tr>
-            <td style="width:53%;padding: 0;border:1px solid #eaeaea;border-radius: 6px;height:640px;vertical-align: top;background: #fff;">
+            <td class="message-block">
+                <div class="message-block-title">Messages</div>
                 <div class="group-scroll nano" style="height: 640px;">
                     <table class="group-wall-content nano-content" style="margin: 0;">
                         <?php
@@ -11,71 +28,36 @@
                         {
                             foreach($friends as $index => $friend)
                             {
-                                echo '<tr>';
-                                echo '<td class="padding-zero tdone left-pad white-space-nowrap">';
-                                $user_friends=$friend->from_user_id==Yii::app()->user->id?Profile::model()->findByAttributes(array("user_id"=>$friend->from_user_id)):Profile::model()->findByAttributes(array("user_id"=>$friend->to_user_id));
-                                if($user_friends->avatar)
-                                {
-                                    $file_company=Files::model()->findByPk($user_friends->avatar);
-                                    if($file_company)
-                                    {
-                                        if(file_exists(Yii::app()->basePath."/../files/".$file_company->image))
-                                        {
-                                            echo "<a href='#'><img class='f-l' style='padding: 0;width:36px;height:36px;border-radius: 36px;' src='/files/".$file_company->image."'/></a>";
-                                        }
-                                        else
-                                        {
-                                            echo "<a href='#'><img class='f-l' style='padding: 0;width:36px;height:36px;border-radius: 36px;' src='/img/default-user.png'/></a>";
-                                        }
-                                    }
-                                    else
-                                    {
-                                        echo "<a href='#'><img class='f-l' style='padding: 0;width:36px;height:36px;border-radius: 36px;' src='/img/default-user.png'/></a>";
-                                    }
-                                }
-                                else
-                                {
-                                    echo "<a href='#'><img class='f-l' style='padding: 0;width:36px;height:36px;border-radius: 36px;' src='/img/default-user.png'/></a>";
-                                }
-                                echo "<div class='project-ver-line f-l'>";
-                                echo '<div class="project-title ">'.htmlspecialchars($user->firstname." ".$user->lastname).'</div>';
-                                $who_are_you=User::model()->findByPk($user_friends->user_id);
-                                echo '<div class="project-pm">'.htmlspecialchars($who_are_you->job_title).'</div>';
-                                echo "</div>";
-                                echo '</td>';
-                                echo '<td class="padding-zero tdmiddle project-ver-line">';
-                                echo "<div class='project-company-date text-center'>".htmlspecialchars(Company::model()->findByPk($group_table->company)->title)."</div>";
-                                echo '</td>';
-                                echo '</tr>';
-                                echo '<tr>';
-                                echo '<td>';
-//                                echo '<div class="all-friends-block-message">'.htmlspecialchars().'</div>';
-                                echo '</td>';
-                                echo '</tr>';
+                            ?>
+                                <tr>
+                                    <td class="padding-zero tdone left-pad white-space-nowrap" style="padding:16px ;">
+                                        <a href="#" class="get-message">
+                                            <img class='f-l' style='padding: 0;width:36px;height:36px;border-radius: 36px;' src='<?php echo $friend['icon'];?>'/>
+                                            <div class='f-l'>
+                                                <div class="message-block-user-name"><?php echo htmlspecialchars($friend['full_name']);?></div>
+                                                <div class="message-block-user-position"><?php echo htmlspecialchars($friend['job_type']);?></div>
+                                            </div>
+                                            <div class="f-r message-block-user-time"><?php echo htmlspecialchars($friend['time']);?></div>
+                                            <div class="clear"></div>
+                                            <div class="message-block-user-message"><?php echo htmlspecialchars($friend['message']);?></div>
+                                        </a>
+                                    </td>
+                                </tr>
+                            <?php
                             }
                         }
                         ?>
-
                     </table>
                 </div>
             </td>
             <td style="padding: 0;width:2%;"></td>
             <td style="overflow:hidden;width:45%;position:relative;padding: 0;border:1px solid #eaeaea;vertical-align: top;border-radius: 6px;height:640px;background: #fff;">
-                <div class="group-wall-title">Dialogs</div>
+                <div class="message-block-title">Dialogs</div>
                 <div class="before-wall-content">
                     <div class="wall-content nano" style='height: 527px;'>
-                        <!--                        --><?php
-                        $comments=Comments::model()->findAllByAttributes(array("parent"=>0,"commented_user_id"=>Yii::app()->user->id),array('order'=>'time ASC'));
-                        if($comments)
-                        {
-                            echo "<div class='wall nano-content' style='height: 527px;'>";
-                            foreach($comments as $index=>$com)
-                            {
-                                echo $this->renderPartial("message",array("com"=>$com,'index'=>$index),true);
-                            }
-                            echo "</div>";
-                        }
-                        //                        ?>
+                        <div class='wall nano-content' style='height: 527px;'>
+
+                        </div>
                     </div>
                 </div>
                 <script>
@@ -121,6 +103,7 @@
                                 data: fd,
                                 success: function (data, textStatus) { // вешаем свой обработчик на функцию success
                                     data=$.parseJSON(data);
+                                    console.log(data)
                                     if(data.error)
                                     {
                                         console.log(data.message)
@@ -133,7 +116,30 @@
                                 }
                             })
                             return false
+                        }).on('click','.like-icon',function()
+                        {
+                            var th= $(this);
+                            var form=th.find('div').clone();
+                            var fd = th.find('form').serializeArray();
+                            $.ajax({
+                                url: "like",
+                                type: "POST",
+                                data: fd,
+                                success: function (data, textStatus) { // вешаем свой обработчик на функцию success
+                                    data=$.parseJSON(data);
+                                    if(data.error)
+                                    {
+                                        console.log(data.message)
+                                    }
+                                    else
+                                    {
+                                        th.text(data.message)
+                                        th.append(form)
+                                    }
+                                }
+                            })
                         })
+                        return false
                     })
                 </script>
                 <?php
@@ -164,7 +170,7 @@
                         echo $form->textField($comment_m,'text',array("placeholder"=>'Enter your message here...','style'=>'height:40px;border:0;padding:0 5%;width:90%;'));
                         echo "</td>";
                         echo "<td style='padding: 0;width:72px;'>";
-                        echo CHtml::submitButton('Send',array('class'=>'','style'=>"height:40px;border:0;padding:0;background:url('../img/comment-send-button.png')no-repeat;width:72px;color:#fff"));
+                        echo CHtml::submitButton('Send',array('class'=>'','style'=>"height:40px;border:0;padding:0;background-color: #22c9ff;border-radius: 0 5px 5px 0;width:72px;color:#fff"));
                         echo "</td>";
                         echo "</tr>";
                     }

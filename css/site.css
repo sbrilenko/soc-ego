@@ -171,7 +171,7 @@ body
     width:99px;
     background: #fff;
     top: 74px;
-    left: -69px;
+    left: -91px;
     z-index: 99999999;
     display: none;
 }
@@ -2778,3 +2778,62 @@ a.profile-icon,a.profile-icon:hover
 }
 
 
+/*message page*/
+.message-block
+{
+    width:49%;
+    padding: 0;
+    border:1px solid #eaeaea;
+    border-radius: 6px;
+    height:640px;
+    vertical-align: top;
+    background: #fff;
+}
+.message-block-title
+{
+    font-family: HelveticaNeueCyr-Roman;
+    font-size:14px;
+    line-height: 18px;
+    color:#777;
+    text-transform:uppercase;
+    padding: 18px 16px;
+    border-bottom: 1px solid #eaeaea;
+}
+.message-block-user-name
+{
+    font-family: HelveticaNeueCyr-Roman;
+    font-size:16px;
+    line-height: 18px;
+    color:#666;
+    margin-left:12px;
+}
+.message-block-user-position,.message-block-user-time
+{
+    font-family: HelveticaNeueCyr-Roman;
+    font-size:14px;
+    line-height: 18px;
+    color:#c9c9c9;
+    margin-left:12px;
+    opacity: 0.5;
+}
+.message-block-user-time
+{
+    margin-left:12px;
+}
+a.get-message,a.get-message:hover,a.get-message:visited
+{
+    text-decoration: none;
+}
+.message-block-user-message
+{
+    font-family: HelveticaNeueCyr-Roman;
+    font-size:14px;
+    line-height: 18px;
+    color:#959595;
+    margin-top: 15px;
+    text-decoration: none;
+}
+.quick-message-user-icon img
+{
+    padding: 0;width:36px;height:36px;border-radius: 36px;
+}

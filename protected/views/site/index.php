@@ -91,7 +91,7 @@
                 <td class="pad"></td>
                 <td class="quadr">
                 <table class="margin-zero">
-                    <tr><td class="padding-zero"><div class="info-title">level progress</div></td></tr>
+                   <tr><td class="padding-zero"><div class="info-title">level progress</div></td></tr>
                    <tr><td class='padding-zero center'>
 <!--                    <div class='info-diagram'><div class='info-diagram-text'>75</div></div>-->
                     <div class="radial-progress" data-progress="0">
@@ -140,21 +140,21 @@
                     <tr><td class="padding-zero center">
                         <div class="levelstarsprogress ">
                             <?php
-                            if(User::model()->findByPk(Yii::app()->user->id)->level==0)
+                            if(User::model()->getLevel(Yii::app()->user->id)==0)
                             {
                             ?>
                                 <div class="levelstars active"></div>
                                 <div class="levelstars padd"></div>
                                 <div class="levelstars"></div>
                             <?php
-                            }elseif(User::model()->findByPk(Yii::app()->user->id)->level==1)
+                            }elseif(User::model()->getLevel(Yii::app()->user->id)==1)
                             {
                             ?>
                                 <div class="levelstars active"></div>
                                 <div class="levelstars active padd"></div>
                                 <div class="levelstars"></div>
                             <?php
-                            }elseif(User::model()->findByPk(Yii::app()->user->id)->level==2)
+                            }elseif(User::model()->getLevel(Yii::app()->user->id)==2)
                             {
                             ?>
                                 <div class="levelstars active"></div>

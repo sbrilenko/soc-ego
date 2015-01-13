@@ -278,7 +278,7 @@ class SiteController extends Controller
 
     public function actionMessages()
     {
-        $this->render('messages',array("friends"=>Message::model()->getAllFriendsMessages(Yii::app()->user->id)));
+        $this->render('messages',array("friends"=>Message::model()->messageStructure(Message::model()->getAllFriendsMessages(Yii::app()->user->id))));
     }
 
     public function actionAdmin()
@@ -336,7 +336,7 @@ class SiteController extends Controller
     /*getAllFriends*/
     public function actionGetAllFriends()
     {
-        $ret=array();
+        $ret_items=array();
         $models=Friendship::model()->findAllBySql("select * from friendship where (inviter_id=:inviter_id OR friend_id=:friend_id) AND status=1 ORDER BY updatetime", array(':inviter_id'=>Yii::app()->user->id,':friend_id'=>Yii::app()->user->id));
         if($models)
         {
@@ -344,13 +344,59 @@ class SiteController extends Controller
             {
                 if($val->inviter_id==Yii::app()->user->id)
                 {
-                    $ret[$val->friend_id]=Profile::model()->getName($val->friend_id);
+                    $dsdd=Profile::model()->getName($val->friend_id);
+                    $user_friends=Profile::model()->findByAttributes(array("user_id"=>$val->friend_id));
+                    $icon="/img/default-user.png";
+                    if($user_friends->avatar)
+                    {
+                        $file_company=Files::model()->findByPk($user_friends->avatar);
+                        if($file_company)
+                        {
+                            if(file_exists(Yii::app()->basePath."/../files/".$file_company->image))
+                            {
+                                $icon="/files/".$file_company->image;
+                            }
+                            else
+                            {
+                                $icon="/img/default-user.png";
+                            }
+                        }
+                        else
+                        {
+                            $icon="/img/default-user.png";
+                        }
+                    }
+                    $ret_items[]=array('value'=>$dsdd,'label'=>$dsdd,'id'=>$val->friend_id,'icon'=>$icon);
                 }
                 else
-                    $ret[$val->inviter_id]=Profile::model()->getName($val->inviter_id);
+                {
+                    $dsdd=Profile::model()->getName($val->inviter_id);
+                    $user_friends=Profile::model()->findByAttributes(array("user_id"=>$val->inviter_id));
+                    $icon="/img/default-user.png";
+                    if($user_friends->avatar)
+                    {
+                        $file_company=Files::model()->findByPk($user_friends->avatar);
+                        if($file_company)
+                        {
+                            if(file_exists(Yii::app()->basePath."/../files/".$file_company->image))
+                            {
+                                $icon="/files/".$file_company->image;
+                            }
+                            else
+                            {
+                                $icon="/img/default-user.png";
+                            }
+                        }
+                        else
+                        {
+                            $icon="/img/default-user.png";
+                        }
+                    }
+                    $ret_items[]=array('value'=>$dsdd,'label'=>$dsdd,'id'=>$val->inviter_id,'icon'=>$icon);
+                }
             }
         }
-        return  $ret;
+        echo json_encode(array('error'=>false,'data'=>$ret_items));
     }
 
     /*like*/
@@ -378,5 +424,51 @@ class SiteController extends Controller
             }
         }
         echo json_encode(array('error'=>false,'message'=>count(Likes::model()->findByAttributes(array('like'=>1,'user_id'=>Yii::app()->user->id,'comments_id'=>$_POST['Comments']['id'])))));
+    }
+
+    /*sendQuickMessage*/
+    public function actionSendQuickMessage()
+    {
+        if(Yii::app()->request->isPostRequest)
+        {
+            $from_user=trim($_POST['from_user']);
+            $to_user=trim($_POST['to_user']);
+            $text=trim($_POST['text']);
+            if(empty($from_user) || !User::model()->findByPk($from_user))
+            {
+                echo json_encode(array('error'=>true,'message'=>'User that send do not exists'));
+                exit();
+            }
+            elseif(empty($to_user) || !User::model()->findByPk($to_user))
+            {
+                echo json_encode(array('error'=>true,'message'=>'Please choose the user'));
+                exit();
+            }
+            elseif(empty($text))
+            {
+                echo json_encode(array('error'=>true,'message'=>'Message cannot be empty'));
+                exit();
+            }
+            $message=new Message();
+            $message->timestamp=strtotime(date('Y-m-d H:i:s'));
+            $message->from_user_id=$from_user;
+            $message->to_user_id=$to_user;
+            $message->message=$text;
+            $message->message_read=0;
+            $message->answered=0;
+            $message->draft=0;
+            if($message->save())
+            {
+                echo json_encode(array('error'=>false,'message'=>'Saved'));
+            }
+            else
+            {
+                echo json_encode(array('error'=>true,'message'=>print_r($message->getErrors(),true)));
+            }
+        }
+        else
+        {
+            echo json_encode(array('error'=>true,'message'=>'No data'));
+        }
     }
 }

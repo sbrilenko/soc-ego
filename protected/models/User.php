@@ -230,4 +230,18 @@ class User extends CActiveRecord
     {
         return User::model()->findByPk($user_id)->level;
     }
+
+	/*return work_count*/
+	public function getWorkCount($user_id)
+	{
+		return User::model()->findByPk($user_id)->work_count;
+	}
+
+	/*return job_type*/
+	public function getJobType($user_id)
+	{
+		return User::model()->findByPk($user_id)->job_type;
+	}
+
+
 }
