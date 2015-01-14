@@ -41,29 +41,100 @@
                     });
                 }
                 setTimeout(initScrollPanes, 100);
-
-//                function initScrollPanes()
-//                {
-//                    $(function()
-//                    {
-//                        $(".scrollbar").jScrollPane();
-//                        var scrollPane = $(".scrollbar").jScrollPane().data('jsp');
-//                        scrollPane.scrollToBottom();
-//                        $('.group-scroll').jScrollPane();
-//                        var scrollPaneGroup = $('.group-scroll').jScrollPane().data('jsp');
-//                        scrollPaneGroup.scrollToBottom();
-//                    });
-//                }
-//                    setTimeout(initScrollPanes, 100);
             })
-//            $(window).resize(function() {
-//                var scrollPane = $(".scrollbar").jScrollPane().data('jsp');
-//                scrollPane.scrollToBottom();
-//            })
         </script>
     <?php }?>
     <?php if(isset(Yii::app()->user->id)) { ?>
     <script>
+        if (!window.WebSocket) {
+            //window.location.reload();
+        } else {
+            //create a new WebSocket object.
+            var wsUri = "ws://"+document.location.hostname+":1600";
+//            var wsUri = "ws://0.0.0.0:1500";
+            websocket = new WebSocket(wsUri);
+
+            // ----------------------------------------------------
+            websocket.onopen = function(ev) { // connection is open
+                var msg = {
+                    type: 'system.init_user_online',
+                    from_user_id: <?php echo Yii::app()->user->id; ?>
+                };
+                console.log(msg);
+                try{ websocket.send(JSON.stringify(msg));console.log('send')}
+                catch(ex){
+                    console.log(ex.data);
+                    return false}
+            };
+            //Connection close
+            websocket.onclose = function(ev) {
+
+                console.log('Disconnected',ev)
+            };
+
+            //Message Receved
+            websocket.onmessage = function(ev) {
+                console.log('Message ',ev)
+                var msg = JSON.parse(ev.data); //PHP sends Json data
+                console.log(msg)
+                var type = msg.type; //message type
+                switch (type) {
+                    case 'system.quickmessage':
+                        if(msg.to==<?php echo Yii::app()->user->id;?>)
+                        {
+                            if(!msg.error)
+                            {
+                                //if page not messages
+                                $('.top-menu .messages-icon').next().text(msg.count).show();
+                                <?php if(Yii::app()->controller->id=="site" && Yii::app()->controller->action->id=="messages") { ?>
+                                /*setTimeout(function(){
+                                    $('.top-menu .messages-icon').next().fadeOut(function(){ $(this).text('');})
+                                },2000)*/
+                                <?php } ?>
+                                $('.get-message').each(function()
+                                {
+                                    var form=$(this).find('form');
+                                    if(form.find('input[name*=from_user_id]').val()==msg.from || form.find('input[name*=to_user_id]').val()==msg.from)
+                                    {
+
+                                        $('.message-block-user-time',this).text(msg.date)
+                                        $('.message-block-user-message',this).text(msg.message)
+                                        $('.message-new-message').text(msg.count).show()
+                                    }
+                                })
+                            }
+
+                        }
+                        else
+                        if(msg.from==<?php echo Yii::app()->user->id;?>)
+                        {
+                            if(!msg.error)
+                            {
+                                <?php if(Yii::app()->controller->id=="site" && Yii::app()->controller->action->id=="messages") { ?>
+                                //clear quickmessage form
+                                $('#message-to-user input[name=to_user],#message-to-user textarea,#message-to-user input[name=user]').val('');
+                                $('.quick-message-user-icon').empty();
+                                $('.get-message').each(function()
+                                {
+                                    var form=$(this).find('form');
+                                    if(form.find('input[name*=from_user_id]').val()==msg.from || form.find('input[name*=to_user_id]').val()==msg.from)
+                                    {
+                                        $('.message-block-user-time',this).text(msg.date)
+                                        $('.message-block-user-message',this).text(msg.message)
+                                    }
+                                })
+                                <?php } ?>
+                            }
+                        }
+                    break;
+                }
+            };
+
+            //Error
+            websocket.onerror = function(ev) {
+                console.log('Error ',ev)
+            };
+        }
         $(document).ready(function()
         {
             $(document).on('click','.tri',function()
@@ -71,7 +142,9 @@
 
             }).on('click',function(el)
             {
-                el.toElement.className=="triangle"?$('.triangle-menu').is(":visible")?$('.triangle-menu').removeAttr("style"):$('.triangle-menu').show():$('.triangle-menu').removeAttr("style");
+                $(el.target).hasClass("triangle")?$('.triangle-menu').is(":visible")?$('.triangle-menu').removeAttr("style"):$('.triangle-menu').show():$('.triangle-menu').removeAttr("style");
+                //el.toElement.className=="triangle"?$('.triangle-menu').is(":visible")?$('.triangle-menu').removeAttr("style"):$('.triangle-menu').show():$('.triangle-menu').removeAttr("style");
+
             }).on('keydown',function(el)
             {
                 if(el.keyCode==27)
@@ -345,14 +418,13 @@
                                     });
                                 },
                                 focus: function( event, ui ) {
-                                    $( "#project" ).val( ui.item.label );
+                                    //$( "#project" ).val( ui.item.label );
                                     return false;
                                 },
                                 select: function( event, ui ) {
-                                    console.log( ui)
                                     $(this).val(ui.item.value)
                                     $('form[id=message-to-user]').find('input[name=to_user]').val(ui.item.id);
-                                    $('.quick-message-user-icon').append('<img src="'+ui.item.icon+'" title="'+ui.item.value+'">')
+                                    $('.quick-message-user-icon').empty().append('<img src="'+ui.item.icon+'" title="'+ui.item.value+'">')
 
                                     return false;
                                 },
@@ -363,11 +435,27 @@
                                     autocomplite_array=[];
                                     $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
                                 }
-                            })
+                            }).autocomplete( "instance" )._renderItem = function( ul, item ) {
+                                ul.addClass('quickmessage-autocomplete-ul');
+                                console.log(ul, item )
+                                return $( "<li>" )
+                                    .append( "<a><div class='f-l'><img class='autocomplete-li-icon' src='"+item.icon+"' /></div><div class='f-l autocomplete-li-margin-l'><div class='autocomplete-name'>" + item.label + "</div><div class='autocomplete-position'>" + item.position + "</div></div><div class='clear'></div></a>" )
+                                    .appendTo( ul );
+                            };
                             $(document).on('submit','#message-to-user',function()
                             {
                                 var arr=$(this).serializeArray();
-                                console.log(arr)
+                                var msg = {
+                                    type: 'system.quickmessage',
+                                    data: arr
+                                };
+                                console.log(msg);
+                                try{ websocket.send(JSON.stringify(msg));console.log('send')}
+                                catch(ex){
+                                    console.log(ex.data);
+                                    return false}
+
+                                /*console.log(arr)
                                 $.ajax({
                                     url: "sendQuickMessage",
                                     data: arr,
@@ -385,7 +473,7 @@
                                             $('.quick-message-user-icon').empty();
                                         }
                                     }
-                                });
+                                });*/
                                 return false
                             })
                         })

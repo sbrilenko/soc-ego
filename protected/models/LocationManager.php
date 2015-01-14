@@ -7,7 +7,7 @@
  * @property string $id
  * @property string $locationname
  */
-class Locationmanager extends CActiveRecord
+class LocationManager extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
@@ -99,7 +99,7 @@ class Locationmanager extends CActiveRecord
         $user=Profile::model()->findByAttributes(array("user_id"=>$user_id));
         if($user)
         {
-            $location=LocationManager::model()->findByPk($user->user_location);
+            $location=LocationManager::model()->findByAttributes(array('id'=>$user->user_location));
             if($location)
                 return $location->locationname;
         }

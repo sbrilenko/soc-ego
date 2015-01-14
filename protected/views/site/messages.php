@@ -30,11 +30,25 @@
                             {
                             ?>
                                 <tr>
-                                    <td class="padding-zero tdone left-pad white-space-nowrap" style="padding:16px ;">
+                                    <td class="padding-zero tdone left-pad white-space-nowrap <?php if($friend['count']>0) echo 'not-read-message-st'?>" style="padding:16px ;">
                                         <a href="#" class="get-message">
+                                            <div style="display: none;">
+                                                <?php $mess=Message::model()->findByPk($friend['message_id']);?>
+                                                <?php $form=$this->beginWidget('CActiveForm', array(
+                                                    'id'=>'users-form-reg-form',
+                                                    'enableAjaxValidation'=>true,
+                                                    'clientOptions'=>array(
+                                                        'validateOnSubmit'=>true,
+                                                    ),
+                                                )); ?>
+                                                <?php echo $form->hiddenField($mess,'id');?>
+                                                <?php echo $form->hiddenField($mess,'from_user_id');?>
+                                                <?php echo $form->hiddenField($mess,'to_user_id');?>
+                                                <?php $this->endWidget(); ?>
+                                            </div>
                                             <img class='f-l' style='padding: 0;width:36px;height:36px;border-radius: 36px;' src='<?php echo $friend['icon'];?>'/>
                                             <div class='f-l'>
-                                                <div class="message-block-user-name"><?php echo htmlspecialchars($friend['full_name']);?></div>
+                                                <div class="message-block-user-name"><?php echo htmlspecialchars($friend['full_name']);?><span class="message-new-message" <?php if($friend['count']>0) echo "style='display:inline;'"?>><?php if($friend['count']>0) echo $friend['count'];?></span></div>
                                                 <div class="message-block-user-position"><?php echo htmlspecialchars($friend['job_type']);?></div>
                                             </div>
                                             <div class="f-r message-block-user-time"><?php echo htmlspecialchars($friend['time']);?></div>

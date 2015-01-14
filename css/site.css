@@ -2837,3 +2837,55 @@ a.get-message,a.get-message:hover,a.get-message:visited
 {
     padding: 0;width:36px;height:36px;border-radius: 36px;
 }
+.message-new-message
+{
+    display: none;
+    background-color: #df495e;
+    padding:2px 5px;
+    font-family: HelveticaNeueCyr-Bold;
+    font-size: 10px;
+    line-height: 12px;
+    color:#fff;
+    margin-left:25px;
+    border-radius: 3px;
+}
+.not-read-message-st
+{
+    background-color: #fff9ec;
+}
+.quickmessage-autocomplete-ul
+{
+    width:270px !important;
+    height:273px;
+    border-radius: 3px;
+    border: 1px solid #4d4d4d;
+    background-color: #393939;
+    list-style: none;
+    padding: 16px 0;
+}
+.quickmessage-autocomplete-ul li
+{
+    margin: 0 16px 16px 16px;
+}
+.quickmessage-autocomplete-ul li .autocomplete-li-icon
+{
+    padding: 0;width:40px;height:40px;border-radius: 40px;
+}
+.quickmessage-autocomplete-ul li .autocomplete-li-margin-l
+{
+    margin-left:15px;
+}
+.quickmessage-autocomplete-ul li .autocomplete-name
+{
+    font-family: HelveticaNeueCyr-Roman;
+    font-size: 18px;
+    line-height: 20px;
+    color:#fff;
+}
+.quickmessage-autocomplete-ul li .autocomplete-position
+{
+    font-family: HelveticaNeueCyr-Roman;
+    font-size: 14px;
+    line-height:19px;
+    color:#afafaf;
+}

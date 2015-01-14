@@ -150,7 +150,7 @@ class Message extends CActiveRecord
 		{
 			foreach($array_message as $val)
 			{
-				$user_friends=$val->from_user_id==Yii::app()->user->id?Profile::model()->findByAttributes(array("user_id"=>$val->from_user_id)):Profile::model()->findByAttributes(array("user_id"=>$val->to_user_id));
+				$user_friends=$val->from_user_id==Yii::app()->user->id?Profile::model()->findByAttributes(array("user_id"=>$val->to_user_id)):Profile::model()->findByAttributes(array("user_id"=>$val->from_user_id));
 				if($user_friends->avatar)
 				{
 					$file_company=Files::model()->findByPk($user_friends->avatar);
@@ -174,9 +174,15 @@ class Message extends CActiveRecord
 				{
 					$icon="/img/default-user.png";
 				}
-				$ret[]=array('icon'=>$icon,'full_name'=>$user_friends->firstname." ".$user_friends->lastname,'job_type'=>User::model()->getJobType($user_friends->id),'time'=>date('H:i',$val->timestamp),'message'=>$val->message,'read'=>$val->message_read);
+				$ret[]=array('count'=>Message::model()->notReadMessage($user_friends->id),'message_id'=>$val->id,'icon'=>$icon,'full_name'=>$user_friends->firstname." ".$user_friends->lastname,'job_type'=>User::model()->getJobType($user_friends->id),'time'=>date('H:i',$val->timestamp),'message'=>$val->message,'read'=>$val->message_read);
 			}
 		}
 		return $ret;
 	}
+    /*count of not readable message*/
+    public function notReadMessage($user_id)
+    {
+        $message=$this->model()->findAllBySql("SELECT m.* FROM ".$this->tableName()." as m,".Friendship::model()->tableName()." as f WHERE ((f.inviter_id=".$user_id." OR f.friend_id) AND f.status>0) and (m.from_user_id=".$user_id." OR m.to_user_id=".$user_id.") AND m.message_read=0 ORDER BY m.timestamp DESC");
+        return count($message);
+    }
 }

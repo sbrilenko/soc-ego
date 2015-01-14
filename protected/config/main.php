@@ -8,7 +8,6 @@
 return array(
     'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
     'name'=>'Giraffe network',
-    'defaultController' => 'site',
 
     // preloading 'log' component
     'preload'=>array('log'),
@@ -17,11 +16,9 @@ return array(
     'import'=>array(
         'application.models.*',
         'application.components.*',
-//        'application.modules.user.models.*',
     ),
 
     'modules'=> array(
-        'api',
         'gii'=>array(
             'class'=>'system.gii.GiiModule',
             'password'=>'root',
@@ -88,6 +85,7 @@ return array(
 
     // application components
     'components'=>array(
+        'class' => 'application.components.DbConnection',
         'imagemod' => array(
             //alias to dir, where you unpacked extension
             'class' => 'application.extensions.imagemodifier.CImageModifier',

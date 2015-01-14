@@ -29,37 +29,7 @@
         setTimeout(window.randomize, 200);
         setTimeout(window.lasttonext, 200);
         $('.radial-progress').click(window.randomize);
-        //Open a WebSocket connection.
-        var wsUri = "ws://soc-ego/socket";
-//        var socket = new WebSocket("ws://localhost:8081");
 
-        websocket = new WebSocket("ws://0.0.0.0:8000");
-
-        //Connected to server
-        websocket.onopen = function(ev) {
-            console.log('Connected to server', ev)
-        }
-
-        //Connection close
-        websocket.onclose = function(ev) {
-            console.log('Disconnected',ev)
-        };
-
-        //Message Receved
-        websocket.onmessage = function(ev) {
-            console.log('Message ',ev)
-        };
-
-        //Error
-        websocket.onerror = function(ev) {
-            console.log('Error ',ev)
-        };
-
-        //Send a Message
-        $('#send').click(function(){
-            var mymessage = 'This is a test message';
-            websocket.send(mymessage);
-        });
     });
 </script>
 <div class="main">
@@ -71,7 +41,7 @@
         </div>
         <div class="location-icon">
             <?php
-            echo $location;
+           // echo $location;
             ?>
         </div>
     </div>

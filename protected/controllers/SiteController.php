@@ -278,7 +278,9 @@ class SiteController extends Controller
 
     public function actionMessages()
     {
-        $this->render('messages',array("friends"=>Message::model()->messageStructure(Message::model()->getAllFriendsMessages(Yii::app()->user->id))));
+        if(isset(Yii::app()->user->id))
+            $this->render('messages',array("friends"=>Message::model()->messageStructure(Message::model()->getAllFriendsMessages(Yii::app()->user->id))));
+        else $this->redirect('/');
     }
 
     public function actionAdmin()
@@ -366,7 +368,7 @@ class SiteController extends Controller
                             $icon="/img/default-user.png";
                         }
                     }
-                    $ret_items[]=array('value'=>$dsdd,'label'=>$dsdd,'id'=>$val->friend_id,'icon'=>$icon);
+                    $ret_items[]=array('value'=>$dsdd,'label'=>$dsdd,'id'=>$val->friend_id,'icon'=>$icon,'position'=>Profile::model()->jobType($val->friend_id));
                 }
                 else
                 {
@@ -392,7 +394,7 @@ class SiteController extends Controller
                             $icon="/img/default-user.png";
                         }
                     }
-                    $ret_items[]=array('value'=>$dsdd,'label'=>$dsdd,'id'=>$val->inviter_id,'icon'=>$icon);
+                    $ret_items[]=array('value'=>$dsdd,'label'=>$dsdd,'id'=>$val->inviter_id,'icon'=>$icon,'position'=>Profile::model()->jobType($val->inviter_id));
                 }
             }
         }
