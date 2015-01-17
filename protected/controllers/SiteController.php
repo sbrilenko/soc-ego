@@ -473,4 +473,95 @@ class SiteController extends Controller
             echo json_encode(array('error'=>true,'message'=>'No data'));
         }
     }
+
+    /*message history*/
+    public function actiongetMessagesHistory()
+    {
+        if(Yii::app()->request->isPostRequest)
+        {
+            /*check the post data*/
+            $message=new Message();
+            $message->attributes=$_POST['Message'];
+            if($message)
+            {
+                if($message->from_user_id!==Yii::app()->user->id && $message->to_user_id!==Yii::app()->user->id)
+                {
+                    echo json_encode(array('error'=>true,'message'=>'This is no history'));
+                    exit();
+                }
+                else
+                {
+                    $from_id=$message->from_user_id;
+                    $to_id=$message->to_user_id;
+                    $from_icon="/img/default-user.png";
+                    $to_icon="/img/default-user.png";
+                    $from_icon_model=Profile::model()->findByAttributes(array("user_id"=>$message->from_user_id));
+                    $from_position=Profile::model()->jobType($message->from_user_id);
+                    $to_icon_model=Profile::model()->findByAttributes(array("user_id"=>$message->to_user_id));
+                    $to_position=Profile::model()->jobType($message->to_user_id);
+                    $from_name=Profile::model()->getName($message->from_user_id);
+                    $to_name=Profile::model()->getName($message->to_user_id);
+                    if($from_icon_model->avatar)
+                    {
+                        $user_image=Files::model()->findByPk($from_icon_model->avatar);
+                        if($user_image)
+                        {
+                            if(file_exists(Yii::app()->basePath."/../files/".$user_image->image))
+                            {
+                                $from_icon="/files/".$user_image->image;
+                            }
+                        }
+                    }
+                    if($to_icon_model->avatar)
+                    {
+                        $user_image=Files::model()->findByPk($to_icon_model->avatar);
+                        if($user_image)
+                        {
+                            if(file_exists(Yii::app()->basePath."/../files/".$user_image->image))
+                            {
+                                $to_icon="/files/".$user_image->image;
+                            }
+                        }
+                    }
+                    $ret_messages=array();
+                    if(Yii::app()->user->id==$message->from_user_id)
+                    {
+                        $messages=Message::model()->getAllMessagesSendingToMe($message->from_user_id,$message->to_user_id);
+                    }
+                    else
+                    {
+                        $messages=Message::model()->getAllMessagesSendingToMe($message->to_user_id,$message->from_user_id);
+                    }
+
+                    foreach($messages as $mess)
+                    {
+                        $ret_messages[]=array('from_id'=>$mess->from_user_id,'to_id'=>$mess->to_user_id,'message'=>$mess->message,'read_status'=>$mess->message_read);
+                    }
+
+                    //dialogmessages
+                    echo json_encode(array('error'=>false,
+                                           'message'=>'',
+                                           'html'=>$this->renderPartial('dialogmessages',array(
+                                           'from_id'=>$from_id,
+                                           'to_id'=>$to_id,
+                                           'from_name'=>$from_name,
+                                           'to_name'=>$to_name,
+                                           'from_position'=>$from_position,
+                                           'to_position'=>$to_position,
+                                           'from_icon'=>$from_icon,
+                                           'to_icon'=>$to_icon,
+                                           'current_user_id'=>Yii::app()->user->id,
+                                           'messages'=>$ret_messages),true)
+                    ));
+                    exit();
+                }
+            }
+            else{
+                echo json_encode(array('error'=>true,'message'=>'History not found'));
+                exit();
+            }
+
+        }
+        else echo json_encode(array('error'=>true,'message'=>'No data'));
+    }
 }

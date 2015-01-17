@@ -1,4 +1,4 @@
-<table style="position: relative;overflow: hidden;<?php if($index>-1) echo "margin-bottom: 0px;" ?>width: 95%; <?php if($index==0) echo 'margin-top:25px;';?>">
+<table style="padding-right: 20px;position: relative;overflow: hidden;<?php if($index>-1) echo "margin-bottom: 0px;" ?> <?php if($index==0) echo 'margin-top:25px;';?>">
     <tr>
         <td class="padding-zero wall-avatar-td">
                     <?php if($com->parent==0) {
@@ -81,7 +81,7 @@
         foreach($child_comm as $index=>$children)
         {
             if(count($child_comm)>3 && $index>3) break;
-            echo "<table style='width: 95%;'>";
+            echo "<table style='padding-right: 20px;'>";
             echo "<tr>";
             echo '<td class="padding-zero wall-avatar-td">&nbsp;</td>';
             echo "<td class='padding-zero'>";
@@ -97,7 +97,7 @@
     }
 ?>
 <?php
-    echo "<table style=' width: 95%;'>";
+    echo "<table style='padding-right: 20px;'>";
     echo "<tr>";
     echo '<td class="padding-zero wall-avatar-td">&nbsp;</td>';
     echo "<td class='padding-zero'>";

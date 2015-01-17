@@ -2551,7 +2551,12 @@ a.profile-icon,a.profile-icon:hover
 .before-wall-content
 {
     /*margin: 0 0 0 25px;*/
-    margin: 0 0 0 4% ;
+    padding: 0 0 0 4% ;
+    position:relative;
+}
+.before-wall-content.not-active,.not-active
+{
+    background-color: #eaeaea;
 }
 .wall-content
 {
@@ -2888,4 +2893,14 @@ a.get-message,a.get-message:hover,a.get-message:visited
     font-size: 14px;
     line-height:19px;
     color:#afafaf;
+}
+.active-dialog
+{
+    display:none;
+    position: absolute;
+    width:2px;
+    background-color: #22c9ff;
+    left: 0;
+    height: 102px;
+    top:0;
 }

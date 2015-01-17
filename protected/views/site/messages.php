@@ -30,8 +30,9 @@
                             {
                             ?>
                                 <tr>
-                                    <td class="padding-zero tdone left-pad white-space-nowrap <?php if($friend['count']>0) echo 'not-read-message-st'?>" style="padding:16px ;">
+                                    <td class="padding-zero tdone left-pad white-space-nowrap <?php if($friend['count']>0) echo 'not-read-message-st'?>" style="position: relative;">
                                         <a href="#" class="get-message">
+                                            <div style="padding:16px 0;">
                                             <div style="display: none;">
                                                 <?php $mess=Message::model()->findByPk($friend['message_id']);?>
                                                 <?php $form=$this->beginWidget('CActiveForm', array(
@@ -54,6 +55,9 @@
                                             <div class="f-r message-block-user-time"><?php echo htmlspecialchars($friend['time']);?></div>
                                             <div class="clear"></div>
                                             <div class="message-block-user-message"><?php echo htmlspecialchars($friend['message']);?></div>
+
+                                        </div>
+                                        <div class="active-dialog"></div>
                                         </a>
                                     </td>
                                 </tr>
@@ -65,11 +69,11 @@
                 </div>
             </td>
             <td style="padding: 0;width:2%;"></td>
-            <td style="overflow:hidden;width:45%;position:relative;padding: 0;border:1px solid #eaeaea;vertical-align: top;border-radius: 6px;height:640px;background: #fff;">
+            <td class='messages-dialog-block' style="overflow:hidden;width:45%;position:relative;padding: 0;border:1px solid #eaeaea;vertical-align: top;border-radius: 6px;height:640px;background: #fff;">
                 <div class="message-block-title">Dialogs</div>
-                <div class="before-wall-content">
-                    <div class="wall-content nano" style='height: 527px;'>
-                        <div class='wall nano-content' style='height: 527px;'>
+                <div class="before-wall-content not-active">
+                    <div class="wall-content nano" style='height: 582px;'>
+                        <div class='dialog-messages wall nano-content' style='height: 582px;'>
 
                         </div>
                     </div>
@@ -77,11 +81,43 @@
                 <script>
                     $(document).ready(function()
                     {
-                        $(document).on('submit','form#addcomments-form',function()
+                        $(document).on('click','.get-message',function()
+                        {
+                            $('.message-block .active-dialog').hide()
+                            $('.messages-dialog-block').find('.not-active').removeClass('not-active')
+                            $('#newmessage-form >table').show();
+                            $('.active-dialog',this).show();
+                            $(this).parent('td').removeClass('.not-read-message-st');
+
+                            var th=$(this);
+                            var form=th.find('form').serializeArray();
+                            console.log(form)
+                            $.ajax({
+                                url: "getMessagesHistory",
+                                type: "POST",
+                                data: form,
+                                //dataType: "json",
+                                success: function (data, textStatus) { // вешаем свой обработчик на функцию success
+                                    console.log(data)
+                                    data=$.parseJSON(data);
+                                    if(data.error)
+                                    {
+
+                                    }
+                                    else
+                                    {
+                                        $('.dialog-messages').empty().append(data.html)
+                                        setTimeout(function(){$(".nano").nanoScroller();$(".nano").nanoScroller({ scroll: 'bottom' });}, 100);
+                                    }
+                                }
+                            })
+                            return false;
+                        })
+                        $(document).on('submit','form#newmessage-form',function()
                         {
 //                                var fd =$(this).serializeArray();
                             var th=$(this);
-                            var formElement = document.getElementById("addcomments-form");
+                            var formElement = document.getElementById("newmessage-form");
                             var fd = new FormData(formElement);
                             console.log(fd)
                             $.ajax({
@@ -107,64 +143,18 @@
                                 }
                             })
                             return false
-                        }).on('submit','form.comment-comment-form',function(e)
-                        {
-                            var th= $(this);
-                            var fd = th.serializeArray();
-                            $.ajax({
-                                url: "CommentsCommentsAdd",
-                                type: "POST",
-                                data: fd,
-                                success: function (data, textStatus) { // вешаем свой обработчик на функцию success
-                                    data=$.parseJSON(data);
-                                    console.log(data)
-                                    if(data.error)
-                                    {
-                                        console.log(data.message)
-                                    }
-                                    else
-                                    {
-                                        th.find("input[name*=text]").val("")
-                                        $(data.html).insertBefore(th.parents("table")[0])
-                                    }
-                                }
-                            })
-                            return false
-                        }).on('click','.like-icon',function()
-                        {
-                            var th= $(this);
-                            var form=th.find('div').clone();
-                            var fd = th.find('form').serializeArray();
-                            $.ajax({
-                                url: "like",
-                                type: "POST",
-                                data: fd,
-                                success: function (data, textStatus) { // вешаем свой обработчик на функцию success
-                                    data=$.parseJSON(data);
-                                    if(data.error)
-                                    {
-                                        console.log(data.message)
-                                    }
-                                    else
-                                    {
-                                        th.text(data.message)
-                                        th.append(form)
-                                    }
-                                }
-                            })
                         })
-                        return false
                     })
                 </script>
                 <?php
                 $form = $this->beginWidget('CActiveForm', array(
-                    'id'=>'addcomments-form',
+                    'id'=>'newmessage-form',
                     'enableAjaxValidation'=>true,
                     'enableClientValidation'=>true,
-                    'htmlOptions' => array('enctype' => 'multipart/form-data',"style"=>"position:absolute;bottom:0;width:100%;height: 58px;")
+                    'htmlOptions' => array('class'=>'not-active','enctype' => 'multipart/form-data',"style"=>"position:absolute;bottom:0;width:100%;height: 58px;")
                 ));
                 ?>
-                <table style="padding:9px;background-color:#e8e8e8;height: 40px;">
+                <table style="display:none;padding:9px;background-color:#e8e8e8;height: 40px;">
 
                     <?php
                     if(isset($message) and !empty($message))
