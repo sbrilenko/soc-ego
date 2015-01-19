@@ -43,7 +43,7 @@ class User extends CActiveRecord
         }
         else
         {
-
+            $this->password=$this->generate_pas($this->password,$this->createtime);
         }
         return parent::beforeSave();
     }
@@ -63,7 +63,7 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('password, email', 'required'),
+			array('email', 'required'),
 			array('createtime, company_id, lastvisit, lastaction, lastpasswordchange, failedloginattempts, superuser, status, day_count, was_flag, work_count, level', 'numerical', 'integerOnly'=>true),
 			array('username', 'length', 'max'=>255),
 			array('password, confirm_password', 'length', 'max'=>64),
@@ -90,7 +90,11 @@ class User extends CActiveRecord
     {
         if($this->isNewRecord)
         {
-            if($this->password!==$this->confirm_password)
+            if(empty($this->password) || empty($this->confirm_password))
+            {
+                $this->addError("password"," Password cannot be empty");
+            }
+            elseif($this->password!==$this->confirm_password)
             {
                 $this->addError("password"," Make sure that the passwords match");
             }

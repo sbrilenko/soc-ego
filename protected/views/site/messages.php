@@ -42,9 +42,15 @@
                                                         'validateOnSubmit'=>true,
                                                     ),
                                                 )); ?>
+                                                <?php if($friend['current_user_id']==$mess->from_user_id) { ?>
                                                 <?php echo $form->hiddenField($mess,'id');?>
                                                 <?php echo $form->hiddenField($mess,'from_user_id');?>
                                                 <?php echo $form->hiddenField($mess,'to_user_id');?>
+                                                <?php } else { ?>
+                                                    <?php echo $form->hiddenField($mess,'id');?>
+                                                    <?php echo $form->hiddenField($mess,'from_user_id',array('value'=>$mess->to_user_id));?>
+                                                    <?php echo $form->hiddenField($mess,'to_user_id',array('value'=>$mess->from_user_id));?>
+                                                <?php } ?>
                                                 <?php $this->endWidget(); ?>
                                             </div>
                                             <img class='f-l' style='padding: 0;width:36px;height:36px;border-radius: 36px;' src='<?php echo $friend['icon'];?>'/>
@@ -81,11 +87,38 @@
                 <script>
                     $(document).ready(function()
                     {
+                        $(document).on('change','#newmessage-send-form input[type=file]',function()
+                        {
+                            var th=$(this);
+                            var formElement = document.getElementById("newmessage-send-form");
+                            var fd = new FormData(formElement);
+                            $.ajax({
+                                url: "getMessagesHistory",
+                                type: "POST",
+                                data: form,
+                                dataType: "json",
+                                success: function (data, textStatus) {
+                                    if(data.error)
+                                    {
+
+                                    }
+                                    else
+                                    {
+                                        $('.dialog-messages').empty().append(data.html)
+                                        $('#newmessage-send-form input[name*=from_user_id]').val(data.from_id);
+                                        $('#newmessage-send-form input[name*=to_user_id]').val(data.to_id);
+                                        setTimeout(function(){$(".nano").nanoScroller();$(".nano").nanoScroller({ scroll: 'bottom' });}, 100);
+                                    }
+                                }
+                            })
+                            return false;
+                            $('#newmessage-send-form .new-comment-file-b').addClass('preloader')
+                        })
                         $(document).on('click','.get-message',function()
                         {
                             $('.message-block .active-dialog').hide()
                             $('.messages-dialog-block').find('.not-active').removeClass('not-active')
-                            $('#newmessage-form >table').show();
+                            $('#newmessage-send-form >table').show();
                             $('.active-dialog',this).show();
                             $(this).parent('td').removeClass('.not-read-message-st');
 
@@ -96,10 +129,8 @@
                                 url: "getMessagesHistory",
                                 type: "POST",
                                 data: form,
-                                //dataType: "json",
-                                success: function (data, textStatus) { // вешаем свой обработчик на функцию success
-                                    console.log(data)
-                                    data=$.parseJSON(data);
+                                dataType: "json",
+                                success: function (data, textStatus) {
                                     if(data.error)
                                     {
 
@@ -107,48 +138,34 @@
                                     else
                                     {
                                         $('.dialog-messages').empty().append(data.html)
+                                        $('#newmessage-send-form input[name*=from_user_id]').val(data.from_id);
+                                        $('#newmessage-send-form input[name*=to_user_id]').val(data.to_id);
                                         setTimeout(function(){$(".nano").nanoScroller();$(".nano").nanoScroller({ scroll: 'bottom' });}, 100);
                                     }
                                 }
                             })
                             return false;
-                        })
-                        $(document).on('submit','form#newmessage-form',function()
-                        {
-//                                var fd =$(this).serializeArray();
+                        }).on('submit','#newmessage-send-form',function(){
                             var th=$(this);
-                            var formElement = document.getElementById("newmessage-form");
+                            var formElement = document.getElementById("newmessage-send-form");
                             var fd = new FormData(formElement);
-                            console.log(fd)
-                            $.ajax({
-                                url: "CommentsAdd",
-                                type: "POST",
-                                data: fd,
-                                enctype: 'multipart/form-data',
-                                processData: false,  // tell jQuery not to process the data
-                                contentType: false,   // tell jQuery not to set contentType
-                                success: function (data, textStatus) { // вешаем свой обработчик на функцию success
-                                    console.log(data)
-                                    data=$.parseJSON(data);
-                                    if(data.error)
-                                    {
-
-                                    }
-                                    else
-                                    {
-                                        $(".wall").append(data.html)
-                                        th.find("input[name*=text]").val("");
-                                        setTimeout(function(){$(".nano").nanoScroller();$(".nano").nanoScroller({ scroll: 'bottom' });}, 100);
-                                    }
-                                }
-                            })
+                            console.log(th.serializeArray()," | ")
+                            var msg = {
+                                type: 'system.message',
+                                data: th.serializeArray()
+                            };
+                            console.log(msg);
+                            try{ websocket.send(JSON.stringify(msg));console.log('send')}
+                            catch(ex){
+                                console.log(ex.data);
+                                return false}
                             return false
                         })
                     })
                 </script>
                 <?php
                 $form = $this->beginWidget('CActiveForm', array(
-                    'id'=>'newmessage-form',
+                    'id'=>'newmessage-send-form',
                     'enableAjaxValidation'=>true,
                     'enableClientValidation'=>true,
                     'htmlOptions' => array('class'=>'not-active','enctype' => 'multipart/form-data',"style"=>"position:absolute;bottom:0;width:100%;height: 58px;")
@@ -163,18 +180,20 @@
                     }
                     else
                     {
-                        $comment_m=new Comments();
+                        $message=new Message();
                         echo "<tr class='new-comment'>";
-                        echo $form->hiddenField($comment_m,'commented_user_id',array("value"=>"")); //
-                        echo $form->hiddenField($comment_m,'create_user_id',array("value"=>"")); //who comment
-                        echo "<td class='new-comment-file-b' style='padding: 0;width: 40px;'>";
-                        echo $form->fileField($comment_m,'image',array("class"=>"add-comment-file-icon"));
-                        echo "</td>";
+                        echo $form->hiddenField($message,'from_user_id',array("value"=>Yii::app()->user->id));
+                        echo $form->hiddenField($message,'to_user_id',array("value"=>""));
                         echo "<td style='padding: 0'>";
-                        echo $form->textField($comment_m,'text',array("placeholder"=>'Enter your message here...','style'=>'height:40px;border:0;padding:0 5%;width:90%;'));
+                        echo $form->textField($message,'message',array("placeholder"=>'Enter your message here...','style'=>'height:40px;border:0;padding:0 5%;width:90%;'));
+                        echo "</td>";
+                        echo "<td style='padding: 0;width: 60px;'>";
+                        echo "<div class='new-comment-file-b'>"; //preloader
+                        echo $form->fileField($message,'image',array("class"=>"add-comment-file-icon",'style'=>'cursor:pointer;padding: 0;width: 40px;border-radius: 5px;border:1px solid #dedede;'));
+                        echo "</div>";
                         echo "</td>";
                         echo "<td style='padding: 0;width:72px;'>";
-                        echo CHtml::submitButton('Send',array('class'=>'','style'=>"height:40px;border:0;padding:0;background-color: #22c9ff;border-radius: 0 5px 5px 0;width:72px;color:#fff"));
+                        echo CHtml::submitButton('Send',array('class'=>'','style'=>"height:40px;border:0;padding:0;background-color: #22c9ff;border-radius: 5px;width:72px;color:#fff"));
                         echo "</td>";
                         echo "</tr>";
                     }

@@ -369,16 +369,18 @@
                                 {
                                     $comment_m=new Comments();
                                     echo "<tr class='new-comment'>";
-                                    echo $form->hiddenField($comment_m,'commented_user_id',array("value"=>"")); //
-                                    echo $form->hiddenField($comment_m,'create_user_id',array("value"=>"")); //who comment
-                                    echo "<td class='new-comment-file-b' style='padding: 0;width: 40px;'>";
-                                    echo $form->fileField($comment_m,'image',array("class"=>"add-comment-file-icon"));
-                                    echo "</td>";
+                                    echo $form->hiddenField($comment_m,'commented_user_id',array("value"=>Yii::app()->user->id));
+                                    echo $form->hiddenField($comment_m,'create_user_id',array("value"=>""));
                                     echo "<td style='padding: 0'>";
                                     echo $form->textField($comment_m,'text',array("placeholder"=>'Enter your message here...','style'=>'height:40px;border:0;padding:0 5%;width:90%;'));
                                     echo "</td>";
+                                    echo "<td style='padding: 0;width: 60px;'>";
+                                    echo "<div class='new-comment-file-b'>";
+                                    echo $form->fileField($comment_m,'image',array("class"=>"add-comment-file-icon",'style'=>'cursor:pointer;padding: 0;width: 40px;border-radius: 5px;border:1px solid #dedede;'));
+                                    echo "</div>";
+                                    echo "</td>";
                                     echo "<td style='padding: 0;width:72px;'>";
-                                    echo CHtml::submitButton('Send',array('class'=>'','style'=>"height:40px;border:0;padding:0;background-color: #22c9ff;border-radius: 0 5px 5px 0;width:72px;color:#fff"));
+                                    echo CHtml::submitButton('Send',array('class'=>'','style'=>"height:40px;border:0;padding:0;background-color: #22c9ff;border-radius: 5px;width:72px;color:#fff"));
                                     echo "</td>";
                                     echo "</tr>";
                                 }

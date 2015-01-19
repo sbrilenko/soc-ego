@@ -100,6 +100,7 @@ class CompanyController extends Controller
 
 		$this->render('create',array(
 			'model'=>$model,
+            'message'=>''
 		));
 	}
 
@@ -152,6 +153,7 @@ class CompanyController extends Controller
 
 		$this->render('update',array(
 			'model'=>$model,
+            'message'=>''
 		));
 	}
 

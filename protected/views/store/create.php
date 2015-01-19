@@ -28,7 +28,18 @@ $form = $this->beginWidget('CActiveForm', array(
         </div>
         <div>
         <?php echo $form->labelEx($store_item, 'description');
-        echo $form->textArea($store_item, 'description',array('class'=>'width-80 textarea-min-height'));
+        $this->widget('application.extensions.cleditor.ECLEditor', array(
+            'model'=>$store_item,
+            'attribute'=>'description',
+            'options'=>array(
+                'width'=>'600',
+                'height'=>250,
+                'useCSS'=>true,
+                'class'=>'width-80 textarea-min-height'
+            ),
+            'value'=>$store_item->description,
+        ));
+       // echo $form->textArea($store_item, 'description',array('class'=>'width-80 textarea-min-height'));
         echo $form->error($store_item, 'description'); ?>
         </div>
         <div>

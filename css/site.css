@@ -2388,10 +2388,15 @@ a.profile-icon,a.profile-icon:hover
     overflow: hidden;
     position: relative;
     cursor: pointer;
-    background: url("../img/add-comment-file-icon.png") no-repeat;
+    background: url("../img/add-comment-file-icon.png") no-repeat center;
     width:40px;
     height:40px;
     padding: 0;
+    margin:0 10px;
+}
+.new-comment .new-comment-file-b.preloader
+{
+    background: url("../img/Animation-proccess.gif") no-repeat center;
 }
 .new-comment .new-comment-file-b input[type="file"] {
     width: 40px;
@@ -2857,6 +2862,14 @@ a.get-message,a.get-message:hover,a.get-message:visited
 .not-read-message-st
 {
     background-color: #fff9ec;
+}
+.not-read-message-st-triangle
+{
+    border-color:transparent #fff9ec transparent transparent;
+}
+.not-read-message-st-triangle-back
+{
+    border-color:transparent transparent transparent #fff9ec;
 }
 .quickmessage-autocomplete-ul
 {

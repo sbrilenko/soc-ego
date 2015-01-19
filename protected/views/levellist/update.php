@@ -21,7 +21,18 @@ $form = $this->beginWidget('CActiveForm', array(
 
         <div>
         <?php echo $form->labelEx($levellist, 'description');
-        echo $form->textArea($levellist, 'description',array('class'=>'width-80 textarea-min-height'));
+        $this->widget('application.extensions.cleditor.ECLEditor', array(
+            'model'=>$levellist,
+            'attribute'=>'description',
+            'options'=>array(
+                'width'=>'600',
+                'height'=>250,
+                'useCSS'=>true,
+                'class'=>'width-80 textarea-min-height'
+            ),
+            'value'=>$levellist->description,
+        ));
+        //echo $form->textArea($levellist, 'description',array('class'=>'width-80 textarea-min-height'));
         echo $form->error($levellist, 'description'); ?>
         </div>
         <div>

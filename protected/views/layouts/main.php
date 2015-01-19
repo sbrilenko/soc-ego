@@ -24,8 +24,6 @@
     <?php } ?>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <?php if(isset(Yii::app()->user->id) && Yii::app()->controller->id=="site" && Yii::app()->controller->action->id=="index") { ?>
-<!--        <script src="--><?php //echo Yii::app()->request->baseUrl; ?><!--/js/jquery.jscrollpane.min.js"></script>-->
-<!--        <link href="--><?php //echo Yii::app()->request->baseUrl; ?><!--/css/jquery.jscrollpane.css" rel="stylesheet">-->
         <link href="<?php echo Yii::app()->request->baseUrl; ?>/css/nanoscroller.css" rel="stylesheet">
         <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery.nanoscroller.js"></script>
         <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery.mousewheel.js"></script>
@@ -79,6 +77,46 @@
                 console.log(msg)
                 var type = msg.type; //message type
                 switch (type) {
+                    case 'system.message':
+
+                        if(msg.to==<?php echo Yii::app()->user->id;?>)
+                        {
+                            if(!msg.error)
+                            {
+                                //if page not messages
+                                $('.top-menu .messages-icon').next().text(msg.count).show();
+                                <?php if(Yii::app()->controller->id=="site" && Yii::app()->controller->action->id=="messages") { ?>
+                                /*setTimeout(function(){
+                                 $('.top-menu .messages-icon').next().fadeOut(function(){ $(this).text('');})
+                                 },2000)*/
+                                <?php } ?>
+
+                            }
+
+                        }
+                        else
+                        if(msg.from==<?php echo Yii::app()->user->id;?>)
+                        {
+                            if(!msg.error)
+                            {
+                                <?php if(Yii::app()->controller->id=="site" && Yii::app()->controller->action->id=="messages") { ?>
+                                var mess="";
+                                mess+='<table style="padding-right: 20px;"><tbody><tr><td class="padding-zero wall-avatar-td">&nbsp;</td>';
+                                mess+='<td class="padding-zero">';
+                                mess+='<div class="message-buble">';
+                                mess+='<div class="message-buble-triangle-back"></div>';
+                                mess+='<div class="comment-owner f-l">'+msg.from_name+'</div><div class="f-r">'+msg.date+'</div>';
+                                mess+='<div class="clear"></div>';
+                                mess+='<div class="comment">'+msg.message+'</div>';
+                                mess+='</div></td></tr></tbody></table>';
+                                $('.dialog-messages').append(mess);
+                                setTimeout(function(){$(".nano").nanoScroller();$(".nano").nanoScroller({ scroll: 'bottom' });}, 100);
+                                //clear the form
+                                $('#newmessage-send-form input[name*=message]').val('');
+                                <?php } ?>
+                            }
+                        }
+                        break;
                     case 'system.quickmessage':
                         if(msg.to==<?php echo Yii::app()->user->id;?>)
                         {
@@ -143,8 +181,6 @@
             }).on('click',function(el)
             {
                 $(el.target).hasClass("triangle")?$('.triangle-menu').is(":visible")?$('.triangle-menu').removeAttr("style"):$('.triangle-menu').show():$('.triangle-menu').removeAttr("style");
-                //el.toElement.className=="triangle"?$('.triangle-menu').is(":visible")?$('.triangle-menu').removeAttr("style"):$('.triangle-menu').show():$('.triangle-menu').removeAttr("style");
-
             }).on('keydown',function(el)
             {
                 if(el.keyCode==27)

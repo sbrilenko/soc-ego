@@ -11,7 +11,7 @@
  * @property integer $time
  * @property integer $user
  */
-class Gamificationmanager extends CActiveRecord
+class GamificationManager extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name

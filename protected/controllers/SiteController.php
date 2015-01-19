@@ -535,12 +535,14 @@ class SiteController extends Controller
 
                     foreach($messages as $mess)
                     {
-                        $ret_messages[]=array('from_id'=>$mess->from_user_id,'to_id'=>$mess->to_user_id,'message'=>$mess->message,'read_status'=>$mess->message_read);
+                        $ret_messages[]=array('from_id'=>$mess->from_user_id,'to_id'=>$mess->to_user_id,'message'=>$mess->message,'read_status'=>$mess->message_read,'date'=>date('H:i',$mess->timestamp));
                     }
 
                     //dialogmessages
                     echo json_encode(array('error'=>false,
                                            'message'=>'',
+                                           'from_id'=>$from_id,
+                                           'to_id'=>$to_id,
                                            'html'=>$this->renderPartial('dialogmessages',array(
                                            'from_id'=>$from_id,
                                            'to_id'=>$to_id,

@@ -15,6 +15,8 @@
     <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css">
     <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
 
     <title><?php echo CHtml::encode(Yii::app()->params->adminName); ?></title>
 </head>
@@ -25,7 +27,28 @@
     <div id="header">
         <div id="logo"><a href="<?php ?>"><?php echo CHtml::encode(Yii::app()->params->adminName); ?></a></div>
     </div><!-- header -->
+    <?php
+    $users=User::model()->findAll();
+    $today_day=date("d");
+    $count_bool=false;
+    if($users)
+    {
+        foreach($users as $user)
+        {
+            if($user->work_count>0)
+            {
+                $work_count=date("d",$user->work_count);
+                if($work_count==$today_day)
+                {
+                    $count_bool=true;
+                    break;
+                }
 
+            }
+
+        }
+    }
+    ?>
     <div id="mainmenu-admin">
         <?php $this->widget('zii.widgets.CMenu',array(
             'items'=>array(

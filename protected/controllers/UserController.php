@@ -162,6 +162,7 @@ class UserController extends Controller
                         {
                             $this->render('update',array(
                                 'model'=>$model,
+                                'message'=>''
                             ));
                             exit();
                         }
@@ -181,6 +182,7 @@ class UserController extends Controller
                     {
                         $this->render('update',array(
                             'model'=>$model,
+                            'message'=>''
                         ));
                     }
                 }
@@ -189,12 +191,14 @@ class UserController extends Controller
             {
                 $this->render('update',array(
                     'model'=>$model,
+                    'message'=>''
                 ));
             }
         }
         else
         $this->render('update',array(
             'model'=>$model,
+            'message'=>''
         ));
 	}
 

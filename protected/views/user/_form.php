@@ -35,14 +35,21 @@ if(isset($message)) { ?>
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'password'); ?>
-		<?php echo $form->passwordField($model,'password',array('size'=>60,'maxlength'=>64)); ?>
+        <?php echo $form->labelEx($model,'password'); ?>
+        <?php echo $form->passwordField($model,'password',array('value'=>'','size'=>60,'maxlength'=>64,'style'=>'float:left')); ?>
+        <div class="passgenerator ui-state-default" style="float:left;margin: 4px 7px;cursor:pointer;" title="Pass generator">
+            <span class="ui-icon ui-icon-key"></span>
+        </div>
+        <div class="showpass ui-state-default" style="float:left;margin: 4px 7px 4px 0;cursor:pointer;" title="Show Password">
+            <span class="ui-icon ui-icon-locked"></span>
+        </div>
+        <div class="clear"></div>
 		<?php echo $form->error($model,'password'); ?>
 	</div>
 
     <div class="row">
         <?php echo $form->labelEx($model,'confirm_password'); ?>
-        <?php echo $form->passwordField($model,'confirm_password',array('size'=>60,'maxlength'=>64)); ?>
+        <?php echo $form->passwordField($model,'confirm_password',array('value'=>'','size'=>60,'maxlength'=>64)); ?>
         <?php echo $form->error($model,'confirm_password'); ?>
     </div>
 
@@ -67,7 +74,7 @@ if(isset($message)) { ?>
 	<div class="row">
         <?php
         echo $form->labelEx($model, 'day_count');
-        if($user->day_count==0) $day_count_value='';
+        if($model->day_count==0) $day_count_value='';
         else $day_count_value=date("m/d/Y",$model->day_count);
         echo $form->textField($model, 'day_count',array('value'=>$day_count_value,'readonly'=>'readonly','data-provide'=>'datepicker','class'=>'day-count'));
         echo $form->error($model, 'day_count'); ?>
@@ -344,7 +351,17 @@ if(isset($message)) { ?>
 
     <div class="row">
         <?php echo $form->labelEx($profile, 'about');
-        echo $form->textArea($profile, 'about');
+        $this->widget('application.extensions.cleditor.ECLEditor', array(
+            'model'=>$profile,
+            'attribute'=>'about', //Model attribute name. Nome do atributo do modelo.
+            'options'=>array(
+                'width'=>'600',
+                'height'=>250,
+                'useCSS'=>true,
+            ),
+            'value'=>$profile->about, //If you want pass a value for the widget. I think you will. Se você precisar passar um valor para o gadget. Eu acho irá.
+        ));
+        //echo $form->textArea($profile, 'about');
         echo $form->error($profile, 'about');
     ?>
     </div>
@@ -368,7 +385,40 @@ if(isset($message)) { ?>
 <script>
     $(document).ready(function()
     {
-        $(document).on("change","select[name*=job_type]",function()
+        function generatePassword() {
+            var length = 8,
+                charset = "abcdefghijklnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
+                retVal = "";
+            for (var i = 0, n = charset.length; i < length; ++i) {
+                retVal += charset.charAt(Math.floor(Math.random() * n));
+            }
+            return retVal;
+        }
+        $(document).on('click','.passgenerator',function()
+        {
+            var var_pass=generatePassword();
+            $('#user-form input[name*=password]').val(var_pass);
+            $('#user-form input[name*=confirm_password]').val(var_pass)
+
+        }).on('click','.showpass',function()
+        {
+            if($('#user-form input[name*=password]').attr('type')=="text")
+            {
+                $('#user-form input[name*=password]').attr('type','password');
+                $('#user-form input[name*=confirm_password]').attr('type','password');
+                $(this).attr('title','Show Password');
+                $('>span',this).removeClass('ui-icon ui-icon-unlocked').addClass('ui-icon ui-icon-locked');
+            }
+            else
+            {
+                $('#user-form input[name*=password]').attr('type','text');
+                $('#user-form input[name*=confirm_password]').attr('type','text');
+                $(this).attr('title','Hide Password');
+                $('>span',this).removeClass('ui-icon ui-icon-locked').addClass('ui-icon ui-icon-unlocked');
+            }
+
+
+        }).on("change","select[name*=job_type]",function()
         {
             var job_title=$("select[name*=job_title]");
             switch ($(this).val())
