@@ -10,6 +10,7 @@
  * @property string $table
  * @property integer $timecreated
  * @property integer $user_id
+ * @property integer $real_name
  */
 class Files extends CActiveRecord
 {
@@ -29,6 +30,7 @@ class Files extends CActiveRecord
         'usergroup'=>array('name'=>array('width'=>57,'height'=>57),'name_middle'=>array('width'=>36,'height'=>36)),
         'profile'=>array('name'=>array('width'=>314,'height'=>314),'name_middle'=>array('width'=>50,'height'=>50),'name_little'=>array('width'=>30,'height'=>30)),
         'comments'=>array('name'=>array('width'=>150,'height'=>150),'name_middle'=>array('width'=>100,'height'=>100),'name_little'=>array('width'=>75,'height'=>75)),
+        'message'=>array('name'=>array('width'=>150,'height'=>150),'name_middle'=>array('width'=>100,'height'=>100),'name_little'=>array('width'=>75,'height'=>75)),
         'company'=>array('name'=>array('width'=>140,'height'=>"auto")));
 
 
@@ -242,6 +244,19 @@ class Files extends CActiveRecord
         $img->image_resize          = true;
         $img->image_x               = $image['width'];
         $img->image_ratio_y         = true;
+        $img->file_new_name_body =$filename;
+        $img->process(Yii::app()->basePath."/../files");
+        if ($img->processed) {
+            return true;
+        } else {
+            return $img->error;
+        }
+    }
+
+    private function message_img($img,$image,$filename)
+    {
+        $img->image_convert = 'png';
+        $img->file_force_extension = false;
         $img->file_new_name_body =$filename;
         $img->process(Yii::app()->basePath."/../files");
         if ($img->processed) {
@@ -468,6 +483,7 @@ class Files extends CActiveRecord
                                 $file->title=$title;
                                 $file->image=$filename.$real_name.".png";
                                 $file->table=$table;
+                                $file->real_name=$post['name'][$name_field];
                                 $file->timecreated=strtotime(date('Y-m-d H:i:s'));
                                 $file->user_id=Yii::app()->user->id;
                                 if($file->save())
@@ -483,34 +499,39 @@ class Files extends CActiveRecord
                             switch($table)
                             {
                                 case 'badges':
-                                    $res=$this->badges_img($img,$image,$filename.$real_name);
+                                    $res=$this->badges_img($img,$image,$filename.".png");
                                     if(is_string($res))
                                         $errors_messages[]=$res;
                                 break;
                                 case 'photo':
                                 break;
                                 case 'store':
-                                    $res=$this->store_img($img,$image,$filename.$real_name);
+                                    $res=$this->store_img($img,$image,$filename.".png");
                                     if(is_string($res))
                                         $errors_messages[]=$res;
                                 break;
                                 case 'usergroup':
-                                    $res=$this->usergroup_img($img,$image,$filename.$real_name);
+                                    $res=$this->usergroup_img($img,$image,$filename.".png");
                                     if(is_string($res))
                                         $errors_messages[]=$res;
                                 break;
                                 case 'profile':
-                                    $res=$this->profile_img($img,$image,$filename.$real_name);
+                                    $res=$this->profile_img($img,$image,$filename.".png");
                                     if(is_string($res))
                                         $errors_messages[]=$res;
                                 break;
                                 case 'comments':
-                                    $res=$this->comments_img($img,$image,$filename.$real_name);
+                                    $res=$this->comments_img($img,$image,$filename.".png");
                                     if(is_string($res))
                                         $errors_messages[]=$res;
                                 break;
+                                case 'message':
+                                    $res=$this->message_img($img,$image,$filename.".png");
+                                    if(is_string($res))
+                                        $errors_messages[]=$res;
+                                    break;
                                 case 'company':
-                                    $res=$this->company_img($img,$image,$filename.$real_name);
+                                    $res=$this->company_img($img,$image,$filename.".png");
                                     if(is_string($res))
                                         $errors_messages[]=$res;
                                 break;

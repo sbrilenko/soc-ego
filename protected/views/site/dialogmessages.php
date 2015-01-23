@@ -1,6 +1,6 @@
 <?php if($messages) { ?>
     <?php
-    foreach($messages as $mess)
+    foreach($messages as $index=>$mess)
     {
      ?>
         <?php if($current_user_id==$mess['to_id']) { ?>
@@ -32,7 +32,7 @@
             </tr>
             </tbody></table>
         <?php } else { ?>
-        <table style="padding-right: 20px;">
+        <table style="padding-right: 20px; <?php if($index==0) echo 'margin-top: 1.4em;';?>">
             <tbody>
             <tr><td class="padding-zero wall-avatar-td">&nbsp;</td>
                 <td class="padding-zero">

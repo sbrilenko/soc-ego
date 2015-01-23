@@ -1,6 +1,11 @@
+html
+{
+    height:100%;
+}
 body
 {
     background-color: #f8f8f8;
+    height:100%;
 }
 .f-l
 {
@@ -9,6 +14,23 @@ body
 .f-r
 {
     float: right;
+}
+.displ-none
+{
+    display: none;
+}
+.displ-inline
+{
+    display:inline;
+}
+.pad-mar-zero{
+    padding: 0;margin: 0;
+}
+.mar-zero{
+    margin: 0;
+}
+.pad-zero{
+    padding: 0;
 }
 .wrapper
 {
@@ -72,6 +94,7 @@ body
     display: table;
     table-layout: fixed;
     padding:0 25px;
+    height:100%;
 }
 .header-top
 {
@@ -186,7 +209,7 @@ body
     margin-left: -8px;
     border-radius: 5px;
 }
-.tri
+.tri,.position-relative
 {
     position: relative;
 }
@@ -2795,7 +2818,7 @@ a.profile-icon,a.profile-icon:hover
     padding: 0;
     border:1px solid #eaeaea;
     border-radius: 6px;
-    height:640px;
+    height:638px;
     vertical-align: top;
     background: #fff;
 }
@@ -2843,7 +2866,7 @@ a.get-message,a.get-message:hover,a.get-message:visited
     margin-top: 15px;
     text-decoration: none;
 }
-.quick-message-user-icon img
+.quick-message-user-icon img, .message-page-block-message-img
 {
     padding: 0;width:36px;height:36px;border-radius: 36px;
 }
@@ -2916,4 +2939,117 @@ a.get-message,a.get-message:hover,a.get-message:visited
     left: 0;
     height: 102px;
     top:0;
+}
+.projects-main-page-block
+{
+    width:53%;padding: 0;border:1px solid #eaeaea;border-radius: 6px;height:638px;vertical-align: top;background: #fff;
+}
+.projects-main-page-scroll-height
+{
+    height: 584px;
+}
+.profile-main-page-img
+{
+    padding: 0;width:36px;height:36px;
+}
+.projects-and-wall-mar,.message-and-dialog-mar
+{
+    padding: 0;width:2%;
+}
+.wall-block
+{
+    overflow:hidden;
+    width:45%;
+    position:relative;
+    padding: 0;
+    border:1px solid #eaeaea;
+    vertical-align: top;
+    border-radius: 6px;
+    height:638px;
+    background: #fff;
+}
+.wall-block-scroll-height
+{
+    height: 527px !important;
+}
+.addcomments-form,.addmessage-form
+{
+    position:absolute;bottom:0;width:100%;height: 68px;
+}
+.addcomments-form table,.addmessage-form table{
+    padding:13px;background-color:#e8e8e8;height: 40px;
+}
+.addcomments-form .comment-text-style
+{
+    height:40px;border:0;padding:0 5%;width:90%;
+}
+.addcomments-form .comment-file-style
+{
+    cursor:pointer;padding: 0;width: 40px;border-radius: 5px;border:1px solid #dedede;
+}
+.addcomments-form .parent-file-style
+{
+    padding: 0;width: 60px;
+}
+.addcomments-form .parent-send-button
+{
+    padding: 0;width:72px;
+}
+.addcomments-form .send-button
+{
+    height:40px;border:0;padding:0;background-color: #22c9ff;border-radius: 5px;width:72px;color:#fff
+}
+.file-upload-part-1
+{
+    position: relative;
+    background: url('../img/file-upload-part-2.png') no-repeat;
+    width:28px;
+    height:35px;
+    cursor:pointer;
+}
+.file-upload-part-2
+{
+    position: absolute;
+    background: url('../img/file-upload-part-1.png') no-repeat;
+    width:24px;
+    height:23px;
+    right: -13px;
+    bottom: -10px;
+}
+.message-page-block-messages-h
+{
+    height: 638px;
+}
+.message-page-block-messg-spec-pad
+{
+    padding:16px 0;
+}
+.message-page-block-dialog
+{
+    overflow:hidden;
+    width:45%;
+    position:relative;
+    padding: 0;
+    border:1px solid #eaeaea;
+    vertical-align: bottom;
+    border-radius: 6px;
+    height:638px;
+    background: #fff;
+    vertical-align: top;
+}
+.message-page-block-dialog-scroll-h
+{
+    height: 515px !important;
+}
+.message-file
+{
+    height:51px;
+}
+.message-filename
+{
+    font-family: HelveticaNeueCyr-Medium;
+    font-size: 14px;
+    line-height: 16px;
+    color:#666;
+    padding-left: 20px;
 }

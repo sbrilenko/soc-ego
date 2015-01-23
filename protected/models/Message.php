@@ -12,11 +12,12 @@
  * @property integer $message_read
  * @property integer $answered
  * @property integer $draft
+ * @property integer $image
  */
 class Message extends CActiveRecord
 {
 	public $full_name;
-    public $image;
+    public $pict;
 
 	/**
 	 * @return string the associated database table name
@@ -36,7 +37,7 @@ class Message extends CActiveRecord
 		return array(
 			array('timestamp, from_user_id, to_user_id, message_read', 'required'),
 			array('message_read, answered, draft', 'numerical', 'integerOnly'=>true),
-			array('timestamp, from_user_id, to_user_id', 'length', 'max'=>10),
+			array('timestamp, from_user_id, to_user_id,image', 'length', 'max'=>10),
 			array('message', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.

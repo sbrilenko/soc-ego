@@ -566,4 +566,55 @@ class SiteController extends Controller
         }
         else echo json_encode(array('error'=>true,'message'=>'No data'));
     }
+
+    /*create file for message*/
+    public function actionMessageCreateFile()
+    {
+        $image_id=null;
+        $real_name="";
+        if(isset($_FILES['Message']) && !empty($_FILES['Message']['name']['pict']))
+        {
+            if(isset($_POST['Message']['image'])) $image_id=$_POST['Message']['image'];
+            $file_ret=Files::model()->create($_FILES['Message'],'pict','test',Message::model()->tableName(),$image_id);
+            if(is_array($file_ret))
+            {
+                echo json_encode(array('error'=>true,'message'=>$file_ret[0],'id'=>null,'name'=>$real_name));
+                exit();
+            }
+            else
+            {
+                if($file_ret) $real_name=Files::model()->findByPk($file_ret)->real_name;
+                echo json_encode(array('error'=>false,'message'=>$file_ret[0],'id'=>$file_ret,'name'=>$real_name));
+                exit();
+            }
+        }
+        else
+        {
+            echo json_encode(array('error'=>true,'message'=>'File not found','id'=>null,'name'=>$real_name));
+        }
+    }
+    /*message remove file*/
+    public function actionMessageRemoveFile()
+    {
+        $image_id=null;
+        if(isset($_POST['Message']) && !empty($_POST['Message']['image']))
+        {
+            $file_rem=Files::model()->findByPk($_POST['Message']['image']);
+            if($file_rem)
+            {
+                Files::model()->delete($file_rem->id);
+                echo json_encode(array('error'=>false,'message'=>'File removed'));
+                exit();
+            }
+            else
+            {
+                echo json_encode(array('error'=>false,'message'=>'File not removed'));
+                exit();
+            }
+        }
+        else
+        {
+            echo json_encode(array('error'=>true,'message'=>'File not found'.print_r($_POST['Message']['id'])));
+        }
+    }
 }

@@ -1,7 +1,5 @@
 <script>
     $(document).ready(function(){
-//        $('head style[type="text/css"]').attr('type', 'text/less');
-//        less.refreshStyles();
         window.randomize = function() {
             <?php
             if(User::model()->findByPk(Yii::app()->user->id)->level==0)
@@ -157,7 +155,7 @@
         <table class="store-info">
             <tr>
                 <?php echo $store;?>
-                <td class="quadr" style="position: relative;">
+                <td class="quadr position-relative">
                     <?php
                     echo $company;
                     ?>
@@ -166,17 +164,17 @@
         </table>
 
 
-    <table style="padding: 0;margin: 0;">
+    <table class="pad-mar-zero">
             <tr>
-                <td style="width:53%;padding: 0;border:1px solid #eaeaea;border-radius: 6px;height:640px;vertical-align: top;background: #fff;">
-                    <table class="group-wall-title" style="margin: 0;">
+                <td class="projects-main-page-block">
+                    <table class="group-wall-title mar-zero">
                         <tr><td class="padding-zero tdone store-head" colspan="2">Projects</td>
                             <td class="padding-zero tdmiddle text-center store-head">Company</td>
 <!--                            <td class="padding-zero tdmiddle text-center store-head">Date</td>-->
                             <td class="padding-zero tdlast store-head">Status</td></tr>
                     </table>
-                    <div class="group-scroll nano" style="height: 584px;">
-                    <table class="group-wall-content nano-content" style="margin: 0;">
+                    <div class="group-scroll nano projects-main-page-scroll-height">
+                    <table class="group-wall-content nano-content mar-zero">
                         <?php
                         $allmygr=Participants::model()->allGroupsForUser(Yii::app()->user->id);
                         if(count($allmygr)>0)
@@ -193,21 +191,21 @@
                                     {
                                         if(file_exists(Yii::app()->basePath."/../files/".$file_company->image))
                                         {
-                                            echo "<a href='#'><img class='f-l' style='padding: 0;width:36px;height:36px;' src='/files/".$file_company->image."'/></a>";
+                                            echo "<a href='#'><img class='f-l profile-main-page-img' src='/files/".$file_company->image."'/></a>";
                                         }
                                         else
                                         {
-                                            echo "<a href='#'><img class='f-l' style='padding: 0;width:36px;height:36px;' src='/img/group-default-little.png'/></a>";
+                                            echo "<a href='#'><img class='f-l profile-main-page-img' src='/img/group-default-little.png'/></a>";
                                         }
                                     }
                                     else
                                     {
-                                        echo "<a href='#'><img class='f-l' style='padding: 0;width:36px;height:36px;' src='/img/group-default-little.png'/></a>";
+                                        echo "<a href='#'><img class='f-l profile-main-page-img' src='/img/group-default-little.png'/></a>";
                                     }
                                 }
                                 else
                                 {
-                                    echo "<a href='#'><img class='f-l' style='padding: 0;width:36px;height:36px;' src='/img/group-default-little.png'/></a>";
+                                    echo "<a href='#'><img class='f-l profile-main-page-img' src='/img/group-default-little.png'/></a>";
                                 }
                                 $user=Profile::model()->findByAttributes(array("user_id"=>$group_table->pm));
                                 echo "<div class='project-ver-line f-l'>";
@@ -249,16 +247,16 @@
                     </table>
                     </div>
                 </td>
-                <td style="padding: 0;width:2%;"></td>
-                <td style="overflow:hidden;width:45%;position:relative;padding: 0;border:1px solid #eaeaea;vertical-align: top;border-radius: 6px;height:640px;background: #fff;">
+                <td class="projects-and-wall-mar"></td>
+                <td class="wall-block">
                     <div class="group-wall-title">Wall</div>
                    <div class="before-wall-content">
-                    <div class="wall-content nano" style='height: 527px;'>
+                    <div class="wall-content nano wall-block-scroll-height">
                     <?php
                         $comments=Comments::model()->findAllByAttributes(array("parent"=>0,"commented_user_id"=>Yii::app()->user->id),array('order'=>'time ASC'));
                         if($comments)
                         {
-                            echo "<div class='wall nano-content' style='height: 527px;'>";
+                            echo "<div class='wall nano-content wall-block-scroll-height'>";
                             foreach($comments as $index=>$com)
                             {
                                 echo $this->renderPartial("message",array("com"=>$com,'index'=>$index),true);
@@ -283,11 +281,12 @@
                                     type: "POST",
                                     data: fd,
                                     enctype: 'multipart/form-data',
-                                    processData: false,  // tell jQuery not to process the data
-                                    contentType: false,   // tell jQuery not to set contentType
-                                    success: function (data, textStatus) { // вешаем свой обработчик на функцию success
+                                    processData: false,
+                                    contentType: false,
+                                    dataType: "json",
+                                    success: function (data, textStatus) {
                                         console.log(data)
-                                        data=$.parseJSON(data);
+                                        //data=$.parseJSON(data);
                                         if(data.error)
                                         {
 
@@ -309,8 +308,9 @@
                                         url: "CommentsCommentsAdd",
                                         type: "POST",
                                         data: fd,
+                                        dataType: "json",
                                         success: function (data, textStatus) { // вешаем свой обработчик на функцию success
-                                            data=$.parseJSON(data);
+                                            //data=$.parseJSON(data);
                                             console.log(data)
                                             if(data.error)
                                             {
@@ -333,8 +333,9 @@
                                     url: "like",
                                     type: "POST",
                                     data: fd,
+                                    dataType: "json",
                                     success: function (data, textStatus) { // вешаем свой обработчик на функцию success
-                                        data=$.parseJSON(data);
+                                        //data=$.parseJSON(data);
                                         if(data.error)
                                         {
                                             console.log(data.message)
@@ -355,10 +356,10 @@
                             'id'=>'addcomments-form',
                             'enableAjaxValidation'=>true,
                             'enableClientValidation'=>true,
-                            'htmlOptions' => array('enctype' => 'multipart/form-data',"style"=>"position:absolute;bottom:0;width:100%;height: 58px;")
+                            'htmlOptions' => array('enctype' => 'multipart/form-data',"class"=>"addcomments-form")
                         ));
                         ?>
-                            <table style="padding:9px;background-color:#e8e8e8;height: 40px;">
+                            <table>
 
                                 <?php
                                 if(isset($message) and !empty($message))
@@ -371,16 +372,16 @@
                                     echo "<tr class='new-comment'>";
                                     echo $form->hiddenField($comment_m,'commented_user_id',array("value"=>Yii::app()->user->id));
                                     echo $form->hiddenField($comment_m,'create_user_id',array("value"=>""));
-                                    echo "<td style='padding: 0'>";
-                                    echo $form->textField($comment_m,'text',array("placeholder"=>'Enter your message here...','style'=>'height:40px;border:0;padding:0 5%;width:90%;'));
+                                    echo "<td class='pad-zero'>";
+                                    echo $form->textField($comment_m,'text',array("placeholder"=>'Enter your message here...','class'=>'comment-text-style'));
                                     echo "</td>";
-                                    echo "<td style='padding: 0;width: 60px;'>";
+                                    echo "<td class='parent-file-style'>";
                                     echo "<div class='new-comment-file-b'>";
-                                    echo $form->fileField($comment_m,'image',array("class"=>"add-comment-file-icon",'style'=>'cursor:pointer;padding: 0;width: 40px;border-radius: 5px;border:1px solid #dedede;'));
+                                    echo $form->fileField($comment_m,'image',array("class"=>"add-comment-file-icon comment-file-style"));
                                     echo "</div>";
                                     echo "</td>";
-                                    echo "<td style='padding: 0;width:72px;'>";
-                                    echo CHtml::submitButton('Send',array('class'=>'','style'=>"height:40px;border:0;padding:0;background-color: #22c9ff;border-radius: 5px;width:72px;color:#fff"));
+                                    echo "<td class='parent-send-button'>";
+                                    echo CHtml::submitButton('Send',array('class'=>'send-button'));
                                     echo "</td>";
                                     echo "</tr>";
                                 }

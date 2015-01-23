@@ -340,6 +340,10 @@ if(isset($message)) { ?>
                 {
                     echo "<div><img src='/files/".$image->image."'/></div>";
                 }
+                else
+                {
+                    echo Yii::app()->basePath."/../files/".$image->image;
+                }
             }
             else
             {
