@@ -246,6 +246,15 @@ class User extends CActiveRecord
 	{
 		return User::model()->findByPk($user_id)->job_type;
 	}
-
+    /*is admin*/
+    public function isAdmin($user_id)
+    {
+        $user=User::model()->findByPk($user_id);
+        if($user)
+        {
+            return $user->superuser==1?true:false;
+        }
+        return false;
+    }
 
 }

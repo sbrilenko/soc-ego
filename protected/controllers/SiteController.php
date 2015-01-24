@@ -286,7 +286,13 @@ class SiteController extends Controller
     public function actionAdmin()
     {
         $this->layout="//layouts/column3";
-        $this->render('admin');
+        if(isset(Yii::app()->user->id))
+        {
+            if(User::model()->isAdmin(Yii::app()->user->id))
+                $this->render('admin');
+        }
+        else $this->redirect('/');
+
     }
     public function actionLogin()
     {
