@@ -48,20 +48,7 @@ class SiteController extends Controller
                 $model->attributes=$_POST['User'];
                 if($model->login())
                 {
-                    $this->render('index',array("model"=>new User(),
-                        'avatar'=>Profile::model()->getLittleAvatar($user_id),
-                        'name'=>Profile::model()->getName($user_id),
-                        'location'=>LocationManager::model()->getLocation($user_id),
-                        'birthday'=>$this->renderPartial('birthday',array('img'=>Profile::model()->birthdayImg($user_id),
-                                                                          'date'=>Profile::model()->birthdayDate($user_id),
-                                                                          'name'=>Profile::model()->birthdayName($user_id)),true),
-                        'rank'=>$this->renderPartial('rank',array('img_class'=>Profile::model()->rankImgClass($user_id),
-                                                                  'title'=>Profile::model()->jobTitle($user_id),
-                                                                  'type'=>Profile::model()->jobType($user_id)),true),
-
-                        'store'=>$this->renderPartial('store',array('stores'=>Store::model()->getCountAllVisibleItem()),true),
-                        'company'=>$this->renderPartial('company',array('img'=>Profile::model()->companyImg($user_id)),true),
-                    ));
+                    $this->redirect('/');
                 }
                 else
                 {
@@ -304,7 +291,22 @@ class SiteController extends Controller
                 $model->attributes=$_POST['User'];
                 if($model->login())
                 {
-                    $this->render('index',array("model"=>$model));
+                    $model=User::model()->findByAttributes(array('email'=>trim(strtolower($model->email))));
+//                    $this->render('index',array("model"=>new User(),
+//                        'avatar'=>Profile::model()->getLittleAvatar($model->id),
+//                        'name'=>Profile::model()->getName($model->id),
+//                        'location'=>LocationManager::model()->getLocation($model->id),
+//                        'birthday'=>$this->renderPartial('birthday',array('img'=>Profile::model()->birthdayImg($model->id),
+//                                'date'=>Profile::model()->birthdayDate($model->id),
+//                                'name'=>Profile::model()->birthdayName($model->id)),true),
+//                        'rank'=>$this->renderPartial('rank',array('img_class'=>Profile::model()->rankImgClass($model->id),
+//                                'title'=>Profile::model()->jobTitle($model->id),
+//                                'type'=>Profile::model()->jobType($model->id)),true),
+//
+//                        'store'=>$this->renderPartial('store',array('stores'=>Store::model()->getCountAllVisibleItem()),true),
+//                        'company'=>$this->renderPartial('company',array('img'=>Profile::model()->companyImg($model->id)),true),
+//                    ));
+//                    $this->redirect('/');
                 }
                 else
                     $this->renderPartial('login',array("model"=>$model));

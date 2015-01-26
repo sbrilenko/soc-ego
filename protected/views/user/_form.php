@@ -408,15 +408,25 @@ if(isset($message)) { ?>
         {
             if($('#user-form input[name*=password]').attr('type')=="text")
             {
-                $('#user-form input[name*=password]').attr('type','password');
-                $('#user-form input[name*=confirm_password]').attr('type','password');
+                var clon=$('#user-form input[name*=password]').clone();
+                var clon_con=$('#user-form input[name*=confirm_password]').clone();
+                clon.attr('type','password')
+                $('#user-form #User_password').replaceWith(clon)
+                clon_con.attr('type','password')
+                $('#user-form #User_confirm_password').replaceWith(clon_con)
                 $(this).attr('title','Show Password');
                 $('>span',this).removeClass('ui-icon ui-icon-unlocked').addClass('ui-icon ui-icon-locked');
             }
             else
             {
-                $('#user-form input[name*=password]').attr('type','text');
-                $('#user-form input[name*=confirm_password]').attr('type','text');
+                var clon=$('#user-form input[name*=password]').clone();
+                var clon_con=$('#user-form input[name*=confirm_password]').clone();
+                clon.attr('type','text')
+                $('#user-form #User_password').replaceWith(clon)
+                clon_con.attr('type','text')
+                $('#user-form #User_confirm_password').replaceWith(clon_con)
+//                $('#user-form input[name*=password]').attr('type','text');
+//                $('#user-form input[name*=confirm_password]').attr('type','text');
                 $(this).attr('title','Hide Password');
                 $('>span',this).removeClass('ui-icon ui-icon-locked').addClass('ui-icon ui-icon-unlocked');
             }

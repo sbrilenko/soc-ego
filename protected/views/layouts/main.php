@@ -222,7 +222,6 @@
 <!--        </div>-->
 
     </div>
-        <svg width="30" height="30" version="1.1" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg"><path stroke="#93bd48" stroke-width="7" fill-opacity="0" d="M15,3.5 a11.5,11.5,0,1, 1,-10.282430716403798,16.64991442281866"></path><path stroke="url(#h-grad)" stroke-opacity="0.3" stroke-width="7" fill-opacity="0" d="M11.06676835175481,4.193534860962053 a11.5,11.5,0,0,1,7.86646329649038,0" style="visibility: visible;" transform="rotate(81,15,15)"></path><defs><linearGradient id="h-grad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:white;stop-opacity:0.3"></stop><stop offset="50%" style="stop-color:white;stop-opacity:1"></stop><stop offset="100%" style="stop-color:white;stop-opacity:0.3"></stop></linearGradient></defs></svg>  
     <div class="main-content" style="overflow: visible;padding: 0">
         <div class="left-column">
             <div class='avatar-container'>
@@ -421,7 +420,7 @@
                     ?>
 
                 </div>
-            <?php } else { ?>
+            <?php } elseif(Yii::app()->controller->id=="site" && Yii::app()->controller->action->id=="messages") { ?>
                 <div class="friends">
                     <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
                     <script>

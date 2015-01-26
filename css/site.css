@@ -538,7 +538,7 @@ table.day-count-table
     width:20px;
     height:16px;
 }
-.current .messages-icon,.messages-icon:hover
+.current .messages-icon,a.no-padding:hover .messages-icon
 {
     background-position: 0 -16px;
 }
@@ -549,7 +549,7 @@ table.day-count-table
     height:19px;
     margin-top: -3px;
 }
-.store-icon:hover
+a.no-padding:hover .store-icon
 {
     background-position: 0 -19px;
 }
@@ -559,7 +559,7 @@ table.day-count-table
     width:18px;
     height:18px;
 }
-.groups-icon:hover
+a.no-padding:hover .groups-icon
 {
     background-position: 0 -18px;
 }
@@ -569,7 +569,7 @@ table.day-count-table
     width:20px;
     height:17px;
 }
-.current .home-icon,.home-icon:hover
+.current .home-icon,a.no-padding:hover .home-icon
 {
     background-position: 0 -17px;
 }
@@ -580,7 +580,7 @@ table.day-count-table
     height:20px;
     margin-top: -3px;
 }
-.current .friends-icon,.friends-icon:hover
+.current .friends-icon,a.no-padding:hover .friends-icon
 {
     background-position: 0 -20px;
 }
