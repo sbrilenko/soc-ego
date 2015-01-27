@@ -69,6 +69,7 @@ class UserController extends Controller
 		if(isset($_POST['User']) && isset($_POST['Profile']))
 		{
 			$model->attributes=$_POST['User'];
+            $model->email=trim(strtolower($_POST['User']['email']));
             $model->work_count=isset($model->work_count) && !empty($model->work_count) ?strtotime($_POST['User']['work_count']):0;
             $model->day_count=isset($model->day_count) && !empty($model->day_count)?strtotime($_POST['User']['day_count']):0;
             $profile->attributes=$_POST['Profile'];

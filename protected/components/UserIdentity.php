@@ -9,7 +9,7 @@ class UserIdentity extends CUserIdentity
 {
     public $_id;
     public $email;
-    public function __construct($email,$password)
+    public function     __construct($email,$password)
     {
         $this->email=$email;
         $this->password=$password;
@@ -25,7 +25,7 @@ class UserIdentity extends CUserIdentity
 	public function authenticate()
 	{
         $model=User::model()->findByAttributes(array('email'=>trim(strtolower($this->email))));
-        if($model==null)
+        if($model===null)
         {
             $this->errorCode=self::ERROR_USERNAME_INVALID;
         }

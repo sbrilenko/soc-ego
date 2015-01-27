@@ -1,4 +1,4 @@
-
+<?php echo "14n4Xmo6okxCo",' | ',crypt("123","1410778270");?>
 <div class="form login-form" >
     <?php $form=$this->beginWidget('CActiveForm', array(
         'id'=>'login-form',

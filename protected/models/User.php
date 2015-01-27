@@ -43,7 +43,11 @@ class User extends CActiveRecord
         }
         else
         {
-            $this->password=$this->generate_pas($this->password,$this->createtime);
+            $user=User::model()->findByAttributes(array('email'=>trim(strtolower($this->email))));
+            if($user)
+            {
+                $this->password=$this->generate_pas($this->password,$user->createtime);
+            }
         }
         return parent::beforeSave();
     }

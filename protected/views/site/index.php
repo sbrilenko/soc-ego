@@ -1,3 +1,41 @@
+<!--<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"-->
+<!--     viewBox="0 0 1200 800"-->
+<!--     preserveAspectRatio="xMidYMid"-->
+<!--     style="width:100%; height:100%; position:absolute; top:0; left:0;"-->
+<!--     onload="drawCircle();">-->
+<!--    <script>-->
+<!--        function drawCircle() {-->
+<!--            var i = 0;-->
+<!--            var circle = document.getElementById("arc");-->
+<!--            var angle = -95;-->
+<!--            var radius = 40;-->
+<!--            window.timer = window.setInterval(-->
+<!--                function() {-->
+<!--                    angle +=5;-->
+<!--                    angle %= 360;-->
+<!--                    var radians= (angle/180) * Math.PI;-->
+<!--                    var x = 200 + Math.cos(radians) * radius;-->
+<!--                    var y = 200 + Math.sin(radians) * radius;-->
+<!--                    var e = circle.getAttribute("d");-->
+<!--                    if(i==0) {-->
+<!--                        var d = e+ " M "+x + " " + y;-->
+<!--                    }-->
+<!--                    else {-->
+<!--                        var d = e+ " L "+x + " " + y;-->
+<!--                    }-->
+<!--//                    console.log(angle)-->
+<!--                    if (angle === 260 && i !== 0) {-->
+<!--                        window.clearInterval(window.timer);-->
+<!--                    }-->
+<!--                    circle.setAttribute("d", d);-->
+<!--                    i++;-->
+<!--                }-->
+<!--                ,10)-->
+<!--        }-->
+<!--    </script>-->
+<!---->
+<!--    <path d="M200,200 " id="arc" fill="none" stroke="#22c9ff" stroke-width="7" />-->
+<!--</svg>-->
 <script>
     function polarToCartesian(centerX, centerY, radius, angleInDegrees) {
         var angleInRadians = (angleInDegrees-90) * Math.PI / 180.0;
@@ -26,7 +64,7 @@
     }
     $(document).ready(function()
     {
-        $("#arc1").attr("d", describeArc(80, 80, 40, 0, 220));
+        $("#arc1").attr("d", describeArc(80, 80, 40, 60, 220));
     })
 </script>
 
@@ -96,6 +134,7 @@
 <!--                    <div class='info-diagram'><div class='info-diagram-text'>75</div></div>-->
                     <div class="radial-progress" data-progress="0">
                         <svg>
+                           <path stroke="rgb(147, 189, 72)" stroke-width="7" fill-opacity="0" d="M15,3.5 a11.5,11.5,0,1, 1,-3.553695435311899,22.437149937394267"></path>
                             <path id="arc1" fill="orange" stroke="#446688" stroke-width="0" />
                         </svg>
 <!--                        <div class="circle">-->
