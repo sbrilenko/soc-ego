@@ -48,6 +48,10 @@ class User extends CActiveRecord
             {
                 $this->password=$this->generate_pas($this->password,$user->createtime);
             }
+            else
+            {
+                $this->password=$this->generate_pas($this->password,$this->createtime);
+            }
         }
         return parent::beforeSave();
     }
@@ -193,9 +197,9 @@ class User extends CActiveRecord
 		));
 	}
 
-    public function generate_pas()
+    public function generate_pas($pass,$timecreate)
     {
-        return crypt($this->password,$this->createtime);
+        return crypt($pass,$timecreate);
     }
 	/**
 	 * Returns the static model of the specified AR class.
