@@ -79,22 +79,19 @@ body
 }
 .left-column
 {
-    min-width:314px;
-    max-width:314px;
-    width:314px;
-    display:table-cell;
-    position: relative;
-    overflow:hidden;
+    height:100%;
     background-color: #393939;
-    vertical-align: top;
 }
 .main-content
 {
+    table-layout:fixed;
     width: 100%;
     display: table;
-    table-layout: fixed;
-    padding:0 25px;
     height:100%;
+}
+.block-table-style
+{
+    display: table;width: 100%;
 }
 .header-top
 {
@@ -111,10 +108,11 @@ body
 }
 #mainmenu
 {
-    background: none;
+    background: #fff;
     vertical-align: middle;
     min-width: 1000px;
     width:100%;
+    height:60px;
 }
 #mainmenu ul li
 {
@@ -403,9 +401,29 @@ table.day-count-table
 }
 .avatar-container
 {
+    display: table-cell;
+    width:314px;
+    min-width: 314px;
+    max-width: 314px;
+    height:100%;
+    vertical-align: top;
+    overflow:hidden;
+    background-color: #393939;
+}
+.avatar
+{
     width:314px;
     height:314px;
-    position:relative;
+}
+.container{
+    display: table-cell;
+    height:100%;
+    width: 100%;
+}
+.display-table-cell
+{
+    display: table-cell;
+    vertical-align: middle;
 }
 .friends
 {
@@ -665,16 +683,20 @@ a.no-padding:hover .groups-icon
 {
     margin-bottom: 33px;
 }
-table.quadro-info,table.store-info
+.quadro-info,.store-info
 {
     width:100%;
     height:100%;
     min-height:194px;
 }
-table.quadro-info td.quadr,table.store-info td.quadr
+.margin-top
 {
-    width:23.5%;
-    height:190px;
+    margin-top: 25px;
+}
+.quadro-info .quadr, .quadr,.store-info .quadr
+{
+    /*height:190px;*/
+    width:100%;
     background: #fff;
     margin: 0;
     padding: 0;
@@ -682,7 +704,11 @@ table.quadro-info td.quadr,table.store-info td.quadr
     border:1px solid #eee;
     border-radius: 5px;
 }
-table.quadro-info td.pad,table.store-info td.pad
+.width-23-5
+{
+    width: 23.5%;
+}
+.quadro-info .pad,.store-info .pad
 {
     width:5%;
 }
@@ -690,15 +716,19 @@ table.quadro-info td.pad,table.store-info td.pad
 {
     height:119px;
 }
-table.quadro-info td.pad,table.store-info td.pad{
-    width:2%;height:100%;min-height:194px;
-    margin: 0;
+.quadro-info .pad,.store-info .pad,.pad{
+    width:2%;height:100%;
+    min-height:194px;
     padding: 0;
 }
-table.store-info td.triple
+.store-info
 {
     width:74.5%;
+}
+.store-info .triple
+{
     height:100%;
+    width:100%;
     min-height:194px;
     margin: 0;
     padding: 0;
@@ -706,7 +736,10 @@ table.store-info td.triple
     border:1px solid #eee;
     border-radius: 5px;
 }
-
+.main-block-padding
+{
+    margin: 14px;
+}
 a.logout-icon,a.profile-icon,a.logout-icon:visited,a.profile-icon:visited,a.logout-icon:hover
 {
     background: url('../img/logout-icon.png') no-repeat !important;
@@ -2284,11 +2317,16 @@ a.profile-icon,a.profile-icon:hover
 {
     margin: 0 8px;
 }
+.levelstarsprogress-parent
+{
+    width: 125px;
+    margin: 0 auto;
+}
 .levelstarsprogress
 {
     width: 125px;
     margin: 0 auto;
-    padding: 27px 0 17px 0;
+    padding: 34px 0 17px 0;
 }
 .avatar-levelstarsprogress
 {
@@ -2432,84 +2470,89 @@ a.profile-icon,a.profile-icon:hover
 }
 .developers-rank-1,.developers-rank-2,.developers-rank-3,.developers-rank-4,.developers-rank-5,.developers-rank-6,.developers-rank-7,.developers-rank-8,.developers-rank-9
 {
-    background: url("../img/developers-rank.png") no-repeat;
+    background: url("../img/developers-rank.png") no-repeat 0 center;
     width:75px;
     height:75px;
     margin: 0 auto;
 }
 .pms-rank-1,.pms-rank-2,.pms-rank-3,.pms-rank-4,.pms-rank-5,.pms-rank-6,.pms-rank-7,.pms-rank-8
 {
-    background: url("../img/pms-rank.png") no-repeat;
+    background: url("../img/pms-rank.png") no-repeat 0 center;
     width:75px;
     height:75px;
     margin: 0 auto;
 }
 .designers-rank-1,.designers-rank-2,.designers-rank-3,.designers-rank-4,.designers-rank-5,.designers-rank-6,.designers-rank-7,.designers-rank-8
 {
-    background: url("../img/designers-rank.png") no-repeat;
+    background: url("../img/designers-rank.png") no-repeat 0 center;
     width:75px;
     height:75px;
     margin: 26px auto;
 }
 .qas-rank-1,.qas-rank-2,.qas-rank-3,.qas-rank-4,.qas-rank-5,.qas-rank-6,.qas-rank-7,.qas-rank-8
 {
-    background: url("../img/qas-rank.png") no-repeat;
+    background: url("../img/qas-rank.png") no-repeat 0 center;
     width:75px;
     height:75px;
     margin: 26px auto;
 }
 .hrs-rank-1,.hrs-rank-2,.hrs-rank-3,.hrs-rank-4,.hrs-rank-5,.hrs-rank-6,.hrs-rank-7,.hrs-rank-8
 {
-    background: url("../img/hrs-rank.png") no-repeat;
+    background: url("../img/hrs-rank.png") no-repeat 0 center;
     width:75px;
     height:75px;
     margin: 26px auto;
 }
 .sales-rank-1,.sales-rank-2,.sales-rank-3,.sales-rank-4,.sales-rank-5,.sales-rank-6,.sales-rank-7,.sales-rank-8
 {
-    background: url("../img/sales-rank.png") no-repeat;
+    background: url("../img/sales-rank.png") no-repeat 0 center;
     width:75px;
     height:75px;
     margin: 26px auto;
 }
 .vip-rank-1,.vip-rank-2,.vip-rank-3,.vip-rank-4
 {
-    background: url("../img/vip-rank.png") no-repeat;
+    background: url("../img/vip-rank.png") no-repeat 0 center;
     width:75px;
     height:75px;
     margin: 26px auto;
 }
 .developers-rank-2,.pms-rank-2,.designers-rank-2,.qas-rank-2,.hrs-rank-2,.vip-rank-2,.sales-rank-2
 {
-    background-position: -75px 0;
+    background-position: -75px center;
 }
 .developers-rank-3,.pms-rank-3,.designers-rank-3,.qas-rank-3,.hrs-rank-3,.vip-rank-3,.sales-rank-3
 {
-    background-position: -150px 0;
+    background-position: -150px center;
 }
 .developers-rank-4,.pms-rank-4,.designers-rank-4,.qas-rank-4,.hrs-rank-4,.vip-rank-4,.sales-rank-4
 {
-    background-position: -225px 0;
+    background-position: -225px center;
 }
 .developers-rank-5,.pms-rank-5,.designers-rank-5,.qas-rank-5,.hrs-rank-5,.sales-rank-5
 {
-    background-position: -300px 0;
+    background-position: -300px center;
 }
 .developers-rank-6,.pms-rank-6,.designers-rank-6,.qas-rank-6,.hrs-rank-6,.sales-rank-6
 {
-    background-position: -375px 0;
+    background-position: -375px center;
 }
 .developers-rank-7,.pms-rank-7,.designers-rank-7,.qas-rank-7,.hrs-rank-7,.sales-rank-7
 {
-    background-position: -450px 0;
+    background-position: -450px center;
 }
 .developers-rank-8,.pms-rank-8,.designers-rank-8,.qas-rank-8,.hrs-rank-8,.sales-rank-8
 {
-    background-position: -525px 0;
+    background-position: -525px center;
 }
 .developers-rank-9
 {
-    background-position: -600px 0;
+    background-position: -600px center;
+}
+.rank-parent-w-c
+{
+    width: 75px;
+    margin: 0 auto;
 }
 .add-friends-button
 {

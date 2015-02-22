@@ -16,21 +16,19 @@
 </script>
 <div class="main">
 <div class="messages-title">Messages</div>
-
-    <table class="pad-mar-zero">
-        <tr>
-            <td class="message-block">
+    <div class="pad-mar-zero" style="width: 100%;">
+            <div class="message-block f-l">
                 <div class="message-block-title">Messages</div>
                 <div class="group-scroll nano message-page-block-messages-h">
-                    <table class="group-wall-content nano-content mar-zero">
+                    <div class="group-wall-content nano-content mar-zero">
                         <?php
                         if(count($friends)>0)
                         {
                             foreach($friends as $index => $friend)
                             {
                             ?>
-                                <tr>
-                                    <td class="padding-zero tdone left-pad white-space-nowrap <?php if($friend['count']>0) echo 'not-read-message-st'?> position-relative">
+                                <div>
+                                    <div class="padding-zero tdone left-pad white-space-nowrap <?php if($friend['count']>0) echo 'not-read-message-st'?> position-relative">
                                         <a href="#" class="get-message">
                                             <div class="message-page-block-messg-spec-pad">
                                             <div class="displ-none">
@@ -65,17 +63,17 @@
                                         </div>
                                         <div class="active-dialog"></div>
                                         </a>
-                                    </td>
-                                </tr>
+                                    </div>
+                                </div>
                             <?php
                             }
                         }
                         ?>
-                    </table>
+                    </div>
                 </div>
-            </td>
-            <td class="message-and-dialog-mar"></td>
-            <td class='messages-dialog-block message-page-block-dialog'>
+            </div>
+            <div class="message-and-dialog-mar f-l"></div>
+            <div class='messages-dialog-block message-page-block-dialog f-l'>
                 <div class="message-block-title">Dialogs</div>
                 <div class="before-wall-content not-active">
                     <div class="wall-content nano message-page-block-dialog-scroll-h">
@@ -209,7 +207,7 @@
                     'htmlOptions' => array('enctype' => 'multipart/form-data',"class"=>"addmessage-form not-active")
                 ));
                 ?>
-                <table class="mar-zero displ-none">
+                <div class="mar-zero displ-none">
 
                     <?php
                     if(isset($message) and !empty($message))
@@ -218,8 +216,8 @@
                     }
                     else
                     {
-                        echo "<tr>";
-                        echo "<td>";
+                        echo "<div>";
+                        echo "<div>";
                         echo "<div class='message-file displ-none'>";
                         echo "<div class='pad-zero' style='padding-bottom: 10px;'>";
                         echo "<div class='f-l file-upload-part-1'>
@@ -249,13 +247,12 @@
                         echo "</div>";
                         echo "</div>";
 
-                        echo "</td>";
-                        echo "</tr>";
+                        echo "</div>";
+                        echo "</div>";
                     }
                     ?>
-                </table>
+                </div>
                 <?php $this->endWidget(); ?>
-            </td>
-        </tr>
-    </table>
+            </div>
+    </div>
 </div>

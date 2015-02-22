@@ -625,4 +625,10 @@ class SiteController extends Controller
             echo json_encode(array('error'=>true,'message'=>'File not found'.print_r($_POST['Message']['id'])));
         }
     }
+
+    /*new layout*/
+    public function actionNew()
+    {
+        $this->render('new');
+    }
 }

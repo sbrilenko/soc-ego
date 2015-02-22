@@ -1,15 +1,18 @@
-<table class="margin-zero">
-    <tr><td class="padding-zero"><div class="info-title">rank</div></td></tr>
-    <?php
-    echo "<tr><td class='padding-zero center'>";
-    echo "<div class='{$img_class}'></div>";
-    echo "</td></tr>";
-    echo '<tr><td class="padding-zero"><div class="info-black">';
-    echo $title;
-    echo '</div>';
-    echo '<div class="info-mini">';
-    echo $type;
-    echo '</div>';
-    echo '</td></tr>';
-    ?>
-</table>
+<div class="main-block-padding">
+    <div class="block-table-style">
+        <div class="display-table-cell info-title">rank</div>
+    </div>
+    <div class='block-table-style rank-parent-w-c'>
+        <div class='display-table-cell block-height <?php echo $img_class; ?>'></div>
+    </div>
+    <div class="block-table-style">
+        <div class="display-table-cell info-black">
+        <?php echo $title; ?>
+        </div>
+    </div>
+    <div class="block-table-style">
+        <div class="display-table-cell info-mini">
+            <?php echo $type;?>
+        </div>
+    </div>
+</div>

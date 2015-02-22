@@ -1,41 +1,4 @@
-<!--<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"-->
-<!--     viewBox="0 0 1200 800"-->
-<!--     preserveAspectRatio="xMidYMid"-->
-<!--     style="width:100%; height:100%; position:absolute; top:0; left:0;"-->
-<!--     onload="drawCircle();">-->
-<!--    <script>-->
-<!--        function drawCircle() {-->
-<!--            var i = 0;-->
-<!--            var circle = document.getElementById("arc");-->
-<!--            var angle = -95;-->
-<!--            var radius = 40;-->
-<!--            window.timer = window.setInterval(-->
-<!--                function() {-->
-<!--                    angle +=5;-->
-<!--                    angle %= 360;-->
-<!--                    var radians= (angle/180) * Math.PI;-->
-<!--                    var x = 200 + Math.cos(radians) * radius;-->
-<!--                    var y = 200 + Math.sin(radians) * radius;-->
-<!--                    var e = circle.getAttribute("d");-->
-<!--                    if(i==0) {-->
-<!--                        var d = e+ " M "+x + " " + y;-->
-<!--                    }-->
-<!--                    else {-->
-<!--                        var d = e+ " L "+x + " " + y;-->
-<!--                    }-->
-<!--//                    console.log(angle)-->
-<!--                    if (angle === 260 && i !== 0) {-->
-<!--                        window.clearInterval(window.timer);-->
-<!--                    }-->
-<!--                    circle.setAttribute("d", d);-->
-<!--                    i++;-->
-<!--                }-->
-<!--                ,10)-->
-<!--        }-->
-<!--    </script>-->
-<!---->
-<!--    <path d="M200,200 " id="arc" fill="none" stroke="#22c9ff" stroke-width="7" />-->
-<!--</svg>-->
+<script src="<?php echo Yii::app()->request->baseUrl; ?>/js/d3.js"></script>
 <script>
     function polarToCartesian(centerX, centerY, radius, angleInDegrees) {
         var angleInRadians = (angleInDegrees-90) * Math.PI / 180.0;
@@ -64,8 +27,67 @@
     }
     $(document).ready(function()
     {
-        $("#arc1").attr("d", describeArc(80, 80, 40, 60, 220));
+        var vis = d3.select("#arc1")
+        var pi = Math.PI;
+        <?php
+        if(User::model()->getLevel(Yii::app()->user->id)==0)
+        {
+        ?>
+        var arc = d3.svg.arc()
+            .innerRadius(30)
+            .outerRadius(40)
+            .startAngle(0 * (pi/180))
+            .endAngle(135 * (pi/180))
+        var arc1 = d3.svg.arc()
+            .innerRadius(30)
+            .outerRadius(40)
+            .startAngle(135 * (pi/180))
+            .endAngle(360 * (pi/180))
+        <?php
+        }
+        elseif(User::model()->getLevel(Yii::app()->user->id)==1)
+        {?>
+        var arc = d3.svg.arc()
+            .innerRadius(30)
+            .outerRadius(40)
+            .startAngle(0 * (pi/180))
+            .endAngle(225* (pi/180))
+        var arc1 = d3.svg.arc()
+            .innerRadius(30)
+            .outerRadius(40)
+            .startAngle(225 * (pi/180))
+            .endAngle(360 * (pi/180))
+        <?php
+        }
+        elseif(User::model()->getLevel(Yii::app()->user->id)==2){?>
+        var arc = d3.svg.arc()
+            .innerRadius(30)
+            .outerRadius(40)
+            .startAngle(0 * (pi/180))
+            .endAngle(360 * (pi/180))
+
+        <?php } ?>
+        vis.attr("width", "80").attr("height", "80") // Added height and width so arc is visible
+            .append("path")
+            .attr("d", arc)
+            .attr("fill", "#22c9ff")
+            .attr("transform", "translate(40,40)");
+        if(arc1)
+        {
+            vis.attr("width", "80").attr("height", "80")
+                .append("path")
+                .attr("d", arc1)
+                .attr("fill", "#d6dadc")
+                .attr("transform", "translate(40,40)");
+        }
+
+
     })
+
+//    $(document).ready(function()
+//    {
+//        $("#arc1").attr("d", describeArc(80, 80, 40, 60, 220));
+//    })
 </script>
 
 <script>
@@ -120,143 +142,138 @@
             </div>
     </div>
     <div class="clear"></div>
-    <div>
-        <table class="quadro-info">
-            <tr>
-                <td class="quadr">
-                    <?php echo $birthday;?>
-                </td>
-                <td class="pad"></td>
-                <td class="quadr">
-                <table class="margin-zero">
-                   <tr><td class="padding-zero"><div class="info-title">level progress</div></td></tr>
-                   <tr><td class='padding-zero center'>
-<!--                    <div class='info-diagram'><div class='info-diagram-text'>75</div></div>-->
-                    <div class="radial-progress" data-progress="0">
-                        <svg>
-                           <path stroke="rgb(147, 189, 72)" stroke-width="7" fill-opacity="0" d="M15,3.5 a11.5,11.5,0,1, 1,-3.553695435311899,22.437149937394267"></path>
-                            <path id="arc1" fill="orange" stroke="#446688" stroke-width="0" />
-                        </svg>
-<!--                        <div class="circle">-->
-<!--                            <div class="mask full">-->
-<!--                                <div class="fill"></div>-->
-<!--                            </div>-->
-<!--                            <div class="mask half">-->
-<!--                                <div class="fill"></div>-->
-<!--                                <div class="fill fix"></div>-->
-<!--                            </div>-->
-<!--                            <div class="shadow"></div>-->
-<!--                        </div>-->
-<!--                        <div class="inset">-->
-<!--                            <div class="percentage">-->
-<!--                                <div class="numbers"><span>-</span><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span><span>22</span><span>23</span><span>24</span><span>25</span><span>26</span><span>27</span><span>28</span><span>29</span><span>30</span><span>31</span><span>32</span><span>33</span><span>34</span><span>35</span><span>36</span><span>37</span><span>38</span><span>39</span><span>40</span><span>41</span><span>42</span><span>43</span><span>44</span><span>45</span><span>46</span><span>47</span><span>48</span><span>49</span><span>50</span><span>51</span><span>52</span><span>53</span><span>54</span><span>55</span><span>56</span><span>57</span><span>58</span><span>59</span><span>60</span><span>61</span><span>62</span><span>63</span><span>64</span><span>65</span><span>66</span><span>67</span><span>68</span><span>69</span><span>70</span><span>71</span><span>72</span><span>73</span><span>74</span><span>75</span><span>76</span><span>77</span><span>78</span><span>79</span><span>80</span><span>81</span><span>82</span><span>83</span><span>84</span><span>85</span><span>86</span><span>87</span><span>88</span><span>89</span><span>90</span><span>91</span><span>92</span><span>93</span><span>94</span><span>95</span><span>96</span><span>97</span><span>98</span><span>99</span><span>100</span></div>-->
-<!--                            </div>-->
-<!--                        </div>-->
+        <div class="quadro-info">
+                <div class="width-23-5 f-l">
+                    <div class="quadr">
+                        <?php echo $birthday;?>
                     </div>
-                    <?php
-                    echo "</td></tr>";
-                    if(User::model()->getLevel(Yii::app()->user->id)==0)
-                    {
-                        echo '<tr><td class="padding-zero"><div class="info-black last-to-next" data-level="100">0</div></td></tr>';
-                    }
-                    elseif(User::model()->getLevel(Yii::app()->user->id)==1)
-                    {
-                        echo '<tr><td class="padding-zero"><div class="info-black last-to-next" data-level="66">0</div></td></tr>';
-                    }
-                    elseif(User::model()->getLevel(Yii::app()->user->id)==2)
-                    {
-                        echo '<tr><td class="padding-zero"><div class="info-black last-to-next" data-level="33">0</div></td></tr>';
-                    }
-                    echo '<tr><td class="padding-zero"><div class="info-mini">left to next level</div></td></tr>'
-                    ?>
-                    </table>
-                </td>
-                <td class="pad"></td>
-                <td class="quadr">
-                    <?php echo $rank;?>
-                </td>
-                <td class="pad"></td>
-                <td class="quadr">
-                    <table class="margin-zero">
-                    <tr><td class="padding-zero"><div class="info-title">total points</div></td></tr>
-                    <tr><td class="padding-zero center">
-                        <div class="levelstarsprogress ">
+                </div>
+                <div class="pad f-l"></div>
+                <div class="width-23-5 f-l">
+                <div class="quadr">
+                   <div class="main-block-padding">
+                       <div class="block-table-style padding-zero">
+                           <div class="display-table-cell info-title">level progress</div>
+                       </div>
+                            <div class="block-table-style "><!-- radial-progress -->
+                                <div class="display-table-cell block-height">
+                                    <svg id="arc1" height="80" width="80" >
+
+                                    </svg>
+                                </div>
+
+                            </div>
                             <?php
                             if(User::model()->getLevel(Yii::app()->user->id)==0)
                             {
-                            ?>
-                                <div class="levelstars active"></div>
-                                <div class="levelstars padd"></div>
-                                <div class="levelstars"></div>
-                            <?php
-                            }elseif(User::model()->getLevel(Yii::app()->user->id)==1)
-                            {
-                            ?>
-                                <div class="levelstars active"></div>
-                                <div class="levelstars active padd"></div>
-                                <div class="levelstars"></div>
-                            <?php
-                            }elseif(User::model()->getLevel(Yii::app()->user->id)==2)
-                            {
-                            ?>
-                                <div class="levelstars active"></div>
-                                <div class="levelstars active padd"></div>
-                                <div class="levelstars active"></div>
-                            <?php
+                                echo '<div class="block-table-style"><div class="display-table-cell info-black last-to-next" data-level="100">0</div></div>';
                             }
+                            elseif(User::model()->getLevel(Yii::app()->user->id)==1)
+                            {
+                                echo '<div class="block-table-style"><div class="display-table-cell info-black last-to-next" data-level="66">0</div></div>';
+                            }
+                            elseif(User::model()->getLevel(Yii::app()->user->id)==2)
+                            {
+                                echo '<div class="block-table-style"><div class="display-table-cell info-black last-to-next" data-level="33">0</div></div>';
+                            }
+                            echo '<div class="block-table-style"><div class="display-table-cell info-mini">left to next level</div></div>';
                             ?>
-
-                            <div class="clear"></div>
+                   </div>
+                </div>
+                </div>
+                <div class="pad f-l"></div>
+                <div class="width-23-5 f-l">
+                    <div class="quadr">
+                        <?php echo $rank;?>
+                    </div>
+                </div>
+                <div class="pad f-l"></div>
+                <div class="width-23-5 f-l">
+                <div class="quadr">
+                    <div class="main-block-padding">
+                        <div class="block-table-style"><div class="display-table-cell info-title">total points</div></div>
+                        <div class="block-height">
+                            <div class="block-table-style levelstarsprogress-parent">
+                                <div class="display-table-cell levelstarsprogress">
+                                    <?php
+                                    if(User::model()->getLevel(Yii::app()->user->id)==0)
+                                    {
+                                    ?>
+                                        <div class="levelstars active"></div>
+                                        <div class="levelstars padd"></div>
+                                        <div class="levelstars"></div>
+                                    <?php
+                                    }elseif(User::model()->getLevel(Yii::app()->user->id)==1)
+                                    {
+                                    ?>
+                                        <div class="levelstars active"></div>
+                                        <div class="levelstars active padd"></div>
+                                        <div class="levelstars"></div>
+                                    <?php
+                                    }elseif(User::model()->getLevel(Yii::app()->user->id)==2)
+                                    {
+                                    ?>
+                                        <div class="levelstars active"></div>
+                                        <div class="levelstars active padd"></div>
+                                        <div class="levelstars active"></div>
+                                    <?php
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                            <div class="block-table-style">
+                                <div class="display-table-cell info-black points-style">
+                                    <?php
+                                    if(isset(Yii::app()->user->id))
+                                    {
+                                        echo (int)User::model()->findByPk(Yii::app()->user->id)->points;
+                                    }
+                                    ?>
+                               </div>
+                            </div>
                         </div>
-                            <div class="info-black points-style">
-                            <?php
-                            if(isset(Yii::app()->user->id))
-                                {
-                                echo (int)User::model()->findByPk(Yii::app()->user->id)->points;
-                                }
-                                echo '</div>';?>
-                    </td></tr>
-                    <?php
-                    echo '<tr><td class="padding-zero">';
-                    echo '<div class="info-black">&nbsp;</div>';
-                    echo '<div class="info-mini">scored overall</div></td>';
-                    echo '</td></tr>';
-                    ?>
-                   </table>
-                </td>
-            </tr>
-        </table>
-        <table class="store-info">
-            <tr>
-                <?php echo $store;?>
-                <td class="quadr position-relative">
-                    <?php
-                    echo $company;
-                    ?>
-                </td>
-            </tr>
-        </table>
+                        <div class="block-table-style">
+                            <div class="display-table-cell info-black">&nbsp;</div>
+                        </div>
+                        <div class="block-table-style">
+                            <div class="display-table-cell info-mini">scored overall</div>
+                        </div>
+                   </div>
+                </div>
+                </div>
+            </div>
+         <div class="clear"></div>
+        <div class="store-info f-l margin-top">
+            <?php echo $store;?>
+        </div>
+        <?php if(!empty($store)) echo '<div class="pad f-l margin-top"></div>';?>
+         <div class="width-23-5 f-l margin-top ">
+                <div class="quadr">
+                    <div class="main-block-padding">
+                        <?php echo $company; ?>
+                    </div>
+                </div>
+         </div>
+         <div class="clear"></div>
 
-
-    <table class="pad-mar-zero">
-            <tr>
-                <td class="projects-main-page-block">
-                    <table class="group-wall-title mar-zero">
-                        <tr><td class="padding-zero tdone store-head" colspan="2">Projects</td>
-                            <td class="padding-zero tdmiddle text-center store-head">Company</td>
-<!--                            <td class="padding-zero tdmiddle text-center store-head">Date</td>-->
-                            <td class="padding-zero tdlast store-head">Status</td></tr>
-                    </table>
+    <div class="pad-mar-zero">
+            <div>
+                <div class="projects-main-page-block">
+                    <div class="group-wall-title mar-zero">
+                        <div><div class="padding-zero tdone store-head" colspan="2">Projects</div>
+                            <div class="padding-zero tdmiddle text-center store-head">Company</div>
+                            <div class="padding-zero tdlast store-head">Status</div></div>
+                    </div>
                     <div class="group-scroll nano projects-main-page-scroll-height">
-                    <table class="group-wall-content nano-content mar-zero">
+                    <div class="group-wall-content nano-content mar-zero">
                         <?php
                         $allmygr=Participants::model()->allGroupsForUser(Yii::app()->user->id);
                         if(count($allmygr)>0)
                         {
                             foreach($allmygr as $index => $group)
                             {
-                                echo '<tr>';
-                                echo '<td class="padding-zero tdone left-pad white-space-nowrap" colspan="2">';
+                                echo '<div>';
+                                echo '<div class="padding-zero tdone left-pad white-space-nowrap" colspan="2">';
                                 $group_table=Usergroup::model()->findByPk($group->group_id);
                                 if($group->group_id && $group_table)
                                 {
@@ -286,14 +303,14 @@
                                 echo '<div class="project-title ">'.htmlspecialchars($group_table->title).'</div>';
                                 echo '<div class="project-pm">'.htmlspecialchars($user->firstname." ".$user->lastname).'</div>';
                                 echo "</div>";
-                                echo '</td>';
-                                echo '<td class="padding-zero tdmiddle project-ver-line">';
+                                echo '</div>';
+                                echo '<div class="padding-zero tdmiddle project-ver-line">';
                                 echo "<div class='project-company-date text-center'>".htmlspecialchars(Company::model()->findByPk($group_table->company)->title)."</div>";
-                                echo '</td>';
-//                                echo '<td class="padding-zero tdmiddle project-ver-line">';
+                                echo '</div>';
+//                                echo '<div class="padding-zero tdmiddle project-ver-line">';
 //                                echo "<div class='project-company-date text-center'>".date("d/m/Y",strtolower($group_table->time_create))."</div>";
-//                                echo '</td>';
-                                echo '<td class="padding-zero tdlast project-ver-line">';
+//                                echo '</div>';
+                                echo '<div class="padding-zero tdlast project-ver-line">';
                                 switch ($group_table->completed)
                                 {
                                     case 0:
@@ -312,17 +329,17 @@
                                     }
                                     break;
                                 }
-                                echo '</td>';
-                                echo '</tr>';
+                                echo '</div>';
+                                echo '</div>';
                             }
                         }
                         ?>
 
-                    </table>
                     </div>
-                </td>
-                <td class="projects-and-wall-mar"></td>
-                <td class="wall-block">
+                    </div>
+                </div>
+                <div class="projects-and-wall-mar"></div>
+                <div class="wall-block">
                     <div class="group-wall-title">Wall</div>
                    <div class="before-wall-content">
                     <div class="wall-content nano wall-block-scroll-height">
@@ -433,7 +450,7 @@
                             'htmlOptions' => array('enctype' => 'multipart/form-data',"class"=>"addcomments-form")
                         ));
                         ?>
-                            <table>
+                            <div>
 
                                 <?php
                                 if(isset($message) and !empty($message))
@@ -443,27 +460,26 @@
                                 else
                                 {
                                     $comment_m=new Comments();
-                                    echo "<tr class='new-comment'>";
+                                    echo "<div class='new-comment'>";
                                     echo $form->hiddenField($comment_m,'commented_user_id',array("value"=>Yii::app()->user->id));
                                     echo $form->hiddenField($comment_m,'create_user_id',array("value"=>""));
-                                    echo "<td class='pad-zero'>";
+                                    echo "<div class='pad-zero'>";
                                     echo $form->textField($comment_m,'text',array("placeholder"=>'Enter your message here...','class'=>'comment-text-style'));
-                                    echo "</td>";
-                                    echo "<td class='parent-file-style'>";
+                                    echo "</div>";
+                                    echo "<div class='parent-file-style'>";
                                     echo "<div class='new-comment-file-b'>";
                                     echo $form->fileField($comment_m,'image',array("class"=>"add-comment-file-icon comment-file-style"));
                                     echo "</div>";
-                                    echo "</td>";
-                                    echo "<td class='parent-send-button'>";
+                                    echo "</div>";
+                                    echo "<div class='parent-send-button'>";
                                     echo CHtml::submitButton('Send',array('class'=>'send-button'));
-                                    echo "</td>";
-                                    echo "</tr>";
+                                    echo "</div>";
+                                    echo "</div>";
                                 }
                                 ?>
-                            </table>
+                            </div>
                         <?php $this->endWidget(); ?>
-                </td>
-            </tr>
-        </table>
-    </div>
+                </div>
+            </div>
+        </div>
 </div>

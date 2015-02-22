@@ -1,17 +1,20 @@
-<table class="margin-zero">
-    <tr>
-        <td class="padding-zero"><div class="info-title">birthday</div></td>
-    </tr>
-    <tr>
-        <td class="padding-zero text-center center">
-            <?php
-            echo $img;
-            echo "</td></tr>";
-            echo '<tr><td class="padding-zero"><div class="info-black">';
-            echo $date;
-            echo '</div></td></tr>';
-            echo '<tr><td class="padding-zero"><div class="info-mini">';
-            echo $name;
-            echo '</div></td></tr>'
-            ?>
-</table>
+<div class="main-block-padding">
+    <div class="block-table-style">
+        <div class="display-table-cell info-title">birthday</div>
+    </div>
+    <div class='block-table-style'>
+           <div class='display-table-cell block-height'>
+               <?php echo $img;?>
+            </div>
+    </div>
+    <div class="block-table-style info-black">
+            <div class='display-table-cell'>
+                <?php echo $date; ?>
+            </div>
+    </div>
+    <div class="block-table-style info-mini">
+            <div class='display-table-cell'>
+                <?php echo $name; ?>
+            </div>
+    </div>
+</div>
