@@ -1,0 +1,52 @@
+@media only screen and (min-width:960px) and (max-width:1200px) {
+    .block-height
+    {
+        height: 151px;
+        vertical-align: middle;
+    }
+    .points-style
+    {
+        padding: 10px 0;
+    }
+}
+@media only screen and (min-width:12000px) and (max-width:1376px){
+    .block-height
+    {
+        height: 151px;
+        vertical-align: middle;
+    }
+    .points-style
+    {
+        padding: 10px 0;
+    }
+}
+@media only screen and (min-width:1376px) and (max-width:1400px){
+    .block-height
+    {
+        height: 151px;
+        vertical-align: middle;
+    }
+    .points-style
+    {
+        padding: 10px 0;
+    }
+}
+@media only screen and (min-width:1400px) and (max-width:1920px){
+    .block-height
+    {
+        height: 151px;
+        vertical-align: middle;
+    }
+    .points-style
+    {
+        padding: 10px 0;
+    }
+}
+/* different techniques for iPad screening */
+/*@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait) {*/
+    /* For portrait layouts only */
+/*}*/
+
+/*@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape) {*/
+    /* For landscape layouts only */
+/*}*/
