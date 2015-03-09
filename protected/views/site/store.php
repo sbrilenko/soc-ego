@@ -22,21 +22,21 @@
                             {
                                 if(file_exists(Yii::app()->basePath."/../files/".$file_avatar->image))
                                 {
-                                    echo "<div class='text-center'><img class='img-store-main' src='/files/".$file_avatar->image."'/></div>";
+                                    echo "<div class='text-center store-margin-img-block'><img class='img-store-main' src='/files/".$file_avatar->image."'/></div>";
                                 }
                                 else
                                 {
-                                    echo '<div class="default-store-main"></div>';
+                                    echo '<div class="default-store-main store-margin-img-block"></div>';
                                 }
                             }
                             else
                             {
-                                echo '<div class="default-store-main"></div>';
+                                echo '<div class="default-store-main store-margin-img-block"></div>';
                             }
                         }
                         else
                         {
-                            echo '<div class="default-store-main"></div>';
+                            echo '<div class="default-store-main store-margin-img-block"></div>';
                         }
                     }
                     if($item->stock==1)

@@ -9,7 +9,7 @@
         padding: 10px 0;
     }
 }
-@media only screen and (min-width:12000px) and (max-width:1376px){
+@media only screen and (min-width:1200px) and (max-width:1376px){
     .block-height
     {
         height: 151px;

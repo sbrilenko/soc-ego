@@ -256,13 +256,14 @@
          </div>
          <div class="clear"></div>
 
-    <div class="pad-mar-zero">
-            <div>
+    <div class="pad-mar-zero margin-top">
+                <div class="projects-main-page-width  f-l">
                 <div class="projects-main-page-block">
                     <div class="group-wall-title mar-zero">
-                        <div><div class="padding-zero tdone store-head" colspan="2">Projects</div>
-                            <div class="padding-zero tdmiddle text-center store-head">Company</div>
-                            <div class="padding-zero tdlast store-head">Status</div></div>
+                        <div class="padding-zero tdone store-head f-l">Projects</div>
+                        <div class="padding-zero tdmiddle text-center store-head f-l">Company</div>
+                        <div class="padding-zero tdlast store-head f-l">Status</div>
+                        <div class="clear"></div>
                     </div>
                     <div class="group-scroll nano projects-main-page-scroll-height">
                     <div class="group-wall-content nano-content mar-zero">
@@ -272,73 +273,96 @@
                         {
                             foreach($allmygr as $index => $group)
                             {
-                                echo '<div>';
-                                echo '<div class="padding-zero tdone left-pad white-space-nowrap" colspan="2">';
-                                $group_table=Usergroup::model()->findByPk($group->group_id);
-                                if($group->group_id && $group_table)
+                                ?>
+                                <div style="padding: 18px 16px;">
+                                <div class="padding-zero tdone left-pad white-space-nowrap f-l">
+                                <?php $group_table=Usergroup::model()->findByPk($group->group_id); ?>
+                                <?php if($group->group_id && $group_table)
                                 {
                                     $file_company=Files::model()->findByPk($group_table->image);
                                     if($file_company)
                                     {
                                         if(file_exists(Yii::app()->basePath."/../files/".$file_company->image))
                                         {
-                                            echo "<a href='#'><img class='f-l profile-main-page-img' src='/files/".$file_company->image."'/></a>";
-                                        }
+                                        ?>
+                                        <a href='#' class="f-l"><img class='f-l profile-main-page-img' src='/files/<?php echo $file_company->image;?>'/></a>
+                                        <?php }
                                         else
                                         {
-                                            echo "<a href='#'><img class='f-l profile-main-page-img' src='/img/group-default-little.png'/></a>";
-                                        }
+                                        ?>
+                                            <a href='#' class="f-l"><img class='f-l profile-main-page-img' src='/img/group-default-little.png'/></a>
+                                        <?php }
                                     }
                                     else
                                     {
-                                        echo "<a href='#'><img class='f-l profile-main-page-img' src='/img/group-default-little.png'/></a>";
-                                    }
+                                    ?>
+                                        <a href='#' class="f-l"><img class='f-l profile-main-page-img' src='/img/group-default-little.png'/></a>
+                                    <?php }
                                 }
                                 else
                                 {
-                                    echo "<a href='#'><img class='f-l profile-main-page-img' src='/img/group-default-little.png'/></a>";
-                                }
+                                ?>
+                                    <a href='#' class="f-l"><img class='f-l profile-main-page-img' src='/img/group-default-little.png'/></a>
+                                <?php }
                                 $user=Profile::model()->findByAttributes(array("user_id"=>$group_table->pm));
-                                echo "<div class='project-ver-line f-l'>";
-                                echo '<div class="project-title ">'.htmlspecialchars($group_table->title).'</div>';
-                                echo '<div class="project-pm">'.htmlspecialchars($user->firstname." ".$user->lastname).'</div>';
-                                echo "</div>";
-                                echo '</div>';
-                                echo '<div class="padding-zero tdmiddle project-ver-line">';
-                                echo "<div class='project-company-date text-center'>".htmlspecialchars(Company::model()->findByPk($group_table->company)->title)."</div>";
-                                echo '</div>';
-//                                echo '<div class="padding-zero tdmiddle project-ver-line">';
-//                                echo "<div class='project-company-date text-center'>".date("d/m/Y",strtolower($group_table->time_create))."</div>";
-//                                echo '</div>';
-                                echo '<div class="padding-zero tdlast project-ver-line">';
-                                switch ($group_table->completed)
+                                ?>
+                                <div class='f-l'>
+                                    <div class="project-title">
+                                        <?php echo htmlspecialchars($group_table->title);?>
+                                    </div>
+                                    <div class="project-pm">
+                                        <?php echo htmlspecialchars($user->firstname." ".$user->lastname);?>
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="padding-zero tdmiddle f-l position-relative">
+                                    <div class="project-ver-line spec-mar" style="position:absolute;width: 1px;"></div>
+                                    <div class=' project-company-date text-center f-l'>
+                                        <?php echo htmlspecialchars(Company::model()->findByPk($group_table->company)->title);?>
+                                    </div>
+                                </div>
+<!--                                <div class="padding-zero tdmiddle project-ver-line f-l">-->
+<!--                                    <div class='project-company-date text-center f-l'>-->
+<!--                                        --><?php //echo date("d/m/Y",strtolower($group_table->time_create));?>
+<!--                                    </div>-->
+<!--                                </div>-->
+                                <div class="padding-zero tdlast f-l">
+                                    <div class="project-ver-line spec-mar f-l" style="width: 1px"></div>
+                                <?php switch ($group_table->completed)
                                 {
                                     case 0:
                                     {
-                                        echo "<div class='project-status finished'>Finished</div>";
-                                    }
+                                     ?>
+                                        <div class='project-status finished f-l'>Finished</div>
+                                    <?php }
                                     break;
                                     case 1:
                                     {
-                                        echo "<div class='project-status active'>Active</div>";
-                                    }
+                                        ?>
+                                        <div class='project-status active f-l'>Active</div>
+                                    <?php }
                                     break;
                                     case 2:
                                     {
-                                        echo "<div class='project-status paused'>Paused</div>";
-                                    }
+                                    ?>
+                                        <div class='project-status paused f-l'>Paused</div>
+                                    <?php }
                                     break;
                                 }
-                                echo '</div>';
-                                echo '</div>';
-                            }
+                                ?>
+                                </div>
+                                    <div class="clear"></div>
+                                 </div>
+                            <?php }
                         }
                         ?>
 
                     </div>
                     </div>
                 </div>
-                <div class="projects-and-wall-mar"></div>
+                </div>
+                <div class="projects-and-wall-mar f-l"></div>
+                <div class="wall-block-w f-l">
                 <div class="wall-block">
                     <div class="group-wall-title">Wall</div>
                    <div class="before-wall-content">
@@ -480,6 +504,6 @@
                             </div>
                         <?php $this->endWidget(); ?>
                 </div>
-            </div>
+                </div>
         </div>
 </div>
