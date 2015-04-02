@@ -36,7 +36,7 @@ class UserGroupMessage extends CActiveRecord
 			array('title', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, author_id, group_id, createtime, title, message, parent', 'safe', 'on'=>'search'),
+			array('id, author_id, group_id, title, message, parent', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -108,4 +108,12 @@ class UserGroupMessage extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+    protected function beforeValidate() {
+        if($this->isNewRecord) {
+            $this->createtime = new CDbExpression('NOW()');
+        }
+
+        return parent::beforeValidate();
+    }
 }

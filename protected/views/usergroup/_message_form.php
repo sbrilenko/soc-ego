@@ -1,5 +1,5 @@
 <?php
-  echo CHtml::beginForm(array('//usergroup/write'));
+  echo CHtml::beginForm('write');
 
 	echo CHtml::hiddenField('UsergroupMessage[group_id]', $group_id);
 

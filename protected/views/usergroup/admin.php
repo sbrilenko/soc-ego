@@ -9,9 +9,9 @@ echo "</div>";
 //);
 
 $this->menu=array(
-		array('label'=>'app', 'List' . ' Usergroup',
+		array('label'=>'List', 'List' . ' Usergroup',
 			'url'=>array('index')),
-		array('label'=>'app', 'Create' . ' Usergroup',
+		array('label'=>'Create', 'Create' . ' Usergroup',
 		'url'=>array('create')),
 	);
 
@@ -29,7 +29,7 @@ data: $(this).serialize()
 			");
 		?>
 
-<h1> <?php echo 'app', 'Manage'; ?> Usergroups</h1>
+<h1>Manage Usergroups</h1>
 
 <?php //echo CHtml::link(Yii::t('app', 'Advanced Search'),'#',array('class'=>'search-button')); ?>
 <!--<div class="search-form" style="display:none">-->

@@ -5,6 +5,12 @@
 <?php if(isset($message) && !empty($message)) {?>
     <div style="color: red"><?php echo $message;?></div>
 <?php } ?>
+
+<?php foreach($errors as $error_key => $error_messages): ?>
+<?php foreach($error_messages as $error_message): ?>
+<div style="color: red"><?php echo 'Field: ' . $error_key . ". Error: " . $error_message;?></div>
+<?php endforeach; ?>
+<?php endforeach; ?>
 <?php $form=$this->beginWidget('CActiveForm', array(
 'id'=>'usergroup-form',
     'enableAjaxValidation'=>false,
