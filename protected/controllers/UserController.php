@@ -82,7 +82,7 @@ class UserController extends Controller
                     $file_ret=Files::model()->create($_FILES['Profile'],'avatar',$title='test',Profile::model()->tableName());
                     if(is_array($file_ret))
                     {
-                        $this->render('create',array('message'=>$file_ret[0]));
+                        $this->render('create',array('message'=>$file_ret[0], 'model'=>$model));
                     }
                     else
                     {
@@ -93,13 +93,13 @@ class UserController extends Controller
                         }
                         else
                         {
-                            $this->render('create',array('message'=>'badges model not saved! Please ask your specialist'));
+                            $this->render('create',array('message'=>'badges model not saved! Please ask your specialist', 'model'=>$model));
                         }
                     }
                 }
                 else
                 {
-                    $this->render('create',array('message'=>'please put the image'));
+                    $this->render('create',array('message'=>'please put the image', 'model' => $model));
                 }
                 if($profile->save())
                 {
@@ -117,6 +117,7 @@ class UserController extends Controller
 		$this->render('create',array(
 			'model'=>$model,
             'profile'=>$profile,
+            'message' => ''
 		));
 	}
 
