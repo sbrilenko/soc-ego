@@ -2,6 +2,7 @@
 
 class UsergroupController extends Controller {
     public $layout='//layouts/admin';
+    public $_model;
 	public function beforeAction($event) {
 		return parent::beforeAction($event);
 	}
@@ -28,16 +29,25 @@ class UsergroupController extends Controller {
 	}
 
 	public function actionWrite() {
-		$message = new UsergroupMessage;
+		$message = new UserGroupMessage;
 
 		if(isset($_POST['UsergroupMessage'])) {
 			$message->attributes = $_POST['UsergroupMessage'];
 			$message->author_id = Yii::app()->user->id;
-			$message->save();
-		}
+			if($message->save()) {
+                $this->redirect(array(
+                    '//usergroup/view',
+                    'id' => $message->group_id));                
+            } else {
+                die(var_dump($message->getErrors()));
+                $this->redirect(YII::app()->request->urlReferrer); // TODO we need to display errors instead of redirect. 
+            }
+            
+		} else {
+            $this->redirect('index');                
+        }
 
-		$this->redirect(array('//usergroup/groups/view',
-					'id' => $message->group_id));
+
 
 	}
 
@@ -109,8 +119,8 @@ class UsergroupController extends Controller {
 		$model = $this->loadModel($id);
 
 		$this->render('view',array(
-					'model' => $model,
-					));
+            'model' => $model,
+        ));
 	}
 
 	public function loadModel($id = false)
@@ -182,19 +192,19 @@ class UsergroupController extends Controller {
                         }
                         else
                         {
-                            $this->redirect('create');
+                            $this->render('create', array('model'=>$group, 'message'=>'', 'errors'=>$group->getErrors()));
                         }
                     }
                     else
-                        $this->render('create',array("messages"=>"Fields with * are required."));
+                        $this->render('create',array("messages"=>"Fields with * are required.", "errors"=>array()));
                 }
                 else
-                    $this->render('create',array("messages"=>"Fields with * are required."));
+                    $this->render('create',array("messages"=>"Fields with * are required.", "errors"=>array()));
             }
             else
             {
                 $model = new Usergroup;
-                $this->render('create',array( 'model'=>$model));
+                $this->render('create',array( 'model'=>$model, 'message'=>'', "errors"=>array()));
             }
         }
     }

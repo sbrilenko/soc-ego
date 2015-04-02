@@ -52,6 +52,8 @@ class Usergroup extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+            'related_participants' => array(self::HAS_MANY, 'Participants', 'group_id'), 
+            'related_messages' => array(self::HAS_MANY, 'UserGroupMessage', 'group_id')
 		);
 	}
 
@@ -121,5 +123,12 @@ class Usergroup extends CActiveRecord
 		return parent::model($className);
 	}
 
+    public function getParticipantDataProvider() {
+        return new CArrayDataProvider($this->related_participants);
+    }
+
+    public function getMessageDataProvider() {
+        return new CArrayDataProvider($this->related_messages);
+    }
 
 }

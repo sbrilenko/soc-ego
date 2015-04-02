@@ -2,9 +2,9 @@
 //Yum::register('css/yum.css');
 
 $this->breadcrumbs=array(
-		'Usergroups'=>array('index'),
-		$model->title,
-		);
+    'Usergroups'=>array('index'),
+    $model->title,
+);
  ?>
 
 <h3> <?php echo $model->title;  ?> </h3>

@@ -6,8 +6,12 @@
 ?>
 <?php //$this->title = 'Create Usergroup'; ?>
 <?php
-$this->renderPartial('_form', array('message'=>$message,
-			'model' => new Usergroup()));
+$this->renderPartial('_form', array(
+    'message'=>$message,
+    'model' => new Usergroup(),
+    'errors' => $errors
+    
+));
 
 ?>
 
