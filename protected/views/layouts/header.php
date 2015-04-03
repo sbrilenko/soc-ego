@@ -42,7 +42,7 @@
         <li><div class="column"></div></li>
         <li><div class="text">
                 <div class="menu-padding">
-                    <a href="/faq">FAG</a>
+                    <a href="/faq">FAQ</a>
                 </div>
             </div>
         </li>
