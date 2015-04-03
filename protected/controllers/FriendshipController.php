@@ -8,6 +8,8 @@ class FriendshipController extends Controller
 	 */
 	public $layout='//layouts/column2';
 
+    public $defaultAction = 'view';
+
 	/**
 	 * @return array action filters
 	 */
