@@ -107,7 +107,7 @@ class Participants extends CActiveRecord
     {
         if(isset($user_id) && $user_id>0 && User::model()->findByPk($user_id))
         {
-            return Participants::model()->findAllByattributes(array("user_id"=>$user_id,"status"=>1));
+            return Participants::model()->findAllByattributes(array("user_id"=>$user_id));
         }
         else return array();
     }
