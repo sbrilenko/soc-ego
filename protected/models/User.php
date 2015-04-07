@@ -117,6 +117,8 @@ class User extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+            'friends' => array(self::HAS_MANY, 'UserFriend', 'user_id'),
+            'profile' => array(self::HAS_ONE, 'Profile', 'user_id')
 		);
 	}
 
@@ -263,6 +265,10 @@ class User extends CActiveRecord
             return $user->superuser==1?true:false;
         }
         return false;
+    }
+
+    public function getFriendsList() {
+        return $this->friends;
     }
 
 }

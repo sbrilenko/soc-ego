@@ -124,10 +124,10 @@ class FriendshipController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Friendship');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
+        $current_user = User::model()->findByPk(Yii::app()->user->getId());
+        $friends = $current_user->getFriendsList();
+        
+		$this->render('index', array('friends'=>$friends));
 	}
 
 	/**

@@ -197,7 +197,7 @@ CREATE TABLE `friendship` (
   `updatetime` int(11) DEFAULT NULL,
   `message` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -206,7 +206,7 @@ CREATE TABLE `friendship` (
 
 LOCK TABLES `friendship` WRITE;
 /*!40000 ALTER TABLE `friendship` DISABLE KEYS */;
-INSERT INTO `friendship` VALUES (1,1,2,1,0,1410876198,1410876198,'Hi a want be your friend! )'),(2,1,3,1,0,1410876198,1410876198,'Hi a want be your friend! )');
+INSERT INTO `friendship` VALUES (1,1,2,1,0,1410876198,1410876198,'Hi a want be your friend! )'),(2,1,3,1,0,1410876198,1410876198,'Hi a want be your friend! )'),(3,1,19,1,0,1410876198,1410876198,'sup?');
 /*!40000 ALTER TABLE `friendship` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -738,6 +738,31 @@ INSERT INTO `user` VALUES (1,'admin','14UaTZqKDvWIQ','',1410778270,1412767308,14
 UNLOCK TABLES;
 
 --
+-- Table structure for table `user_friend`
+--
+
+DROP TABLE IF EXISTS `user_friend`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_friend` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `friend_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_friend`
+--
+
+LOCK TABLES `user_friend` WRITE;
+/*!40000 ALTER TABLE `user_friend` DISABLE KEYS */;
+INSERT INTO `user_friend` VALUES (1,19,1),(2,1,19),(3,19,2),(4,2,19),(5,3,19),(6,19,3);
+/*!40000 ALTER TABLE `user_friend` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `user_group_message`
 --
 
@@ -832,4 +857,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-04-03 11:34:14
+-- Dump completed on 2015-04-07 13:15:25
