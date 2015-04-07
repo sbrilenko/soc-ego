@@ -110,7 +110,7 @@ return array(
             'caseSensitive'=>false,
             'rules'=>array(
                 '<friends>/<action:\w+>'                                          => 'friendship/<action>',
-                '<friends>'                                                       => 'friendship/index',
+                'friends'                                                         => 'friendship/index',
                 '<controller:(foo|bar)>/<action>'                                 => 'module/<controller>/<action>',
                 '/install/default/<action:\w+>'                                   => '/install/default/<action>',
                 '/gii/<controller:\w+>/<action:\w+>'                              => 'gii/<controller>/<action>',
