@@ -69,87 +69,34 @@
                     ?>
                 </div>
             <?php if(Yii::app()->controller->id=="site" && Yii::app()->controller->action->id=="index") {?>
-                <div class="friends">
-                    <?php
-
-                    if(true)
-                    {
-                        $user_friends=Friendship::model()->findAllBySql("select * from friendship where (inviter_id=:inviter_id OR friend_id=:friend_id) AND status=1 ORDER BY updatetime", array(':inviter_id'=>Yii::app()->user->id,':friend_id'=>Yii::app()->user->id));
-                        if($user_friends)
-                        {
-                            $frie_count_class="friends-title-count-text";
-                            $frie_count=count($user_friends);
-                            if($frie_count>10)
-                                $frie_count_class="friends-title-count-text-more";
-                            echo "<div><div class='friends-title-count'><div class='".$frie_count_class."'>".$frie_count."</div></div><div class='friends-title' href='/friends'>Friends</div></div><div class='clear'></div>";
-                            echo "<ul class='friends-list'>";
-                            foreach($user_friends as $friend)
-                            {
-                                echo "<li>";
-                                if($friend->inviter_id==Yii::app()->user->id)
-                                {
-                                    $profile_user=Profile::model()->findByPk($friend->friend_id);
-                                    if($profile_user && !is_null($profile_user->avatar) && $profile_user->avatar>0)
-                                    {
-                                        echo "<table class='friends-list-table'>";
-                                        $avatar_image=Files::model()->findByPk($profile_user->avatar);
-                                        if($avatar_image)
-                                        {
-                                            if(file_exists(Yii::app()->basePath."/../files/".$avatar_image->image))
-                                            {
-                                                $name_in_db=str_replace('.jpg','',$avatar_image->image);
-                                                echo "<tr><td class='width'><a href='/user?id=$profile_user->id'><img title='".$profile_user->firstname." ".$profile_user->lastname."' src='/files/".$name_in_db."_little.jpg"."'/></a></td>";
-                                                echo "<td><div class='friends-name'>".$profile_user->firstname." ".$profile_user->lastname."</div><div class='friends-position'>".User::model()->findByPk($profile_user->user_id)->job_type."</div></td></tr>";
-                                            }
-                                            else
-                                            {
-                                                echo "<tr><td class='width'><a href='/user?id=$profile_user->id'><img title='".$profile_user->firstname." ".$profile_user->lastname."' src='/img/default-user-mini.png'/></a></td>";
-                                                echo "<td><div class='friends-name'>".$profile_user->firstname." ".$profile_user->lastname."</div><div class='friends-position'>".User::model()->findByPk($profile_user->user_id)->job_type."</div></td></tr>";
-                                            }
-                                        }
-                                        else
-                                        {
-                                            echo "<tr><td class='width'><a href='/user?id=$profile_user->id'><img title='".$profile_user->firstname." ".$profile_user->lastname."' src='/img/default-user-mini.png'/></a></td>";
-                                            echo "<td><div class='friends-name'>".$profile_user->firstname." ".$profile_user->lastname."</div><div class='friends-position'>".User::model()->findByPk($profile_user->user_id)->job_type."</div></td></tr>";
-                                        }
-                                        echo "</table>";
-                                    }
-                                }
-                                else
-                                {
-                                    $profile_user=Profile::model()->findByPk($friend->inviter_id);
-                                    if($profile_user && !is_null($profile_user->avatar) && $profile_user->avatar>0)
-                                    {
-                                        echo "<table class='friends-list-table'>";
-                                        $avatar_image=Files::model()->findByPk($profile_user->avatar);
-                                        if($avatar_image)
-                                        {
-                                            if(file_exists(Yii::app()->basePath."/../files/".$avatar_image->image))
-                                            {
-                                                $name_in_db=str_replace('.png','',$avatar_image->image);
-                                                echo "<tr><td class='width'><img title='".$profile_user->firstname." ".$profile_user->lastname."' src='/files/".$name_in_db."_little.png"."'/></td>";
-                                                echo "<td><div class='friends-name'>".$profile_user->firstname." ".$profile_user->lastname."</div><div class='friends-position'>".User::model()->findByPk($profile_user->user_id)->job_type."</div></td></tr>";
-                                            }
-                                            else
-                                            {
-                                                echo "<tr><td class='width'><img title='".$profile_user->firstname." ".$profile_user->lastname."' src='/img/default-user-mini.png'/></td>";
-                                                echo "<td><div class='friends-name'>".$profile_user->firstname." ".$profile_user->lastname."</div><div class='friends-position'>".User::model()->findByPk($profile_user->user_id)->job_type."</div></td></tr>";
-                                            }
-                                        }
-                                        else
-                                        {
-                                            echo "<tr><td class='width'><div class='text-center'><img title='".$profile_user->firstname." ".$profile_user->lastname."' src='/img/default-user-mini.png'/></div></td>";
-                                            echo "<td><div class='friends-name'>".$profile_user->firstname." ".$profile_user->lastname."</div><div class='friends-position'>".User::model()->findByPk($profile_user->user_id)->job_type."</div></td></tr>";
-                                        }
-                                        echo "</table>";
-                                    }
-                                }
-                                echo "</li>";
-                            }
-                            echo "</ul>";
-                        }
-                    }
-//                    ?>
+            <div class="friends">
+              <div>
+                    <?php $friends = $user->friends; ?>
+                    <div class="friends-title-count">
+                      <div class="friends-title-count-text"><?php echo count($friends); ?></div>
+                    </div>
+                    <div class="friends-title" href="/friends">Friends</div>
+                  </div>
+                  <div class="clear"></div>
+                  <ul class="friends-list">
+                    <li>
+                      <table class="friends-list-table">
+                        <tbody>
+                          <?php foreach($friends as $friend): ?>
+                          <tr>
+                            <td class="width">
+                              <img style="width:57px; border-radius:50px" title="<?php echo $friend->user->profile->firstname . ' ' . $friend->user->profile->lastname?>" src="<?php echo $friend->user->profile->getAvatarUrl(); ?>">
+                            </td>
+                            <td>
+                              <div class="friends-name"><?php echo $friend->user->profile->firstname . ' ' . $friend->user->profile->lastname; ?></div>
+                              <div class="friends-position"><?php echo $friend->user->job_title; ?></div>
+                            </td>
+                          </tr>
+                         <?php endforeach; ?>
+                        </tbody>
+                      </table>
+                    </li>
+                  </ul>                
                 </div>
                 <a href="/friends"><div class="add-friends-button"></div></a>
                 <div class="friends">
