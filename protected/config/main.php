@@ -115,6 +115,7 @@ return array(
                 '/install/default/<action:\w+>'                                   => '/install/default/<action>',
                 '/gii/<controller:\w+>/<action:\w+>'                              => 'gii/<controller>/<action>',
                 '/<action:\w+>'                                                   => 'site/<action>',
+                '<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
                 '<controller:\w+>/<action:\w+>'                                   => '<controller>/<action>',
             ),
         ),

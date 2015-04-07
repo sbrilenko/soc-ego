@@ -6,7 +6,7 @@ class UserController extends Controller
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
-	public $layout='//layouts/admin';
+
 
 	/**
 	 * @return array action filters
@@ -28,7 +28,7 @@ class UserController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+                'actions'=>array('index','view', 'show'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -271,4 +271,22 @@ class UserController extends Controller
 			Yii::app()->end();
 		}
 	}
+
+    public function actionShow($id) {
+        $model = User::model()->findByPk($id);
+        $this->render('//site/index',array("model"=>$model,
+                                    'avatar'=>Profile::model()->getLittleAvatar($id),
+                                    'name'=>Profile::model()->getName($id),
+                                    'location'=>LocationManager::model()->getLocation($id),
+                                    'birthday'=>$this->renderPartial('//site/birthday',array('img'=>Profile::model()->birthdayImg($id),
+                                                                                      'date'=>Profile::model()->birthdayDate($id),
+                                                                                      'name'=>Profile::model()->birthdayName($id)),true),
+                                    'rank'=>$this->renderPartial('//site/rank',array('img_class'=>Profile::model()->rankImgClass($id),
+                                                                              'title'=>Profile::model()->jobTitle($id),
+                                                                              'type'=>Profile::model()->jobType($id)),true),
+
+                                    'store'=>$this->renderPartial('//site/store',array('stores'=>Store::model()->getCountAllVisibleItem()),true),
+                                    'company'=>$this->renderPartial('//site/company',array('img'=>Profile::model()->companyImg($id)),true),
+        ));
+    }
 }

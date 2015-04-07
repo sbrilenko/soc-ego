@@ -374,7 +374,7 @@
                             echo "<div class='wall nano-content wall-block-scroll-height'>";
                             foreach($comments as $index=>$com)
                             {
-                                echo $this->renderPartial("message",array("com"=>$com,'index'=>$index),true);
+                                echo $this->renderPartial("//site/message",array("com"=>$com,'index'=>$index),true);
                             }
                             echo "</div>";
                         }
