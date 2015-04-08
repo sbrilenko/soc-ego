@@ -268,7 +268,8 @@
                     <div class="group-scroll nano projects-main-page-scroll-height">
                     <div class="group-wall-content nano-content mar-zero">
                         <?php
-                        $allmygr=Participants::model()->allGroupsForUser(Yii::app()->user->id);
+                        //$allmygr=Participants::model()->allGroupsForUser(Yii::app()->user->id);
+                        $allmygr=Participants::model()->allGroupsForUser($model->id);
                         if(count($allmygr)>0)
                         {
                             foreach($allmygr as $index => $group)
@@ -368,7 +369,7 @@
                    <div class="before-wall-content">
                     <div class="wall-content nano wall-block-scroll-height">
                     <?php
-                        $comments=Comments::model()->findAllByAttributes(array("parent"=>0,"commented_user_id"=>Yii::app()->user->id),array('order'=>'time ASC'));
+                            $comments=Comments::model()->findAllByAttributes(array("parent"=>0,"commented_user_id"=>$model->id),array('order'=>'time ASC'));
                         if($comments)
                         {
                             echo "<div class='wall nano-content wall-block-scroll-height'>";
@@ -506,4 +507,5 @@
                 </div>
                 </div>
         </div>
+
 </div>

@@ -85,10 +85,10 @@
                           <?php foreach($friends as $friend): ?>
                           <tr>
                             <td class="width">
-                              <img style="width:57px; border-radius:50px" title="<?php echo $friend->user->profile->firstname . ' ' . $friend->user->profile->lastname?>" src="<?php echo $friend->user->profile->getAvatarUrl(); ?>">
+                              <a href="/user/show/<?php echo $friend->user->id; ?>"><img style="width:57px; border-radius:50px" title="<?php echo $friend->user->profile->firstname . ' ' . $friend->user->profile->lastname?>" src="<?php echo $friend->user->profile->getAvatarUrl(); ?>"></a>
                             </td>
                             <td>
-                              <div class="friends-name"><?php echo $friend->user->profile->firstname . ' ' . $friend->user->profile->lastname; ?></div>
+                              <a style="text-decoration:none;" href="/user/show/<?php echo $friend->user->id; ?>"><div class="friends-name"><?php echo $friend->user->profile->firstname . ' ' . $friend->user->profile->lastname; ?></div></a>
                               <div class="friends-position"><?php echo $friend->user->job_title; ?></div>
                             </td>
                           </tr>

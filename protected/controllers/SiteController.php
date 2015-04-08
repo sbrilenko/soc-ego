@@ -59,21 +59,24 @@ class SiteController extends Controller
             else
                 $this->render("login",array("model"=>$model));
         }
-        elseif(isset(Yii::app()->user->id))
+        elseif(isset(Yii::app()->user->id)) {
+            $model = User::model()->findByPk(Yii::app()->user->id);
             $this->render('index',array("model"=>$model,
-                'avatar'=>Profile::model()->getLittleAvatar($user_id),
-                'name'=>Profile::model()->getName($user_id),
-                'location'=>LocationManager::model()->getLocation($user_id),
-                'birthday'=>$this->renderPartial('birthday',array('img'=>Profile::model()->birthdayImg($user_id),
-                                                                  'date'=>Profile::model()->birthdayDate($user_id),
-                                                                  'name'=>Profile::model()->birthdayName($user_id)),true),
-                'rank'=>$this->renderPartial('rank',array('img_class'=>Profile::model()->rankImgClass($user_id),
-                                                          'title'=>Profile::model()->jobTitle($user_id),
-                                                          'type'=>Profile::model()->jobType($user_id)),true),
+                                        'avatar'=>Profile::model()->getLittleAvatar($user_id),
+                                        'name'=>Profile::model()->getName($user_id),
+                                        'location'=>LocationManager::model()->getLocation($user_id),
+                                        'birthday'=>$this->renderPartial('birthday',array('img'=>Profile::model()->birthdayImg($user_id),
+                                                                                          'date'=>Profile::model()->birthdayDate($user_id),
+                                                                                          'name'=>Profile::model()->birthdayName($user_id)),true),
+                                        'rank'=>$this->renderPartial('rank',array('img_class'=>Profile::model()->rankImgClass($user_id),
+                                                                                  'title'=>Profile::model()->jobTitle($user_id),
+                                                                                  'type'=>Profile::model()->jobType($user_id)),true),
 
-                'store'=>$this->renderPartial('store',array('stores'=>Store::model()->getCountAllVisibleItem()),true),
-                'company'=>$this->renderPartial('company',array('img'=>Profile::model()->companyImg($user_id)),true),
-            ));
+                                        'store'=>$this->renderPartial('store',array('stores'=>Store::model()->getCountAllVisibleItem()),true),
+                                        'company'=>$this->renderPartial('company',array('img'=>Profile::model()->companyImg($user_id)),true),
+            ));            
+        }
+
         else $this->render("login",array("model"=>$model));
 
     }
