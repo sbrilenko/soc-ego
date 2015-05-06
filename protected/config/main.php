@@ -22,6 +22,7 @@ return array(
         'gii'=>array(
             'class'=>'system.gii.GiiModule',
             'password'=>'root',
+            'ipFilters' => array()
         ),
 //        'admin'=>array(
 //        ),
@@ -108,10 +109,13 @@ return array(
             'showScriptName'=>false,
             'caseSensitive'=>false,
             'rules'=>array(
+                '<friends>/<action:\w+>'                                          => 'friendship/<action>',
+                'friends'                                                         => 'friendship/index',
                 '<controller:(foo|bar)>/<action>'                                 => 'module/<controller>/<action>',
                 '/install/default/<action:\w+>'                                   => '/install/default/<action>',
                 '/gii/<controller:\w+>/<action:\w+>'                              => 'gii/<controller>/<action>',
                 '/<action:\w+>'                                                   => 'site/<action>',
+                '<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
                 '<controller:\w+>/<action:\w+>'                                   => '<controller>/<action>',
             ),
         ),
@@ -131,7 +135,26 @@ return array(
                 array(
                     'class'=>'CFileLogRoute',
                     'levels'=>'error, warning',
+                    'logFile' => 'error.log',
                 ),
+                array(
+                    'class' => 'CFileLogRoute',
+                    'levels' => 'info',
+                    'logFile' => 'application.log',
+                ),
+                array(
+                    'class' => 'CFileLogRoute',
+                    'levels' => 'trace',
+                    'logFile' => 'debug.log',
+                ),
+
+                                /*'log'=>array(
+            'class'=>'CLogRouter',
+            'routes'=>array(
+                array(
+                    'class'=>'CFileLogRoute',
+                    'levels'=>'error, warning',
+                    ),*/
                 // uncomment the following to show log messages on web pages
                 /*
                 array(

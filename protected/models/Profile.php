@@ -148,6 +148,21 @@ class Profile extends CActiveRecord
         return $return;
     }
 
+    public function getAvatarUrl()
+    {
+        $return="/img/default-user.png";
+
+        $avatar = Files::model()->findByPk($this->avatar);
+        if($avatar) {
+            if(file_exists(Yii::app()->basePath . "/../files/" . $avatar->image))
+            {
+                $return="/files/" . $avatar->image;
+            }
+        }
+
+        return $return;
+    }
+
     public function getName($user_id)
     {
         $user=Profile::model()->findByAttributes(array("user_id"=>$user_id));
@@ -207,171 +222,171 @@ class Profile extends CActiveRecord
         if($user_rank)
         {
             switch (strtolower($user_rank->job_type)){
-                case "developer":
-                    switch (strtolower($user_rank->job_title))
-                    {
-                        case "youngling":
-                            $rank_class="developers-rank-1";
-                            break;
-                        case "padawan":
-                            $rank_class="developers-rank-2";
-                            break;
-                        case "jedi":
-                            $rank_class="developers-rank-3";
-                            break;
-                        case "jedi survivor":
-                            $rank_class="developers-rank-4";
-                            break;
-                        case "jedi knight":
-                            $rank_class="developers-rank-5";
-                            break;
-                        case "master jedi":
-                            $rank_class="developers-rank-6";
-                            break;
-                        case "the chosen one":
-                            $rank_class="developers-rank-7";
-                            break;
-                        case "yoda":
-                            $rank_class="developers-rank-8";
-                            break;
-                        case "darth vader":
-                            $rank_class="developers-rank-9";
-                            break;
-                    }
+            case "developer":
+                switch (strtolower($user_rank->job_title))
+                {
+                case "youngling":
+                    $rank_class="developers-rank-1";
                     break;
-                case "pm":
-                    switch (strtolower($user_rank->job_title))
-                    {
-                        case "pixie":
-                            $rank_class="pms-rank-1";
-                            break;
-                        case "tinker bell":
-                            $rank_class="pms-rank-2";
-                            break;
-                        case "nymph":
-                            $rank_class="pms-rank-3";
-                            break;
-                        case "fairy":
-                            $rank_class="pms-rank-4";
-                            break;
-                        case "djinni":
-                            $rank_class="pms-rank-5";
-                            break;
-                        case "witch":
-                            $rank_class="pms-rank-6";
-                            break;
-                        case "snow queen":
-                            $rank_class="pms-rank-7";
-                            break;
-                        case "cruella de cil":
-                            $rank_class="pms-rank-8";
-                            break;
-                    }
+                case "padawan":
+                    $rank_class="developers-rank-2";
                     break;
-                case "designer":
-                    switch (strtolower($user_rank->job_title))
-                    {
-                        case "muggle/gunter":
-                            $rank_class="designers-rank-1";
-                            break;
-                        case "muggle-born/peppermint butler":
-                            $rank_class="designers-rank-2";
-                            break;
-                        case "house-elf/jake the dog":
-                            $rank_class="designers-rank-3";
-                            break;
-                        case "wizard/fin":
-                            $rank_class="designers-rank-4";
-                            break;
-                        case "metamorphmagus/billy":
-                            $rank_class="designers-rank-5";
-                            break;
-                        case "auror the/ice king":
-                            $rank_class="designers-rank-6";
-                            break;
-                        case "albus dumbledore/the lich":
-                            $rank_class="designers-rank-7";
-                            break;
-                        case "lord voldemort/lemongrab":
-                            $rank_class="designers-rank-8";
-                            break;
-                    }
+                case "jedi":
+                    $rank_class="developers-rank-3";
                     break;
-                case "qa":
-                    switch (strtolower($user_rank->job_title))
-                    {
-                        case "gremlin":
-                            $rank_class="qas-rank-1";
-                            break;
-                        case "elf":
-                            $rank_class="qas-rank-2";
-                            break;
-                        case "leprechaun":
-                            $rank_class="qas-rank-3";
-                            break;
-                        case "warlock":
-                            $rank_class="qas-rank-4";
-                            break;
-                        case "whitelighter":
-                            $rank_class="qas-rank-5";
-                            break;
-                        case "sorcerer":
-                            $rank_class="qas-rank-6";
-                            break;
-                        case "driad":
-                            $rank_class="qas-rank-7";
-                            break;
-                        case "merlin":
-                            $rank_class="qas-rank-8";
-                            break;
-                    }
+                case "jedi survivor":
+                    $rank_class="developers-rank-4";
                     break;
-                case "hr":
-                    switch (strtolower($user_rank->job_title))
-                    {
-                        case "flora":
-                            $rank_class="hrs-rank-1";
-                            break;
-                        case "demeter":
-                            $rank_class="hrs-rank-2";
-                            break;
-                        case "terra":
-                            $rank_class="hrs-rank-3";
-                            break;
-                        case "aurora":
-                            $rank_class="hrs-rank-4";
-                            break;
-                        case "luna":
-                            $rank_class="hrs-rank-5";
-                            break;
-                        case "aphrodite":
-                            $rank_class="hrs-rank-6";
-                            break;
-                        case "athena":
-                            $rank_class="hrs-rank-7";
-                            break;
-                        case "artemis":
-                            $rank_class="hrs-rank-8";
-                            break;
-                    }
+                case "jedi knight":
+                    $rank_class="developers-rank-5";
                     break;
-                case "v.i.p.":
-                    switch (strtolower($user_rank->job_title))
-                    {
-                        case "iron man":
-                            $rank_class="vip-rank-1";
-                            break;
-                        case "captain america":
-                            $rank_class="vip-rank-2";
-                            break;
-                        case "magneto":
-                            $rank_class="vip-rank-3";
-                            break;
-                        case "rogue":
-                            $rank_class="vip-rank-4";
-                            break;
-                    }
+                case "master jedi":
+                    $rank_class="developers-rank-6";
                     break;
+                case "the chosen one":
+                    $rank_class="developers-rank-7";
+                    break;
+                case "yoda":
+                    $rank_class="developers-rank-8";
+                    break;
+                case "darth vader":
+                    $rank_class="developers-rank-9";
+                    break;
+                }
+                break;
+            case "pm":
+                switch (strtolower($user_rank->job_title))
+                {
+                case "pixie":
+                    $rank_class="pms-rank-1";
+                    break;
+                case "tinker bell":
+                    $rank_class="pms-rank-2";
+                    break;
+                case "nymph":
+                    $rank_class="pms-rank-3";
+                    break;
+                case "fairy":
+                    $rank_class="pms-rank-4";
+                    break;
+                case "djinni":
+                    $rank_class="pms-rank-5";
+                    break;
+                case "witch":
+                    $rank_class="pms-rank-6";
+                    break;
+                case "snow queen":
+                    $rank_class="pms-rank-7";
+                    break;
+                case "cruella de cil":
+                    $rank_class="pms-rank-8";
+                    break;
+                }
+                break;
+            case "designer":
+                switch (strtolower($user_rank->job_title))
+                {
+                case "muggle/gunter":
+                    $rank_class="designers-rank-1";
+                    break;
+                case "muggle-born/peppermint butler":
+                    $rank_class="designers-rank-2";
+                    break;
+                case "house-elf/jake the dog":
+                    $rank_class="designers-rank-3";
+                    break;
+                case "wizard/fin":
+                    $rank_class="designers-rank-4";
+                    break;
+                case "metamorphmagus/billy":
+                    $rank_class="designers-rank-5";
+                    break;
+                case "auror the/ice king":
+                    $rank_class="designers-rank-6";
+                    break;
+                case "albus dumbledore/the lich":
+                    $rank_class="designers-rank-7";
+                    break;
+                case "lord voldemort/lemongrab":
+                    $rank_class="designers-rank-8";
+                    break;
+                }
+                break;
+            case "qa":
+                switch (strtolower($user_rank->job_title))
+                {
+                case "gremlin":
+                    $rank_class="qas-rank-1";
+                    break;
+                case "elf":
+                    $rank_class="qas-rank-2";
+                    break;
+                case "leprechaun":
+                    $rank_class="qas-rank-3";
+                    break;
+                case "warlock":
+                    $rank_class="qas-rank-4";
+                    break;
+                case "whitelighter":
+                    $rank_class="qas-rank-5";
+                    break;
+                case "sorcerer":
+                    $rank_class="qas-rank-6";
+                    break;
+                case "driad":
+                    $rank_class="qas-rank-7";
+                    break;
+                case "merlin":
+                    $rank_class="qas-rank-8";
+                    break;
+                }
+                break;
+            case "hr":
+                switch (strtolower($user_rank->job_title))
+                {
+                case "flora":
+                    $rank_class="hrs-rank-1";
+                    break;
+                case "demeter":
+                    $rank_class="hrs-rank-2";
+                    break;
+                case "terra":
+                    $rank_class="hrs-rank-3";
+                    break;
+                case "aurora":
+                    $rank_class="hrs-rank-4";
+                    break;
+                case "luna":
+                    $rank_class="hrs-rank-5";
+                    break;
+                case "aphrodite":
+                    $rank_class="hrs-rank-6";
+                    break;
+                case "athena":
+                    $rank_class="hrs-rank-7";
+                    break;
+                case "artemis":
+                    $rank_class="hrs-rank-8";
+                    break;
+                }
+                break;
+            case "v.i.p.":
+                switch (strtolower($user_rank->job_title))
+                {
+                case "iron man":
+                    $rank_class="vip-rank-1";
+                    break;
+                case "captain america":
+                    $rank_class="vip-rank-2";
+                    break;
+                case "magneto":
+                    $rank_class="vip-rank-3";
+                    break;
+                case "rogue":
+                    $rank_class="vip-rank-4";
+                    break;
+                }
+                break;
             }
         }
         return $rank_class;

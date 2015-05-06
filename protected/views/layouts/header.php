@@ -9,13 +9,13 @@
         </li>
         <li>
             <a href="/" title="Home" class="no-padding">
-                <div class="menu-padding <?php if(Yii::app()->controller->action->id=="index") echo "current";?>">
+                <div class="menu-padding <?php if(Yii::app()->controller->id=="site") echo "current";?>">
                     <div class="home-icon "></div>
                 </div>
             </a></li>
         <li>
             <a href="/friends" class="no-padding">
-                <div class="menu-padding <?php if(Yii::app()->controller->action->id=="friends") echo "current";?>">
+                <div class="menu-padding <?php if(Yii::app()->controller->id=="friendship") echo "current";?>">
                     <div class="friends-icon"></div>
                     <div class="messages-not yellow"></div>
                 </div>
@@ -42,7 +42,7 @@
         <li><div class="column"></div></li>
         <li><div class="text">
                 <div class="menu-padding">
-                    <a href="/faq">FAG</a>
+                    <a href="/faq">FAQ</a>
                 </div>
             </div>
         </li>

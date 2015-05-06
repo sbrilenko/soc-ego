@@ -1,0 +1,78 @@
+.friends-list {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #EFEFEF;
+    height: 70%;
+    width: 39%;
+    position: absolute;
+}
+
+.friends-page .header {
+    border-bottom: solid 1px #EFEFEF;
+    height: 45px;
+    background-color: #F5F5F5;
+}
+
+.friends-list .list {
+    background-color: #FFFFFF;
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+.friends-page .active {
+    color:#FDCE39;
+}
+
+.main {
+    color:#858585;
+}
+
+.friends-list .list .row {
+    border-bottom: solid 1px #EFEFEF;
+    height: 70px;
+}
+
+.friends-list .col-left {
+    float: left;
+    width: 44%;
+    border-right: solid 1px #EFEFEF;
+    margin-left:20px;
+    height:100%;
+}
+
+.friends-list .col-right {
+    float: left;
+    margin-left:20px;
+    height:100%;
+    width:44%;
+}
+
+.friends-list .f-avatar {
+    float: left;
+    margin-top:7px;
+}
+
+.friends-list .f-avatar img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+}
+
+.friends-list .user-name {
+    font-size: 130%;
+    margin-left:15px;
+}
+
+.friends-list .job-title {
+    color: #DDDDDD;
+    margin-left:15px;
+}
+
+.friends-list .f-description {
+    margin-top:12px;
+}

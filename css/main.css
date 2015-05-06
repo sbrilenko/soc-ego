@@ -1,4 +1,4 @@
-
+@import url(http://fonts.googleapis.com/css?family=Oxygen:400,300,700);
 
 body
 {
@@ -269,4 +269,9 @@ div.search-form
 .operations li a:hover
 {
     background: #80CFFF;
+}
+
+body * {
+    font-family: 'Oxygen', sans-serif !important;
+    font-weight: 400;
 }

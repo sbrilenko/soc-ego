@@ -4,7 +4,7 @@
                     <?php if($com->parent==0) {
                         if(Yii::app()->user->id)
                         {
-                            $avatar_id=Profile::model()->findByAttributes(array("user_id"=>Yii::app()->user->id));
+                            $avatar_id=Profile::model()->findByAttributes(array("user_id"=>$com->commented_user_id));
                             if($avatar_id)
                             {
                                 $file_avatar=Files::model()->findByPk($avatar_id->avatar);
