@@ -9,7 +9,7 @@
         </li>
         <li>
             <a href="/" title="Home" class="no-padding">
-                <div class="menu-padding <?php if(Yii::app()->controller->id=="site") echo "current";?>">
+                <div class="menu-padding <?php if(Yii::app()->controller->id=="site" && Yii::app()->controller->action->id=="index") echo "current";?>">
                     <div class="home-icon "></div>
                 </div>
             </a></li>
@@ -42,7 +42,7 @@
         <li><div class="column"></div></li>
         <li><div class="text">
                 <div class="menu-padding">
-                    <a href="/faq">FAQ</a>
+                    <a <?php if(Yii::app()->controller->id=="site" && Yii::app()->controller->action->id=="faq") echo "current";?> href="/faq">FAQ</a>
                 </div>
             </div>
         </li>

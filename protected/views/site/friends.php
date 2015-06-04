@@ -1,5 +1,3 @@
-<?php
-?>
 <div>
     <?php
     if(Yum::hasModule('friendship'))

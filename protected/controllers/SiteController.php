@@ -634,4 +634,10 @@ class SiteController extends Controller
     {
         $this->render('new');
     }
+
+    /*faq*/
+    public function actionFaq()
+    {
+        $this->render('faq');
+    }
 }
