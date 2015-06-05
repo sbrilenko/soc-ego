@@ -21,3 +21,6 @@ protected/config/db.php
 *.*~
 *.yml
 !*.dist.yml
+/assets
+/modules_
+/runtime

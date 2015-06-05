@@ -70,13 +70,35 @@ class QuestionsController extends Controller
 		if(isset($_POST['Questions']))
 		{
 			$model->attributes=$_POST['Questions'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
-		}
+            $model->question=trim($model->question);
+            if(empty($model->question))
+            {
+                echo json_encode(array('error'=>true,'message'=>'Question cannot be empty'));
+                exit();
+            }
+            else
+            {
+                $model->user_id=Yii::app()->user->id;
+                $model->answer='';
+                $model->status=0;
+                $model->time_create=time();
+                if($model->save())
+                {
+                    echo json_encode(array('error'=>false,'message'=>'Sent'));
+                    exit();
+                }
+                else {
+                    echo json_encode(array('error'=>true,'message'=>$model->getErrors()));
+                    exit();
+                }
+            }
 
-		$this->render('create',array(
-			'model'=>$model,
-		));
+		}
+        else{
+            echo json_encode(array('error'=>true,'message'=>'No post data'));
+            exit();
+        }
+
 	}
 
 	/**

@@ -3011,10 +3011,7 @@ a.get-message,a.get-message:hover,a.get-message:visited
 {
     width:100%;padding: 0;border:1px solid #eaeaea;border-radius: 6px;height:638px;vertical-align: top;background: #fff;
 }
-.faq-h-page-block
-{
-    height: 327px;
-}
+
 .projects-main-page-scroll-height
 {
     height: 584px;
@@ -3074,6 +3071,10 @@ a.get-message,a.get-message:hover,a.get-message:visited
 {
     height:40px;border:0;padding:0;background-color: #22c9ff;border-radius: 5px;width:72px;color:#fff;
     cursor:pointer;
+}
+.question-form .send-button
+{
+    margin-top: 16px;
 }
 .file-upload-part-1
 {
@@ -3138,26 +3139,35 @@ a.get-message,a.get-message:hover,a.get-message:visited
 {
     width:33%;
 }
-.questions-answers
+.questions-answers,.questions-knowledge-basic,
+.questions-knowledge-levels,.questions-knowledge-badges
 {
     margin: 0;
     padding:0;
 }
-.questions-answers li
+.questions-knowledge-levels,.questions-knowledge-badges
+{
+    display: none;
+}
+.faq-h-page-block,.faq-just-h-page-block
+{
+    height: 327px;
+}
+.questions-answers li,.questions-knowledge-basic li
 {
     list-style: none;
     padding: 20px 16px;
     border-top: 1px solid #eaeaea;
 }
-.questions-answers li:nth-child(1)
+.questions-answers li:nth-child(1),.questions-knowledge-basic li:nth-child(1)
 {
     border-top: 0;
 }
-.questions-answers li:last-child
+.questions-answers li:last-child,.questions-knowledge-basic li:last-child
 {
     border-bottom: 1px solid #eaeaea;
 }
-.questions-answers li .question
+.questions-answers li .question,.questions-knowledge-basic li .question
 {
     font-family: HelveticaNeueCyr-Roman;
     font-size: 14px;
@@ -3165,7 +3175,7 @@ a.get-message,a.get-message:hover,a.get-message:visited
     color:#ffc047;
     cursor:pointer;
 }
-.questions-answers li .answer
+.questions-answers li .answer,.questions-knowledge-basic li .answer
 {
     font-family: HelveticaNeueCyr-Roman;
     font-size: 14px;
@@ -3180,7 +3190,25 @@ a.get-message,a.get-message:hover,a.get-message:visited
 }
 .question-form textarea
 {
+    height: 150px;
     resize:none;
-    width:100%;
+    width:95%;
     padding: 10px;
+    font-family: HelveticaNeueCyr-Roman;
+    font-size: 12px;
+    line-height: 20px;
+    color:#c4c4c4;
+    border: 1px solid #eaeaea;
+}
+.question-knowledge a,.question-knowledge a:hover,.question-knowledge a:visited
+{
+    font-size: 14px;
+    line-height: 20px;
+    cursor: pointer;
+    text-transform: capitalize;
+    text-decoration: none;
+}
+.question-knowledge a.current,.question-knowledge a.current:hover,.question-knowledge a.current:visited
+{
+    color: #ffc047;
 }
