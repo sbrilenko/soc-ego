@@ -638,6 +638,8 @@ class SiteController extends Controller
     /*faq*/
     public function actionFaq()
     {
-        $this->render('faq');
+        $jobtype=JobType::model()->findAll();
+        $jobtitle=JobTitle::model()->findAll();
+        $this->render('faq',array('jobtype'=>$jobtype,'jobtitle'=>$jobtitle));
     }
 }

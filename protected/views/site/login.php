@@ -11,12 +11,12 @@
     <div class="form-padding">
         <div class="row" style="margin-top: 0;">
             <div class="login-icon"></div>
-            <?php echo $form->textField($model,'email',array("placeholder"=>"Email","style"=>"padding: 20px 5px 20px 54px;width: 268px;")); ?>
+            <?php echo $form->textField($model,'email',array("placeholder"=>"Email","style"=>"padding: 16px 5px 16px 56px;width: 268px;box-shadow:0 1px 1px rgba(0, 0, 0, 0.05);")); ?>
         </div>
         <div class="clear"></div>
         <div class="row">
             <div class="password-icon"></div>
-            <?php echo $form->passwordField($model,'password',array("placeholder"=>"Password","style"=>"padding: 20px 5px 20px 54px;width: 268px;")); ?>
+            <?php echo $form->passwordField($model,'password',array("placeholder"=>"Password","style"=>"padding: 16px 5px 16px 56px;width: 268px;box-shadow:0 1px 1px rgba(0, 0, 0, 0.05);")); ?>
         </div>
         <div class="clear"></div>
         <div class="row buttons">
