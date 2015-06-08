@@ -16,7 +16,7 @@
                         <div class="padding-zero question-knowledge">Knowledge Base: <a href="#basics" class="knowledge-b current">Basics</a> | <a href="#levels" class="knowledge-l">Levels</a> | <a href="#badges" class="knowledge-bad">Badges</a></div>
                         <div class="clear"></div>
                     </div>
-                    <div class="nano" id="questions-knowledge" style="height:544px;">
+                    <div class="nano" id="questions-knowledge" style="height:623px;">
                     <div class="nano-content">
                     <script>
                         $(document).ready(function()
@@ -72,10 +72,6 @@
                             {
                                 var th=$(this),thnextul=th.parents('li'),allsubul=thnextul.find('.sub-questions-knowledge-levels');
                                 $(".questions-knowledge-levels li .answer").each(function()
-                                {
-                                    if($(this).is(':visible')) $(this).slideUp();
-                                })
-                                $(".questions-knowledge-levels li>div:not('.sub-questions-knowledge-levels')").each(function()
                                 {
                                     if($(this).is(':visible')) $(this).slideUp();
                                 })
@@ -325,7 +321,7 @@
                 </div>
                 <div class="projects-and-wall-mar f-l faq-just-h-page-block"></div>
                 <div class="faq-right-block-width f-l">
-                <div class="faq-h-page-block">
+                <div class="faq-h-page-block-right">
                     <div class="questions-wall-title">have a question?</div>
                    <div class="quest-form-par">
                        <?php
@@ -381,7 +377,7 @@
                 </div>
                     <div class="pad-mar-zero margin-top">
                         <div class="faq-right-block-width f-l">
-                            <div class="faq-h-page-block">
+                            <div class="faq-h-page-block-right">
                                 Formula - the salary counter
 
                             </div>

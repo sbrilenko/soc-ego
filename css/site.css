@@ -3155,30 +3155,36 @@ a.get-message,a.get-message:hover,a.get-message:visited
 }
 .faq-h-page-block,.faq-just-h-page-block
 {
-    height: 591px;
+    height: 680px;
 }
 .faq-h-page-block-right
 {
     height: 327px;
+    width: 100%;
+    padding: 0;
+    border: 1px solid #eaeaea;
+    border-radius: 6px;
+    vertical-align: top;
+    background: #fff;
 }
-.questions-answers li,.questions-knowledge-basic li,.questions-knowledge-levels li,.sub-questions-knowledge-levels li
+.questions-answers li,.questions-knowledge-basic li,.questions-knowledge-levels li,.sub-questions-knowledge-levels div
 {
     list-style: none;
     padding: 20px 16px;
     border-top: 1px solid #eaeaea;
 }
 .questions-answers li:nth-child(1),.questions-knowledge-basic li:nth-child(1),
-.questions-knowledge-levels li:nth-child(1),.sub-questions-knowledge-levels li:nth-child(1)
+.questions-knowledge-levels li:nth-child(1),.sub-questions-knowledge-levels div:nth-child(1)
 {
     border-top: 0;
 }
 .questions-answers li:last-child,.questions-knowledge-basic li:last-child,
-.questions-knowledge-levels li:last-child,.sub-questions-knowledge-levels li:last-child
+.questions-knowledge-levels li:last-child,.sub-questions-knowledge-levels div:last-child
 {
     border-bottom: 1px solid #eaeaea;
 }
 .questions-answers li .question,.questions-knowledge-basic li .question,
-.questions-knowledge-levels li .question,.sub-questions-knowledge-levels li .question
+.questions-knowledge-levels li .question,.sub-questions-knowledge-levels .question
 {
     font-family: HelveticaNeueCyr-Roman;
     font-size: 14px;
@@ -3187,7 +3193,7 @@ a.get-message,a.get-message:hover,a.get-message:visited
     cursor:pointer;
 }
 .questions-answers li .answer,.questions-knowledge-basic li .answer,
-.questions-knowledge-levels li .answer,.sub-questions-knowledge-levels li .answer
+.questions-knowledge-levels li .answer,.sub-questions-knowledge-levels .answer
 {
     font-family: HelveticaNeueCyr-Roman;
     font-size: 14px;
