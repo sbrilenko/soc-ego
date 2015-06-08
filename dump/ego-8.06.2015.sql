@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Июн 08 2015 г., 10:11
+-- Время создания: Июн 08 2015 г., 13:37
 -- Версия сервера: 5.6.16
 -- Версия PHP: 5.5.11
 
@@ -668,6 +668,104 @@ INSERT INTO `gamificationmanager` (`id`, `level`, `seniority`, `start_month`, `t
 (25, 'Tech_Officer', 'Low', '23.00', 1415635383, 1),
 (26, 'Tech_Officer', 'Normal', '24.00', 1415635383, 1),
 (27, 'Tech_Officer', 'High', '25.00', 1415635383, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `job_title`
+--
+
+CREATE TABLE IF NOT EXISTS `job_title` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `job_type_id` int(11) NOT NULL,
+  `job_title` varchar(512) NOT NULL,
+  `description` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=54 ;
+
+--
+-- Дамп данных таблицы `job_title`
+--
+
+INSERT INTO `job_title` (`id`, `job_type_id`, `job_title`, `description`) VALUES
+(1, 1, 'Youngling', ''),
+(2, 1, 'Padawan', ''),
+(3, 1, 'Jedi', ''),
+(4, 1, 'Jedi Survivor', ''),
+(5, 1, 'Jedi Knight', ''),
+(6, 1, 'Master Jedi', ''),
+(7, 1, 'The Chosen One', ''),
+(8, 1, 'Yoda', ''),
+(9, 1, 'Darth Vader', ''),
+(10, 2, 'Pixie', 'dfdsfsdf<div>sdf</div><div>dsf</div><div>sdf</div><div>sdf</div><div>sd</div><div>fsd</div><div>fsd</div><div>fsd</div><div>fsdfdsfdsfdsf</div>'),
+(11, 2, 'Tinker Bell', ''),
+(12, 2, 'Nymph', ''),
+(13, 2, 'Fairy', ''),
+(14, 2, 'Djinni', ''),
+(15, 2, 'Witch', ''),
+(16, 2, 'Snow Queen', ''),
+(17, 2, 'Cruella De Vil', ''),
+(18, 3, 'Gunter', ''),
+(19, 3, 'Peppermint Butler', ''),
+(20, 3, 'Jake the Dog', ''),
+(21, 3, 'Fin', ''),
+(22, 3, 'Billy', ''),
+(23, 3, 'The Ice King', ''),
+(24, 3, 'The Lich', ''),
+(25, 3, 'Lemongrab', ''),
+(26, 4, 'Gremlin', ''),
+(27, 4, 'Elf', ''),
+(28, 4, 'Leprechaun', ''),
+(29, 4, 'Warlock', ''),
+(30, 4, 'Whitelighter', ''),
+(31, 4, 'Sorcerer', ''),
+(32, 4, 'Driad', ''),
+(33, 4, 'Merlin', ''),
+(34, 5, 'Sleeping Beauty', ''),
+(35, 5, 'Thumbelina', ''),
+(36, 5, 'Jasmine', ''),
+(37, 5, 'Cinderella', ''),
+(38, 5, 'Snow White', ''),
+(39, 5, 'Rapunzel', ''),
+(40, 5, 'Ariel', ''),
+(41, 5, 'Pocahontas', ''),
+(42, 6, 'Flora', ''),
+(43, 6, 'Demeter', ''),
+(44, 6, 'Terra', ''),
+(45, 6, 'Aurora', ''),
+(46, 6, 'Luna', ''),
+(47, 6, 'Aphrodite', ''),
+(48, 6, 'Athena', ''),
+(49, 6, 'Artemis', ''),
+(50, 7, 'Iron Man', ''),
+(51, 7, 'Captain America', ''),
+(52, 7, 'Magneto', ''),
+(53, 7, 'Rogue', '');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `job_type`
+--
+
+CREATE TABLE IF NOT EXISTS `job_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `job_type` varchar(512) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+
+--
+-- Дамп данных таблицы `job_type`
+--
+
+INSERT INTO `job_type` (`id`, `job_type`) VALUES
+(1, 'Developer'),
+(2, 'PM'),
+(3, 'Designer'),
+(4, 'QA'),
+(5, 'Sales manager'),
+(6, 'HR'),
+(7, 'V.I.P.');
 
 -- --------------------------------------------------------
 
