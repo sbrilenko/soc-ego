@@ -1,24 +1,20 @@
 <?php
 
 /**
- * This is the model class for table "comments".
+ * This is the model class for table "job_type".
  *
- * The followings are the available columns in table 'comments':
- * @property string $id
- * @property integer $create_user_id
- * @property integer $commented_user_id
- * @property string $text
- * @property integer $image
- * @property integer $time
+ * The followings are the available columns in table 'job_type':
+ * @property integer $id
+ * @property string $job_type
  */
-class Comments extends CActiveRecord
+class JobType extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'comments';
+		return 'job_type';
 	}
 
 	/**
@@ -29,12 +25,11 @@ class Comments extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('create_user_id, commented_user_id, time', 'required'),
-			array('create_user_id, commented_user_id, image, time', 'numerical', 'integerOnly'=>true),
-			array('text', 'safe'),
+			array('job_type', 'required'),
+			array('job_type', 'length', 'max'=>512),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, create_user_id, commented_user_id, text, image, time', 'safe', 'on'=>'search'),
+			array('id, job_type', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -56,11 +51,7 @@ class Comments extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'create_user_id' => 'Create User',
-			'commented_user_id' => 'Commented User',
-			'text' => 'Text',
-			'image' => 'Image',
-			'time' => 'Time',
+			'job_type' => 'Job Type',
 		);
 	}
 
@@ -82,12 +73,8 @@ class Comments extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id,true);
-		$criteria->compare('create_user_id',$this->create_user_id);
-		$criteria->compare('commented_user_id',$this->commented_user_id);
-		$criteria->compare('text',$this->text,true);
-		$criteria->compare('image',$this->image);
-		$criteria->compare('time',$this->time);
+		$criteria->compare('id',$this->id);
+		$criteria->compare('job_type',$this->job_type,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -98,7 +85,7 @@ class Comments extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Comments the static model class
+	 * @return JobType the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

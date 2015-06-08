@@ -15,5 +15,6 @@ $this->menu=array(
 
 <h1> <?php echo 'Update Usergroup'; ?> #<?php echo $model->id; ?> </h1>
 <?php
-$this->renderPartial('_form', array('message'=>$message,
+$this->renderPartial('_form', array(
+//            'message'=>$message,
 			'model'=>$model));

@@ -1,53 +1,42 @@
 <?php
 $form = $this->beginWidget('CActiveForm', array(
-    'id'=>'badges-form',
+    'id'=>'levellist-form',
     'action'=>'/levellist/update',
     'enableAjaxValidation'=>false,
     'enableClientValidation'=>true,
 ));
 ?>
 <fieldset class="badge-add-form">
-    <legend>Add new level</legend>
-<div class="row">
-    <div class="span6">
-        <div>
-        <?php
-            echo $form->hiddenField($levellist, 'id');
-        ?>
-        <?php echo $form->labelEx($levellist, 'position');
-        echo $form->textField($levellist, 'position',array("class"=>"width-80"));
-        echo $form->error($levellist, 'position'); ?>
-        </div>
+    <legend>Update level</legend>
+    <?php if($levellist) { ?>
+            <div class="row">
+                <div class="span6">
+                    <?php
+                        echo $form->hiddenField($levellist, 'id');
+                    ?>
+                    <div><?php echo htmlspecialchars($levellist->job_title);?></div>
+                    <div>
+                    <?php echo $form->labelEx($levellist, 'description');
+                    $this->widget('application.extensions.cleditor.ECLEditor', array(
+                        'model'=>$levellist,
+                        'attribute'=>'description',
+                        'options'=>array(
+                            'width'=>'600',
+                            'height'=>250,
+                            'useCSS'=>true,
+                            'class'=>'width-80 textarea-min-height'
+                        ),
+                        'value'=>$levellist->description,
+                    ));
+                    echo $form->error($levellist, 'description'); ?>
+                    </div>
+                </div>
 
-        <div>
-        <?php echo $form->labelEx($levellist, 'description');
-        $this->widget('application.extensions.cleditor.ECLEditor', array(
-            'model'=>$levellist,
-            'attribute'=>'description',
-            'options'=>array(
-                'width'=>'600',
-                'height'=>250,
-                'useCSS'=>true,
-                'class'=>'width-80 textarea-min-height'
-            ),
-            'value'=>$levellist->description,
-        ));
-        //echo $form->textArea($levellist, 'description',array('class'=>'width-80 textarea-min-height'));
-        echo $form->error($levellist, 'description'); ?>
-        </div>
-        <div>
-            <?php echo $form->labelEx($levellist, 'priority');
-            echo $form->textField($levellist, 'priority');
-            echo $form->error($levellist, 'priority'); ?>
-        </div>
-    </div>
-
-</div>
+            </div>
+    <?php }?>
 </fieldset>
 <div class="button-center">
-<?php echo CHtml::submitButton($levellist->isNewRecord
-    ? 'Create'
-    : 'Save'); ?>
+<?php echo CHtml::submitButton('Save'); ?>
 </div>
 <?php $this->endWidget(); ?>
 

@@ -1,24 +1,22 @@
 <?php
 
 /**
- * This is the model class for table "levellist".
+ * This is the model class for table "job_title".
  *
- * The followings are the available columns in table 'levellist':
- * @property string $id
- * @property string $position
+ * The followings are the available columns in table 'job_title':
+ * @property integer $id
+ * @property integer $job_type_id
+ * @property string $job_title
  * @property string $description
- * @property integer $priority
- * @property integer $timecreated
- * @property integer $user_id
  */
-class Levellist extends CActiveRecord
+class JobTitle extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'levellist';
+		return 'job_title';
 	}
 
 	/**
@@ -29,25 +27,25 @@ class Levellist extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('position, description, priority, timecreated, user_id', 'required'),
-			array('priority, timecreated, user_id', 'numerical', 'integerOnly'=>true),
-			array('position', 'length', 'max'=>512),
+            array('description', 'required'),
+			array('job_type_id', 'numerical', 'integerOnly'=>true),
+			array('job_title', 'length', 'max'=>512),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, position, description, priority, timecreated, user_id', 'safe', 'on'=>'search'),
+			array('id, job_type_id, job_title, description', 'safe', 'on'=>'search'),
 		);
 	}
 
-	/**
-	 * @return array relational rules.
-	 */
-	public function relations()
-	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
-		return array(
-		);
-	}
+    /**
+     * @return array relational rules.
+     */
+    public function relations()
+    {
+        // NOTE: you may need to adjust the relation name and the related
+        // class name for the relations automatically generated below.
+        return array(
+        );
+    }
 
 	/**
 	 * @return array customized attribute labels (name=>label)
@@ -56,11 +54,9 @@ class Levellist extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'position' => 'Position',
-			'description' => 'Description',
-			'priority' => 'Priority',
-			'timecreated' => 'Timecreated',
-			'user_id' => 'User',
+			'job_type_id' => 'Job Type',
+			'job_title' => 'Job Title',
+            'description'=>'Description'
 		);
 	}
 
@@ -82,12 +78,10 @@ class Levellist extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id,true);
-		$criteria->compare('position',$this->position,true);
-		$criteria->compare('description',$this->description,true);
-		$criteria->compare('priority',$this->priority);
-		$criteria->compare('timecreated',$this->timecreated);
-		$criteria->compare('user_id',$this->user_id);
+		$criteria->compare('id',$this->id);
+		$criteria->compare('job_type_id',$this->job_type_id);
+		$criteria->compare('job_title',$this->job_title,true);
+        $criteria->compare('description',$this->description);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -98,7 +92,7 @@ class Levellist extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Levellist the static model class
+	 * @return JobTitle the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
