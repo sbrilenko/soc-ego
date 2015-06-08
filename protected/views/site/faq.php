@@ -211,9 +211,7 @@
                                         <?php if($type->id==$title->job_type_id) { ?>
                                             <div class="sub-questions-knowledge-levels">
                                                 <div class="question"><?php echo $title->job_title?></div>
-                                                <div class="answer">
-                                                    <?php echo $title->description?>
-                                                </div>
+                                                <div class="answer"><?php echo $title->description?></div>
                                             </div>
                                         <?php } ?>
                                     <?php } ?>

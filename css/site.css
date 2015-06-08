@@ -3202,7 +3202,12 @@ a.get-message,a.get-message:hover,a.get-message:visited
     padding-top:20px;
     display: none;
 }
-.sub-questions-knowledge-levels li .answer
+.sub-questions-knowledge-levels .answer>div
+{
+    padding:0;
+    border:0;
+}
+.sub-questions-knowledge-levels .answer
 {
     margin-left:25px;
 }
