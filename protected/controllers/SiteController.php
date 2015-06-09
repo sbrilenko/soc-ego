@@ -638,8 +638,14 @@ class SiteController extends Controller
     /*faq*/
     public function actionFaq()
     {
-        $jobtype=JobType::model()->findAll();
-        $jobtitle=JobTitle::model()->findAll();
-        $this->render('faq',array('jobtype'=>$jobtype,'jobtitle'=>$jobtitle));
+        $user_id=Yii::app()->user->id;
+        if(isset($user_id))
+        {
+            $jobtype=JobType::model()->findAll();
+            $jobtitle=JobTitle::model()->findAll();
+            $this->render('faq',array('jobtype'=>$jobtype,'jobtitle'=>$jobtitle));
+        }
+        else $this->redirect('/');
+
     }
 }
