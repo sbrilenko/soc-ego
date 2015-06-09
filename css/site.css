@@ -3140,51 +3140,34 @@ a.get-message,a.get-message:hover,a.get-message:visited
     width:33%;
 }
 .questions-answers,.questions-knowledge-basic,
-.questions-knowledge-levels,.sub-questions-knowledge-levels,.questions-knowledge-badges
+.questions-knowledge-levels,.questions-knowledge-badges
 {
     margin: 0;
     padding:0;
 }
-.sub-questions-knowledge-levels
-{
-    margin-left: 25px;
-}
-.questions-knowledge-levels,.sub-questions-knowledge-levels,.questions-knowledge-badges
+.questions-knowledge-levels,.questions-knowledge-badges
 {
     display: none;
 }
 .faq-h-page-block,.faq-just-h-page-block
 {
-    height: 680px;
-}
-.faq-h-page-block-right
-{
     height: 327px;
-    width: 100%;
-    padding: 0;
-    border: 1px solid #eaeaea;
-    border-radius: 6px;
-    vertical-align: top;
-    background: #fff;
 }
-.questions-answers li,.questions-knowledge-basic li,.questions-knowledge-levels li,.sub-questions-knowledge-levels div
+.questions-answers li,.questions-knowledge-basic li
 {
     list-style: none;
     padding: 20px 16px;
     border-top: 1px solid #eaeaea;
 }
-.questions-answers li:nth-child(1),.questions-knowledge-basic li:nth-child(1),
-.questions-knowledge-levels li:nth-child(1),.sub-questions-knowledge-levels div:nth-child(1)
+.questions-answers li:nth-child(1),.questions-knowledge-basic li:nth-child(1)
 {
     border-top: 0;
 }
-.questions-answers li:last-child,.questions-knowledge-basic li:last-child,
-.questions-knowledge-levels li:last-child,.sub-questions-knowledge-levels div:last-child
+.questions-answers li:last-child,.questions-knowledge-basic li:last-child
 {
     border-bottom: 1px solid #eaeaea;
 }
-.questions-answers li .question,.questions-knowledge-basic li .question,
-.questions-knowledge-levels li .question,.sub-questions-knowledge-levels .question
+.questions-answers li .question,.questions-knowledge-basic li .question
 {
     font-family: HelveticaNeueCyr-Roman;
     font-size: 14px;
@@ -3192,8 +3175,7 @@ a.get-message,a.get-message:hover,a.get-message:visited
     color:#ffc047;
     cursor:pointer;
 }
-.questions-answers li .answer,.questions-knowledge-basic li .answer,
-.questions-knowledge-levels li .answer,.sub-questions-knowledge-levels .answer
+.questions-answers li .answer,.questions-knowledge-basic li .answer
 {
     font-family: HelveticaNeueCyr-Roman;
     font-size: 14px;
@@ -3201,15 +3183,6 @@ a.get-message,a.get-message:hover,a.get-message:visited
     color:#959595;
     padding-top:20px;
     display: none;
-}
-.sub-questions-knowledge-levels .answer>div
-{
-    padding:0;
-    border:0;
-}
-.sub-questions-knowledge-levels .answer
-{
-    margin-left:25px;
 }
 .quest-form-par
 {
@@ -3239,3 +3212,138 @@ a.get-message,a.get-message:hover,a.get-message:visited
 {
     color: #ffc047;
 }
+
+
+/* Groups page */
+
+/*-------------------*/
+
+.recent-projects-block {
+    width: 100%;
+    padding: 0px;
+    border: 1px solid #EAEAEA;
+    border-radius: 6px;
+    vertical-align: top;
+    background: none repeat scroll 0% 0% #FFF;
+}
+
+.group-recent-projects {
+    width: 30%;
+}
+
+.border-bot {
+    border-bottom: 1px solid #EAEAEA;
+}
+
+.recent-projects-head {
+    font-size: 18px;
+    line-height: 16px;
+    color: #777;
+    text-transform: uppercase;
+}
+
+.projects-margin {
+    padding: 0px;
+    width: 2%;
+    height: 638px;
+}
+
+.group-projects {
+    width: 68%;
+}
+
+.projects-name {
+    width: 40%;
+}
+
+.projects-company {
+    width: 30%;
+    text-transform: none;
+}
+
+.projects-date {
+    width: 15%;
+    text-transform: none;
+}
+
+.projects-status {
+    width: 12%;
+    text-align: center;
+    text-transform: none;
+}
+
+.group-font-bold {
+    font-weight: bold;
+}
+
+.name-uppercase {
+    text-transform: uppercase;
+}
+
+.project-start-date {
+    font-family: HelveticaNeueCyr-Roman;
+    font-size: 12px;
+    line-height: 30px;
+    color: #AEAEAE;
+}
+
+.project-company-name {
+    font-family: HelveticaNeueCyr-Roman;
+    font-size: 12px;
+    line-height: 30px;
+    color: #AEAEAE;
+}
+
+.nano > .nano-content-fixed {
+    position: absolute;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+}
+
+.group-scroll-height {
+    height: 580px;
+}
+
+.groups-foot-pad {
+    width: 2%;
+    height: 100%;
+    padding: 0px;
+    min-height: 25px;
+}
+
+.groups-projects-block {
+    width: 100%;
+    padding: 0px;
+    border: 1px solid #EAEAEA;
+    border-radius: 6px;
+    height: 778px;
+    vertical-align: top;
+    background: none repeat scroll 0% 0% #FFF;
+}
+
+.inside-circle {
+    position: absolute;
+    top: 79px;
+}
+
+.pos-relative {
+    position: relative;
+}
+
+.group-scrollbar-height {
+    height: 700px !important;
+}
+
+.native-scrollbar-hide {
+    left: 13px !important;
+}
+
+.project-container {
+    padding: 18px 16px;
+}
+
+/*-------------------*/
