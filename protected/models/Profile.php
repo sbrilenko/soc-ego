@@ -221,9 +221,11 @@ class Profile extends CActiveRecord
         $rank_class=null;
         if($user_rank)
         {
-            switch (strtolower($user_rank->job_type)){
+            $job_type=JobType::model()->findByPk($user_rank->job_type)->job_type;
+            $job_title=JobTitle::model()->findByPk($user_rank->job_title)->job_title;
+            switch (strtolower($job_type)){
             case "developer":
-                switch (strtolower($user_rank->job_title))
+                switch (strtolower($job_title))
                 {
                 case "youngling":
                     $rank_class="developers-rank-1";
@@ -255,7 +257,7 @@ class Profile extends CActiveRecord
                 }
                 break;
             case "pm":
-                switch (strtolower($user_rank->job_title))
+                switch (strtolower($job_title))
                 {
                 case "pixie":
                     $rank_class="pms-rank-1";
@@ -284,7 +286,7 @@ class Profile extends CActiveRecord
                 }
                 break;
             case "designer":
-                switch (strtolower($user_rank->job_title))
+                switch (strtolower($job_title))
                 {
                 case "muggle/gunter":
                     $rank_class="designers-rank-1";
@@ -313,7 +315,7 @@ class Profile extends CActiveRecord
                 }
                 break;
             case "qa":
-                switch (strtolower($user_rank->job_title))
+                switch (strtolower($job_title))
                 {
                 case "gremlin":
                     $rank_class="qas-rank-1";
@@ -342,7 +344,7 @@ class Profile extends CActiveRecord
                 }
                 break;
             case "hr":
-                switch (strtolower($user_rank->job_title))
+                switch (strtolower($job_title))
                 {
                 case "flora":
                     $rank_class="hrs-rank-1";
@@ -371,7 +373,7 @@ class Profile extends CActiveRecord
                 }
                 break;
             case "v.i.p.":
-                switch (strtolower($user_rank->job_title))
+                switch (strtolower($job_title))
                 {
                 case "iron man":
                     $rank_class="vip-rank-1";
@@ -398,7 +400,7 @@ class Profile extends CActiveRecord
     {
         $user_rank=User::model()->findByPk($user_id);
         if($user_rank)
-            return $user_rank->job_title;
+            return JobTitle::model()->findByPk($user_rank->job_title)->job_title;
         else return "";
     }
 
@@ -408,7 +410,7 @@ class Profile extends CActiveRecord
     {
         $user_rank=User::model()->findByPk($user_id);
         if($user_rank)
-            return $user_rank->job_type;
+            return JobType::model()->findByPk($user_rank->job_type)->job_type;
         else return "";
     }
 
