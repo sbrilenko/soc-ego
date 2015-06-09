@@ -99,4 +99,31 @@ class JobTitle extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+    public function allJobTitle()
+    {
+        $all=$this->model()->findAll();
+        return Chtml::listData($all,"id","job_title");
+    }
+    /**/
+    public function jobTitleByTypeIdArray($id)
+    {
+        $findAllByJobType=$this->findAllByAttributes(array('job_type_id'=>$id));
+        if($findAllByJobType)
+        {
+            return $findAllByJobType;
+        }
+        return array();
+    }
+    /**/
+    public function jobTitleByTypeId($id)
+    {
+        $findAllByJobType=$this->findAllByAttributes(array('job_type_id'=>$id));
+        if($findAllByJobType)
+        {
+            return Chtml::listData($findAllByJobType,"id","job_title");
+        }
+        return array();
+    }
+
 }

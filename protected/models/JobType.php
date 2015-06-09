@@ -91,4 +91,10 @@ class JobType extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+    public function allJobType()
+    {
+        $all=$this->model()->findAll();
+        return Chtml::listData($all,"id","job_type");
+    }
 }

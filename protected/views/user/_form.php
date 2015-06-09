@@ -122,107 +122,21 @@ if(isset($message)) { ?>
 	<div class="row">
 		<?php
         echo $form->labelEx($model,'job_type'); ?>
-		<?php echo $form->dropDownList($model, 'job_type',array('Developer'=>'Developer',
-            'PM'=>'PM',
-            'Designer'=>'Designer',
-            'QA'=>'QA',
-            'Sales manager'=>'Sales manager',
-            'HR'=>'HR',
-            'V.I.P.'=>'V.I.P.'
-        )); ?>
+        <?php echo $form->dropDownList($model, 'job_type',JobType::model()->allJobType()); ?>
+<!--		--><?php //echo $form->dropDownList($model, 'job_type',array('Developer'=>'Developer',
+//            'PM'=>'PM',
+//            'Designer'=>'Designer',
+//            'QA'=>'QA',
+//            'Sales manager'=>'Sales manager',
+//            'HR'=>'HR',
+//            'V.I.P.'=>'V.I.P.'
+//        )); ?>
 		<?php echo $form->error($model,'job_type'); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'job_title'); ?>
-        <?php
-        switch(strtolower($model->job_type))
-        {
-            case 'developer':
-                echo $form->dropDownList($model,'job_title',array(
-                    'Youngling'=>'Youngling',
-                    'Padawan'=>'Padawan',
-                    'Jedi'=>'Jedi',
-                    'Jedi Survivor'=>'Jedi Survivor',
-                    'Jedi Knight'=>'Jedi Knight',
-                    'Master Jedi'=>'Master Jedi',
-                    'The Chosen One'=>'The Chosen One',
-                    'Yoda'=>'Yoda',
-                    'Darth Vader'=>'Darth Vader'
-                ));
-            break;
-            case 'pm':
-                echo $form->dropDownList($model,'job_title',array(
-                    'Pixie'=> 'Pixie',
-                    'Tinker Bell'=>'Tinker Bell',
-                    'Nymph'=>'Nymph',
-                    'Fairy'=>'Fairy',
-                    'Djinni'=>'Djinni',
-                    'Witch'=>'Witch',
-                    'Snow Queen'=>'Snow Queen',
-                    'Cruella De Vil'=>'Cruella De Vil',
-
-                ));
-            break;
-            case 'designer':
-                echo $form->dropDownList($model,'job_title',array(
-                    'Gunter'=>'Gunter',
-                    'Peppermint Butler'=>'Peppermint Butler',
-                    'Jake the Dog'=>'Jake the Dog',
-                    'Fin'=>'Fin',
-                    'Billy'=>'Billy',
-                    'The Ice King'=>'The Ice King',
-                    'The Lich'=>'The Lich',
-                    'Lemongrab'=>'Lemongrab'
-                ));
-            break;
-            case 'qa':
-                echo $form->dropDownList($model,'job_title',array(
-                    'Gremlin'=>'Gremlin',
-                    'Elf'=>'Elf',
-                    'Leprechaun'=>'Leprechaun',
-                    'Warlock'=>'Warlock',
-                    'Whitelighter'=>'Whitelighter',
-                    'Sorcerer'=>'Sorcerer',
-                    'Driad'=>'Driad',
-                    'Merlin'=>'Merlin'
-                ));
-            break;
-            case 'sales manager':
-                echo $form->dropDownList($model,'job_title',array(
-                    'Sleeping Beauty'=>'Sleeping Beauty',
-                    'Thumbelina'=>'Thumbelina',
-                    'Jasmine'=>'Jasmine',
-                    'Cinderella'=>'Cinderella',
-                    'Snow White'=>'Snow White',
-                    'Rapunzel'=>'Rapunzel',
-                    'Ariel'=>'Ariel',
-                    'Pocahontas'=>'Pocahontas'
-                ));
-            break;
-            case 'hr':
-                echo $form->dropDownList($model,'job_title',array(
-                    'Flora'=>'Flora',
-                    'Demeter'=>'Demeter',
-                    'Terra'=>'Terra',
-                    'Aurora'=>'Aurora',
-                    'Luna'=>'Luna',
-                    'Aphrodite'=>'Aphrodite',
-                    'Athena'=>'Athena',
-                    'Artemis'=>'Artemis'
-
-                ));
-            break;
-            case 'v.i.p.':
-                echo $form->dropDownList($model,'job_title',array(
-                'Iron Man'=>'Iron Man',
-                'Captain America'=>'Captain America',
-                'Rogue'=>'Rogue',
-                ));
-            break;
-        }
-        ?>
-
+        <?php echo $form->dropDownList($model,'job_title',JobTitle::model()->jobTitleByTypeId($model->job_type));?>
 		<?php echo $form->error($model,'job_title'); ?>
 	</div>
 
@@ -434,113 +348,31 @@ if(isset($message)) { ?>
 
         }).on("change","select[name*=job_type]",function()
         {
-            var job_title=$("select[name*=job_title]");
-            switch ($(this).val())
+            var th=$(this);
+            if(!th.hasClass('disabled'))
             {
-                case 'Developer':
-                {
-                    var newOptions = [
-                        'Youngling',
-                        'Padawan',
-                        'Jedi',
-                        'Jedi Survivor',
-                        'Jedi Knight',
-                        'Master Jedi',
-                        'The Chosen One',
-                        'Yoda',
-                        'Darth Vader',
-                    ];
-                }
-                break;
-                case 'PM':
-                {
-                    var newOptions = [
-                        'Pixie',
-                        'Tinker Bell',
-                        'Nymph',
-                        'Fairy',
-                        'Djinni',
-                        'Witch',
-                        'Snow Queen',
-                        'Cruella De Vil',
-
-                    ];
-                    break;
-                }
-                case 'Designer':
-                {
-                    var newOptions = [
-                        'Gunter',
-                        'Peppermint Butler',
-                        'Jake the Dog',
-                        'Fin',
-                        'Billy',
-                        'The Ice King',
-                        'The Lich',
-                        'Lemongrab',
-                    ];
-                    break;
-                }
-                case 'QA':
-                {
-                    var newOptions = [
-                        'Gremlin',
-                        'Elf',
-                        'Leprechaun',
-                        'Warlock',
-                        'Whitelighter',
-                        'Sorcerer',
-                        'Driad',
-                        'Merlin',
-                    ];
-                    break;
-                }
-                case 'Sales manager':
-                {
-                    var newOptions = [
-                        'Sleeping Beauty',
-                        'Thumbelina',
-                        'Jasmine',
-                        'Cinderella',
-                        'Snow White',
-                        'Rapunzel',
-                        'Ariel',
-                        'Pocahontas',
-
-                    ];
-                    break;
-                }
-                case 'HR':
-                {
-                    var newOptions = [
-                        'Flora',
-                        'Demeter',
-                        'Terra',
-                        'Aurora',
-                        'Luna',
-                        'Aphrodite',
-                        'Athena',
-                        'Artemis',
-                    ];
-                    break;
-                }
-                case 'V.I.P.':
-                {
-                    var newOptions = [
-                        'Iron Man',
-                        'Captain America',
-                        'Magneto',
-                        'Rogue',
-
-                    ];
-                    break;
-                }
+                th.addClass('disabled');
+                var job_title=$("select[name*=job_title]");
+                var fd =$('#user-form').serializeArray();
+                $.ajax({
+                    url: "/jobtitle/getByParId",
+                    type: "POST",
+                    data: fd,
+                    dataType: "json",
+                    success: function (data, textStatus) {
+                        th.removeClass('disabled');
+                        if(typeof data.jobtitles!=='undefined')
+                        {
+                            job_title.empty();
+                            for(jobtit in data.jobtitles)
+                            {
+                                $("select[name*=job_title]").append($("<option value='"+jobtit+"'>"+data.jobtitles[jobtit]+"</option>"));
+                            }
+                        }
+                    }
+                })
             }
-            job_title.empty()
-            for(var i=0;i<newOptions.length;i++)
-            {
-                $("select[name*=job_title]").append($("<option value='"+newOptions[i]+"'>"+newOptions[i]+"</option>"));
-            }
+            return false
         })
     })
 </script>
