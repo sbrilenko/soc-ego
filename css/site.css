@@ -3373,3 +3373,72 @@ a.get-message,a.get-message:hover,a.get-message:visited
 }
 
 /*-------------------*/
+
+
+/* Blank template styles */
+/*------------------------*/
+
+
+/* Left column */
+.add-to-friends-container {
+    margin-top: 30px;
+
+}
+
+.add-to-friends-container p {
+    text-align: center;
+    color: #B7B7B7;
+    margin-top: 20px;
+    width: 254px;
+}
+
+.add-to-friends-button {
+    height: 38px;
+    width: 254px;
+    margin: 0 auto;
+    border-radius: 30px;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    background-color: #4D4D4D;
+    font-family: HelveticaNeueCyr-Roman;
+    font-size: 14px;
+    color: #B7B7B7;
+}
+
+.add-to-friends-button:hover {
+    border: 1px #ffc047 solid;
+    color: #ffc047;
+}
+
+/* Main page */
+.hidden-content {
+    background: none repeat scroll 0% 0% #FFF;
+    margin-top: 2%;
+    padding: 0px;
+    text-align: center;
+    border: 1px solid #EEE;
+    border-radius: 5px;
+    min-height: 600px; 
+}
+
+.incognito-img {
+    background: url("../img/incognito.png") no-repeat;
+    margin: 120px auto 0;
+    width: 178px;
+    height: 163px;
+}
+
+.hidden-content .hidden-content-header {
+    font-family: HelveticaNeueCyr-Roman;
+    margin: 0 auto;
+    text-align: center;
+    width: 100%;
+    font-size: 26px;
+}
+
+.hidden-content .hidden-content-text {
+    font-family: HelveticaNeueCyr-Roman;
+    color: #B7B7B7; 
+}
+/*------------------------*/
