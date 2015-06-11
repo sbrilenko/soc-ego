@@ -3239,3 +3239,206 @@ a.get-message,a.get-message:hover,a.get-message:visited
 {
     color: #ffc047;
 }
+
+/* Groups page */
+
+/*-------------------*/
+
+.recent-projects-block {
+    width: 100%;
+    padding: 0px;
+    border: 1px solid #EAEAEA;
+    border-radius: 6px;
+    vertical-align: top;
+    background: none repeat scroll 0% 0% #FFF;
+}
+
+.group-recent-projects {
+    width: 30%;
+}
+
+.border-bot {
+    border-bottom: 1px solid #EAEAEA;
+}
+
+.recent-projects-head {
+    font-size: 18px;
+    line-height: 16px;
+    color: #777;
+    text-transform: uppercase;
+}
+
+.projects-margin {
+    padding: 0px;
+    width: 2%;
+    height: 638px;
+}
+
+.group-projects {
+    width: 68%;
+}
+
+.projects-name {
+    width: 40%;
+}
+
+.projects-company {
+    width: 30%;
+    text-transform: none;
+}
+
+.projects-date {
+    width: 15%;
+    text-transform: none;
+}
+
+.projects-status {
+    width: 12%;
+    text-align: center;
+    text-transform: none;
+}
+
+.group-font-bold {
+    font-weight: bold;
+}
+
+.name-uppercase {
+    text-transform: uppercase;
+}
+
+.project-start-date {
+    font-family: HelveticaNeueCyr-Roman;
+    font-size: 12px;
+    line-height: 30px;
+    color: #AEAEAE;
+}
+
+.project-company-name {
+    font-family: HelveticaNeueCyr-Roman;
+    font-size: 12px;
+    line-height: 30px;
+    color: #AEAEAE;
+}
+
+.nano > .nano-content-fixed {
+    position: absolute;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+}
+
+.group-scroll-height {
+    height: 580px;
+}
+
+.groups-foot-pad {
+    width: 2%;
+    height: 100%;
+    padding: 0px;
+    min-height: 25px;
+}
+
+.groups-projects-block {
+    width: 100%;
+    padding: 0px;
+    border: 1px solid #EAEAEA;
+    border-radius: 6px;
+    height: 778px;
+    vertical-align: top;
+    background: none repeat scroll 0% 0% #FFF;
+}
+
+.inside-circle {
+    position: absolute;
+    top: 79px;
+}
+
+.pos-relative {
+    position: relative;
+}
+
+.group-scrollbar-height {
+    height: 700px !important;
+}
+
+.native-scrollbar-hide {
+    left: 13px !important;
+}
+
+.project-container {
+    padding: 18px 16px;
+}
+
+/*-------------------*/
+
+
+/* Blank template styles */
+/*------------------------*/
+
+
+/* Left column */
+.add-to-friends-container {
+    margin-top: 30px;
+
+}
+
+.add-to-friends-container p {
+    text-align: center;
+    color: #B7B7B7;
+    margin-top: 20px;
+    width: 254px;
+}
+
+.add-to-friends-button {
+    height: 38px;
+    width: 254px;
+    margin: 0 auto;
+    border-radius: 30px;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    background-color: #4D4D4D;
+    font-family: HelveticaNeueCyr-Roman;
+    font-size: 14px;
+    color: #B7B7B7;
+}
+
+.add-to-friends-button:hover {
+    border: 1px #ffc047 solid;
+    color: #ffc047;
+}
+
+/* Main page */
+.hidden-content {
+    background: none repeat scroll 0% 0% #FFF;
+    margin-top: 2%;
+    padding: 0px;
+    text-align: center;
+    border: 1px solid #EEE;
+    border-radius: 5px;
+    min-height: 600px; 
+}
+
+.incognito-img {
+    background: url("../img/incognito.png") no-repeat;
+    margin: 120px auto 0;
+    width: 178px;
+    height: 163px;
+}
+
+.hidden-content .hidden-content-header {
+    font-family: HelveticaNeueCyr-Roman;
+    margin: 0 auto;
+    text-align: center;
+    width: 100%;
+    font-size: 26px;
+}
+
+.hidden-content .hidden-content-text {
+    font-family: HelveticaNeueCyr-Roman;
+    color: #B7B7B7; 
+}
+/*------------------------*/
