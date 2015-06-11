@@ -578,7 +578,7 @@ a.no-padding:hover .store-icon
     width:18px;
     height:18px;
 }
-a.no-padding:hover .groups-icon
+a.no-padding:hover .groups-icon,a.no-padding .current .groups-icon
 {
     background-position: 0 -18px;
 }

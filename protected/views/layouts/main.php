@@ -24,7 +24,7 @@
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/login.css">
     <?php } ?>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <?php if(isset(Yii::app()->user->id) && Yii::app()->controller->id=="site" && (Yii::app()->controller->action->id=="index" || Yii::app()->controller->action->id=="faq")) { ?>
+    <?php if(isset(Yii::app()->user->id) && Yii::app()->controller->id=="site" && (Yii::app()->controller->action->id=="index" || Yii::app()->controller->action->id=="faq" || Yii::app()->controller->action->id=="groups")) { ?>
         <link href="<?php echo Yii::app()->request->baseUrl; ?>/css/nanoscroller.css" rel="stylesheet">
         <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery.nanoscroller.js"></script>
         <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery.mousewheel.js"></script>
@@ -206,7 +206,7 @@
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
 
-<body <?php if(!isset(Yii::app()->user->id)) echo "style='background:#393939;'"; ?>>
+<body>
     <?php
     if(isset(Yii::app()->user->id))
     {

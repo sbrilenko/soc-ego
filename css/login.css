@@ -9,10 +9,17 @@
     margin-top:-238px;
     background:#fff;
     border-radius: 3px;
+    z-index: 10;
+}
+.login-form.witherror
+{
+    height:540px;
+    margin-top: -270px;
 }
 .maybe-logo-place
 {
-    height:114px;
+    height:87px;
+    padding:20px;
 }
 .form-padding
 {
@@ -39,43 +46,54 @@ div.form div.error input, div.form div.error textarea, div.form div.error select
     color: #666;
     padding: 0;
     margin: 0;
-    border: 1px solid red;
+    border: 1px solid #ff8080;
     background: none;
     width: 100%;
     border-radius: 4px;
+}
+.login-form.witherror input[type=text],.login-form.witherror input[type=password]
+{
+    border-color:#ff8080;
 }
 div.form .row
 {
     position: relative;
     margin:20px 0;
 }
-.login-icon,.password-icon
+
+input[type=text],input[type=password]
 {
-    background: url('../img/login-icon.png') no-repeat;
-    width: 18px;
-    height: 18px;
-    position: absolute;
-    margin: 20px 20px 20px 17px;
+    width: 272px;
+    padding-left: 54px;
+    border: 1px solid #d8d8d8;
+    box-shadow: inset 0 2px 3px #eeeeee;
 }
-.password-icon
+input[type=text]
 {
-    background: url('../img/login-icon.png') no-repeat 0 -18px;
+    background: url('../img/u.svg') no-repeat left center !important;
+    height: 18px;
+}
+input[type=text]:hover
+{
+    background: url('../img/u_h.svg') no-repeat left center !important;
+}
+input[type=password]
+{
+    background: url('../img/p.svg') no-repeat left 6px top 5px !important;
     width: 19px;
     height: 22px;
 }
-/**/
+input[type=password]:hover
+{
+    background: url('../img/p_h.svg') no-repeat left center !important;
+}
+
 
 #login-form .row.buttons {
     margin-top: 42px;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px;
-    -webkit-box-shadow:
-    0 8px 0 #d7821d;
-    -moz-box-shadow:
-    0 8px 0 #d7821d;
-    box-shadow:
-    0 8px 0 #d7821d;
     -webkit-transition: -webkit-box-shadow .2s ease-in-out;
     -moz-transition: -moz-box-shadow .2s ease-in-out;
     -o-transition: -o-box-shadow .2s ease-in-out;
@@ -85,29 +103,16 @@ div.form .row
     padding: 20px;
     font-family: HelveticaNeueCyr-Roman;
     font-size: 18px;
-    line-height: 18px;
     color:#fff;
-    text-shadow: 0 -1px 1px rgba(215, 130, 29, 0.80);
-    background: #f7941e;
+    background: #faa43e;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px;
-    -webkit-box-shadow: inset 0 -1px 1px rgba(255,255,255,.15);
-    -moz-box-shadow: inset 0 -1px 1px rgba(255,255,255,.15);
-    box-shadow: inset 0 -1px 1px rgba(255,255,255,.15);
-    -webkit-transition: -webkit-transform .2s ease-in-out;
-    -moz-transition: -moz-transform .2s ease-in-out;
-    -o-transition: -o-transform .2s ease-in-out;
-    transition: transform .2s ease-in-out;
     border: 0;
     margin: 0;
     width: 100%;
-}
-#login-form .buttons:active input[type=submit] {
-    -webkit-transform: translate(0, 4px);
-    -moz-transform: translate(0, 4px);
-    -o-transform: translate(0, 4px);
-    transform: translate(0, 4px);
+    text-transform: uppercase;
+    cursor:pointer;
 }
 .row input[type=checkbox]
 {
@@ -128,7 +133,7 @@ input[type=checkbox] + label
 {
     font-family: HelveticaNeueCyr-Roman;
     font-size: 14px;
-    color:#aeaeae;
+    color:#cdcdcd;
     padding-left: 40px;
     height: 23px;
     display: inline-block;
@@ -138,7 +143,7 @@ input[type=checkbox] + label
     font-size: 15px;
     vertical-align: middle;
     cursor: pointer;
-
+    font-weight: normal;
 }
 .row input[type=checkbox]:checked + label
 {
@@ -149,7 +154,7 @@ a.forgotpass,a.forgotpass:visited
     font-family: HelveticaNeueCyr-Roman;
     font-size: 14px;
     line-height: 23px;
-    color:#aeaeae;
+    color:#cdcdcd;
     padding-left: 40px;
     height: 23px;
     text-decoration: underline;
@@ -161,8 +166,38 @@ a.forgotpass:hover
 div.form .errorMessage
 {
     text-align: center;
-    color: #df4949;
+    color: #ff8080;
     font-family: HelveticaNeueCyr-Medium;
     font-size: 14px;
     line-height: 14px;
+    padding:32px;
 }
+.filter {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 1;
+}
+.bg {
+    background: url('../img/bg.jpeg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    min-height: 100%;
+     min-width: 1024px;
+    width: 100%;
+    height: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+::-webkit-input-placeholder {color:#d1d1d1;}
+::-moz-placeholder          {color:#d1d1d1;}
+:-moz-placeholder           {color:#d1d1d1;}
+:-ms-input-placeholder      {color:#d1d1d1;}
+

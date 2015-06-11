@@ -1,4 +1,3 @@
-<?php var_dump("fdfsfffd");?>
 <div class="form login-form" >
     <?php $form=$this->beginWidget('CActiveForm', array(
         'id'=>'login-form',

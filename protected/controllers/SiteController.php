@@ -52,12 +52,11 @@ class SiteController extends Controller
                 }
                 else
                 {
-                    $model->addError("error","Incorrect email or password");
-                    $this->render("login",array("model"=>$model));
+                    $this->render("login",array("model"=>$model,'error'=>"Wrong Email / Password"));
                 }
             }
             else
-                $this->render("login",array("model"=>$model));
+                $this->render("login",array("model"=>$model,'error'=>''));
         }
         elseif(isset(Yii::app()->user->id)) {
             $model = User::model()->findByPk(Yii::app()->user->id);
@@ -77,7 +76,7 @@ class SiteController extends Controller
             ));            
         }
 
-        else $this->render("login",array("model"=>$model));
+        else $this->render("login",array("model"=>$model,'error'=>''));
 
     }
 
@@ -647,5 +646,15 @@ class SiteController extends Controller
         }
         else $this->redirect('/');
 
+    }
+    /*groups*/
+    public function actionGroups()
+    {
+        $user_id=Yii::app()->user->id;
+        if(isset($user_id))
+        {
+            $this->render('groups');
+        }
+        else $this->redirect('/');
     }
 }
