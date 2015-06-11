@@ -70,12 +70,12 @@ input[type=text],input[type=password]
 }
 input[type=text]
 {
-    background: url('../img/u.svg') no-repeat left center !important;
+    background: url('../img/u.svg') no-repeat left 6px top 5px !important;
     height: 18px;
 }
 input[type=text]:hover
 {
-    background: url('../img/u_h.svg') no-repeat left center !important;
+    background: url('../img/u_h.svg') no-repeat left 6px top 5px !important;
 }
 input[type=password]
 {
@@ -85,10 +85,16 @@ input[type=password]
 }
 input[type=password]:hover
 {
-    background: url('../img/p_h.svg') no-repeat left center !important;
+    background: url('../img/p_h.svg') no-repeat left 6px top 5px  !important;
 }
-
-
+input[type=text]:focus
+{
+    background: url('../img/u_p.svg') no-repeat left 6px top 5px !important;
+}
+input[type=password]:focus
+{
+    background: url('../img/p_p.svg') no-repeat left 6px top 5px  !important;
+}
 #login-form .row.buttons {
     margin-top: 42px;
     -webkit-border-radius: 4px;
