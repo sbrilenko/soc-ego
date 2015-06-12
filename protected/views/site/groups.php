@@ -21,7 +21,7 @@
                                 </div>
                             </div>
                             <div class="block-table-style">
-                                <div class="display-table-cell block-height">
+                                <div class="display-table-cell groups-circle-block-height">
                                     <svg id="finished-svg"></svg>
                                 </div>
                             </div>
@@ -52,7 +52,7 @@
                                 </div>
                             </div>
                             <div class="block-table-style">
-                                <div class="display-table-cell block-height">
+                                <div class="display-table-cell groups-circle-block-height">
                                     <svg id="active-svg"></svg>
                                 </div>
                             </div>
@@ -83,7 +83,7 @@
                                 </div>
                             </div>
                             <div class="block-table-style">
-                                <div class="display-table-cell block-height">
+                                <div class="display-table-cell groups-circle-block-height">
                                     <svg id="paused-svg"></svg>
                                 </div>
                             </div>
@@ -114,7 +114,7 @@
                                 </div>
                             </div>
                             <div class="block-table-style">
-                                <div class="display-table-cell block-height">
+                                <div class="display-table-cell groups-circle-block-height">
                                     <svg id="overall-svg"></svg>
                                 </div>
                             </div>

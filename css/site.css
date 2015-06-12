@@ -3429,6 +3429,10 @@ a.get-message,a.get-message:hover,a.get-message:visited
 {
     background-color: #35db7f;
 }
+
+.groups-circle-block-height {
+    height: 151px;
+}
 /*-------------------*/
 
 
