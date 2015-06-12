@@ -328,7 +328,40 @@ class SiteController extends Controller
         Yii::app()->user->logout();
         $this->redirect("/");
     }
-
+    /*forgotpass*/
+    public function actionForgotPass()
+    {
+        if(isset(Yii::app()->user->id))
+        {
+            $this->redirect("/");
+        }
+        else
+        {
+            $model=new User();
+            if(isset($_POST['User']))
+            {
+                $model->attributes=$_POST['User'];
+                if(empty($model->email))
+                {
+                    $this->render('forgotpass',array("model"=>new User(),"error"=>'Email cannot be empty','message'=>''));
+                }
+                /*search user*/
+                $seruser=User::model()->findByAttributes(array('email'=>$model->email));
+                if($seruser)
+                {
+                    $this->render('forgotpass',array("model"=>new User(),"error"=>'','message'=>'Message was sent'));
+                }
+                else
+                {
+                    $this->render('forgotpass',array("model"=>new User(),"error"=>'User with this email not found','message'=>''));
+                }
+            }
+            else
+            {
+                $this->render('forgotpass',array("model"=>new User(),"error"=>'','message'=>''));
+            }
+        }
+    }
     /*all user by company*/
     public function actionAllUserByCompany()
     {

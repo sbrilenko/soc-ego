@@ -1,4 +1,4 @@
-.login-form
+.login-form,.forgotpass-form
 {
     width:370px;
     height:476px;
@@ -11,15 +11,39 @@
     border-radius: 3px;
     z-index: 10;
 }
+.forgotpass-form
+{
+    width: 370px;
+    height: 282px;
+    top: 50%;
+    margin-top: -141px;
+    left:50%;
+    background-color: transparent;
+}
+.forgotpass-form .form-padding
+{
+    padding: 20px;
+    background-color: #fff;
+}
 .login-form.witherror
 {
     height:540px;
     margin-top: -270px;
 }
+.forgotpass-form.witherror,.forgotpass-form.withmessage
+{
+    height: 358px;
+    margin-top: -179px;
+}
 .maybe-logo-place
 {
     height:87px;
     padding:20px;
+}
+.message
+{
+    text-align: center;
+    margin:20px 0;
 }
 .form-padding
 {
@@ -55,25 +79,29 @@ div.form div.error input, div.form div.error textarea, div.form div.error select
 {
     border-color:#ff8080;
 }
+.forgotpass-form.witherror input[type=email]
+{
+    border-color:#ff8080;
+}
 div.form .row
 {
     position: relative;
     margin:20px 0;
 }
 
-input[type=text],input[type=password]
+input[type=text],input[type=password],input[type=email]
 {
     width: 272px;
     padding-left: 54px;
     border: 1px solid #d8d8d8;
     box-shadow: inset 0 2px 3px #eeeeee;
 }
-input[type=text]
+input[type=text],input[type=email]
 {
     background: url('../img/u.svg') no-repeat left 6px top 5px !important;
     height: 18px;
 }
-input[type=text]:hover
+input[type=text]:hover,input[type=email]:hover
 {
     background: url('../img/u_h.svg') no-repeat left 6px top 5px !important;
 }
@@ -87,7 +115,7 @@ input[type=password]:hover
 {
     background: url('../img/p_h.svg') no-repeat left 6px top 5px  !important;
 }
-input[type=text]:focus
+input[type=text]:focus,input[type=email]:focus
 {
     background: url('../img/u_p.svg') no-repeat left 6px top 5px !important;
 }
@@ -95,7 +123,7 @@ input[type=password]:focus
 {
     background: url('../img/p_p.svg') no-repeat left 6px top 5px  !important;
 }
-#login-form .row.buttons {
+#login-form .row.buttons,#forgotpass-form .row.buttons {
     margin-top: 42px;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
@@ -105,7 +133,9 @@ input[type=password]:focus
     -o-transition: -o-box-shadow .2s ease-in-out;
     transition: box-shadow .2s ease-in-out;
 }
-#login-form .buttons input[type=submit] {
+#login-form .buttons input[type=submit],
+#forgotpass-form .buttons input[type=submit]
+{
     padding: 20px;
     font-family: HelveticaNeueCyr-Roman;
     font-size: 18px;
@@ -119,6 +149,10 @@ input[type=password]:focus
     width: 100%;
     text-transform: uppercase;
     cursor:pointer;
+}
+#forgotpass-form .row.buttons
+{
+    margin:0;
 }
 .row input[type=checkbox]
 {
@@ -201,7 +235,35 @@ div.form .errorMessage
     top: 0;
     left: 0;
 }
-
+.forgotpass-title
+{
+    font-size: 24px;
+    line-height: 28px;
+    font-family: HelveticaNeueCyr-Medium;
+    color:#fff;
+    text-shadow: 5px 0px 3px #020202;
+    -moz-text-shadow: 1px 1px 1px #020202;
+    -webkit-text-shadow: 1px 1px 1px #020202;
+    /* For IE 8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=177, Color='#020202')";
+    /* For IE 5.5 - 7 */
+    filter: progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=177, Color='#020202');
+    text-align: center;
+    padding: 0 0 30px 0;
+}
+.forgotpass-form .back-par
+{
+    margin-top: 30px;
+    text-align: center;
+}
+.forgotpass-form .go-to-signin,.forgotpass-form .go-to-signin:hover,.forgotpass-form .go-to-signin:focus
+{
+    font-size: 14px;
+    line-height: 18px;
+    font-family: HelveticaNeueCyr-Roman;
+    color:#eaeaea;
+    text-decoration: none;
+}
 ::-webkit-input-placeholder {color:#d1d1d1;}
 ::-moz-placeholder          {color:#d1d1d1;}
 :-moz-placeholder           {color:#d1d1d1;}

@@ -30,7 +30,7 @@
                     <?php echo $form->label($model,'rememberme'); ?>
                 </div>
             <div class="row" style="float:right;">
-                <a href="#" class="forgotpass">Forgot Password?</a>
+                <a href="/forgotpass" class="forgotpass">Forgot Password?</a>
             </div>
             <div class="clear"></div>
             <?php $this->endWidget(); ?>
