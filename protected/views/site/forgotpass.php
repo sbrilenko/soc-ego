@@ -14,7 +14,7 @@
             <?php if(!empty($error)) { ?><div class="errorMessage"><?php echo $error;?> </div><?php } ?>
             <?php if(!empty($message)) { ?><div class="message"><?php echo $message;?> </div><?php } ?>
             <div class="row" style="margin-top: 0;">
-                <?php echo $form->emailField($model,'email',array("autocomplete"=>"off","placeholder"=>"Email","style"=>"padding: 16px 5px 16px 56px;width: 268px;box-shadow:0 1px 1px rgba(0, 0, 0, 0.05);")); ?>
+                <?php echo $form->emailField($model,'email',array("autofocus"=>true,"autocomplete"=>"off","placeholder"=>"Email","style"=>"padding: 16px 5px 16px 56px;width: 268px;box-shadow:0 1px 1px rgba(0, 0, 0, 0.05);")); ?>
             </div>
             <div class="clear"></div>
             <div class="row buttons">

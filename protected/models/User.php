@@ -271,4 +271,23 @@ class User extends CActiveRecord
         return $this->friends;
     }
 
+    private function char_at($str, $pos)
+    {
+        return $str[$pos];
+    }
+    /*random gen pass*/
+    public function genpass()
+    {
+        $length = 8;
+        $charset = "abcdefghijklnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        $charset_str_split=str_split($charset);
+        $retVal = "";
+        $n = strlen($charset);
+        for ($i = 0; $i < $length; ++$i) {
+            $fdfgdf=floor((float)rand()/(float)getrandmax() * $n);
+            $fdd=$charset_str_split[$fdfgdf];
+            $retVal.= $fdd;
+        }
+        return $retVal;
+    }
 }

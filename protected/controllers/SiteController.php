@@ -349,7 +349,33 @@ class SiteController extends Controller
                 $seruser=User::model()->findByAttributes(array('email'=>$model->email));
                 if($seruser)
                 {
-                    $this->render('forgotpass',array("model"=>new User(),"error"=>'','message'=>'Message was sent'));
+                    $subject = 'GiraFFe Network change password';
+                    $headers = 'From: GiraFFe Network'. "\r\n";
+                    $headers .= 'MIME-Version: 1.0'."\r\n";
+                    $headers .= 'Content-Type: text/html; charset=utf-8'."\r\n";
+
+                    $newpass=$seruser->genpass();
+                    $seruser->password=$newpass;
+                    if($seruser->save())
+                    {
+                        $body="A very special welcome to you, Name! You joined giraffe.ego-cms.com.";
+                        $body.="<br /><br />";
+                        $body.="Your password is ".$newpass.".";
+                        $body.="<br />";
+                        $body.="Please, keep it secret and safe!";
+                        $body.="<br /><br />";
+                        $body.="We hope you enjoy your time at GiraFFe Network! If you have any problems, questions, opinions, comments, suggestions, please feel free to contact us any time.";
+                        $body.="<br /><br />";
+                        $body.="Best Regards,";
+                        $body.="<br />";
+                        $body.="GiraFFe Network Support Team";
+                        $body.="<br />";
+                        if(mail($seruser->email,$subject,$body,$headers,"-fsupport@giraffe.ego-cms.com"))
+                            $this->render('forgotpass',array("model"=>new User(),"error"=>'','message'=>'Message was sent'));
+                        else $this->render('forgotpass',array("model"=>new User(),"error"=>'','message'=>'Message was not sent'));
+                    }
+                    else
+                    $this->render('forgotpass',array("model"=>new User(),"error"=>'','message'=>'Password don\'t save'));
                 }
                 else
                 {
