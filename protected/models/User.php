@@ -118,7 +118,10 @@ class User extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
             'friends' => array(self::HAS_MANY, 'UserFriend', 'user_id'),
-            'profile' => array(self::HAS_ONE, 'Profile', 'user_id')
+            'profile' => array(self::HAS_ONE, 'Profile', 'user_id'),
+            'activeProjectsCount'=>array(self::STAT, 'Usergroup', 'participants(user_id, group_id)', 'condition'=>'completed=1'),
+            'finishedProjectsCount'=>array(self::STAT, 'Usergroup', 'participants(user_id, group_id)', 'condition'=>'completed=0'),
+            'pausedProjectsCount'=>array(self::STAT, 'Usergroup', 'participants(user_id, group_id)', 'condition'=>'completed=2'),
 		);
 	}
 

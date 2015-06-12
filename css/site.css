@@ -3361,7 +3361,7 @@ a.get-message,a.get-message:hover,a.get-message:visited
 }
 
 .group-scrollbar-height {
-    height: 700px !important;
+    height: 725px !important;
 }
 
 .native-scrollbar-hide {
@@ -3372,6 +3372,32 @@ a.get-message,a.get-message:hover,a.get-message:visited
     padding: 18px 16px;
 }
 
+.empty-projects-container {
+    margin: 200px auto;
+}
+
+.paper-plane-img {
+    background: url("../img/paper-plane.png") no-repeat;
+    margin: 120px auto 0;
+    width: 100px;
+    height: 100px;
+}
+
+.empty-projects-container .empty-text {
+    font-family: HelveticaNeueCyr-Roman;
+    color: #B7B7B7;
+    text-align: center;
+    margin: 20px auto;
+    width: 200px;
+}
+
+.recent-empty-text {
+    font-family: HelveticaNeueCyr-Roman;
+    color: #B7B7B7;
+    text-align: center;
+    height: 80px;
+    margin-top: 50px;
+}
 /*-------------------*/
 
 

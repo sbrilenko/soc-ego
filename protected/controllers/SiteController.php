@@ -653,7 +653,21 @@ class SiteController extends Controller
         $user_id=Yii::app()->user->id;
         if(isset($user_id))
         {
-            $this->render('groups');
+            // How much projects will be shown as recent.
+            $recent_number = 6;
+
+            $user = User::model()->findByPk($user_id);
+
+            // Number of finished, active and paused projects for user.
+            $finished = $user->finishedProjectsCount;
+            $active = $user->activeProjectsCount;
+            $paused = $user->pausedProjectsCount;
+
+            $allmygr=Participants::model()->allGroupsForUser($user_id);
+            $recentmygr=Participants::model()->recentGroupsForUser($user_id, $recent_number);
+            $this->render('groups',array('allmygr'=>$allmygr, 'recentmygr'=>$recentmygr, 'finished'=>$finished,
+                                         'active'=>$active, 'paused'=>$paused)
+            );
         }
         else $this->redirect('/');
     }

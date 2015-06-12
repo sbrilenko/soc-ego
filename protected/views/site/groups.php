@@ -149,72 +149,68 @@
                         <div class="clear"></div>
                     </div>
                     
-                    
-                    <div tabindex="0" class="group-wall-content mar-zero border-bot">
+                    <?php if(count($recentmygr)>0)
+                        {
+                            foreach($recentmygr as $index => $group)
+                            { ?>
+                            <div tabindex="0" class="group-wall-content mar-zero border-bot">
 
-                        <div class="project-container">
-                            <div class="padding-zero left-pad f-l">
-                                <a href="#" class="f-l"><img class="f-l profile-main-page-img" src="/img/group-default-little.png"></a>
-                                <div class="f-l">
-                                    <div class="project-title">
-                                        Best group in the world
+                                <div class="project-container">
+                                    <div class="padding-zero left-pad f-l">
+                                        <?php $group_table=Usergroup::model()->findByPk($group->group_id); ?>
+                                        <?php if($group->group_id && $group_table)
+                                        { ?>
+                                                <?php $file_company=Files::model()->findByPk($group_table->image);
+                                                if($file_company)
+                                                {
+                                                    if(file_exists(Yii::app()->basePath."/../files/".$file_company->image))
+                                                    {
+                                                    ?>
+                                                    <a href='#' class="f-l"><img class='f-l profile-main-page-img' src='/files/<?php echo $file_company->image;?>'/></a>
+                                                    <?php }
+                                                    else
+                                                    {
+                                                    ?>
+                                                        <a href='#' class="f-l"><img class='f-l profile-main-page-img' src='/img/group-default-little.png'/></a>
+                                                    <?php }
+                                                }
+                                                else
+                                                {
+                                                ?>
+                                                    <a href='#' class="f-l"><img class='f-l profile-main-page-img' src='/img/group-default-little.png'/></a>
+                                                <?php }
+                                            }
+                                            else
+                                            {
+                                            ?>
+                                            <a href='#' class="f-l"><img class='f-l profile-main-page-img' src='/img/group-default-little.png'/></a>
+                                            <?php }
+                                            $user=Profile::model()->findByAttributes(array("user_id"=>$group_table->pm));
+                                            ?>
+                                        <div class='f-l'>
+                                            <div class="project-title">
+                                                <?php echo htmlspecialchars($group_table->title);?>
+                                            </div>
+                                            <div class="project-pm">
+                                                <?php echo htmlspecialchars($user->firstname." ".$user->lastname);?>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="project-pm">
-                                        pm'ovna Pm
-                                    </div>
+                                    
+                                    <div class="clear"></div>
                                 </div>
+                                
                             </div>
 
-                            <div class="clear"></div>
-                                
-                        </div>
 
+                        <?php }
+                        } else { ?>
+                    <div class="project-container recent-empty-text">
+                        No projects yet :(
                     </div>
-
-                    
-                    <div tabindex="0" class="group-wall-content mar-zero border-bot">
-
-                        <div class="project-container">
-                            <div class="padding-zero left-pad f-l">
-                                <a href="#" class="f-l"><img class="f-l profile-main-page-img" src="/img/group-default-little.png"></a>
-                                <div class="f-l">
-                                    <div class="project-title">
-                                        Best group in the world
-                                    </div>
-                                    <div class="project-pm">
-                                        pm'ovna Pm
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="clear"></div>
-                                
-                        </div>
-
-                    </div>
-                    
-                    
-                    <div tabindex="0" class="group-wall-content mar-zero border-bot">
-
-                        <div class="project-container">
-                            <div class="padding-zero left-pad f-l">
-                                <a href="#" class="f-l"><img class="f-l profile-main-page-img" src="/img/group-default-little.png"></a>
-                                <div class="f-l">
-                                    <div class="project-title">
-                                        Best group in the world
-                                    </div>
-                                    <div class="project-pm">
-                                        pm'ovna Pm
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="clear"></div>
-                                
-                        </div>
-                    
-                    </div>
-
+                        <?php 
+                    }
+                    ?>
                 </div>
             </div>
             
@@ -232,401 +228,99 @@
                     <div class="group-scroll nano has-scrollbar group-scrollbar-height">
 
                         <div tabindex="0" class="group-wall-content nano-content mar-zero native-scrollbar-hide">
+
+                        <?php if(count($allmygr)>0)
+                        {
+                            foreach($allmygr as $index => $group)
+                            { ?>   
                             <div class="project-container">
-                                <div class="padding-zero projects-name left-pad white-space-nowrap f-l">
-                                    <a href="#" class="f-l"><img class="f-l profile-main-page-img" src="/img/group-default-little.png"></a>
-                                    <div class="f-l">
+                                <div class="padding-zero projects-name left-pad f-l">
+                                <?php $group_table=Usergroup::model()->findByPk($group->group_id); ?>
+                                <?php if($group->group_id && $group_table)
+                                { ?>
+                                        <?php $file_company=Files::model()->findByPk($group_table->image);
+                                        if($file_company)
+                                        {
+                                            if(file_exists(Yii::app()->basePath."/../files/".$file_company->image))
+                                            {
+                                            ?>
+                                            <a href='#' class="f-l"><img class='f-l profile-main-page-img' src='/files/<?php echo $file_company->image;?>'/></a>
+                                            <?php }
+                                            else
+                                            {
+                                            ?>
+                                                <a href='#' class="f-l"><img class='f-l profile-main-page-img' src='/img/group-default-little.png'/></a>
+                                            <?php }
+                                        }
+                                        else
+                                        {
+                                        ?>
+                                            <a href='#' class="f-l"><img class='f-l profile-main-page-img' src='/img/group-default-little.png'/></a>
+                                        <?php }
+                                    }
+                                    else
+                                    {
+                                    ?>
+                                    <a href='#' class="f-l"><img class='f-l profile-main-page-img' src='/img/group-default-little.png'/></a>
+                                    <?php }
+                                    $user=Profile::model()->findByAttributes(array("user_id"=>$group_table->pm));
+                                    ?>
+                                    <div class='f-l'>
                                         <div class="project-title">
-                                            Best group in the world
+                                            <?php echo htmlspecialchars($group_table->title);?>
                                         </div>
                                         <div class="project-pm">
-                                            pm'ovna Pm
+                                            <?php echo htmlspecialchars($user->firstname." ".$user->lastname);?>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="padding-zero projects-company f-l position-relative">
                                     <div class="project-ver-line spec-mar" style="position:absolute;width: 1px;"></div>
                                     <div class=" project-company-name text-center">
-                                        eGo - Creative Media Solutions
+                                        <?php echo htmlspecialchars(Company::model()->findByPk($group_table->company)->title);?>
                                     </div>
                                 </div>
                                 <div class="padding-zero projects-date f-l position-relative">
                                     <div class="project-ver-line spec-mar" style="position:absolute;width: 1px;"></div>
                                     <div class=" project-start-date text-center">
-                                        27/10/2015
+                                        <?php echo htmlspecialchars(date('j/n/Y', $group_table->time_create));?>
                                     </div>
                                 </div>
                                 <div class="padding-zero projects-status f-l">
                                     <div class="project-ver-line spec-mar f-l" style="width: 1px"></div>
-                                    <div class="project-status active">
-                                        Active
-                                    </div>
+                                    <?php switch ($group_table->completed)
+                                    {
+                                        case 0:
+                                        {
+                                         ?>
+                                            <div class='project-status finished'>Finished</div>
+                                        <?php }
+                                        break;
+                                        case 1:
+                                        {
+                                            ?>
+                                            <div class='project-status active'>Active</div>
+                                        <?php }
+                                        break;
+                                        case 2:
+                                        {
+                                        ?>
+                                            <div class='project-status paused'>Paused</div>
+                                        <?php }
+                                        break;
+                                    }
+                                    ?>
                                 </div>
                                 <div class="clear"></div>
                             </div>
-<!--  START DUPLICATED GROUPS TO TEST SCROLL -->
-                            <div class="project-container">
-                                <div class="padding-zero projects-name left-pad white-space-nowrap f-l">
-                                    <a href="#" class="f-l"><img class="f-l profile-main-page-img" src="/img/group-default-little.png"></a>
-                                    <div class="f-l">
-                                        <div class="project-title">
-                                            Best group in the world
-                                        </div>
-                                        <div class="project-pm">
-                                            pm'ovna Pm
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="padding-zero projects-company f-l position-relative">
-                                    <div class="project-ver-line spec-mar" style="position:absolute;width: 1px;"></div>
-                                    <div class=" project-company-name text-center">
-                                        eGo - Creative Media Solutions
-                                    </div>
-                                </div>
-                                <div class="padding-zero projects-date f-l position-relative">
-                                    <div class="project-ver-line spec-mar" style="position:absolute;width: 1px;"></div>
-                                    <div class=" project-start-date text-center">
-                                        27/10/2015
-                                    </div>
-                                </div>
-                                    <!-- <div class="padding-zero tdmiddle project-ver-line f-l">
-                                        <div class='project-company-date text-center f-l'>13.08.15</div>
-                                    </div> -->
-                                <div class="padding-zero projects-status f-l">
-                                    <div class="project-ver-line spec-mar f-l" style="width: 1px"></div>
-                                    <div class="project-status active">
-                                        Active
-                                    </div>
-                                </div>
-                                <div class="clear"></div>
-                            </div>
-
-                            <div class="project-container">
-                                <div class="padding-zero projects-name left-pad white-space-nowrap f-l">
-                                    <a href="#" class="f-l"><img class="f-l profile-main-page-img" src="/img/group-default-little.png"></a>
-                                    <div class="f-l">
-                                        <div class="project-title">
-                                            Best group in the world
-                                        </div>
-                                        <div class="project-pm">
-                                            pm'ovna Pm
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="padding-zero projects-company f-l position-relative">
-                                    <div class="project-ver-line spec-mar" style="position:absolute;width: 1px;"></div>
-                                    <div class=" project-company-name text-center">
-                                        eGo - Creative Media Solutions
-                                    </div>
-                                </div>
-                                <div class="padding-zero projects-date f-l position-relative">
-                                    <div class="project-ver-line spec-mar" style="position:absolute;width: 1px;"></div>
-                                    <div class=" project-start-date text-center">
-                                        27/10/2015
-                                    </div>
-                                </div>
-                                    <!-- <div class="padding-zero tdmiddle project-ver-line f-l">
-                                        <div class='project-company-date text-center f-l'>13.08.15</div>
-                                    </div> -->
-                                <div class="padding-zero projects-status f-l">
-                                    <div class="project-ver-line spec-mar f-l" style="width: 1px"></div>
-                                    <div class="project-status active">
-                                        Active
-                                    </div>
-                                </div>
-                                <div class="clear"></div>
-                            </div>
-
-                            <div class="project-container">
-                                <div class="padding-zero projects-name left-pad white-space-nowrap f-l">
-                                    <a href="#" class="f-l"><img class="f-l profile-main-page-img" src="/img/group-default-little.png"></a>
-                                    <div class="f-l">
-                                        <div class="project-title">
-                                            Best group in the world
-                                        </div>
-                                        <div class="project-pm">
-                                            pm'ovna Pm
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="padding-zero projects-company f-l position-relative">
-                                    <div class="project-ver-line spec-mar" style="position:absolute;width: 1px;"></div>
-                                    <div class=" project-company-name text-center">
-                                        eGo - Creative Media Solutions
-                                    </div>
-                                </div>
-                                <div class="padding-zero projects-date f-l position-relative">
-                                    <div class="project-ver-line spec-mar" style="position:absolute;width: 1px;"></div>
-                                    <div class=" project-start-date text-center">
-                                        27/10/2015
-                                    </div>
-                                </div>
-                                    <!-- <div class="padding-zero tdmiddle project-ver-line f-l">
-                                        <div class='project-company-date text-center f-l'>13.08.15</div>
-                                    </div> -->
-                                <div class="padding-zero projects-status f-l">
-                                    <div class="project-ver-line spec-mar f-l" style="width: 1px"></div>
-                                    <div class="project-status active">
-                                        Active
-                                    </div>
-                                </div>
-                                <div class="clear"></div>
-                            </div>
-
-                            <div class="project-container">
-                                <div class="padding-zero projects-name left-pad white-space-nowrap f-l">
-                                    <a href="#" class="f-l"><img class="f-l profile-main-page-img" src="/img/group-default-little.png"></a>
-                                    <div class="f-l">
-                                        <div class="project-title">
-                                            Best group in the world
-                                        </div>
-                                        <div class="project-pm">
-                                            pm'ovna Pm
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="padding-zero projects-company f-l position-relative">
-                                    <div class="project-ver-line spec-mar" style="position:absolute;width: 1px;"></div>
-                                    <div class=" project-company-name text-center">
-                                        eGo - Creative Media Solutions
-                                    </div>
-                                </div>
-                                <div class="padding-zero projects-date f-l position-relative">
-                                    <div class="project-ver-line spec-mar" style="position:absolute;width: 1px;"></div>
-                                    <div class=" project-start-date text-center">
-                                        27/10/2015
-                                    </div>
-                                </div>
-                                    <!-- <div class="padding-zero tdmiddle project-ver-line f-l">
-                                        <div class='project-company-date text-center f-l'>13.08.15</div>
-                                    </div> -->
-                                <div class="padding-zero projects-status f-l">
-                                    <div class="project-ver-line spec-mar f-l" style="width: 1px"></div>
-                                    <div class="project-status active">
-                                        Active
-                                    </div>
-                                </div>
-                                <div class="clear"></div>
-                            </div>
-
-                            <div style="padding: 18px 16px;">
-                                <div class="padding-zero projects-name left-pad white-space-nowrap f-l">
-                                    <a href="#" class="f-l"><img class="f-l profile-main-page-img" src="/img/group-default-little.png"></a>
-                                    <div class="f-l">
-                                        <div class="project-title">
-                                            Best group in the world
-                                        </div>
-                                        <div class="project-pm">
-                                            pm'ovna Pm
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="padding-zero projects-company f-l position-relative">
-                                    <div class="project-ver-line spec-mar" style="position:absolute;width: 1px;"></div>
-                                    <div class=" project-company-name text-center">
-                                        eGo - Creative Media Solutions
-                                    </div>
-                                </div>
-                                <div class="padding-zero projects-date f-l position-relative">
-                                    <div class="project-ver-line spec-mar" style="position:absolute;width: 1px;"></div>
-                                    <div class=" project-start-date text-center">
-                                        27/10/2015
-                                    </div>
-                                </div>
-                                    <!-- <div class="padding-zero tdmiddle project-ver-line f-l">
-                                        <div class='project-company-date text-center f-l'>13.08.15</div>
-                                    </div> -->
-                                <div class="padding-zero projects-status f-l">
-                                    <div class="project-ver-line spec-mar f-l" style="width: 1px"></div>
-                                    <div class="project-status active">
-                                        Active
-                                    </div>
-                                </div>
-                                <div class="clear"></div>
-                            </div>
-
-                            <div style="padding: 18px 16px;">
-                                <div class="padding-zero projects-name left-pad white-space-nowrap f-l">
-                                    <a href="#" class="f-l"><img class="f-l profile-main-page-img" src="/img/group-default-little.png"></a>
-                                    <div class="f-l">
-                                        <div class="project-title">
-                                            Best group in the world
-                                        </div>
-                                        <div class="project-pm">
-                                            pm'ovna Pm
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="padding-zero projects-company f-l position-relative">
-                                    <div class="project-ver-line spec-mar" style="position:absolute;width: 1px;"></div>
-                                    <div class=" project-company-name text-center">
-                                        eGo - Creative Media Solutions
-                                    </div>
-                                </div>
-                                <div class="padding-zero projects-date f-l position-relative">
-                                    <div class="project-ver-line spec-mar" style="position:absolute;width: 1px;"></div>
-                                    <div class=" project-start-date text-center">
-                                        27/10/2015
-                                    </div>
-                                </div>
-                                    <!-- <div class="padding-zero tdmiddle project-ver-line f-l">
-                                        <div class='project-company-date text-center f-l'>13.08.15</div>
-                                    </div> -->
-                                <div class="padding-zero projects-status f-l">
-                                    <div class="project-ver-line spec-mar f-l" style="width: 1px"></div>
-                                    <div class="project-status active">
-                                        Active
-                                    </div>
-                                </div>
-                                <div class="clear"></div>
-                            </div>
-
-                            <div style="padding: 18px 16px;">
-                                <div class="padding-zero projects-name left-pad white-space-nowrap f-l">
-                                    <a href="#" class="f-l"><img class="f-l profile-main-page-img" src="/img/group-default-little.png"></a>
-                                    <div class="f-l">
-                                        <div class="project-title">
-                                            Best group in the world
-                                        </div>
-                                        <div class="project-pm">
-                                            pm'ovna Pm
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="padding-zero projects-company f-l position-relative">
-                                    <div class="project-ver-line spec-mar" style="position:absolute;width: 1px;"></div>
-                                    <div class=" project-company-name text-center">
-                                        eGo - Creative Media Solutions
-                                    </div>
-                                </div>
-                                <div class="padding-zero projects-date f-l position-relative">
-                                    <div class="project-ver-line spec-mar" style="position:absolute;width: 1px;"></div>
-                                    <div class=" project-start-date text-center">
-                                        27/10/2015
-                                    </div>
-                                </div>
-                                    <!-- <div class="padding-zero tdmiddle project-ver-line f-l">
-                                        <div class='project-company-date text-center f-l'>13.08.15</div>
-                                    </div> -->
-                                <div class="padding-zero projects-status f-l">
-                                    <div class="project-ver-line spec-mar f-l" style="width: 1px"></div>
-                                    <div class="project-status active">
-                                        Active
-                                    </div>
-                                </div>
-                                <div class="clear"></div>
-                            </div>
-
-                            <div style="padding: 18px 16px;">
-                                <div class="padding-zero projects-name left-pad white-space-nowrap f-l">
-                                    <a href="#" class="f-l"><img class="f-l profile-main-page-img" src="/img/group-default-little.png"></a>
-                                    <div class="f-l">
-                                        <div class="project-title">
-                                            Best group in the world
-                                        </div>
-                                        <div class="project-pm">
-                                            pm'ovna Pm
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="padding-zero projects-company f-l position-relative">
-                                    <div class="project-ver-line spec-mar" style="position:absolute;width: 1px;"></div>
-                                    <div class=" project-company-name text-center">
-                                        eGo - Creative Media Solutions
-                                    </div>
-                                </div>
-                                <div class="padding-zero projects-date f-l position-relative">
-                                    <div class="project-ver-line spec-mar" style="position:absolute;width: 1px;"></div>
-                                    <div class=" project-start-date text-center">
-                                        27/10/2015
-                                    </div>
-                                </div>
-                                    <!-- <div class="padding-zero tdmiddle project-ver-line f-l">
-                                        <div class='project-company-date text-center f-l'>13.08.15</div>
-                                    </div> -->
-                                <div class="padding-zero projects-status f-l">
-                                    <div class="project-ver-line spec-mar f-l" style="width: 1px"></div>
-                                    <div class="project-status active">
-                                        Active
-                                    </div>
-                                </div>
-                                <div class="clear"></div>
-                            </div>
-
-                            <div style="padding: 18px 16px;">
-                                <div class="padding-zero projects-name left-pad white-space-nowrap f-l">
-                                    <a href="#" class="f-l"><img class="f-l profile-main-page-img" src="/img/group-default-little.png"></a>
-                                    <div class="f-l">
-                                        <div class="project-title">
-                                            Best group in the world
-                                        </div>
-                                        <div class="project-pm">
-                                            pm'ovna Pm
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="padding-zero projects-company f-l position-relative">
-                                    <div class="project-ver-line spec-mar" style="position:absolute;width: 1px;"></div>
-                                    <div class=" project-company-name text-center">
-                                        eGo - Creative Media Solutions
-                                    </div>
-                                </div>
-                                <div class="padding-zero projects-date f-l position-relative">
-                                    <div class="project-ver-line spec-mar" style="position:absolute;width: 1px;"></div>
-                                    <div class=" project-start-date text-center">
-                                        27/10/2015
-                                    </div>
-                                </div>
-                                    <!-- <div class="padding-zero tdmiddle project-ver-line f-l">
-                                        <div class='project-company-date text-center f-l'>13.08.15</div>
-                                    </div> -->
-                                <div class="padding-zero projects-status f-l">
-                                    <div class="project-ver-line spec-mar f-l" style="width: 1px"></div>
-                                    <div class="project-status active">
-                                        Active
-                                    </div>
-                                </div>
-                                <div class="clear"></div>
-                            </div>
-
-                            <div style="padding: 18px 16px;">
-                                <div class="padding-zero projects-name left-pad white-space-nowrap f-l">
-                                    <a href="#" class="f-l"><img class="f-l profile-main-page-img" src="/img/group-default-little.png"></a>
-                                    <div class="f-l">
-                                        <div class="project-title">
-                                            Best group in the world
-                                        </div>
-                                        <div class="project-pm">
-                                            pm'ovna Pm
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="padding-zero projects-company f-l position-relative">
-                                    <div class="project-ver-line spec-mar" style="position:absolute;width: 1px;"></div>
-                                    <div class=" project-company-name text-center">
-                                        eGo - Creative Media Solutions
-                                    </div>
-                                </div>
-                                <div class="padding-zero projects-date f-l position-relative">
-                                    <div class="project-ver-line spec-mar" style="position:absolute;width: 1px;"></div>
-                                    <div class=" project-start-date text-center">
-                                        27/10/2015
-                                    </div>
-                                </div>
-                                    <!-- <div class="padding-zero tdmiddle project-ver-line f-l">
-                                        <div class='project-company-date text-center f-l'>13.08.15</div>
-                                    </div> -->
-                                <div class="padding-zero projects-status f-l">
-                                    <div class="project-ver-line spec-mar f-l" style="width: 1px"></div>
-                                    <div class="project-status active">
-                                        Active
-                                    </div>
-                                </div>
-                                <div class="clear"></div>
-                            </div>
-                                
-<!-- END OF DUPLICATED TEST SCROLL GROUPS -->
-
+                            <?php }
+                        } else { ?>
+                        <div class="empty-projects-container">
+                            <div class="paper-plane-img"></div>
+                            <div class="empty-text">You are not a member of any group. Please contact your PM.</div>                           
+                        </div>
+                        <?php }
+                        ?>
                         </div>
                         
                         <div class="nano-pane">
@@ -643,9 +337,9 @@
     </div>
     <script type="text/javascript">
         // Variables to override by server data.
-        var finishedProjects = 7;
-        var activeProjects = 1;
-        var pausedProjects = 6;
+        var finishedProjects = <?php echo $finished ?>;
+        var activeProjects = <?php echo $active ?>;
+        var pausedProjects = <?php echo $paused ?>;
 
         // Calculate circle step per project.
 
