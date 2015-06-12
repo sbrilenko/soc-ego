@@ -362,7 +362,8 @@ class SiteController extends Controller
                         $body="Dear, ".$prof->firstname;
                         $body.="<br /><br />";
                         $body.="We have received a request to reset the password for this email address.";
-                        $body.="Here is your new password ".$newpass;
+                        $body.="<br /><br />";
+                        $body.="Here is your new password: ".$newpass;
                         $body.="<br />";
                         $body.="Please, keep it secret and safe!";
                         $body.="<br /><br />";
