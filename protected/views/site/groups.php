@@ -156,7 +156,7 @@
                             <div tabindex="0" class="group-wall-content mar-zero border-bot">
 
                                 <div class="project-container">
-                                    <div class="padding-zero left-pad f-l">
+                                    <div class="padding-zero left-pad f-l inline-with-image">
                                         <?php $group_table=Usergroup::model()->findByPk($group->group_id); ?>
                                         <?php if($group->group_id && $group_table)
                                         { ?>
@@ -234,7 +234,7 @@
                             foreach($allmygr as $index => $group)
                             { ?>   
                             <div class="project-container">
-                                <div class="padding-zero projects-name left-pad f-l">
+                                <div class="padding-zero projects-name left-pad f-l inline-with-image">
                                 <?php $group_table=Usergroup::model()->findByPk($group->group_id); ?>
                                 <?php if($group->group_id && $group_table)
                                 { ?>
@@ -293,19 +293,19 @@
                                         case 0:
                                         {
                                          ?>
-                                            <div class='project-status finished'>Finished</div>
+                                            <div class='groups-project-status finished'>Finished</div>
                                         <?php }
                                         break;
                                         case 1:
                                         {
                                             ?>
-                                            <div class='project-status active'>Active</div>
+                                            <div class='groups-project-status active'>Active</div>
                                         <?php }
                                         break;
                                         case 2:
                                         {
                                         ?>
-                                            <div class='project-status paused'>Paused</div>
+                                            <div class='groups-project-status paused'>Paused</div>
                                         <?php }
                                         break;
                                     }

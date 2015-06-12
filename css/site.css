@@ -51,7 +51,7 @@ body
 #content
 {
     padding: 0;
-    min-width:1000px;
+    min-width:600px;
 }
 #sidebar
 {
@@ -110,7 +110,7 @@ body
 {
     background: #fff;
     vertical-align: middle;
-    min-width: 1000px;
+    min-width: 600px;
     width:100%;
     height:60px;
 }
@@ -3279,7 +3279,7 @@ a.get-message,a.get-message:hover,a.get-message:visited
 }
 
 .projects-name {
-    width: 40%;
+    width: 37%;
 }
 
 .projects-company {
@@ -3293,7 +3293,7 @@ a.get-message,a.get-message:hover,a.get-message:visited
 }
 
 .projects-status {
-    width: 12%;
+    width: 15%;
     text-align: center;
     text-transform: none;
 }
@@ -3397,6 +3397,37 @@ a.get-message,a.get-message:hover,a.get-message:visited
     text-align: center;
     height: 80px;
     margin-top: 50px;
+}
+
+.inline-with-image {
+    display: inline-flex;
+}
+
+.groups-project-status {
+    font-family: HelveticaNeueCyr-Bold;
+    font-size: 10px;
+    font-weight: bold;
+    line-height: 20px;
+    color: #FFF;
+    width: 80%;
+    margin: 0px auto;
+    text-align: center;
+    padding: 7px 0px;
+    border-radius: 3px;
+    height: 20px;
+}
+
+.groups-project-status.active
+{
+    background-color: #ffc047;
+}
+.groups-project-status.paused
+{
+    background-color: #df495e;
+}
+.groups-project-status.finished
+{
+    background-color: #35db7f;
 }
 /*-------------------*/
 
