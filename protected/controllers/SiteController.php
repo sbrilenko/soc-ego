@@ -360,7 +360,7 @@ class SiteController extends Controller
                     {
                         $body="A very special welcome to you, Name! You joined giraffe.ego-cms.com.";
                         $body.="<br /><br />";
-                        $body.="Your password is ".$newpass.".";
+                        $body.="Your password is ".$newpass;
                         $body.="<br />";
                         $body.="Please, keep it secret and safe!";
                         $body.="<br /><br />";
