@@ -358,13 +358,13 @@ class SiteController extends Controller
                     $seruser->password=$newpass;
                     if($seruser->save())
                     {
-                        $body="A very special welcome to you, Name! You joined giraffe.ego-cms.com.";
+                        $prof=Profile::model()->findByAttributes(array('user_id'=>$seruser->id));
+                        $body="Dear, ".$prof->firstname;
                         $body.="<br /><br />";
-                        $body.="Your password is ".$newpass;
+                        $body.="We have received a request to reset the password for this email address.";
+                        $body.="Here is your new password ".$newpass;
                         $body.="<br />";
                         $body.="Please, keep it secret and safe!";
-                        $body.="<br /><br />";
-                        $body.="We hope you enjoy your time at GiraFFe Network! If you have any problems, questions, opinions, comments, suggestions, please feel free to contact us any time.";
                         $body.="<br /><br />";
                         $body.="Best Regards,";
                         $body.="<br />";
