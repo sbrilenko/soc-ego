@@ -384,7 +384,7 @@
                         else
                         {
                             $comment_m=new Comments(); ?>
-                            <div class='new-comment position-relative' style="padding: 7px;">
+                            <div class='new-comment position-relative' style="padding: 7px;  border-bottom: 1px solid #eaeaea;margin-bottom: 7px;">
                                 <?php echo $form->hiddenField($comment_m,'commented_user_id',array("value"=>Yii::app()->user->id));?>
                                 <?php echo $form->hiddenField($comment_m,'create_user_id',array("value"=>""));?>
                                 <div class='pad-zero' style="  margin-right: 127px;">
