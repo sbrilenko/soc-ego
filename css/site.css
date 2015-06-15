@@ -211,6 +211,10 @@ body
 {
     position: relative;
 }
+.pos-ab
+{
+    position: absolute;
+}
 /*fonts*/
 @font-face
 {
@@ -3042,18 +3046,24 @@ a.get-message,a.get-message:hover,a.get-message:visited
 }
 .wall-block-scroll-height
 {
-    height: 527px !important;
+    height: 491px !important;
 }
 .addcomments-form,.addmessage-form
 {
-    position:absolute;bottom:0;width:100%;height: 68px;
+    bottom:0;
+    width:100%;
+    /*height: 68px;*/
 }
 .addcomments-form table,.addmessage-form table{
     padding:13px;background-color:#e8e8e8;height: 40px;
 }
 .addcomments-form .comment-text-style
 {
-    height:40px;border:0;padding:0 5%;width:90%;
+    height:59px;
+    border: 1px solid #eaeaea;
+    padding:7px 0 7px 7px;
+    width:96%;
+    resize: none;
 }
 .addcomments-form .comment-file-style
 {
