@@ -111,4 +111,14 @@ class Participants extends CActiveRecord
         }
         else return array();
     }
+
+    /* get $recent_number of latest projects */ 
+    public function recentGroupsForUser($user_id, $recent_number)
+    {
+        if(isset($user_id) && $user_id>0 && User::model()->findByPk($user_id))
+        {
+            return array_slice(Participants::model()->findAllByattributes(array("user_id"=>$user_id), array('order'=>'time DESC')), 0, $recent_number);
+        }
+        else return array();
+    }
 }
