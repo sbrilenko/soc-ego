@@ -367,7 +367,44 @@
                 <div class="wall-block-w f-l">
                 <div class="wall-block">
                     <div class="group-wall-title">Wall</div>
-                    <div class="buttons-placeholder"></div>
+                    <?php
+                    $form = $this->beginWidget('CActiveForm', array(
+                        'id'=>'addcomments-form',
+                        'enableAjaxValidation'=>true,
+                        'enableClientValidation'=>true,
+                        'htmlOptions' => array('enctype' => 'multipart/form-data',"class"=>"addcomments-form")
+                    ));
+                    ?>
+                    <div>
+
+                        <?php
+                        if(isset($message) and !empty($message))
+                        {
+                            echo $message,"<br />";
+                        }
+                        else
+                        {
+                            $comment_m=new Comments(); ?>
+                            <div class='new-comment position-relative' style="padding: 7px;  border-bottom: 1px solid #eaeaea;margin-bottom: 7px;">
+                                <?php echo $form->hiddenField($comment_m,'commented_user_id',array("value"=>Yii::app()->user->id));?>
+                                <?php echo $form->hiddenField($comment_m,'create_user_id',array("value"=>""));?>
+                                <div class='pad-zero' style="  margin-right: 127px;">
+                                    <?php echo $form->textArea($comment_m,'text',array("placeholder"=>'Enter your message here...','class'=>'comment-text-style'));?>
+                                </div>
+                                <div class="pos-ab" style="  right: 8px;top: 8px;">
+                                    <div class='parent-file-style f-l'>
+                                         <div class='new-comment-file-b'>
+                                             <?php echo $form->fileField($comment_m,'image',array("class"=>"add-comment-file-icon comment-file-style"));?>
+                                         </div>
+                                    </div>
+                                    <div class='parent-send-button f-l'>
+                                        <?php echo CHtml::submitButton('Send',array('class'=>'send-button'));?>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php } ?>
+                    </div>
+                    <?php $this->endWidget(); ?>
                    <div class="before-wall-content">
                     <div class="wall-content nano wall-block-scroll-height">
                     <?php
@@ -391,32 +428,41 @@
                             {
 //                                var fd =$(this).serializeArray();
                                 var th=$(this);
-                                var formElement = document.getElementById("addcomments-form");
-                                var fd = new FormData(formElement);
-                                console.log(fd)
-                                $.ajax({
-                                    url: "CommentsAdd",
-                                    type: "POST",
-                                    data: fd,
-                                    enctype: 'multipart/form-data',
-                                    processData: false,
-                                    contentType: false,
-                                    dataType: "json",
-                                    success: function (data, textStatus) {
-                                        console.log(data)
-                                        //data=$.parseJSON(data);
-                                        if(data.error)
-                                        {
+                                if(!th.hasClass('disabled'))
+                                {
+                                    th.addClass('disabled')
+                                    var formElement = document.getElementById("addcomments-form");
+                                    var fd = new FormData(formElement);
+                                    console.log(fd)
+                                    $.ajax({
+                                        url: "CommentsAdd",
+                                        type: "POST",
+                                        data: fd,
+                                        enctype: 'multipart/form-data',
+                                        processData: false,
+                                        contentType: false,
+                                        dataType: "json",
+                                        success: function (data, textStatus) {
+                                            th.removeClass('disabled')
+                                            console.log(data)
+                                            //data=$.parseJSON(data);
+                                            if(data.error)
+                                            {
 
+                                            }
+                                            else
+                                            {
+                                                $(".wall").append(data.html)
+                                                th.find("textarea[name*=text]").val("");
+                                                th.find('.new-comment-file-b').removeClass('clip');
+                                                th.find('input[type=file]').replaceWith(th.find('input[type=file]').clone());
+                                                setTimeout(function(){$(".nano").nanoScroller();$(".nano").nanoScroller({ scroll: 'bottom' });}, 100);
+                                            }
                                         }
-                                        else
-                                        {
-                                            $(".wall").append(data.html)
-                                            th.find("input[name*=text]").val("");
-                                            setTimeout(function(){$(".nano").nanoScroller();$(".nano").nanoScroller({ scroll: 'bottom' });}, 100);
-                                        }
-                                    }
-                                })
+                                    })
+                                }
+
+
                                 return false
                             }).on('submit','form.comment-comment-form',function(e)
                             {
@@ -465,47 +511,20 @@
                                         }
                                     }
                                 })
-                            })
-                            return false
-                        })
-                    </script>
-                        <?php
-                        $form = $this->beginWidget('CActiveForm', array(
-                            'id'=>'addcomments-form',
-                            'enableAjaxValidation'=>true,
-                            'enableClientValidation'=>true,
-                            'htmlOptions' => array('enctype' => 'multipart/form-data',"class"=>"addcomments-form")
-                        ));
-                        ?>
-                            <div>
-
-                                <?php
-                                if(isset($message) and !empty($message))
+                            }).on('change','#addcomments-form input[type=file]',function(e){
+                                var th=$('#addcomments-form .new-comment-file-b');
+                                if(typeof e.target.files[0]=='undefined')
                                 {
-                                    echo $message,"<br />";
+                                    th.removeClass('clip')
                                 }
                                 else
                                 {
-                                    $comment_m=new Comments();
-                                    echo "<div class='new-comment'>";
-                                    echo $form->hiddenField($comment_m,'commented_user_id',array("value"=>Yii::app()->user->id));
-                                    echo $form->hiddenField($comment_m,'create_user_id',array("value"=>""));
-                                    echo "<div class='pad-zero comment-text-input'>";
-                                    echo $form->textField($comment_m,'text',array("placeholder"=>'Enter your message here...','class'=>'comment-text-style'));
-                                    echo "</div>";
-                                    echo "<div class='parent-file-style'>";
-                                    echo "<div class='new-comment-file-b'>";
-                                    echo $form->fileField($comment_m,'image',array("class"=>"add-comment-file-icon comment-file-style"));
-                                    echo "</div>";
-                                    echo "</div>";
-                                    echo "<div class='parent-send-button'>";
-                                    echo CHtml::submitButton('Send',array('class'=>'send-button'));
-                                    echo "</div>";
-                                    echo "</div>";
+                                    th.addClass('clip')
                                 }
-                                ?>
-                            </div>
-                        <?php $this->endWidget(); ?>
+                            })
+                        })
+                    </script>
+
                 </div>
                 </div>
         </div>

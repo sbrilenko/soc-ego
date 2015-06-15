@@ -211,6 +211,10 @@ body
 {
     position: relative;
 }
+.pos-ab
+{
+    position: absolute;
+}
 /*fonts*/
 @font-face
 {
@@ -2456,13 +2460,17 @@ a.profile-icon,a.profile-icon:hover
     overflow: hidden;
     position: relative;
     cursor: pointer;
-    background: url("../img/add-file.png") no-repeat center;
-    width:80%;
+    background: url("../img/add-comment-file-icon.png") no-repeat center;
+    width:40px;
     height:40px;
     padding: 0;
-    margin:0 auto;
-    border-radius: 5px;
-    border: 1px #22C9FF solid;
+    margin:0 10px;
+}
+.new-comment .new-comment-file-b.clip
+{
+    background: url('../img/add-comment-file-icon-clip.png') no-repeat;
+    border:1px solid #22c9ff;
+    border-radius: 4px;
 }
 .new-comment .new-comment-file-b.preloader
 {
@@ -2476,6 +2484,7 @@ a.profile-icon,a.profile-icon:hover
     right: 0;
     opacity: 0;
     cursor: pointer;
+    border:1px solid transparent;
 }
 .developers-rank-1,.developers-rank-2,.developers-rank-3,.developers-rank-4,.developers-rank-5,.developers-rank-6,.developers-rank-7,.developers-rank-8,.developers-rank-9
 {
@@ -3011,12 +3020,12 @@ a.get-message,a.get-message:hover,a.get-message:visited
 }
 .projects-main-page-block,.faq-h-page-block
 {
-    width:100%;padding: 0;border:1px solid #eaeaea;border-radius: 6px;height:680px;vertical-align: top;background: #fff;
+    width:100%;padding: 0;border:1px solid #eaeaea;border-radius: 6px;height:638px;vertical-align: top;background: #fff;
 }
 
 .projects-main-page-scroll-height
 {
-    height: 615px !important;
+    height: 584px !important;
 }
 .profile-main-page-img
 {
@@ -3039,23 +3048,29 @@ a.get-message,a.get-message:hover,a.get-message:visited
     border:1px solid #eaeaea;
     vertical-align: top;
     border-radius: 6px;
-    height:680px;
+    height:638px;
     background: #fff;
 }
 .wall-block-scroll-height
 {
-    height: 527px !important;
+    height: 483px !important;
 }
 .addcomments-form,.addmessage-form
 {
-    position:absolute;top:70px;width:100%;height: 68px;
+    bottom:0;
+    width:100%;
+    /*height: 68px;*/
 }
 .addcomments-form table,.addmessage-form table{
     padding:13px;background-color:#e8e8e8;height: 40px;
 }
 .addcomments-form .comment-text-style
 {
-    height:40px;border:0;padding:0 5%;width:90%;
+    height:59px;
+    border: 1px solid #eaeaea;
+    padding:7px 0 7px 7px;
+    width:96%;
+    resize: none;
 }
 .addcomments-form .comment-file-style
 {
@@ -3063,15 +3078,15 @@ a.get-message,a.get-message:hover,a.get-message:visited
 }
 .addcomments-form .parent-file-style
 {
-    padding: 0;width: 10%; display: inline-block; vertical-align: top;
+    padding: 0;width: 60px;
 }
 .addcomments-form .parent-send-button
 {
-    padding: 0;width:15%; display: inline-block;
+    padding: 0;width:72px;
 }
 .addcomments-form .send-button,.question-form .send-button
 {
-    height:40px;border:0;padding:0;background-color: #22c9ff;border-radius: 5px;width:100%;color:#fff;
+    height:40px;border:0;padding:0;background-color: #22c9ff;border-radius: 5px;width:72px;color:#fff;
     cursor:pointer;
 }
 .question-form .send-button

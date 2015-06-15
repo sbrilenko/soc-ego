@@ -1,4 +1,4 @@
-<table style="padding-right: 40px;position: relative;overflow: hidden;<?php if($index>-1) echo "margin-bottom: 0px;" ?> <?php if($index==0) echo 'margin-top:25px;';?>">
+<table style="padding-right: 20px;position: relative;overflow: hidden;<?php if($index>-1) echo "margin-bottom: 0px;" ?>">
     <tr>
         <td class="padding-zero wall-avatar-td">
                     <?php if($com->parent==0) {
