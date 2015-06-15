@@ -1,0 +1,44 @@
+@media only screen and (max-width:1200px){
+    
+    .width-23-5 {
+    	width: 47%;
+	}
+    
+    .responsive-fix::after
+    {
+        content: "";
+        display: block;
+        clear: both;
+        min-height: 235px;
+    }
+
+    .store-info {
+    	width: 47%;
+	}
+
+	.margin-top {
+		margin-top: 10px;
+	}
+
+	.projects-main-page-width {
+		width: 96%;
+	}
+
+	.tdone {
+		width: 55%;
+	}
+
+	.tdmiddle {
+		width: 25%;
+	}
+
+	.tdlast {
+		width: 20%;
+	}
+
+	.wall-block-w {
+    	width: 96%;
+    	margin-top: 10px;
+    	margin-bottom: 20px;
+	}
+}

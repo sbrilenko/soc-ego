@@ -181,7 +181,8 @@
                    </div>
                 </div>
                 </div>
-                <div class="pad f-l"></div>
+                <div class="pad f-l responsive-fix"></div>
+                <!-- <div class="responsive-fix"></div> -->
                 <div class="width-23-5 f-l">
                     <div class="quadr">
                         <?php echo $rank;?>
@@ -266,7 +267,7 @@
                         <div class="clear"></div>
                     </div>
                     <div class="group-scroll nano projects-main-page-scroll-height">
-                    <div class="group-wall-content nano-content mar-zero">
+                    <div class="group-wall-content native-scrollbar-hide nano-content mar-zero">
                         <?php
                         //$allmygr=Participants::model()->allGroupsForUser(Yii::app()->user->id);
                         $allmygr=Participants::model()->allGroupsForUser($model->id);
@@ -366,6 +367,7 @@
                 <div class="wall-block-w f-l">
                 <div class="wall-block">
                     <div class="group-wall-title">Wall</div>
+                    <div class="buttons-placeholder"></div>
                    <div class="before-wall-content">
                     <div class="wall-content nano wall-block-scroll-height">
                     <?php
@@ -488,7 +490,7 @@
                                     echo "<div class='new-comment'>";
                                     echo $form->hiddenField($comment_m,'commented_user_id',array("value"=>Yii::app()->user->id));
                                     echo $form->hiddenField($comment_m,'create_user_id',array("value"=>""));
-                                    echo "<div class='pad-zero'>";
+                                    echo "<div class='pad-zero comment-text-input'>";
                                     echo $form->textField($comment_m,'text',array("placeholder"=>'Enter your message here...','class'=>'comment-text-style'));
                                     echo "</div>";
                                     echo "<div class='parent-file-style'>";

@@ -1,4 +1,4 @@
-@media only screen and (min-width:960px) and (max-width:1200px) {
+@media only screen and (min-width:460px) and (max-width:1200px) {
     .block-height
     {
         height: 151px;
@@ -7,6 +7,19 @@
     .points-style
     {
         padding: 10px 0;
+    }
+
+    #mainmenu ul.top-menu li {
+        max-width: 12%;
+    }
+
+    #mainmenu ul.top-menu {
+        max-width: 60%;
+    }
+
+    #mainmenu ul li .menu-padding.current {
+        padding-left: 30%;
+        padding-right: 30%;
     }
 }
 @media only screen and (min-width:1200px) and (max-width:1376px){
