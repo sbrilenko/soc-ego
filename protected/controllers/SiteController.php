@@ -196,7 +196,7 @@ class SiteController extends Controller
 
                 if(is_array($add_file))
                 {
-                    echo json_encode(array("error"=>false,"message"=>$add_file[0],"html"=>""));
+                    echo json_encode(array("error"=>true,"message"=>$add_file[0],"html"=>""));
                     exit();
                 }
                 else

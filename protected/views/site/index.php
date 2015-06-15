@@ -425,34 +425,42 @@
                         {
                             $(document).on('submit','form#addcomments-form',function()
                             {
-//                                var fd =$(this).serializeArray();
                                 var th=$(this);
-                                var formElement = document.getElementById("addcomments-form");
-                                var fd = new FormData(formElement);
-                                console.log(fd)
-                                $.ajax({
-                                    url: "CommentsAdd",
-                                    type: "POST",
-                                    data: fd,
-                                    enctype: 'multipart/form-data',
-                                    processData: false,
-                                    contentType: false,
-                                    dataType: "json",
-                                    success: function (data, textStatus) {
-                                        console.log(data)
-                                        //data=$.parseJSON(data);
-                                        if(data.error)
-                                        {
+                                if(!th.hasClass('disabled'))
+                                {
+                                    th.addClass('disabled')
+                                    var formElement = document.getElementById("addcomments-form");
+                                    var fd = new FormData(formElement);
+                                    console.log(fd)
+                                    $.ajax({
+                                        url: "CommentsAdd",
+                                        type: "POST",
+                                        data: fd,
+                                        enctype: 'multipart/form-data',
+                                        processData: false,
+                                        contentType: false,
+                                        dataType: "json",
+                                        success: function (data, textStatus) {
+                                            th.removeClass('disabled')
+                                            console.log(data)
+                                            //data=$.parseJSON(data);
+                                            if(data.error)
+                                            {
 
+                                            }
+                                            else
+                                            {
+                                                $(".wall").append(data.html)
+                                                th.find("textarea[name*=text]").val("");
+                                                th.find('.new-comment-file-b').removeClass('clip');
+                                                th.find('input[type=file]').replaceWith(th.find('input[type=file]').clone());
+                                                setTimeout(function(){$(".nano").nanoScroller();$(".nano").nanoScroller({ scroll: 'bottom' });}, 100);
+                                            }
                                         }
-                                        else
-                                        {
-                                            $(".wall").append(data.html)
-                                            th.find("input[name*=text]").val("");
-                                            setTimeout(function(){$(".nano").nanoScroller();$(".nano").nanoScroller({ scroll: 'bottom' });}, 100);
-                                        }
-                                    }
-                                })
+                                    })
+                                }
+
+
                                 return false
                             }).on('submit','form.comment-comment-form',function(e)
                             {
@@ -501,8 +509,17 @@
                                         }
                                     }
                                 })
+                            }).on('change','#addcomments-form input[type=file]',function(e){
+                                var th=$('#addcomments-form .new-comment-file-b');
+                                if(typeof e.target.files[0]=='undefined')
+                                {
+                                    th.removeClass('clip')
+                                }
+                                else
+                                {
+                                    th.addClass('clip')
+                                }
                             })
-                            return false
                         })
                     </script>
 

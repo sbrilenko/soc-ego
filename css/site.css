@@ -2466,6 +2466,12 @@ a.profile-icon,a.profile-icon:hover
     padding: 0;
     margin:0 10px;
 }
+.new-comment .new-comment-file-b.clip
+{
+    background: url('../img/add-comment-file-icon-clip.png') no-repeat;
+    border:1px solid #22c9ff;
+    border-radius: 4px;
+}
 .new-comment .new-comment-file-b.preloader
 {
     background: url("../img/Animation-proccess.gif") no-repeat center;
@@ -2478,6 +2484,7 @@ a.profile-icon,a.profile-icon:hover
     right: 0;
     opacity: 0;
     cursor: pointer;
+    border:1px solid transparent;
 }
 .developers-rank-1,.developers-rank-2,.developers-rank-3,.developers-rank-4,.developers-rank-5,.developers-rank-6,.developers-rank-7,.developers-rank-8,.developers-rank-9
 {
@@ -3046,7 +3053,7 @@ a.get-message,a.get-message:hover,a.get-message:visited
 }
 .wall-block-scroll-height
 {
-    height: 491px !important;
+    height: 483px !important;
 }
 .addcomments-form,.addmessage-form
 {
