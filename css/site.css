@@ -3025,7 +3025,7 @@ a.get-message,a.get-message:hover,a.get-message:visited
 
 .projects-main-page-scroll-height
 {
-    height: 584px;
+    height: 584px !important;
 }
 .profile-main-page-img
 {
@@ -3518,5 +3518,19 @@ a.get-message,a.get-message:hover,a.get-message:visited
 .hidden-content .hidden-content-text {
     font-family: HelveticaNeueCyr-Roman;
     color: #B7B7B7; 
+}
+
+.buttons-placeholder {
+    width: 100%;
+    min-height: 75px;
+    border-bottom: 1px solid #EAEAEA;
+}
+
+.comment-text-input {
+    display: inline-block;
+    width: 70%;
+    border-radius: 5px;
+    border: 1px solid #EAEAEA;
+    margin-left: 2%;
 }
 /*------------------------*/

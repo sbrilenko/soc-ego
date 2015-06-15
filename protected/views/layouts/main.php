@@ -8,6 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=7" />
     <meta http-equiv="X-UA-Compatible" content="IE=8" />
     <meta http-equiv="X-UA-Compatible" content="IE=9" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- blueprint CSS framework -->
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/screen.css" media="screen, projection">
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/print.css" media="print">
@@ -22,6 +23,9 @@
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/responsive.css">
     <?php } else { ?>
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/login.css">
+    <?php } ?>
+    <?php if(isset(Yii::app()->user->id) && Yii::app()->controller->id=="site" && (Yii::app()->controller->action->id=="index")) { ?>
+    <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/index-responsive.css">
     <?php } ?>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <?php if(isset(Yii::app()->user->id) && Yii::app()->controller->id=="site" && (Yii::app()->controller->action->id=="index" || Yii::app()->controller->action->id=="faq" || Yii::app()->controller->action->id=="groups")) { ?>

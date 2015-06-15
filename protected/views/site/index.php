@@ -181,7 +181,8 @@
                    </div>
                 </div>
                 </div>
-                <div class="pad f-l"></div>
+                <div class="pad f-l responsive-fix"></div>
+                <!-- <div class="responsive-fix"></div> -->
                 <div class="width-23-5 f-l">
                     <div class="quadr">
                         <?php echo $rank;?>
@@ -266,7 +267,7 @@
                         <div class="clear"></div>
                     </div>
                     <div class="group-scroll nano projects-main-page-scroll-height">
-                    <div class="group-wall-content nano-content mar-zero">
+                    <div class="group-wall-content native-scrollbar-hide nano-content mar-zero">
                         <?php
                         //$allmygr=Participants::model()->allGroupsForUser(Yii::app()->user->id);
                         $allmygr=Participants::model()->allGroupsForUser($model->id);
@@ -425,6 +426,7 @@
                         {
                             $(document).on('submit','form#addcomments-form',function()
                             {
+//                                var fd =$(this).serializeArray();
                                 var th=$(this);
                                 if(!th.hasClass('disabled'))
                                 {
