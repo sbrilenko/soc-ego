@@ -3534,3 +3534,297 @@ a.get-message,a.get-message:hover,a.get-message:visited
     margin-left: 2%;
 }
 /*------------------------*/
+
+/* Friends page styles */
+/*------------------------*/
+
+.friends-page {
+    width: 100%;
+}
+
+.friends-navigation {
+    display: inline-block;
+    text-transform: uppercase;
+    font-size: 18px;
+    margin-right: 40px;
+    cursor: pointer;
+}
+
+.friends-navigation.active {
+    color: #FFC047;
+}
+
+.friends-block {
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+    padding: 0px;
+    border: 1px solid #EAEAEA;
+    vertical-align: top;
+    border-radius: 6px;
+    background: none repeat scroll 0% 0% #FFF;
+}
+
+.friends-block-all {
+    width: 35%;
+    float: left;
+}
+
+.friends-all {
+    height: 760px;
+}
+
+.friends-requests {
+    height: 340px;
+}
+
+.friends-recent {
+    height: 340px;
+}
+
+.friends-block-requests {
+    width: 35%;
+    float: left;
+}
+
+.friends-block-recent {
+    width: 35%;
+    float: left;
+    margin-top: 1%;
+}
+
+.friends-pad {
+    width: 1%;
+    float: left;
+    height: 700px;
+}
+
+.friends-content {
+    margin-top: 2%;
+}
+
+.friends-block-head {
+    font-family: HelveticaNeueCyr-Roman;
+    font-size: 16px;
+    line-height: 18px;
+    color: #666;
+    padding: 18px 16px;
+    border-bottom: 1px solid #EAEAEA;
+    text-transform: uppercase;
+    background-color: #F8F8F8;
+    box-sizing: border-box;
+    height: 70px;
+}
+
+.block-head-title {
+    padding-top: 8px;
+    font-weight: 600;
+}
+
+#search input[type="text"] {
+    background: url(../img/search-white.png) no-repeat 95% #fcfcfc;
+    border: 1px solid #d1d1d1;
+    color: #bebebe;
+    width: 75%;
+    margin: 0 auto;
+    padding-left: 5%;
+    padding-right: 15%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    }
+
+#search input[type="text"]:hover {
+    border: 1px solid #9C9A9A;
+}
+
+.friend-little-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    margin-right: 10%;
+}
+
+.friend-name-container {
+    width: 65%;
+}
+
+.friend-fullname {
+    font-family: HelveticaNeueCyr-Medium;
+    font-size: 16px;
+    line-height: 18px;
+    color: #777;
+    margin-left: 5%;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.friend-job-title {
+    font-family: HelveticaNeueCyr-Roman;
+    font-size: 12px;
+    line-height: 18px;
+    color: #D7D7D7;
+    margin-left: 5%;
+    width: 100%;
+}
+
+.in-friends {
+    background: url("../img/in-friends.png") no-repeat;
+    width: 24px;
+    height: 24px;
+    margin: 15px auto;
+    position: relative;
+}
+
+.friends-commit {
+    background: url("../img/friends-commit.png") no-repeat;
+    width: 25px;
+    height: 24px;
+    margin: 15px auto;
+}
+
+.friends-commit:hover {
+    background: url("../img/friends-commit-active.png") no-repeat;
+}
+
+.remove-from-friends, .friends-decline {
+    background: url("../img/friends-decline.png") no-repeat;
+    width: 24px;
+    height: 24px;
+    margin: 15px auto;
+}
+
+.remove-from-friends:hover, .friends-decline:hover {
+    background: url("../img/friends-decline-active.png") no-repeat;
+}
+
+
+.friends-write-message {
+    background: url("../img/friends-write-message.png") no-repeat;
+    width: 24px;
+    height: 24px;
+    margin: 15px auto;
+}
+
+.friends-write-message:hover {
+    background: url("../img/friends-write-message-active.png") no-repeat;
+}
+
+.friend-status {
+    float:right;
+    width: 10%;
+    cursor: pointer;
+}
+
+.friend-status.action-imaga-m-r {
+    margin-right: 2%;
+}
+
+.friend-all-status {
+    float: right;
+    width: 20%;
+    cursor: pointer;
+}
+
+.friends-all-scrollbar-height {
+    height: 690px !important;
+}
+
+.friends-all-scroll-height {
+    height: 760px;
+}
+
+.friends-wall-content {
+    width: 100%;
+}
+
+.friend-container {
+    border-bottom: 1px solid #EAEAEA;
+    padding: 3% 2%;
+}
+
+.friends-requests-scrollbar-height {
+    height: 270px !important;
+}
+
+.friends-bottom-pad {
+    clear: both;
+    min-height: 1%;
+}
+
+.in-friends:hover .friends-request-sent-popup {
+    display: block;
+}
+
+.friends-request-sent-popup {
+    width:250px;
+    height:110px;
+    background: none repeat scroll 0% 0% #FFF;
+    position:relative;
+    border:1px solid #EAEAEA;
+    box-shadow: 0 0 10px #EAEAEA;
+    position: absolute;
+    top: 35px;
+    left: -210px;
+    z-index: 99999999;
+    border-radius: 8px;
+    display: none;
+}
+
+.friends-request-sent-popup:before, .friends-request-sent-popup:after{
+    content:"";
+    position:absolute;
+    top:-10px;
+    left:85%;
+    border-bottom:10px solid #FFF;
+    border-left:10px solid transparent;
+    border-right:10px solid transparent;
+}
+.friends-request-sent-popup:before{
+    top:-11px;
+    border-bottom-color:#EAEAEA;
+}
+
+.friends-popup-header {
+    text-transform: uppercase;
+    margin: 10px;
+    font-size: 16px;
+    font-weight: 200px;
+    font-family: HelveticaNeueCyr-Roman;
+    color: #777;
+}
+
+.friends-popup-message {
+    background-color: #F8F8F8;
+    margin-right: 10px;
+    margin-left: 10px;
+    font-size: 14px;
+    padding: 5px;
+    color: #777;
+    font-family: HelveticaNeueCyr-Roman;
+    border-radius: 3px;
+}
+
+.recent-container {
+    position: relative;
+    right: -13px;
+}
+
+.empty-recent, .empty-requests, .empty-friends-list {
+    color: #777;
+    margin: 200px auto;
+    font-size: 24px;
+    width: 100%;
+    text-align: center;
+}
+
+.empty-requests {
+    margin: 110px auto;
+}
+
+.empty-recent {
+    margin: 110px auto;
+}
+/*------------------------*/

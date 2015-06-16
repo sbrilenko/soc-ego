@@ -1,0 +1,19 @@
+@media only screen and (max-width:1200px){
+	.friends-block-all {
+		width: 90%
+	}
+
+	.friends-pad {
+		display: none;
+	}
+
+	.friends-block-requests {
+		width: 90%;
+		margin-top: 2%;
+	}
+
+	.friends-block-recent {
+		width: 90%;
+		margin-top: 2%;
+	}
+}
