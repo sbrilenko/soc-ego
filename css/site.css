@@ -2925,7 +2925,7 @@ a.profile-icon,a.profile-icon:hover
 }
 .message-block-user-time
 {
-    margin-left:12px;
+    margin-right: 3%;
 }
 a.get-message,a.get-message:hover,a.get-message:visited
 {
@@ -2958,15 +2958,15 @@ a.get-message,a.get-message:hover,a.get-message:visited
 }
 .not-read-message-st
 {
-    background-color: #fff9ec;
+    background-color: #fffbed;
 }
 .not-read-message-st-triangle
 {
-    border-color:transparent #fff9ec transparent transparent;
+    border-color:transparent #fffbed transparent transparent;
 }
 .not-read-message-st-triangle-back
 {
-    border-color:transparent transparent transparent #fff9ec;
+    border-color:transparent transparent transparent #fffbed;
 }
 .quickmessage-autocomplete-ul
 {
@@ -3826,5 +3826,50 @@ a.get-message,a.get-message:hover,a.get-message:visited
 
 .empty-recent {
     margin: 110px auto;
+}
+/*------------------------*/
+
+
+/* Message page css fixes.*/
+/*------------------------*/
+.active-dialog {
+    width: 5px;
+    height: 100px;
+}
+
+.messages-img-margin {
+    margin-left: 3%;
+}
+
+.messages-friend-container {
+    border-bottom: 1px solid #EAEAEA;
+    min-height: 100px;
+    max-height: 100px;
+}
+
+.new-messages-number {
+    width: 20px;
+    height: 14px;
+    background-color: rgb(225, 18, 113);
+    color: rgb(218, 218, 218);
+    margin-left: 10px;
+    border-radius: 2px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 10px;
+}
+
+.message-block-user-message {
+    height: 30px;
+    margin-left: 3%;
+    margin-right: 3%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.message-block-title {
+    font-weight: 600;
+    font-size: 16px;
 }
 /*------------------------*/
