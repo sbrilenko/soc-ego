@@ -605,7 +605,7 @@ class SiteController extends Controller
 
                     foreach($messages as $mess)
                     {
-                        $ret_messages[]=array('from_id'=>$mess->from_user_id,'to_id'=>$mess->to_user_id,'message'=>$mess->message,'read_status'=>$mess->message_read,'date'=>date('H:i',$mess->timestamp));
+                        $ret_messages[]=array('from_id'=>$mess->from_user_id,'to_id'=>$mess->to_user_id,'message'=>$mess->message,'read_status'=>$mess->message_read,'date'=>$mess->timestamp);
                     }
 
                     //dialogmessages

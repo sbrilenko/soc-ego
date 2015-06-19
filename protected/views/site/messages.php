@@ -1,4 +1,5 @@
 <link href="<?php echo Yii::app()->request->baseUrl; ?>/css/nanoscroller.css" rel="stylesheet">
+<link href="/css/messages-responsive.css" rel="stylesheet">
 <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery.nanoscroller.js"></script>
 <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery.mousewheel.js"></script>
 <script>
@@ -16,6 +17,14 @@
 </script>
 <div class="main">
 <div class="messages-title">Messages</div>
+<div class="f-r blue-message-margin-b">
+    <div class="blue-message position-relative">
+        <div class="big">New Items</div>
+        <div class="little">Available on market</div>
+        <div class="new-items-close-cross">x</div>
+    </div>
+</div>
+<div class="clear"></div>
     <div class="pad-mar-zero" style="width: 100%;">
             <div class="message-block f-l">
                 <div class="message-block-title">Messages</div>

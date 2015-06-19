@@ -2925,7 +2925,7 @@ a.profile-icon,a.profile-icon:hover
 }
 .message-block-user-time
 {
-    margin-right: 3%;
+    margin-right: 5%;
 }
 a.get-message,a.get-message:hover,a.get-message:visited
 {
@@ -3872,4 +3872,18 @@ a.get-message,a.get-message:hover,a.get-message:visited
     font-weight: 600;
     font-size: 16px;
 }
+
+.messages-title {
+    float: left;
+}
 /*------------------------*/
+
+.new-items-close-cross {
+    position: absolute;
+    top: 3px;
+    right: 5px;
+    line-height: 10px;
+    color: white;
+    cursor: pointer;
+    font-weight: 800;
+}
