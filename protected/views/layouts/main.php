@@ -160,10 +160,32 @@
                                 $('.get-message').each(function()
                                 {
                                     var form=$(this).find('form');
-                                    if(form.find('input[name*=from_user_id]').val()==msg.from || form.find('input[name*=to_user_id]').val()==msg.from)
+                                    if((form.find('input[name*=from_user_id]').val()==msg.from && form.find('input[name*=to_user_id]').val()==msg.to) || 
+                                        (form.find('input[name*=from_user_id]').val()==msg.to && form.find('input[name*=to_user_id]').val()==msg.from))
                                     {
-                                        $('.message-block-user-time',this).text(msg.date)
-                                        $('.message-block-user-message',this).text(msg.message)
+                                        $('.message-block-user-time',this).text(msg.date);
+                                        $('.message-block-user-message',this).text(msg.message);
+
+                                        if ($('.dialog-messages').attr('id') === msg.to ) {
+                                            var mess = '';
+                                            mess += '<table style="padding-right: 30px; margin-top:25px; margin-bottom:25px;">';
+                                            mess += '<tbody>';
+                                            mess += '<tr><td class="padding-zero wall-avatar-td">&nbsp;</td>';
+                                            mess += '<td class="padding-zero" style="padding-left: 10%;">';
+                                            mess += '<div class="message-buble">';
+                                            mess += '<div class="message-buble-triangle-back"></div>';
+                                            mess += '<div class="comment-owner f-l" style="font-size: 16px; font-weight: 500;">' + $('.avatar-name-style').text() + '</div>';
+                                            mess += '<div class="f-r" style="color: #959595; font-size: 12px;">' + msg.date + '</div>';
+                                            mess += '<div class="clear"></div>';
+                                            mess += '<div class="comment">' + msg.message + '</div>';
+                                            mess += '</div></td></tr>';
+                                            mess += '</tbody>';
+                                            mess += '</table>';
+
+                                            $('.dialog-messages').append(mess);
+
+                                            setTimeout(function(){$(".nano").nanoScroller();$(".nano").nanoScroller({ scroll: 'bottom' });}, 100);
+                                        }
                                     }
                                 })
                                 <?php } ?>

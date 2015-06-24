@@ -731,4 +731,125 @@ class SiteController extends Controller
         }
         else $this->redirect('/');
     }
+
+    /*Send New Message AJAX action.*/
+    public function actionSendMessage()
+    {
+        $text_flag=false;
+        $image_flag=false;
+        $img_id=null;
+        $message='';
+            if(isset($_POST) && !empty($_POST))
+            {
+                $new_message=new Message();
+                $new_message->attributes=$_POST['Message'];
+                $text_explode=explode(" ",$new_message->message);
+                if(count($text_explode)>0)
+                {
+                    $text_new="";
+                    for($i=0;$i<count($text_explode);$i++)
+                    {
+                        if(strpos($text_explode[$i],"www.")===0 || strpos($text_explode[$i],"http://")===0 || strpos($text_explode[$i],"https://")===0)
+                        {
+                            if(strpos($text_explode[$i],"www.")===0) $text_explode[$i]="<a href='{$text_explode[$i]}' target='_blank'>".substr($text_explode[$i], 4, strlen($text_explode[$i]))."</a>";
+                            elseif(strpos($text_explode[$i],"http://")===0) $text_explode[$i]="<a href='{$text_explode[$i]}' target='_blank'>".substr($text_explode[$i], 7, strlen($text_explode[$i]))."</a>";
+                            elseif(strpos($text_explode[$i],"https://")===0) $text_explode[$i]="<a href='{$text_explode[$i]}' target='_blank'>".substr($text_explode[$i], 8, strlen($text_explode[$i]))."</a>";
+                            if($i==0)$text_new .= $text_explode[$i];
+                            else $text_new .=" ".$text_explode[$i];
+                        }
+                        else {
+                            if($i==0)$text_new .= $text_explode[$i];
+                            else $text_new .=" ".$text_explode[$i];
+                        }
+                    }
+                    $new_message->message=$text_new;
+                }
+            }
+            else{
+                echo json_encode(array("error"=>true,"message"=>"Empty data"));
+                exit();
+            }
+
+            if(isset($_FILES['Message']) && !empty($_FILES['Message']['tmp_name']))
+            {
+                $add_file=Files::model()->create($_FILES['Message'],'image','test', Message::model()->tableName(),null);
+
+                if(is_array($add_file))
+                {
+                    echo json_encode(array("error"=>true,"message"=>$add_file[0],"html"=>""));
+                    exit();
+                }
+                else
+                {
+                    $img_id=$add_file;
+                    $new_message->image=$img_id;
+                    $new_message->message_read = 0;
+                    
+                    // Do not really understand why do we need this two fields.
+                    $new_message->draft=0;
+                    $new_message->answered=0;
+                    
+                    if(empty($new_message->from_user_id))
+                        $new_message->from_user_id=Yii::app()->user->id;
+                    // $new_message->create_user_id=Yii::app()->user->id;
+                    $new_message->timestamp=strtotime(date("Y-m-d H:i:s"));
+                    $image_flag=true;
+                }
+            }
+            if(isset($_POST['Message']) && !empty($_POST['Message']['message']))
+            {
+                $new_message->image=$img_id;
+                $new_message->message_read = 0;
+                
+                // Do not really understand why do we need this two fields.
+                $new_message->draft=0;
+                $new_message->answered=0;
+
+                if(empty($new_message->from_user_id))
+                    $new_message->from_user_id=Yii::app()->user->id;
+                $new_message->timestamp=strtotime(date("Y-m-d H:i:s"));
+                $text_flag=true;
+            }
+            if($text_flag || $image_flag)
+            {
+                if($new_message->save())
+                {
+                    $mess=Message::model()->findByPk($new_message->id);
+                    if($mess)
+                    {
+                        $image_url="";
+                        if(!is_null($mess->image) && !empty($mess->image))
+                        {
+                            $image=Files::model()->findByPk($mess->image);
+                            if($image)
+                            {
+                                if(file_exists(Yii::app()->basePath."/../files/".$image->image))
+                                {
+                                    $image_url='/files/'.$image->image;
+                                }
+                            }
+                        }
+
+                        $sender = Profile::model()->findByPk($mess->from_user_id);
+                        $sender_name = $sender->firstname." ".$sender->lastname;
+                        $sender_avatar = $sender->getAvatarUrl();
+                        echo json_encode(array("error"=>false,
+                            "from_html"=>$this->renderPartial('message-from-user', array('message'=>$mess, 'sender_name' => $sender_name, 'image' => $image_url, 'sender_avatar' => $sender_avatar),true),
+                            "to_html"=>$this->renderPartial('message-to-user', array('message'=>$mess, 'sender_name' => $sender_name, 'image' => $image_url, 'sender_avatar' => $sender_avatar),true),
+                            "send_to"=>$mess->to_user_id, "date"=>date('H:i', $mess->timestamp), 'message'=>$mess->message));
+                        exit();
+                    }
+                }
+                else
+                {
+                    echo json_encode(array("error"=>true,"message"=>print_r($new_message->getErrors())));
+                    exit();
+                }
+            }
+            else
+            {
+                echo json_encode(array("error"=>true,"message"=>"image or comment is empty"));
+                exit();
+            }
+    }
 }
