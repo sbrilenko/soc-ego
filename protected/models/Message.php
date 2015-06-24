@@ -176,7 +176,14 @@ class Message extends CActiveRecord
 				{
 					$icon="/img/default-user.png";
 				}
-				$ret[]=array('count'=>Message::model()->notReadMessage($val->from_user_id,$val->to_user_id),'current_user_id'=>Yii::app()->user->id,'message_id'=>$val->id,'icon'=>$icon,'full_name'=>$user_friends->firstname." ".$user_friends->lastname,'job_type'=>User::model()->getJobType($user_friends->id),'time'=>date('H:i',$val->timestamp),'message'=>$val->message,'read'=>$val->message_read);
+
+				/* Display date for non-today messages */
+				if(date('Y:m:d',$val->timestamp) == date('Y:m:d')) {
+					$display_date = date('H:i',$val->timestamp);
+				} else {
+					$display_date = date('d.m.y',$val->timestamp);
+				}
+				$ret[]=array('count'=>Message::model()->notReadMessage($val->from_user_id,$val->to_user_id),'current_user_id'=>Yii::app()->user->id,'message_id'=>$val->id,'icon'=>$icon,'full_name'=>$user_friends->firstname." ".$user_friends->lastname,'job_type'=>User::model()->getJobType($user_friends->id),'time'=>$display_date,'message'=>$val->message,'read'=>$val->message_read);
 			}
 		}
 		return $ret;

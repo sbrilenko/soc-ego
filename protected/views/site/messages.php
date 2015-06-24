@@ -1,4 +1,5 @@
 <link href="<?php echo Yii::app()->request->baseUrl; ?>/css/nanoscroller.css" rel="stylesheet">
+<link href="/css/messages-responsive.css" rel="stylesheet">
 <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery.nanoscroller.js"></script>
 <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery.mousewheel.js"></script>
 <script>
@@ -16,19 +17,27 @@
 </script>
 <div class="main">
 <div class="messages-title">Messages</div>
+<div class="f-r blue-message-margin-b">
+    <div class="blue-message position-relative">
+        <div class="big">New Items</div>
+        <div class="little">Available on market</div>
+        <div class="new-items-close-cross">x</div>
+    </div>
+</div>
+<div class="clear"></div>
     <div class="pad-mar-zero" style="width: 100%;">
             <div class="message-block f-l">
                 <div class="message-block-title">Messages</div>
                 <div class="group-scroll nano message-page-block-messages-h">
-                    <div class="group-wall-content nano-content mar-zero">
+                    <div class="group-wall-content nano-content mar-zero" style="left: 13px;">
                         <?php
                         if(count($friends)>0)
                         {
                             foreach($friends as $index => $friend)
                             {
                             ?>
-                                <div>
-                                    <div class="padding-zero tdone left-pad white-space-nowrap <?php if($friend['count']>0) echo 'not-read-message-st'?> position-relative">
+                                <div class="messages-friend-container <?php if($friend['count']>0) echo 'not-read-message-st'?>" >
+                                    <div class="padding-zero left-pad white-space-nowrap position-relative">
                                         <a href="#" class="get-message">
                                             <div class="message-page-block-messg-spec-pad">
                                             <div class="displ-none">
@@ -51,14 +60,19 @@
                                                 <?php } ?>
                                                 <?php $this->endWidget(); ?>
                                             </div>
-                                            <img class='f-l message-page-block-message-img' src='<?php echo $friend['icon'];?>'/>
+                                            <img class='f-l message-page-block-message-img messages-img-margin' src='<?php echo $friend['icon'];?>'/>
                                             <div class='f-l'>
                                                 <div class="message-block-user-name"><?php echo htmlspecialchars($friend['full_name']);?><span class="message-new-message <?php if($friend['count']>0) echo "displ-inline"?>" ><?php if($friend['count']>0) echo $friend['count'];?></span></div>
-                                                <div class="message-block-user-position"><?php echo htmlspecialchars($friend['job_type']);?></div>
+                                                <div class="message-block-user-position"><?php echo htmlspecialchars(JobType::model()->findByPk($friend['job_type'])->job_type);?></div>
                                             </div>
+                                            <?php if($friend['count']>0) { ?>
+                                                <div class="f-l">
+                                                    <div class="new-messages-number"><?php echo htmlspecialchars($friend['count']) ?></div>
+                                                </div>
+                                            <?php }; ?>
                                             <div class="f-r message-block-user-time"><?php echo htmlspecialchars($friend['time']);?></div>
                                             <div class="clear"></div>
-                                            <div class="message-block-user-message"><?php echo htmlspecialchars($friend['message']);?></div>
+                                            <div class="message-block-user-message"><?php echo htmlspecialchars($friend['message']);?> t is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use </div>
 
                                         </div>
                                         <div class="active-dialog"></div>

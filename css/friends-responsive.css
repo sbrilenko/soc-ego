@@ -16,4 +16,14 @@
 		width: 90%;
 		margin-top: 2%;
 	}
+
+	.blue-message-margin-b {
+		margin-right: 10%;
+	}
+}
+
+@media only screen and (min-width:1201px){
+	.blue-message-margin-b {
+		margin-right: 29%;
+	}
 }
