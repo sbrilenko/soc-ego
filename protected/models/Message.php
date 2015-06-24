@@ -191,8 +191,10 @@ class Message extends CActiveRecord
     /*count of not readable message*/
     public function notReadMessage($user_id,$dialog_user)
     {
-        $message=$this->model()->findAllBySql("SELECT m.* FROM ".$this->tableName()." as m,".Friendship::model()->tableName()." as f WHERE (((f.inviter_id=".$user_id." OR f.friend_id=".$user_id.") AND (f.inviter_id=".$dialog_user." OR f.friend_id=".$dialog_user.")) AND f.status>0) and ((m.from_user_id=".$user_id." OR m.to_user_id=".$user_id.") AND (m.from_user_id=".$dialog_user." OR m.to_user_id=".$dialog_user.")) AND m.message_read=0 ORDER BY m.timestamp DESC");
-        return count($message);
+        // $message=$this->model()->findAllBySql("SELECT m.* FROM ".$this->tableName()." as m,".Friendship::model()->tableName()." as f WHERE (((f.inviter_id=".$user_id." OR f.friend_id=".$user_id.") AND (f.inviter_id=".$dialog_user." OR f.friend_id=".$dialog_user.")) AND f.status>0) and ((m.from_user_id=".$user_id." OR m.to_user_id=".$user_id.") AND (m.from_user_id=".$dialog_user." OR m.to_user_id=".$dialog_user.")) AND m.message_read=0 ORDER BY m.timestamp DESC");
+        $messages=$this->model()->findAll("from_user_id=:from_user_id AND to_user_id=:to_user_id AND message_read=:message_read",
+        								 array(':from_user_id' => $user_id, ':to_user_id' => $dialog_user, ':message_read' => 0 ));
+        return count($messages);
     }
 
     /*select all messages where to_user_id=Yii::app()->user->id*/

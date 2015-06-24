@@ -3133,7 +3133,7 @@ a.get-message,a.get-message:hover,a.get-message:visited
 }
 .message-page-block-dialog-scroll-h
 {
-    height: 515px !important;
+    height: 485px !important;
 }
 .message-file
 {
@@ -3875,6 +3875,74 @@ a.get-message,a.get-message:hover,a.get-message:visited
 
 .messages-title {
     float: left;
+}
+
+.send-message-form {
+    bottom: 0px;
+    width: 100%;
+    display: none;
+}
+
+.send-message-form .messages-message-text-style
+{
+    height:59px;
+    border: 1px solid #eaeaea;
+    padding:7px 0 7px 7px;
+    width:96%;
+    resize: none;
+}
+.send-message-form .messages-message-file-style
+{
+    cursor:pointer;padding: 0;width: 40px;border-radius: 5px;border:1px solid #dedede;
+}
+.send-message-form .parent-file-style
+{
+    padding: 0;width: 60px;
+}
+.send-message-form .parent-send-button
+{
+    padding: 0;width:72px;
+}
+.send-message-form .send-button
+{
+    height:40px;border:0;padding:0;background-color: #22c9ff;border-radius: 5px;width:72px;color:#fff;
+    cursor:pointer;
+}
+
+.messages-new-message .messages-new-message-file-b {
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    background: url("../img/add-comment-file-icon.png") no-repeat center;
+    width:40px;
+    height:40px;
+    padding: 0;
+    margin:0 10px;
+}
+.messages-new-message .messages-new-message-file-b.clip
+{
+    background: url('../img/add-comment-file-icon-clip.png') no-repeat;
+    border:1px solid #22c9ff;
+    border-radius: 4px;
+}
+.messages-new-message .messages-new-message-file-b.preloader
+{
+    background: url("../img/Animation-proccess.gif") no-repeat center;
+}
+.messages-new-message .messages-new-message-file-b input[type="file"] {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    opacity: 0;
+    cursor: pointer;
+    border:1px solid transparent;
+}
+
+.send-message-form-placeholder {
+    height: 98px;
+    background-color: #EAEAEA;
 }
 /*------------------------*/
 
