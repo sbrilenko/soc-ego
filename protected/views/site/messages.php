@@ -229,6 +229,20 @@
 
                                     // Send Websocket message to reciever.
 
+                                    msg = {
+                                        'send_to': data.send_to,
+                                        'from': user,
+                                        'text': data.message,
+                                        'html': data.from_html,
+                                        'date': data.date,
+                                        'type': 'system.friendmessage'
+                                    };
+                                    try {
+                                        websocket.send(JSON.stringify(msg));
+                                    } catch (e) {
+                                        console.log(e);
+                                    }
+
                                 },
 
                             });

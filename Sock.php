@@ -309,6 +309,19 @@ class Sock implements MessageComponentInterface {
                         }
                     }
                     break;
+                case 'system.friendmessage':
+                    
+                    // TODO: Add message validation.
+
+                    $send_to = $tst_msg->send_to;
+                    foreach($this->all_clients as $cli)
+                        {
+                            if($cli->user_id==$send_to)
+                            {
+                                $cli->send(json_encode($tst_msg));
+                            }
+                        }
+                    break;
             }
         }
         $numRecv = count($this->clients) - 1;

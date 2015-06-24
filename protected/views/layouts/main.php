@@ -192,6 +192,32 @@
                             }
                         }
                     break;
+                    case 'system.friendmessage':
+                        if(msg.send_to == <?php echo Yii::app()->user->id;?>) {
+                            // if(!msg.error) {
+                                <?php if(Yii::app()->controller->id=="site" && Yii::app()->controller->action->id=="messages") { ?>
+                                    
+                                    if ($('.dialog-messages').attr('id') == msg.from) {
+                                        $('.dialog-messages').append(msg.html);
+                                        setTimeout(function(){$(".nano").nanoScroller();$(".nano").nanoScroller({ scroll: 'bottom' });}, 100);
+                                    }
+                                    $('.get-message').each(function() {
+                                        var form=$(this).find('form');
+                                        if((form.find('input[name*=from_user_id]').val()==msg.from && form.find('input[name*=to_user_id]').val()==msg.send_to) || 
+                                            (form.find('input[name*=from_user_id]').val()==msg.send_to && form.find('input[name*=to_user_id]').val()==msg.from)) {
+
+                                            $('.message-block-user-time',this).text(msg.date);
+                                            if (msg.text == '') {
+                                                $('.message-block-user-message',this).text("Image file");
+                                            } else {
+                                                $('.message-block-user-message',this).text(msg.text);
+                                            }
+                                        }
+                                    })
+                                <?php } ?>
+                            // }
+                        }
+                    break;
                 }
             };
 
