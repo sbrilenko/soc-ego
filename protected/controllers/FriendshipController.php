@@ -127,8 +127,8 @@ class FriendshipController extends Controller
 		$this->layout = '//layouts/main';
         $current_user = User::model()->findByPk(Yii::app()->user->getId());
         $friends = $current_user->getFriendsList();
-        
-		$this->render('index', array('friends'=>$friends));
+        $allusers=User::model()->findAllUsersWithout(array(Yii::app()->user->getId()));
+		$this->render('index', array('friends'=>$friends,'allusers'=>$allusers));
 	}
 
 	/**

@@ -1,4 +1,5 @@
 <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/d3.js"></script>
+<script src="<?php echo Yii::app()->request->baseUrl; ?>/js/svg.min.js"></script>
 <script>
     function polarToCartesian(centerX, centerY, radius, angleInDegrees) {
         var angleInRadians = (angleInDegrees-90) * Math.PI / 180.0;
@@ -80,8 +81,20 @@
                 .attr("fill", "#d6dadc")
                 .attr("transform", "translate(40,40)");
         }
+        setTimeout(function()
+        {
+            var svgAnimSettings = {
+                "elem" : "#arc1",
+                "increaseBy" : 3,
+                "timeout" : 1,
+                "reverse" : true
+            };
 
-
+            var svgCircle = new SvgAnimation(svgAnimSettings);
+            svgCircle.animate(function(response){
+                console.log(response);
+            });
+        },500)
     })
 
 //    $(document).ready(function()
@@ -511,16 +524,16 @@
                                         }
                                     }
                                 })
+                            }).on('click','#addcomments-form input[type=file]',function(e){
+                                    var th=$('#addcomments-form .new-comment-file-b');
+                                    console.log(e.target.files,$(this).val())
+
                             }).on('change','#addcomments-form input[type=file]',function(e){
                                 var th=$('#addcomments-form .new-comment-file-b');
-                                if(typeof e.target.files[0]=='undefined')
-                                {
-                                    th.removeClass('clip')
-                                }
-                                else
-                                {
-                                    th.addClass('clip')
-                                }
+                                console.log(this)
+
+                                typeof e.target.files[0]=='undefined'?th.removeClass('clip'):th.addClass('clip')
+
                             })
                         })
                     </script>

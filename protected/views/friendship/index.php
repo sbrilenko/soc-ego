@@ -42,7 +42,8 @@
   };
 </script>
 
-<div class="main friends-page">
+<div class="main">
+<div class="friends-page">
   <div class="f-l">
       <div class="f-l page-title">
         Friends
@@ -72,240 +73,39 @@
 <!-- USE THIS BLOCK FOR ALL USERS DISPLAY -->
 
              <div tabindex="0" class="friends-wall-content nano-content mar-zero native-scrollbar-hide" id="all-list">
+              <?php foreach($allusers as $fr) { ?>
+                  <div class="friend-container">
 
-              <div class="friend-container">
-                
-                <div class="padding-zero friend-name-container left-pad f-l inline-with-image">
-                  <a href='#' class="f-l"><img class='f-l friend-little-avatar' src='/img/default-user.png'/></a>
-                  <div class='f-l'>
-                    <div class="friend-fullname">
-                      Валерий Леоньтьев
-                    </div>
-                    <div class="friend-job-title">
-                      Senior Xamarin Developer
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="friend-all-status">
-                    <div class="in-friends">
-                      <div class="friends-request-sent-popup">
-                        <div class="friends-popup-header">Friends Request</div>
-                        <div class="friends-popup-message">You've already sent request to this user.</div>
+                      <div class="padding-zero friend-name-container left-pad f-l inline-with-image">
+                          <a href='#' class="f-l">
+                              <img class='f-l friend-little-avatar' src='/img/default-user.png'/></a>
+                          <div class='f-l'>
+                              <div class="friend-fullname">
+                                  <?php echo htmlspecialchars($fr->profile->firstname),' ',htmlspecialchars($fr->profile->lastname);?>
+                              </div>
+                              <div class="friend-job-title">
+                                  <?php echo Profile::model()->jobTitle($fr->id)?>
+                              </div>
+                          </div>
                       </div>
-                    </div>    
-                </div>
-
-                <div class="clear"></div>
-
-              </div>
-
-
-              <div class="friend-container">
-                
-                <div class="padding-zero friend-name-container left-pad f-l inline-with-image">
-                  <a href='#' class="f-l"><img class='f-l friend-little-avatar' src='/img/default-user.png'/></a>
-                  <div class='f-l'>
-                    <div class="friend-fullname">
-                      Генрик Михайлов
-                    </div>
-                    <div class="friend-job-title">
-                      Junior Xamarin Developer
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="friend-all-status">
-                    <div class="in-friends">
-                      <div class="friends-request-sent-popup">
-                        <div class="friends-popup-header">Friends Request</div>
-                        <div class="friends-popup-message">You've already sent request to this user.</div>
+                      <!-- if request sent-->
+                      <div class="friend-all-status">
+                          <div class="in-friends">
+                              <div class="friends-request-sent-popup">
+                                  <div class="friends-popup-header">Friends Request</div>
+                                  <div class="friends-popup-message">You've already sent request to this user.</div>
+                              </div>
+                          </div>
                       </div>
-                    </div>    
-                </div>
+                      <!-- if request is not send-->
+<!--                      <div class="friend-all-status">-->
+<!--                          <div class="friends-commit"></div>-->
+<!--                      </div>-->
 
-                <div class="clear"></div>
+                      <div class="clear"></div>
 
-              </div>
-
-
-              <div class="friend-container">
-                
-                <div class="padding-zero friend-name-container left-pad f-l inline-with-image">
-                  <a href='#' class="f-l"><img class='f-l friend-little-avatar' src='/img/default-user.png'/></a>
-                  <div class='f-l'>
-                    <div class="friend-fullname">
-                      Тарас Бульба
-                    </div>
-                    <div class="friend-job-title">
-                      Middle Product Designer
-                    </div>
                   </div>
-                </div>
-                
-                <div class="friend-all-status">
-                    <div class="friends-commit"></div>    
-                </div>
-
-                <div class="clear"></div>
-
-              </div>
-
-
-              <div class="friend-container">
-                
-                <div class="padding-zero friend-name-container left-pad f-l inline-with-image">
-                  <a href='#' class="f-l"><img class='f-l friend-little-avatar' src='/img/default-user.png'/></a>
-                  <div class='f-l'>
-                    <div class="friend-fullname">
-                      Валерий Леоньтьев
-                    </div>
-                    <div class="friend-job-title">
-                      Senior Xamarin Developer
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="friend-all-status">
-                    <div class="in-friends">
-                      <div class="friends-request-sent-popup">
-                        <div class="friends-popup-header">Friends Request</div>
-                        <div class="friends-popup-message">You've already sent request to this user.</div>
-                      </div>
-                    </div>    
-                </div>
-
-                <div class="clear"></div>
-
-              </div>
-
-              <div class="friend-container">
-                
-                <div class="padding-zero friend-name-container left-pad f-l inline-with-image">
-                  <a href='#' class="f-l"><img class='f-l friend-little-avatar' src='/img/default-user.png'/></a>
-                  <div class='f-l'>
-                    <div class="friend-fullname">
-                      Валерий Леоньтьев
-                    </div>
-                    <div class="friend-job-title">
-                      Senior Xamarin Developer
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="friend-all-status">
-                    <div class="friends-commit"></div>    
-                </div>
-
-                <div class="clear"></div>
-
-              </div>
-
-
-              <div class="friend-container">
-                
-                <div class="padding-zero friend-name-container left-pad f-l inline-with-image">
-                  <a href='#' class="f-l"><img class='f-l friend-little-avatar' src='/img/default-user.png'/></a>
-                  <div class='f-l'>
-                    <div class="friend-fullname">
-                      Генрик Михайлов
-                    </div>
-                    <div class="friend-job-title">
-                      Junior Xamarin Developer
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="friend-all-status">
-                    <div class="in-friends">
-                      <div class="friends-request-sent-popup">
-                        <div class="friends-popup-header">Friends Request</div>
-                        <div class="friends-popup-message">You've already sent request to this user.</div>
-                      </div>
-                    </div>    
-                </div>
-
-                <div class="clear"></div>
-
-              </div>
-
-
-              <div class="friend-container">
-                
-                <div class="padding-zero friend-name-container left-pad f-l inline-with-image">
-                  <a href='#' class="f-l"><img class='f-l friend-little-avatar' src='/img/default-user.png'/></a>
-                  <div class='f-l'>
-                    <div class="friend-fullname">
-                      Тарас Бульба
-                    </div>
-                    <div class="friend-job-title">
-                      Middle Product Designer
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="friend-all-status">
-                    <div class="friends-commit"></div>    
-                </div>
-
-                <div class="clear"></div>
-
-              </div>
-
-
-              <div class="friend-container">
-                
-                <div class="padding-zero friend-name-container left-pad f-l inline-with-image">
-                  <a href='#' class="f-l"><img class='f-l friend-little-avatar' src='/img/default-user.png'/></a>
-                  <div class='f-l'>
-                    <div class="friend-fullname">
-                      Валерий Леоньтьев
-                    </div>
-                    <div class="friend-job-title">
-                      Senior Xamarin Developer
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="friend-all-status">
-                    <div class="in-friends">
-                      <div class="friends-request-sent-popup">
-                        <div class="friends-popup-header">Friends Request</div>
-                        <div class="friends-popup-message">You've already sent request to this user.</div>
-                      </div>
-                    </div>    
-                </div>
-
-                <div class="clear"></div>
-
-              </div>
-
-              <div class="friend-container">
-                
-                <div class="padding-zero friend-name-container left-pad f-l inline-with-image">
-                  <a href='#' class="f-l"><img class='f-l friend-little-avatar' src='/img/default-user.png'/></a>
-                  <div class='f-l'>
-                    <div class="friend-fullname">
-                      Игорь Паслён
-                    </div>
-                    <div class="friend-job-title">
-                      CEO & Co-Founder
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="friend-all-status">
-                    <div class="in-friends">
-                      <div class="friends-request-sent-popup">
-                        <div class="friends-popup-header">Friends Request</div>
-                        <div class="friends-popup-message">You've already sent request to this user.</div>
-                      </div>
-                    </div>    
-                </div>
-
-                <div class="clear"></div>
-
-              </div>
+              <?php } ?>
 
             </div>
 <!-- END USE THIS BLOCK FOR ALL USERS DISPLAY -->
@@ -720,4 +520,5 @@
 
       <div class="friends-bottom-pad"></div>
   </div>
+</div>
 </div>

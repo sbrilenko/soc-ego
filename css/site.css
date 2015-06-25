@@ -420,6 +420,15 @@ table.day-count-table
     position: relative;
     width:314px;
 }
+.avatar-back
+{
+    background: url('../img/logo-back.png') no-repeat;
+    position: absolute;
+    bottom:0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+}
 .container{
     display: table-cell;
     height:100%;

@@ -4,6 +4,7 @@
             <div id="logo"><a href="/"></a></div>
         </div>
             <div class='avatar'>
+<!--                <div class="avatar-back"></div>-->
             <?php
                 echo Profile::model()->getLittleAvatar(Yii::app()->user->id);
                 ?>
@@ -47,6 +48,7 @@
                     </div>
                 </div>
                 <?php } ?>
+
             </div>
                 <div class="day-count">
                     <?php

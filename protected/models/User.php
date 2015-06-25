@@ -293,4 +293,8 @@ class User extends CActiveRecord
         }
         return $retVal;
     }
+    public function findAllUsersWithOut($useridarray)
+    {
+        return $this->model()->findAllBySql('SELECT * FROM '.$this->tableName().' WHERE id NOT in ('.implode(',',$useridarray).')');
+    }
 }
