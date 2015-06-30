@@ -2,9 +2,45 @@
 <link href="/css/friends-responsive.css" rel="stylesheet">
 <script src="/js/jquery.nanoscroller.js"></script>
 <script src="/js/jquery.mousewheel.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 <script>
   $(document).ready(function()
     {
+
+        $('#search input[name=q]').autocomplete({
+            search  : function(){$(this).addClass('ui-autocomplete-loading');},
+            open    : function(){$(this).removeClass('ui-autocomplete-loading');},
+            source: function(request, response){
+                var alllist=$('#all-list'),
+                    friendslist=$('#friends-list');
+                var ajaxurl='/Friendship/GetAllUsersByName';
+                ajaxurl=alllist.is(':visible')?'/Friendship/GetAllUsersByName':'/Friendship/GetAllFriendsByName';
+                $.ajax({
+                    url:ajaxurl,
+                    type:'post',
+                    data:$('#search').serializeArray(),
+                    dataType:'json',
+                    success: function(data){
+                        console.log(data.allusershtml);
+                        if(alllist.is(':visible'))
+                        {
+                            $('#all-list').replaceWith(data.allusershtml)
+                        }
+                        else
+                        {
+                            $('#friends-list').replaceWith(data.allfriendshtml)
+                        }
+                    }
+                });
+            },
+            select: function( event, ui ) {
+//                location.href = ui.item.plink;
+                return false;
+            },
+            minLength: 3
+        });
+
       function initScrollPanes()
         {
           $(function()
@@ -64,107 +100,26 @@
       <div class="friends-block-all">
         <div class="friends-block friends-all">
           <div class="friends-block-head">
-            <form method="get" action="/search" id="search">
+              <?php
+              $form = $this->beginWidget('CActiveForm', array(
+                  'id'=>'search',
+                  'enableAjaxValidation'=>true,
+                  'enableClientValidation'=>true,
+                  'htmlOptions' => array('enctype' => 'multipart/form-data',"class"=>"addcomments-form")
+              ));
+              ?>
               <input name="q" type="text" size="40" placeholder="Search" />
-            </form>
+              <?php $this->endWidget(); ?>
           </div>
           <div class="nano has-scrollbar friends-all-scrollbar-height">
 
 <!-- USE THIS BLOCK FOR ALL USERS DISPLAY -->
 
-             <div tabindex="0" class="friends-wall-content nano-content mar-zero native-scrollbar-hide" id="all-list">
-              <?php foreach($allusers as $fr) { ?>
-                  <div class="friend-container">
-
-                      <div class="padding-zero friend-name-container left-pad f-l inline-with-image">
-                          <a href='#' class="f-l">
-                              <?php echo Profile::model()->getLittleAvatar($fr->id,'f-l friend-little-avatar') ?>
-                          </a>
-                          <div class='f-l'>
-                              <div class="friend-fullname">
-                                  <?php echo htmlspecialchars($fr->profile->firstname),' ',htmlspecialchars($fr->profile->lastname);?>
-                              </div>
-                              <div class="friend-job-title">
-                                  <?php echo Profile::model()->jobTitle($fr->id)?>
-                              </div>
-                          </div>
-                      </div>
-                      <?php if(count($fr->friends)>0) { ?>
-                          <div class="friend-all-status">
-                              <div class="in-friends">
-                                  <div class="friends-request-sent-popup">
-                                      <div class="friends-popup-header">YOUR FRIEND</div>
-                                      <div class="friends-popup-message">This user is already your friend.</div>
-                                  </div>
-                              </div>
-                          </div>
-                      <?php } else if(in_array($fr->id,$curruserinviter)) {?>
-                      <!-- if request sent-->
-                      <div class="friend-all-status">
-                          <div class="in-friends">
-                              <div class="friends-request-sent-popup">
-                                  <div class="friends-popup-header">Friends Request</div>
-                                  <div class="friends-popup-message">You've already sent request to this user.</div>
-                              </div>
-                          </div>
-                      </div>
-                      <?php  } else if(in_array($fr->id,$currusernotinviter)){ ?>
-                                <div class="friend-all-status">
-                                    <div class="in-friends">
-                                        <div class="friends-request-sent-popup">
-                                            <div class="friends-popup-header">WAITING FOR CONFIRMATION</div>
-                                            <div class="friends-popup-message">You already have the pending request from this user.</div>
-                                        </div>
-                                    </div>
-                                </div>
-                      <?php } else {?>
-<!--                       if request is not send-->
-                                <div class="friend-all-status">
-                                    <div class="friends-commit"></div>
-                                </div>
-                      <?php } ?>
-                      <div class="clear"></div>
-
-                  </div>
-              <?php } ?>
-
-            </div>
+             <?php echo $allusershtml;?>
 <!-- END USE THIS BLOCK FOR ALL USERS DISPLAY -->
 
 <!-- USE THIS BLOCK FOR FRIENDS DISPLAY -->
-            <div tabindex="0" class="friends-wall-content nano-content mar-zero native-scrollbar-hide" id="friends-list" style="display:none;">
-              <?php foreach($friends as $fri) { ?>
-              <div class="friend-container">
-                <div class="padding-zero friend-name-container left-pad f-l inline-with-image">
-                  <a href='#' class="f-l">
-                      <?php echo Profile::model()->getLittleAvatar($fri->friend_id,'f-l friend-little-avatar') ?>
-                  </a>
-                  <div class='f-l'>
-                    <div class="friend-fullname">
-                        <?php echo htmlspecialchars($fri->user->profile->firstname),' ',htmlspecialchars($fri->user->profile->lastname);?>
-                    </div>
-                    <div class="friend-job-title">
-                        <?php echo Profile::model()->jobTitle($fri->friend_id)?>
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="friend-status action-imaga-m-r">
-                    <div class="friends-write-message">
-                    </div>    
-                </div>
-
-                <div class="friend-status">
-                    <div class="remove-from-friends">
-                    </div>    
-                </div>
-
-                <div class="clear"></div>
-
-              </div>
-                <?php } ?>
-            
-            </div>
+              <?php echo $allfriendshtml;?>
 <!-- END USE THIS BLOCK FOR FRIENDS DISPLAY -->
 
             <div class="nano-pane">

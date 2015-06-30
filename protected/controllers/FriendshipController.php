@@ -30,15 +30,15 @@ class FriendshipController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('index','view','GetAllUsersByName','GetAllFriendsByName'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update','GetAllUsersByName','GetAllFriendsByName'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
+				'actions'=>array('admin','delete','GetAllUsersByName','GetAllFriendsByName'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -131,11 +131,72 @@ class FriendshipController extends Controller
         $allusers=User::model()->findAllUsersWithout(array($curruser));
         $curruserinviter=Friendship::model()->getAllUsersByIdIfInviter($curruser);
         $currusernotinviter=Friendship::model()->getAllUsersByIdIfNotInviter($curruser);
-        $this->render('index', array('friends'=>$friends,'allusers'=>$allusers,
+        $this->render('index', array('friends'=>$friends,
+                                     'allusers'=>$allusers,
                                      'curruserinviter'=>$curruserinviter,
                                      'currusernotinviter'=>$currusernotinviter,
+                                     'allusershtml'=>$this->renderPartial('allusers',array( 'allusers'=>$allusers,
+                                                                                            'curruserinviter'=>$curruserinviter,
+                                                                                            'currusernotinviter'=>$currusernotinviter),true),
+                                     'allfriendshtml'=>$this->renderPartial('allfriends',array('friends'=>$friends),true),
                                      'friendrequest'=>Friendship::model()->getAllFriendReq($currusernotinviter,$friends)));
 	}
+
+
+    /**
+     * get all users by name
+     */
+    public function actionGetAllUsersByName()
+    {
+        if(Yii::app()->request->isAjaxRequest && isset($_POST) && !empty($_POST))
+        {
+            if(!empty($_POST) && isset($_POST['q']))
+            {
+                $searchword=trim($_POST['q']);
+                $curruser=Yii::app()->user->getId();
+                $allwithoutme=User::model()->findAllUsersWithOut(array(Yii::app()->user->getId()));
+                $allusersbyname=array();
+                $allusersbynameobjects=array();
+                $curruserinviter=Friendship::model()->getAllUsersByIdIfInviter($curruser);
+                $currusernotinviter=Friendship::model()->getAllUsersByIdIfNotInviter($curruser);
+                if(!empty($searchword))
+                {
+                    foreach($allwithoutme as $user)
+                    {
+                        $fullname=$user->profile->firstname.' '.$user->profile->lastname;
+                        if(strpos($fullname,$searchword)===0)
+                        {
+                            $allusersbyname[]=array('image'=>Profile::model()->getAvatarUrl($user->id),
+                                'name'=>$fullname,
+                                'jobtitle'=>Profile::model()->jobTitle($user->id));
+                            $allusersbynameobjects[]=$user;
+                        }
+                    }
+                }
+                else
+                {
+                    $allusersbynameobjects=$allwithoutme;
+                }
+
+                echo json_encode(array('allusers'=>$allusersbyname,
+                        'allusershtml'=>$this->renderPartial('allusers',array('allusers'=>$allusersbynameobjects,
+                                                            'curruserinviter'=>$curruserinviter,
+                                                            'currusernotinviter'=>$currusernotinviter),true)
+                ));
+            }
+        }
+    }
+
+    /**
+     * get all friends by name
+     */
+    public function actionGetAllFriendsByName()
+    {
+        if(Yii::app()->request->isAjaxRequest && isset($_POST) && !empty($_POST))
+        {
+            var_dump($_POST);
+        }
+    }
 
 	/**
 	 * Manages all models.
