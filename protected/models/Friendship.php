@@ -107,4 +107,30 @@ class Friendship extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+    /*get users ids by id, if user inviter*/
+    public function getAllUsersByIdIfInviter($userid)
+    {
+        $retarray=array();
+        $allrec=$this::model()->findAllBySql('SELECT friend_id FROM '.$this->tableName().' WHERE inviter_id='.$userid);
+        if($allrec)
+        {
+            foreach($allrec as $rec)
+                $retarray[]=$rec->friend_id;
+        }
+        return $retarray;
+    }
+
+    /*get users ids by id, if user not inviter*/
+    public function getAllUsersByIdIfNotInviter($userid)
+    {
+        $retarray=array();
+        $allrec=$this::model()->findAllBySql('SELECT inviter_id FROM '.$this->tableName().' WHERE friend_id='.$userid);
+        if($allrec)
+        {
+            foreach($allrec as $rec)
+                $retarray[]=$rec->inviter_id;
+        }
+        return $retarray;
+    }
 }

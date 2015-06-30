@@ -88,6 +88,16 @@
                               </div>
                           </div>
                       </div>
+                      <?php if(count($fr->friends)>0) { ?>
+                          <div class="friend-all-status">
+                              <div class="in-friends">
+                                  <div class="friends-request-sent-popup">
+                                      <div class="friends-popup-header">YOUR FRIEND</div>
+                                      <div class="friends-popup-message">This user is already your friend.</div>
+                                  </div>
+                              </div>
+                          </div>
+                      <?php } else if(in_array($fr->id,$curruserinviter)) {?>
                       <!-- if request sent-->
                       <div class="friend-all-status">
                           <div class="in-friends">
@@ -97,11 +107,21 @@
                               </div>
                           </div>
                       </div>
-                      <!-- if request is not send-->
-<!--                      <div class="friend-all-status">-->
-<!--                          <div class="friends-commit"></div>-->
-<!--                      </div>-->
-
+                      <?php  } else if(in_array($fr->id,$currusernotinviter)){ ?>
+                                <div class="friend-all-status">
+                                    <div class="in-friends">
+                                        <div class="friends-request-sent-popup">
+                                            <div class="friends-popup-header">WAITING FOR CONFIRMATION</div>
+                                            <div class="friends-popup-message">You already have the pending request from this user.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                      <?php } else {?>
+<!--                       if request is not send-->
+                                <div class="friend-all-status">
+                                    <div class="friends-commit"></div>
+                                </div>
+                      <?php } ?>
                       <div class="clear"></div>
 
                   </div>

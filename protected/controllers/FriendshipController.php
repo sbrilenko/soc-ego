@@ -125,10 +125,13 @@ class FriendshipController extends Controller
 	public function actionIndex()
 	{	
 		$this->layout = '//layouts/main';
-        $current_user = User::model()->findByPk(Yii::app()->user->getId());
+        $curruser=Yii::app()->user->getId();
+        $current_user = User::model()->findByPk($curruser);
         $friends = $current_user->getFriendsList();
-        $allusers=User::model()->findAllUsersWithout(array(Yii::app()->user->getId()));
-		$this->render('index', array('friends'=>$friends,'allusers'=>$allusers));
+        $allusers=User::model()->findAllUsersWithout(array($curruser));
+        $curruserinviter=Friendship::model()->getAllUsersByIdIfInviter($curruser);
+        $currusernotinviter=Friendship::model()->getAllUsersByIdIfNotInviter($curruser);
+		$this->render('index', array('friends'=>$friends,'allusers'=>$allusers,'curruserinviter'=>$curruserinviter,'currusernotinviter'=>$currusernotinviter));
 	}
 
 	/**
