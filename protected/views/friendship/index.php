@@ -15,11 +15,21 @@
                 var alllist=$('#all-list'),
                     friendslist=$('#friends-list');
                 var ajaxurl='/Friendship/GetAllUsersByName';
+                var searchword=$('#search input[name=q]').val().toLowerCase().trim();
+                var formdata=$('#search').serializeArray();
+                if(searchword.length<3)
+                {
+                    console.log(searchword.length)
+                    for(datarow in formdata)
+                    {
+                        if(formdata[datarow].name=='q') formdata[datarow].value=='';
+                    }
+                }
                 ajaxurl=alllist.is(':visible')?'/Friendship/GetAllUsersByName':'/Friendship/GetAllFriendsByName';
                 $.ajax({
                     url:ajaxurl,
                     type:'post',
-                    data:$('#search').serializeArray(),
+                    data:formdata,
                     dataType:'json',
                     success: function(data){
                         console.log(data.allusershtml);
@@ -37,8 +47,7 @@
             select: function( event, ui ) {
 //                location.href = ui.item.plink;
                 return false;
-            },
-            minLength: 3
+            }
         });
 
       function initScrollPanes()

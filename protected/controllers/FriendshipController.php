@@ -152,18 +152,18 @@ class FriendshipController extends Controller
         {
             if(!empty($_POST) && isset($_POST['q']))
             {
-                $searchword=trim($_POST['q']);
+                $searchword=strtolower(trim($_POST['q']));
                 $curruser=Yii::app()->user->getId();
                 $allwithoutme=User::model()->findAllUsersWithOut(array(Yii::app()->user->getId()));
                 $allusersbyname=array();
                 $allusersbynameobjects=array();
                 $curruserinviter=Friendship::model()->getAllUsersByIdIfInviter($curruser);
                 $currusernotinviter=Friendship::model()->getAllUsersByIdIfNotInviter($curruser);
-                if(!empty($searchword))
+                if(strlen($searchword)>=3)
                 {
                     foreach($allwithoutme as $user)
                     {
-                        $fullname=$user->profile->firstname.' '.$user->profile->lastname;
+                        $fullname=strtolower($user->profile->firstname.' '.$user->profile->lastname);
                         if(strpos($fullname,$searchword)===0)
                         {
                             $allusersbyname[]=array('image'=>Profile::model()->getAvatarUrl($user->id),
