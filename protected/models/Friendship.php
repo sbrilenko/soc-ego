@@ -133,4 +133,23 @@ class Friendship extends CActiveRecord
         }
         return $retarray;
     }
+
+    /*get all friend requests for me*/
+    public function getAllFriendReq($allfromUserFriend,$allreadyFriends)
+    {
+        $retarray=array();
+        $whoisin=array();
+        foreach($allreadyFriends as $friend)
+        {
+            for($i=0;$i<count($allfromUserFriend);$i++)
+            {
+                if($allfromUserFriend[$i]!==$friend->user_id && !in_array($allfromUserFriend[$i],$whoisin))
+                {
+                    $retarray[]=User::model()->findByPk($allfromUserFriend[$i]);
+                    $whoisin[]=$allfromUserFriend[$i];
+                }
+            }
+        }
+        return $retarray;
+    }
 }

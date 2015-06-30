@@ -131,10 +131,10 @@ class FriendshipController extends Controller
         $allusers=User::model()->findAllUsersWithout(array($curruser));
         $curruserinviter=Friendship::model()->getAllUsersByIdIfInviter($curruser);
         $currusernotinviter=Friendship::model()->getAllUsersByIdIfNotInviter($curruser);
-		$this->render('index', array('friends'=>$friends,'allusers'=>$allusers,
+        $this->render('index', array('friends'=>$friends,'allusers'=>$allusers,
                                      'curruserinviter'=>$curruserinviter,
                                      'currusernotinviter'=>$currusernotinviter,
-                                     ));
+                                     'friendrequest'=>Friendship::model()->getAllFriendReq($currusernotinviter,$friends)));
 	}
 
 	/**

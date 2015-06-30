@@ -78,7 +78,8 @@
 
                       <div class="padding-zero friend-name-container left-pad f-l inline-with-image">
                           <a href='#' class="f-l">
-                              <?php echo Profile::model()->getLittleAvatar($fr->id,'f-l friend-little-avatar') ?></a>
+                              <?php echo Profile::model()->getLittleAvatar($fr->id,'f-l friend-little-avatar') ?>
+                          </a>
                           <div class='f-l'>
                               <div class="friend-fullname">
                                   <?php echo htmlspecialchars($fr->profile->firstname),' ',htmlspecialchars($fr->profile->lastname);?>
@@ -132,17 +133,18 @@
 
 <!-- USE THIS BLOCK FOR FRIENDS DISPLAY -->
             <div tabindex="0" class="friends-wall-content nano-content mar-zero native-scrollbar-hide" id="friends-list" style="display:none;">
-
+              <?php foreach($friends as $fri) { ?>
               <div class="friend-container">
-                
                 <div class="padding-zero friend-name-container left-pad f-l inline-with-image">
-                  <a href='#' class="f-l"><img class='f-l friend-little-avatar' src='/img/default-user.png'/></a>
+                  <a href='#' class="f-l">
+                      <?php echo Profile::model()->getLittleAvatar($fri->friend_id,'f-l friend-little-avatar') ?>
+                  </a>
                   <div class='f-l'>
                     <div class="friend-fullname">
-                      Валерий Леоньтьев
+                        <?php echo htmlspecialchars($fri->user->profile->firstname),' ',htmlspecialchars($fri->user->profile->lastname);?>
                     </div>
                     <div class="friend-job-title">
-                      Senior Xamarin Developer
+                        <?php echo Profile::model()->jobTitle($fri->friend_id)?>
                     </div>
                   </div>
                 </div>
@@ -160,146 +162,7 @@
                 <div class="clear"></div>
 
               </div>
-
-              <div class="friend-container">
-                
-                <div class="padding-zero friend-name-container left-pad f-l inline-with-image">
-                  <a href='#' class="f-l"><img class='f-l friend-little-avatar' src='/img/default-user.png'/></a>
-                  <div class='f-l'>
-                    <div class="friend-fullname">
-                      Валерий Леоньтьев
-                    </div>
-                    <div class="friend-job-title">
-                      Senior Xamarin Developer
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="friend-status action-imaga-m-r">
-                    <div class="friends-write-message">
-                    </div>    
-                </div>
-
-                <div class="friend-status">
-                    <div class="remove-from-friends">
-                    </div>    
-                </div>
-
-                <div class="clear"></div>
-
-              </div>
-
-              <div class="friend-container">
-                
-                <div class="padding-zero friend-name-container left-pad f-l inline-with-image">
-                  <a href='#' class="f-l"><img class='f-l friend-little-avatar' src='/img/default-user.png'/></a>
-                  <div class='f-l'>
-                    <div class="friend-fullname">
-                      Валерий Леоньтьев
-                    </div>
-                    <div class="friend-job-title">
-                      Senior Xamarin Developer
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="friend-status action-imaga-m-r">
-                    <div class="friends-write-message">
-                    </div>    
-                </div>
-
-                <div class="friend-status">
-                    <div class="remove-from-friends">
-                    </div>    
-                </div>
-
-                <div class="clear"></div>
-
-              </div>
-
-              <div class="friend-container">
-                
-                <div class="padding-zero friend-name-container left-pad f-l inline-with-image">
-                  <a href='#' class="f-l"><img class='f-l friend-little-avatar' src='/img/default-user.png'/></a>
-                  <div class='f-l'>
-                    <div class="friend-fullname">
-                      Валерий Леоньтьев
-                    </div>
-                    <div class="friend-job-title">
-                      Senior Xamarin Developer
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="friend-status action-imaga-m-r">
-                    <div class="friends-write-message">
-                    </div>    
-                </div>
-
-                <div class="friend-status">
-                    <div class="remove-from-friends">
-                    </div>    
-                </div>
-
-                <div class="clear"></div>
-
-              </div>
-
-              <div class="friend-container">
-                
-                <div class="padding-zero friend-name-container left-pad f-l inline-with-image">
-                  <a href='#' class="f-l"><img class='f-l friend-little-avatar' src='/img/default-user.png'/></a>
-                  <div class='f-l'>
-                    <div class="friend-fullname">
-                      Валерий Леоньтьев
-                    </div>
-                    <div class="friend-job-title">
-                      Senior Xamarin Developer
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="friend-status action-imaga-m-r">
-                    <div class="friends-write-message">
-                    </div>    
-                </div>
-
-                <div class="friend-status">
-                    <div class="remove-from-friends">
-                    </div>    
-                </div>
-
-                <div class="clear"></div>
-
-              </div>
-
-              <div class="friend-container">
-                
-                <div class="padding-zero friend-name-container left-pad f-l inline-with-image">
-                  <a href='#' class="f-l"><img class='f-l friend-little-avatar' src='/img/default-user.png'/></a>
-                  <div class='f-l'>
-                    <div class="friend-fullname">
-                      Валерий Леоньтьев
-                    </div>
-                    <div class="friend-job-title">
-                      Senior Xamarin Developer
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="friend-status action-imaga-m-r">
-                    <div class="friends-write-message">
-                    </div>    
-                </div>
-
-                <div class="friend-status">
-                    <div class="remove-from-friends">
-                    </div>    
-                </div>
-
-                <div class="clear"></div>
-
-              </div>
+                <?php } ?>
             
             </div>
 <!-- END USE THIS BLOCK FOR FRIENDS DISPLAY -->
@@ -326,123 +189,50 @@
               Requests
             </div>
           </div>
-
+          <?php if(count($friendrequest)>0) { ?>
           <div class="nano has-scrollbar friends-requests-scrollbar-height">
 
             <div tabindex="0" class="friends-wall-content nano-content mar-zero native-scrollbar-hide">
 
-              <div class="friend-container">
-                
-                <div class="padding-zero friend-name-container left-pad f-l inline-with-image">
-                  <a href='#' class="f-l"><img class='f-l friend-little-avatar' src='/img/default-user.png'/></a>
-                  <div class='f-l'>
-                    <div class="friend-fullname">
-                      Валерий Леоньтьев
+                <?php foreach($friendrequest as $request) {?>
+                    <div class="friend-container">
+
+                        <div class="padding-zero friend-name-container left-pad f-l inline-with-image">
+                            <a href='#' class="f-l">
+                                <?php echo Profile::model()->getLittleAvatar($request->id,'f-l friend-little-avatar') ?>
+                            </a>
+                            <div class='f-l'>
+                                <div class="friend-fullname">
+                                    <?php echo htmlspecialchars($request->profile->firstname),' ',htmlspecialchars($request->profile->lastname);?>
+                                </div>
+                                <div class="friend-job-title">
+                                    <?php echo Profile::model()->jobTitle($request->id)?>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="friend-status action-imaga-m-r">
+                            <div class="friends-decline"></div>
+                        </div>
+
+                        <div class="friend-status">
+                            <div class="friends-commit"></div>
+                        </div>
+
+                        <div class="clear"></div>
+
                     </div>
-                    <div class="friend-job-title">
-                      Senior Xamarin Developer
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="friend-status action-imaga-m-r">
-                    <div class="friends-decline"></div>    
-                </div>
-
-                <div class="friend-status">
-                    <div class="friends-commit"></div>    
-                </div>
-
-                <div class="clear"></div>
-
-              </div>
-
-              <div class="friend-container">
-                
-                <div class="padding-zero friend-name-container left-pad f-l inline-with-image">
-                  <a href='#' class="f-l"><img class='f-l friend-little-avatar' src='/img/default-user.png'/></a>
-                  <div class='f-l'>
-                    <div class="friend-fullname">
-                      Валерий Леоньтьев
-                    </div>
-                    <div class="friend-job-title">
-                      Senior Xamarin Developer
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="friend-status action-imaga-m-r">
-                    <div class="friends-decline"></div>    
-                </div>
-
-                <div class="friend-status">
-                    <div class="friends-commit"></div>    
-                </div>
-
-                <div class="clear"></div>
-
-              </div>
-
-              <div class="friend-container">
-                
-                <div class="padding-zero friend-name-container left-pad f-l inline-with-image">
-                  <a href='#' class="f-l"><img class='f-l friend-little-avatar' src='/img/default-user.png'/></a>
-                  <div class='f-l'>
-                    <div class="friend-fullname">
-                      Валерий Леоньтьев
-                    </div>
-                    <div class="friend-job-title">
-                      Senior Xamarin Developer
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="friend-status action-imaga-m-r">
-                    <div class="friends-decline"></div>    
-                </div>
-
-                <div class="friend-status">
-                    <div class="friends-commit"></div>    
-                </div>
-
-                <div class="clear"></div>
-
-              </div>
-
-              <div class="friend-container">
-                
-                <div class="padding-zero friend-name-container left-pad f-l inline-with-image">
-                  <a href='#' class="f-l"><img class='f-l friend-little-avatar' src='/img/default-user.png'/></a>
-                  <div class='f-l'>
-                    <div class="friend-fullname">
-                      Валерий Леоньтьев
-                    </div>
-                    <div class="friend-job-title">
-                      Senior Xamarin Developer
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="friend-status action-imaga-m-r">
-                    <div class="friends-decline"></div>    
-                </div>
-
-                <div class="friend-status">
-                    <div class="friends-commit"></div>    
-                </div>
-
-                <div class="clear"></div>
-
-              </div>
+                <?php } ?>
 
             </div>
 
           </div>
-
+            <?php } else { ?>
 <!-- DISPLAY THIS BLOCK INSTEAD OF PREVEOUS IF NO REQUESTS -->
-          <div class="empty-requests" style="display:none;">
+          <div class="empty-requests">
             There's no active requests.
           </div>
+          <?php } ?>
 <!-- END DISPLAY THIS BLOCK INSTEAD OF PREVEOUS IF NO REQUESTS -->
 
         </div>
@@ -454,14 +244,16 @@
               Recent
             </div>
           </div>
+          <?php if(count($friends)>0) { ?>
           <div class="recent-block-main">
-              <?php foreach($friends as $fr) { ?>
+              <?php foreach($friends as $index=>$fr) { ?>
+                  <?php if($index>3) break;?>
                   <div class="friend-container recent-container">
 
                       <div class="padding-zero friend-name-container left-pad f-l inline-with-image">
                           <a href='#' class="f-l">
                               <?php echo Profile::model()->getLittleAvatar($fr->user->id,'f-l friend-little-avatar') ?>
-                              </a>
+                          </a>
                           <div class='f-l'>
                               <div class="friend-fullname">
                                   <?php echo htmlspecialchars($fr->user->profile->firstname),' ',htmlspecialchars($fr->user->profile->lastname);?>
@@ -478,11 +270,12 @@
               <?php } ?>
 
             </div>
-
+            <?php } else { ?>
 <!-- DISPLAY THIS BLOCK INSTEAD OF PREVEOUS IF NO RECENT FRIENDS -->
-            <div class="empty-recent" style="display:none;">
+            <div class="empty-recent" >
               There's no recent friends.
             </div>
+            <?php } ?>
 <!-- END DISPLAY THIS BLOCK INSTEAD OF PREVEOUS IF NO RECENT FRIENDS -->
 
         </div>
