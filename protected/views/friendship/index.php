@@ -78,7 +78,7 @@
 
                       <div class="padding-zero friend-name-container left-pad f-l inline-with-image">
                           <a href='#' class="f-l">
-                              <img class='f-l friend-little-avatar' src='/img/default-user.png'/></a>
+                              <?php echo Profile::model()->getLittleAvatar($fr->id,'f-l friend-little-avatar') ?></a>
                           <div class='f-l'>
                               <div class="friend-fullname">
                                   <?php echo htmlspecialchars($fr->profile->firstname),' ',htmlspecialchars($fr->profile->lastname);?>
@@ -455,77 +455,27 @@
             </div>
           </div>
           <div class="recent-block-main">
-          <div class="friend-container recent-container">
-                
-                <div class="padding-zero friend-name-container left-pad f-l inline-with-image">
-                  <a href='#' class="f-l"><img class='f-l friend-little-avatar' src='/img/default-user.png'/></a>
-                  <div class='f-l'>
-                    <div class="friend-fullname">
-                      Тарас Бульба
-                    </div>
-                    <div class="friend-job-title">
-                      Middle Product Designer
-                    </div>
+              <?php foreach($friends as $fr) { ?>
+                  <div class="friend-container recent-container">
+
+                      <div class="padding-zero friend-name-container left-pad f-l inline-with-image">
+                          <a href='#' class="f-l">
+                              <?php echo Profile::model()->getLittleAvatar($fr->user->id,'f-l friend-little-avatar') ?>
+                              </a>
+                          <div class='f-l'>
+                              <div class="friend-fullname">
+                                  <?php echo htmlspecialchars($fr->user->profile->firstname),' ',htmlspecialchars($fr->user->profile->lastname);?>
+                              </div>
+                              <div class="friend-job-title">
+                                  <?php echo Profile::model()->jobTitle($fr->user->id)?>
+                              </div>
+                          </div>
+                      </div>
+
+                      <div class="clear"></div>
+
                   </div>
-                </div>
-                
-                <div class="clear"></div>
-
-            </div>
-
-            <div class="friend-container recent-container">
-                
-                <div class="padding-zero friend-name-container left-pad f-l inline-with-image">
-                  <a href='#' class="f-l"><img class='f-l friend-little-avatar' src='/img/default-user.png'/></a>
-                  <div class='f-l'>
-                    <div class="friend-fullname">
-                      Тарас Бульба
-                    </div>
-                    <div class="friend-job-title">
-                      Middle Product Designer
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="clear"></div>
-
-            </div>
-
-            <div class="friend-container recent-container">
-                
-                <div class="padding-zero friend-name-container left-pad f-l inline-with-image">
-                  <a href='#' class="f-l"><img class='f-l friend-little-avatar' src='/img/default-user.png'/></a>
-                  <div class='f-l'>
-                    <div class="friend-fullname">
-                      Генрик Михайлов
-                    </div>
-                    <div class="friend-job-title">
-                      Junior Xamarin Developer
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="clear"></div>
-
-              </div>
-
-              <div class="friend-container recent-container">
-                
-                <div class="padding-zero friend-name-container left-pad f-l inline-with-image">
-                  <a href='#' class="f-l"><img class='f-l friend-little-avatar' src='/img/default-user.png'/></a>
-                  <div class='f-l'>
-                    <div class="friend-fullname">
-                      Генрик Михайлов
-                    </div>
-                    <div class="friend-job-title">
-                      Junior Xamarin Developer
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="clear"></div>
-
-              </div>
+              <?php } ?>
 
             </div>
 

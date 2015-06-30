@@ -126,9 +126,9 @@ class Profile extends CActiveRecord
 		return parent::model($className);
 	}
 
-    public function getLittleAvatar($user_sess)
+    public function getLittleAvatar($user_sess,$class=null)
     {
-        $return="<img src='/img/default-user.png'/>";
+        $return="<img class='".$class."' src='/img/default-user.png'/>";
         if($user_sess)
         {
             $avatar_id=Profile::model()->findByAttributes(array("user_id"=>$user_sess));
@@ -139,7 +139,7 @@ class Profile extends CActiveRecord
                 {
                     if(file_exists(Yii::app()->basePath."/../files/".$file_avatar->image))
                     {
-                        $return="<img src='/files/".$file_avatar->image."'/>";
+                        $return="<img class='".$class."' src='/files/".$file_avatar->image."'/>";
                     }
                 }
 
