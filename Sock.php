@@ -1,10 +1,9 @@
 <?php
-$config=dirname(__FILE__).'/protected/config/main.php';
-require_once(dirname(__FILE__).'/../yii/framework/yii.php');
-Yii::createWebApplication($config);
+//$config=dirname(__FILE__).'/protected/config/main.php';
+//require_once(dirname(__FILE__).'/../yii/framework/yii.php');
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
-date_default_timezone_set('America/Los_Angeles');
+//date_default_timezone_set('America/Los_Angeles');
 class Sock implements MessageComponentInterface {
     protected $clients;
     protected $all_clients;
@@ -27,6 +26,11 @@ class Sock implements MessageComponentInterface {
             $type = $tst_msg->type;
             switch ($type) {
                 case 'system.init_user_online':
+                    require_once(dirname(__FILE__).'/../yii/framework/yii.php');
+                    if(!Yii::app())
+                    {
+                        Yii::createWebApplication(dirname(__FILE__).'/protected/config/main.php');
+                    }
                     $user=null;
                     try{
                         $user=User::model()->findByPk($tst_msg->from_user_id);
