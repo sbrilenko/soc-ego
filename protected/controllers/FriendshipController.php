@@ -194,7 +194,36 @@ class FriendshipController extends Controller
     {
         if(Yii::app()->request->isAjaxRequest && isset($_POST) && !empty($_POST))
         {
-            var_dump($_POST);
+            if(!empty($_POST) && isset($_POST['q']))
+            {
+                $searchword=strtolower(trim($_POST['q']));
+                $curruser=Yii::app()->user->getId();
+                $current_user = User::model()->findByPk($curruser);
+                $friends = $current_user->getFriendsList();
+                $allusersbynameobjects=array();
+                if(strlen($searchword)>=3)
+                {
+                    foreach($friends as $user)
+                    {
+                        $fullname=strtolower($user->user->profile->firstname.' '.$user->user->profile->lastname);
+                        if(strpos($fullname,$searchword)===0)
+                        {
+//                            $allusersbyname[]=array('image'=>Profile::model()->getAvatarUrl($user->id),
+//                                'name'=>$fullname,
+//                                'jobtitle'=>Profile::model()->jobTitle($user->id));
+                            $allusersbynameobjects[]=$user;
+                        }
+                    }
+                }
+                else
+                {
+                    $allusersbynameobjects=$friends;
+                }
+
+                echo json_encode(array('friends'=>$allusersbynameobjects,
+                    'allfriendshtml'=>$this->renderPartial('allfriends',array('friends'=>$allusersbynameobjects),true)
+                ));
+            }
         }
     }
 

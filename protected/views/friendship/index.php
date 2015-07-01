@@ -7,45 +7,82 @@
 <script>
   $(document).ready(function()
     {
+        var ajaxdata=function(data,tabnumber)
+        {
+            var alllist=$('#all-list'),
+                friendslist=$('#friends-list');
+            var ajaxurl='/Friendship/GetAllUsersByName';
+            ajaxurl=tabnumber==0?'/Friendship/GetAllUsersByName':'/Friendship/GetAllFriendsByName';
+            $.ajax({
+                url:ajaxurl,
+                type:'post',
+                data:data,
+                dataType:'json',
+                success: function(data){
+                    $('#search input[name=q]').removeClass('ui-autocomplete-loading');
+                    if(alllist.is(':visible'))
+                    {
+                        alllist.replaceWith(data.allusershtml)
+                    }
+                    else
+                    {
+                        friendslist.empty().append(data.allfriendshtml)
+                    }
+                }
+            });
+        }
+        function showAllUsers() {
+            $('#search input[name=q]').val('');
+            ajaxdata($('#search').serializeArray(),0);
+            if ($("#nav-users-all").hasClass("active")) return;
+
+            $("#nav-friends-only").removeClass("active");
+            $("#friends-list").hide();
+            $("#nav-users-all").addClass("active");
+            $("#all-list").show();
+
+        };
+
+        function showFriendsOnly() {
+            $('#search input[name=q]').val('');
+            var formd=$('#search').serializeArray()
+            ajaxdata(formd,1);
+            if ($("#nav-friends-only").hasClass("active")) return;
+
+            $("#nav-users-all").removeClass("active");
+            $("#all-list").hide();
+            $("#nav-friends-only").addClass("active");
+            $("#friends-list").show();
+
+            $(".nano").nanoScroller();
+
+        };
+        $(document).on('click','#nav-friends-only',function(){
+            showFriendsOnly()
+        });
+        $(document).on('click','#nav-users-all',function()
+        {
+            showAllUsers();
+        });
+
 
         $('#search input[name=q]').autocomplete({
             search  : function(){$(this).addClass('ui-autocomplete-loading');},
             open    : function(){$(this).removeClass('ui-autocomplete-loading');},
             source: function(request, response){
-                var alllist=$('#all-list'),
-                    friendslist=$('#friends-list');
-                var ajaxurl='/Friendship/GetAllUsersByName';
                 var searchword=$('#search input[name=q]').val().toLowerCase().trim();
                 var formdata=$('#search').serializeArray();
                 if(searchword.length<3)
                 {
-                    console.log(searchword.length)
                     for(datarow in formdata)
                     {
                         if(formdata[datarow].name=='q') formdata[datarow].value=='';
                     }
                 }
-                ajaxurl=alllist.is(':visible')?'/Friendship/GetAllUsersByName':'/Friendship/GetAllFriendsByName';
-                $.ajax({
-                    url:ajaxurl,
-                    type:'post',
-                    data:formdata,
-                    dataType:'json',
-                    success: function(data){
-                        console.log(data.allusershtml);
-                        if(alllist.is(':visible'))
-                        {
-                            $('#all-list').replaceWith(data.allusershtml)
-                        }
-                        else
-                        {
-                            $('#friends-list').replaceWith(data.allfriendshtml)
-                        }
-                    }
-                });
+                var alllist=$('#all-list');
+                alllist.is(':visible')?ajaxdata(formdata,0):ajaxdata(formdata,1);
             },
             select: function( event, ui ) {
-//                location.href = ui.item.plink;
                 return false;
             }
         });
@@ -61,32 +98,6 @@
     })
 </script>
 
-<script type="text/javascript">
-  // Debug script to check "Friends list/All Users functionality."
-
-  function showAllUsers() {
-    if ($("#nav-users-all").hasClass("active")) return;
-
-    $("#nav-friends-only").removeClass("active");
-    $("#friends-list").hide();
-    $("#nav-users-all").addClass("active");
-    $("#all-list").show();
-
-  };
-
-  function showFriendsOnly() {
-    if ($("#nav-friends-only").hasClass("active")) return;
-
-    $("#nav-users-all").removeClass("active");
-    $("#all-list").hide();
-    $("#nav-friends-only").addClass("active");
-    $("#friends-list").show();
-
-    $(".nano").nanoScroller();
-
-  };
-</script>
-
 <div class="main">
 <div class="friends-page">
   <div class="f-l">
@@ -94,8 +105,8 @@
         Friends
       </div>
       <div class="clear">
-        <div class="friends-navigation" id="nav-friends-only" onclick="showFriendsOnly();">Friend List</div>
-        <div class="friends-navigation active" id="nav-users-all" onclick="showAllUsers();">All Users</div>
+        <div class="friends-navigation" id="nav-friends-only">Friend List</div>
+        <div class="friends-navigation active" id="nav-users-all">All Users</div>
       </div>
   </div>
   <div class="f-r blue-message-margin-b">
@@ -128,7 +139,9 @@
 <!-- END USE THIS BLOCK FOR ALL USERS DISPLAY -->
 
 <!-- USE THIS BLOCK FOR FRIENDS DISPLAY -->
+              <div tabindex="0" class="friends-wall-content nano-content mar-zero native-scrollbar-hide" id="friends-list" style="display:none;">
               <?php echo $allfriendshtml;?>
+              </div>
 <!-- END USE THIS BLOCK FOR FRIENDS DISPLAY -->
 
             <div class="nano-pane">

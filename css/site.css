@@ -3964,7 +3964,7 @@ a.get-message,a.get-message:hover,a.get-message:visited
     cursor: pointer;
     font-weight: 800;
 }
-.ui-autocomplete-loading
+#search input[type="text"].ui-autocomplete-loading
 {
-    background:url('../img/search-preloader.gif') no-repeat right center
+    background:url('../img/search-preloader.gif') no-repeat 95% #fcfcfc
 }
