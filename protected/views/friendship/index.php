@@ -11,8 +11,7 @@
         {
             var alllist=$('#all-list'),
                 friendslist=$('#friends-list');
-            var ajaxurl='/Friendship/GetAllUsersByName';
-            ajaxurl=tabnumber==0?'/Friendship/GetAllUsersByName':'/Friendship/GetAllFriendsByName';
+            var ajaxurl=tabnumber==0?'/Friendship/GetAllUsersByName':'/Friendship/GetAllFriendsByName';
             $.ajax({
                 url:ajaxurl,
                 type:'post',
@@ -59,11 +58,24 @@
         };
         $(document).on('click','#nav-friends-only',function(){
             showFriendsOnly()
-        });
-        $(document).on('click','#nav-users-all',function()
+        }).on('click','#nav-users-all',function()
         {
             showAllUsers();
-        });
+        }).on('click','#all-list .friends-commit',function()
+        {
+            var th=$(this),thpar=th.parents('.friend-container'),
+                touserid=thpar.find('form input[name=allusers-id]').val();
+            var msg = {
+                'from': authorizateduserid,
+                'to': touserid,
+                'type': 'system.bemyfriend'
+            };
+            try {
+                websocket.send(JSON.stringify(msg));
+            } catch (e) {
+                console.log(e);
+            }
+        })
 
 
         $('#search input[name=q]').autocomplete({
@@ -176,7 +188,7 @@
 
                         <div class="padding-zero friend-name-container left-pad f-l inline-with-image">
                             <a href='#' class="f-l">
-                                <?php echo Profile::model()->getLittleAvatar($request->id,'f-l friend-little-avatar') ?>
+                                <?php echo Profile::model()->getLittleAvatar($request->profile->id,'f-l friend-little-avatar') ?>
                             </a>
                             <div class='f-l'>
                                 <div class="friend-fullname">

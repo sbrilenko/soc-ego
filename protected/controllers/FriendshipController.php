@@ -131,15 +131,21 @@ class FriendshipController extends Controller
         $allusers=User::model()->findAllUsersWithout(array($curruser));
         $curruserinviter=Friendship::model()->getAllUsersByIdIfInviter($curruser);
         $currusernotinviter=Friendship::model()->getAllUsersByIdIfNotInviter($curruser);
+        $friendrequest=array();
+        for($i=0;$i<count($currusernotinviter);$i++)
+        {
+            $friendrequest[]=User::model()->findByPk($currusernotinviter[$i]);
+        }
         $this->render('index', array('friends'=>$friends,
                                      'allusers'=>$allusers,
                                      'curruserinviter'=>$curruserinviter,
                                      'currusernotinviter'=>$currusernotinviter,
                                      'allusershtml'=>$this->renderPartial('allusers',array( 'allusers'=>$allusers,
+                                                                                            'friends'=>$friends,
                                                                                             'curruserinviter'=>$curruserinviter,
                                                                                             'currusernotinviter'=>$currusernotinviter),true),
                                      'allfriendshtml'=>$this->renderPartial('allfriends',array('friends'=>$friends),true),
-                                     'friendrequest'=>Friendship::model()->getAllFriendReq($currusernotinviter,$friends)));
+                                     'friendrequest'=>$friendrequest));
 	}
 
 
@@ -157,6 +163,8 @@ class FriendshipController extends Controller
                 $allwithoutme=User::model()->findAllUsersWithOut(array(Yii::app()->user->getId()));
                 $allusersbyname=array();
                 $allusersbynameobjects=array();
+                $current_user = User::model()->findByPk($curruser);
+                $friends = $current_user->getFriendsList();
                 $curruserinviter=Friendship::model()->getAllUsersByIdIfInviter($curruser);
                 $currusernotinviter=Friendship::model()->getAllUsersByIdIfNotInviter($curruser);
                 if(strlen($searchword)>=3)
@@ -180,6 +188,7 @@ class FriendshipController extends Controller
 
                 echo json_encode(array('allusers'=>$allusersbyname,
                         'allusershtml'=>$this->renderPartial('allusers',array('allusers'=>$allusersbynameobjects,
+                                                            'friends'=>$friends,
                                                             'curruserinviter'=>$curruserinviter,
                                                             'currusernotinviter'=>$currusernotinviter),true)
                 ));

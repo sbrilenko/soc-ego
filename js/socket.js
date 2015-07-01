@@ -157,6 +157,47 @@ websocket.onmessage = function(ev) {
         // }
         }
         break;
+        case 'system.bemyfriend':
+            if(msg.to == authorizateduserid) {
+                var newreqblock='<div class="nano has-scrollbar friends-requests-scrollbar-height">';
+                    newreqblock+='<div tabindex="0" class="friends-wall-content nano-content mar-zero native-scrollbar-hide" style="right: -15px;">';
+                    newreqblock+='<div class="friend-container">';
+                    newreqblock+='<div class="padding-zero friend-name-container left-pad f-l inline-with-image">';
+                    newreqblock+='<a href="#" class="f-l">';
+                    newreqblock+=msg.inviterimage;
+                    newreqblock+='</a>';
+                    newreqblock+='<div class="f-l">';
+                    newreqblock+='<div class="friend-fullname">';
+                    newreqblock+=msg.inviterfullname;
+                    newreqblock+='</div>';
+                    newreqblock+='<div class="friend-job-title">';
+                    newreqblock+=msg.inviterjobtitle;
+                    newreqblock+='</div>';
+                    newreqblock+='</div></div>';
+                    newreqblock+='<div class="friend-status action-imaga-m-r">';
+                    newreqblock+='<div class="friends-decline"></div>';
+                    newreqblock+='</div><div class="friend-status"><div class="friends-commit"></div></div><div class="clear"></div></div></div></div>';
+
+                if($('.friends-requests .empty-requests').length>0)
+                {
+                    $('.friends-requests .empty-requests').remove();
+                    $('.friends-requests').append(newreqblock);
+                }
+                else
+                {
+                    $('.friends-requests .nano').append(newreqblock);
+                }
+                setTimeout(function()
+                {
+                    $(".friends-requests .nano").nanoScroller({ scroll: 'bottom',flash: true  });
+                }, 100);
+
+            }
+            else if(msg.from == authorizateduserid)
+            {
+
+            }
+            break;
 }
 };
 

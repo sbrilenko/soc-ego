@@ -2,7 +2,16 @@
              <div tabindex="0" class="friends-wall-content nano-content mar-zero native-scrollbar-hide" id="all-list">
               <?php foreach($allusers as $fr) { ?>
                   <div class="friend-container">
-
+                      <?php
+                      $form = $this->beginWidget('CActiveForm', array(
+                          'id'=>'allusers-from-'.uniqid(),
+                          'enableAjaxValidation'=>true,
+                          'enableClientValidation'=>true,
+                          'htmlOptions' => array('enctype' => 'multipart/form-data',"style"=>"display: none")
+                      ));
+                      ?>
+                      <input name="allusers-id" value="<?php echo $fr->id; ?>" type="hidden">
+                      <?php $this->endWidget(); ?>
                       <div class="padding-zero friend-name-container left-pad f-l inline-with-image">
                           <a href='#' class="f-l">
                               <?php echo Profile::model()->getLittleAvatar($fr->id,'f-l friend-little-avatar') ?>
@@ -16,7 +25,14 @@
                               </div>
                           </div>
                       </div>
-                      <?php if(count($fr->friends)>0) { ?>
+                      <?php
+                      $all_friend_ids=array();
+                      foreach($friends as $f)
+                      {
+                          $all_friend_ids[]=$f->user_id;
+                      }
+                      ?>
+                      <?php if(in_array($fr->id,$all_friend_ids)) { ?>
                           <div class="friend-all-status">
                               <div class="in-friends">
                                   <div class="friends-request-sent-popup">

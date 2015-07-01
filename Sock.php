@@ -326,17 +326,89 @@ class Sock implements MessageComponentInterface {
                             }
                         }
                     break;
+
+                case 'system.bemyfriend':
+
+                    try{
+                        $user=User::model()->findByPk($tst_msg->from);
+                    }
+                    catch(\Exception $e)
+                    {
+                        Yii::app()->db->setActive(false);
+                        Yii::app()->db->setActive(true);
+                        $user=User::model()->findByPk($tst_msg->from);
+                    }
+                    $iftoexists=User::model()->findByPk($tst_msg->to);
+                    if($user && $iftoexists)
+                    {
+                        $friendship=new Friendship();
+                        $friendship->inviter_id=$tst_msg->from;
+                        $friendship->friend_id=$tst_msg->to;
+                        $friendship->status=0;
+                        $friendship->acknowledgetime=0;
+                        $friendship->requesttime=time();
+                        $friendship->updatetime=0;
+                        $friendship->message=$user->profile->firstname.' '.$user->profile->lastname.' wants add you to friends';
+                        if($friendship->save())
+                        {
+                            /*to friend*/
+                            $response_arr = array(
+                                'type' => 'system.bemyfriend',
+                                'error'=>false,
+                                'from' => $tst_msg->from,
+                                'to'=>$tst_msg->to,
+                                'inviterimage'=>Profile::model()->getLittleAvatar($user->id,'f-l friend-little-avatar'),
+                                'inviterfullname'=>htmlspecialchars($user->profile->firstname).' '.htmlspecialchars($user->profile->lastname),
+                                'inviterjobtitle'=>Profile::model()->jobTitle($user->id),
+                                'message' =>$user->profile->firstname.' '.$user->profile->lastname.' wants add you to friends'
+                            );
+                            foreach($this->all_clients as $cli)
+                            {
+                                if($cli->user_id==$tst_msg->to)
+                                {
+                                    $cli->send(json_encode($response_arr));
+                                }
+                            }
+                            /*to inviter*/
+                            $response_arr = array(
+                                'type' => 'system.bemyfriend',
+                                'error'=>false,
+                                'from' => $tst_msg->from,
+                                'to'=>$tst_msg->to,
+                                'message' =>'We sent request to '.$iftoexists->profile->firstname.' '.$iftoexists->profile->lastname
+                            );
+                            foreach($this->all_clients as $cli)
+                            {
+                                if($cli->user_id==$tst_msg->from)
+                                {
+                                    $cli->send(json_encode($response_arr));
+                                }
+                            }
+                        }
+                        else
+                        {
+                            /*to inviter*/
+                            $response_arr = array(
+                                'type' => 'system.bemyfriend',
+                                'error'=>false,
+                                'from' => $tst_msg->from,
+                                'to'=>$tst_msg->to,
+                                'message' =>'We doe\'s sent request to '.$iftoexists->profile->firstname.' '.$iftoexists->profile->lastname.'. Sorry!'
+                            );
+                            foreach($this->all_clients as $cli)
+                            {
+                                if($cli->user_id==$tst_msg->from)
+                                {
+                                    $cli->send(json_encode($response_arr));
+                                }
+                            }
+                        }
+
+                    }
+                    break;
             }
         }
         $numRecv = count($this->clients) - 1;
-        //echo sprintf('Connection %d sending message "%s" to %d other connection%s' . "\n", $from->resourceId, $msg, $numRecv, $numRecv == 1 ? '' : 's');
-
-        /*foreach ($this->clients as $client) {
-            if ($from !== $client) {
-                // The sender is not the receiver, send to each client connected
-                $client->send($msg);
-            }
-        }*/
     }
 
     public function onClose(ConnectionInterface $conn) {
