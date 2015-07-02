@@ -136,16 +136,20 @@ class FriendshipController extends Controller
         {
             $friendrequest[]=User::model()->findByPk($currusernotinviter[$i]);
         }
-        $this->render('index', array('friends'=>$friends,
+        $sortedfriend=User::model()->sortFullNameByAlph($friends);
+        $this->render('index', array('friends'=>$sortedfriend,
                                      'allusers'=>$allusers,
                                      'curruserinviter'=>$curruserinviter,
                                      'currusernotinviter'=>$currusernotinviter,
                                      'allusershtml'=>$this->renderPartial('allusers',array( 'allusers'=>$allusers,
-                                                                                            'friends'=>$friends,
+                                                                                            'friends'=>$sortedfriend,
                                                                                             'curruserinviter'=>$curruserinviter,
                                                                                             'currusernotinviter'=>$currusernotinviter),true),
-                                     'allfriendshtml'=>$this->renderPartial('allfriends',array('friends'=>$friends),true),
-                                     'friendrequest'=>$friendrequest));
+
+                                     'allfriendshtml'=>$this->renderPartial('allfriends',array('friends'=>$sortedfriend),true),
+                                     'friendrequest'=>$friendrequest,
+                                     'requestshtml'=>$this->renderPartial('requests',array('friendrequest'=>$friendrequest),true)
+                    ));
 	}
 
 
@@ -185,10 +189,10 @@ class FriendshipController extends Controller
                 {
                     $allusersbynameobjects=$allwithoutme;
                 }
-
+                $sortedfriend=User::model()->sortFullNameByAlph($friends);
                 echo json_encode(array('allusers'=>$allusersbyname,
                         'allusershtml'=>$this->renderPartial('allusers',array('allusers'=>$allusersbynameobjects,
-                                                            'friends'=>$friends,
+                                                            'friends'=>$sortedfriend,
                                                             'curruserinviter'=>$curruserinviter,
                                                             'currusernotinviter'=>$currusernotinviter),true)
                 ));
@@ -217,9 +221,6 @@ class FriendshipController extends Controller
                         $fullname=strtolower($user->user->profile->firstname.' '.$user->user->profile->lastname);
                         if(strpos($fullname,$searchword)===0)
                         {
-//                            $allusersbyname[]=array('image'=>Profile::model()->getAvatarUrl($user->id),
-//                                'name'=>$fullname,
-//                                'jobtitle'=>Profile::model()->jobTitle($user->id));
                             $allusersbynameobjects[]=$user;
                         }
                     }
@@ -228,9 +229,9 @@ class FriendshipController extends Controller
                 {
                     $allusersbynameobjects=$friends;
                 }
-
-                echo json_encode(array('friends'=>$allusersbynameobjects,
-                    'allfriendshtml'=>$this->renderPartial('allfriends',array('friends'=>$allusersbynameobjects),true)
+                $sortedfriend=User::model()->sortFullNameByAlph($allusersbynameobjects);
+                echo json_encode(array('friends'=>$sortedfriend,
+                    'allfriendshtml'=>$this->renderPartial('allfriends',array('friends'=>$sortedfriend),true)
                 ));
             }
         }

@@ -75,6 +75,21 @@
             } catch (e) {
                 console.log(e);
             }
+        }).on('click','.friends-requests .friend-container .friends-commit',function() /*add to friend*/
+        {
+            var th=$(this),thpar=th.parents('.friend-container'),
+                touserid=thpar.find('form input[name=request-id]').val();
+            console.log(touserid);
+            var msg = {
+                'from': authorizateduserid,
+                'to': touserid,
+                'type': 'system.addtofriends'
+            };
+            try {
+                websocket.send(JSON.stringify(msg));
+            } catch (e) {
+                console.log(e);
+            }
         })
 
 
@@ -179,43 +194,7 @@
             </div>
           </div>
           <?php if(count($friendrequest)>0) { ?>
-          <div class="nano has-scrollbar friends-requests-scrollbar-height">
-
-            <div tabindex="0" class="friends-wall-content nano-content mar-zero native-scrollbar-hide">
-
-                <?php foreach($friendrequest as $request) {?>
-                    <div class="friend-container">
-
-                        <div class="padding-zero friend-name-container left-pad f-l inline-with-image">
-                            <a href='#' class="f-l">
-                                <?php echo Profile::model()->getLittleAvatar($request->profile->id,'f-l friend-little-avatar') ?>
-                            </a>
-                            <div class='f-l'>
-                                <div class="friend-fullname">
-                                    <?php echo htmlspecialchars($request->profile->firstname),' ',htmlspecialchars($request->profile->lastname);?>
-                                </div>
-                                <div class="friend-job-title">
-                                    <?php echo Profile::model()->jobTitle($request->id)?>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="friend-status action-imaga-m-r">
-                            <div class="friends-decline"></div>
-                        </div>
-
-                        <div class="friend-status">
-                            <div class="friends-commit"></div>
-                        </div>
-
-                        <div class="clear"></div>
-
-                    </div>
-                <?php } ?>
-
-            </div>
-
-          </div>
+          <?php echo $requestshtml;?>
             <?php } else { ?>
 <!-- DISPLAY THIS BLOCK INSTEAD OF PREVEOUS IF NO REQUESTS -->
           <div class="empty-requests">
@@ -241,18 +220,17 @@
 
                       <div class="padding-zero friend-name-container left-pad f-l inline-with-image">
                           <a href='#' class="f-l">
-                              <?php echo Profile::model()->getLittleAvatar($fr->user->id,'f-l friend-little-avatar') ?>
+                              <?php echo Profile::model()->getLittleAvatar($fr->id,'f-l friend-little-avatar') ?>
                           </a>
                           <div class='f-l'>
                               <div class="friend-fullname">
-                                  <?php echo htmlspecialchars($fr->user->profile->firstname),' ',htmlspecialchars($fr->user->profile->lastname);?>
+                                  <?php echo htmlspecialchars($fr->profile->firstname),' ',htmlspecialchars($fr->profile->lastname);?>
                               </div>
                               <div class="friend-job-title">
-                                  <?php echo Profile::model()->jobTitle($fr->user->id)?>
+                                  <?php echo Profile::model()->jobTitle($fr->id)?>
                               </div>
                           </div>
                       </div>
-
                       <div class="clear"></div>
 
                   </div>
@@ -261,7 +239,7 @@
             </div>
             <?php } else { ?>
 <!-- DISPLAY THIS BLOCK INSTEAD OF PREVEOUS IF NO RECENT FRIENDS -->
-            <div class="empty-recent" >
+            <div class="empty-recent">
               There's no recent friends.
             </div>
             <?php } ?>

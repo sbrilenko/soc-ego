@@ -298,6 +298,28 @@ class User extends CActiveRecord
      * */
     public function findAllUsersWithOut($useridarray)
     {
-        return $this->model()->findAllBySql('SELECT * FROM '.$this->tableName().' WHERE id NOT in ('.implode(',',$useridarray).')');
+        return $this->model()->findAllBySql('SELECT * FROM '.$this->tableName().' WHERE id NOT in ('.implode(',',$useridarray).') ORDER BY id DESC');
+    }
+
+    /*
+     * sort by alphabetic firstname+lastname
+     * */
+    public function sortFullNameByAlph($arrayofobj)
+    {
+        $rearray=array();
+        $ideofuserid=array();
+        $ideofuserfullnam=array();
+        foreach($arrayofobj as $item)
+        {
+            $fullname=$item->user->profile->firstname.' '.$item->user->profile->lastname;
+            $ideofuserid[$fullname]=$item->user->id;
+            $ideofuserfullnam[]=$fullname;
+        }
+        sort($ideofuserfullnam);
+        for($i=0;$i<count($ideofuserfullnam);$i++)
+        {
+            $rearray[]=User::model()->findByPk($ideofuserid[$ideofuserfullnam[$i]]);
+        }
+        return $rearray;
     }
 }

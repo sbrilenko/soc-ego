@@ -159,37 +159,65 @@ websocket.onmessage = function(ev) {
         break;
         case 'system.bemyfriend':
             if(msg.to == authorizateduserid) {
-                var newreqblock='<div class="nano has-scrollbar friends-requests-scrollbar-height">';
-                    newreqblock+='<div tabindex="0" class="friends-wall-content nano-content mar-zero native-scrollbar-hide" style="right: -15px;">';
-                    newreqblock+='<div class="friend-container">';
-                    newreqblock+='<div class="padding-zero friend-name-container left-pad f-l inline-with-image">';
-                    newreqblock+='<a href="#" class="f-l">';
-                    newreqblock+=msg.inviterimage;
-                    newreqblock+='</a>';
-                    newreqblock+='<div class="f-l">';
-                    newreqblock+='<div class="friend-fullname">';
-                    newreqblock+=msg.inviterfullname;
-                    newreqblock+='</div>';
-                    newreqblock+='<div class="friend-job-title">';
-                    newreqblock+=msg.inviterjobtitle;
-                    newreqblock+='</div>';
-                    newreqblock+='</div></div>';
-                    newreqblock+='<div class="friend-status action-imaga-m-r">';
-                    newreqblock+='<div class="friends-decline"></div>';
-                    newreqblock+='</div><div class="friend-status"><div class="friends-commit"></div></div><div class="clear"></div></div></div></div>';
 
+                $('#all-list .friend-container').each(function()
+                {
+                    var alluserid=$(this).find('input[name=allusers-id]').val();
+                    if(alluserid==msg.from)
+                    {
+                        var newstatus='<div class="friend-all-status">';
+                            newstatus+='<div class="in-friends">';
+                            newstatus+='<div class="friends-request-sent-popup">';
+                            newstatus+='<div class="friends-popup-header">WAITING FOR CONFIRMATION</div>';
+                            newstatus+='<div class="friends-popup-message">You already have the pending request from this user.</div>';
+                            newstatus+='</div>';
+                            newstatus+='</div>';
+                            newstatus+='</div>';
+                        $(this).find('.friend-all-status').replaceWith(newstatus)
+                    }
+                })
                 if($('.friends-requests .empty-requests').length>0)
                 {
                     $('.friends-requests .empty-requests').remove();
-                    $('.friends-requests').append(newreqblock);
+                    $('.friends-requests').append(msg.html);
                 }
                 else
                 {
-                    $('.friends-requests .nano').append(newreqblock);
+                    $('.friends-requests .nano').replaceWith(msg.html);
                 }
                 setTimeout(function()
                 {
                     $(".friends-requests .nano").nanoScroller({ scroll: 'bottom',flash: true  });
+                }, 100);
+
+            }
+            else if(msg.from == authorizateduserid)
+            {
+                  $('#all-list .friend-container').each(function()
+                  {
+                      var userid=$(this).find('input[name=allusers-id]').val();
+                      if(msg.to==userid)
+                      {
+                          var newstatus='<div class="friend-all-status">';
+                          newstatus+='<div class="in-friends">';
+                          newstatus+='<div class="friends-request-sent-popup">';
+                          newstatus+='<div class="friends-popup-header">Friends Request</div>';
+                          newstatus+='<div class="friends-popup-message">You\'ve already sent request to this user.</div>';
+                          newstatus+='</div>';
+                          newstatus+='</div>';
+                          newstatus+='</div>';
+                          $(this).find('.friend-all-status').replaceWith(newstatus)
+
+                      }
+                  })
+            }
+            break;
+        case 'system.addtofriends':
+            if(msg.to == authorizateduserid) {
+
+                setTimeout(function()
+                {
+                    $(".friends-requests .nano").nanoScroller({flash: true  });
                 }, 100);
 
             }

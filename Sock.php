@@ -351,6 +351,15 @@ class Sock implements MessageComponentInterface {
                         $friendship->message=$user->profile->firstname.' '.$user->profile->lastname.' wants add you to friends';
                         if($friendship->save())
                         {
+                            $html='';
+                            $ccc = new CController('friendship');
+                            $currusernotinviter=Friendship::model()->getAllUsersByIdIfNotInviter($tst_msg->from);
+                            $friendrequest=array();
+                            for($i=0;$i<count($currusernotinviter);$i++)
+                            {
+                                $friendrequest[]=User::model()->findByPk($currusernotinviter[$i]);
+                            }
+                            $html = $ccc->renderPartial('requests',array('friendrequest'=>$friendrequest),true);
                             /*to friend*/
                             $response_arr = array(
                                 'type' => 'system.bemyfriend',
@@ -360,7 +369,8 @@ class Sock implements MessageComponentInterface {
                                 'inviterimage'=>Profile::model()->getLittleAvatar($user->id,'f-l friend-little-avatar'),
                                 'inviterfullname'=>htmlspecialchars($user->profile->firstname).' '.htmlspecialchars($user->profile->lastname),
                                 'inviterjobtitle'=>Profile::model()->jobTitle($user->id),
-                                'message' =>$user->profile->firstname.' '.$user->profile->lastname.' wants add you to friends'
+                                'message' =>$user->profile->firstname.' '.$user->profile->lastname.' wants add you to friends',
+                                'html'=>$html
                             );
                             foreach($this->all_clients as $cli)
                             {
@@ -406,6 +416,99 @@ class Sock implements MessageComponentInterface {
 
                     }
                     break;
+                    case 'system.addtofriends':
+                        try{
+                            $user=User::model()->findByPk($tst_msg->from);
+                        }
+                        catch(\Exception $e)
+                        {
+                            Yii::app()->db->setActive(false);
+                            Yii::app()->db->setActive(true);
+                            $user=User::model()->findByPk($tst_msg->from);
+                        }
+                        if(isset($tst_msg->to))
+                        {
+                            $iftoexists=User::model()->findByPk($tst_msg->to);
+                            if($user && $iftoexists)
+                            {
+                                /*let's find this record in friendship table*/
+                                $friendrequest=Friendship::model()->findByAttributes(array('inviter_id'=>$tst_msg->to,'friend_id'=>$tst_msg->from));
+                                if($friendrequest)
+                                {
+                                    /*add this user to friend*/
+                                    /*check if this record exist*/
+                                    $indfriend=UserFriend::model()->findByAttributes(array('user_id'=>$tst_msg->from,'friend_id'=>$tst_msg->to));
+                                    if(!$indfriend)
+                                    {
+                                        $newfriend=new UserFriend();
+                                        $newfriend->user_id=$tst_msg->from;
+                                        $newfriend->friend_id=$tst_msg->to;
+
+                                        $friendind=UserFriend::model()->findByAttributes(array('user_id'=>$tst_msg->to,'friend_id'=>$tst_msg->from));
+                                        if(!$friendind)
+                                        {
+                                            $newfriendoth=new UserFriend();
+                                            $newfriendoth->user_id=$tst_msg->to;
+                                            $newfriendoth->friend_id=$tst_msg->from;
+                                            if($newfriend->save() && $newfriendoth->save())
+                                            {
+                                                $html='';
+//                                                $ccc = new CController('friendship');
+//                                                $currusernotinviter=Friendship::model()->getAllUsersByIdIfNotInviter($user);
+//                                                $friendrequest=array();
+//                                                for($i=0;$i<count($currusernotinviter);$i++)
+//                                                {
+//                                                    $friendrequest[]=User::model()->findByPk($currusernotinviter[$i]);
+//                                                }
+//                                                $html = $ccc->renderPartial('requests',array('friendrequest'=>$friendrequest),true);
+                                                /*and remove from friendship table*/
+                                                $friendrequest->delete();
+                                                /*to me*/
+                                                $response_arr = array(
+                                                    'type' => 'system.addtofriends',
+                                                    'error'=>false,
+                                                    'from' => $tst_msg->from,
+                                                    'to'=>$tst_msg->to,
+                                                    'inviterimage'=>Profile::model()->getLittleAvatar($user->id,'f-l friend-little-avatar'),
+                                                    'inviterfullname'=>htmlspecialchars($user->profile->firstname).' '.htmlspecialchars($user->profile->lastname),
+                                                    'inviterjobtitle'=>Profile::model()->jobTitle($user->id),
+                                                    'html'=>$html
+                                                );
+                                                foreach($this->all_clients as $cli)
+                                                {
+                                                    if($cli->user_id==$tst_msg->from)
+                                                    {
+                                                        $cli->send(json_encode($response_arr));
+                                                    }
+                                                }
+
+                                                /*to inviter*/
+                                                $response_arr = array(
+                                                    'type' => 'system.addtofriends',
+                                                    'error'=>false,
+                                                    'from' => $tst_msg->from,
+                                                    'to'=>$tst_msg->to,
+                                                    'inviterimage'=>Profile::model()->getLittleAvatar($user->id,'f-l friend-little-avatar'),
+                                                    'inviterfullname'=>htmlspecialchars($user->profile->firstname).' '.htmlspecialchars($user->profile->lastname),
+                                                    'inviterjobtitle'=>Profile::model()->jobTitle($user->id),
+                                                    'html'=>$html
+                                                );
+                                                foreach($this->all_clients as $cli)
+                                                {
+                                                    if($cli->user_id==$tst_msg->to)
+                                                    {
+                                                        $cli->send(json_encode($response_arr));
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                    }
+                                }
+                            }
+                        }
+
+                        break;
             }
         }
         $numRecv = count($this->clients) - 1;

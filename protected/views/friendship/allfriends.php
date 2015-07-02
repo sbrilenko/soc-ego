@@ -9,18 +9,18 @@
           'htmlOptions' => array('enctype' => 'multipart/form-data',"style"=>"display: none")
       ));
       ?>
-      <input name="allfriends-id" value="<?php echo $fri->user->id; ?>" type="hidden">
+      <input name="allfriends-id" value="<?php echo $fri->id; ?>" type="hidden">
       <?php $this->endWidget(); ?>
     <div class="padding-zero friend-name-container left-pad f-l inline-with-image">
       <a href='#' class="f-l">
-          <?php echo Profile::model()->getLittleAvatar($fri->friend_id,'f-l friend-little-avatar') ?>
+          <?php echo Profile::model()->getLittleAvatar($fri->id,'f-l friend-little-avatar') ?>
       </a>
       <div class='f-l'>
         <div class="friend-fullname">
-            <?php echo htmlspecialchars($fri->user->profile->firstname),' ',htmlspecialchars($fri->user->profile->lastname);?>
+            <?php echo htmlspecialchars($fri->profile->firstname),' ',htmlspecialchars($fri->profile->lastname);?>
         </div>
         <div class="friend-job-title">
-            <?php echo Profile::model()->jobTitle($fri->friend_id)?>
+            <?php echo Profile::model()->jobTitle($fri->id)?>
         </div>
       </div>
     </div>

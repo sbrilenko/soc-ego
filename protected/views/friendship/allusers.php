@@ -7,7 +7,7 @@
                           'id'=>'allusers-from-'.uniqid(),
                           'enableAjaxValidation'=>true,
                           'enableClientValidation'=>true,
-                          'htmlOptions' => array('enctype' => 'multipart/form-data',"style"=>"display: none")
+                          'htmlOptions' => array("style"=>"display: none")
                       ));
                       ?>
                       <input name="allusers-id" value="<?php echo $fr->id; ?>" type="hidden">
@@ -29,7 +29,7 @@
                       $all_friend_ids=array();
                       foreach($friends as $f)
                       {
-                          $all_friend_ids[]=$f->user_id;
+                          $all_friend_ids[]=$f->id;
                       }
                       ?>
                       <?php if(in_array($fr->id,$all_friend_ids)) { ?>
