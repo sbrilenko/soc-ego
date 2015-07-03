@@ -2,16 +2,18 @@
              <div tabindex="0" class="friends-wall-content nano-content mar-zero native-scrollbar-hide" id="all-list">
               <?php foreach($allusers as $fr) { ?>
                   <div class="friend-container">
-                      <?php
-                      $form = $this->beginWidget('CActiveForm', array(
-                          'id'=>'allusers-from-'.uniqid(),
-                          'enableAjaxValidation'=>true,
-                          'enableClientValidation'=>true,
-                          'htmlOptions' => array("style"=>"display: none")
-                      ));
-                      ?>
+<!--                      --><?php
+//                      $form = $this->beginWidget('CActiveForm', array(
+//                          'id'=>'allusers-from-'.uniqid(),
+//                          'enableAjaxValidation'=>true,
+//                          'enableClientValidation'=>true,
+//                          'htmlOptions' => array("style"=>"display: none")
+//                      ));
+//                      ?>
+                      <form style="display: none;" id="'allusers-from-<?php echo uniqid();?>">
                       <input name="allusers-id" value="<?php echo $fr->id; ?>" type="hidden">
-                      <?php $this->endWidget(); ?>
+                      </form>
+<!--                      --><?php //$this->endWidget(); ?>
                       <div class="padding-zero friend-name-container left-pad f-l inline-with-image">
                           <a href='#' class="f-l">
                               <?php echo Profile::model()->getLittleAvatar($fr->id,'f-l friend-little-avatar') ?>

@@ -148,7 +148,8 @@ class FriendshipController extends Controller
 
                                      'allfriendshtml'=>$this->renderPartial('allfriends',array('friends'=>$sortedfriend),true),
                                      'friendrequest'=>$friendrequest,
-                                     'requestshtml'=>$this->renderPartial('requests',array('friendrequest'=>$friendrequest),true)
+                                     'requestshtml'=>$this->renderPartial('requests',array('friendrequest'=>$friendrequest),true),
+                                     'recenthtml'=>$this->renderPartial('recent',array('friends'=>$sortedfriend),true)
                     ));
 	}
 

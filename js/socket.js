@@ -213,18 +213,38 @@ websocket.onmessage = function(ev) {
             }
             break;
         case 'system.addtofriends':
-            if(msg.to == authorizateduserid) {
-
+                /*all friends section*/
+                $('#friends-list').empty().append(msg.allfriendshtml);
                 setTimeout(function()
                 {
-                    $(".friends-requests .nano").nanoScroller({flash: true  });
+                    $('.friends-all .nano').nanoScroller({flash: true  });
                 }, 100);
 
-            }
-            else if(msg.from == authorizateduserid)
-            {
+                /*all users section*/
+                $('#all-list').empty().append(msg.allusershtml);
+                setTimeout(function()
+                {
+                    $('.friends-all .nano').nanoScroller({flash: true  });
+                }, 100);
 
-            }
+                /*requests section*/
+                $('.friends-requests .nano-content .friend-container').remove();
+                $('.friends-requests .nano-content').append(msg.requestshtml);
+                setTimeout(function()
+                {
+                    $('.friends-requests .nano').nanoScroller({flash: true  });
+                }, 100);
+                /*recent section*/
+                if($('.empty-recent').length>0)
+                {
+                    $('.empty-recent').remove()
+                    $('.friends-block-recent .friends-block').append(msg.recenthtml)
+                }
+                else
+                {
+                    $('.friends-block-recent .recent-block-main').replaceWith(msg.recenthtml)
+                }
+
             break;
 }
 };
