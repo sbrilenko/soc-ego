@@ -79,11 +79,38 @@
         {
             var th=$(this),thpar=th.parents('.friend-container'),
                 touserid=thpar.find('form input[name=request-id]').val();
-            console.log(touserid);
             var msg = {
                 'from': authorizateduserid,
                 'to': touserid,
                 'type': 'system.addtofriends'
+            };
+            try {
+                websocket.send(JSON.stringify(msg));
+            } catch (e) {
+                console.log(e);
+            }
+        }).on('click','.friends-decline',function()
+        {
+            var th=$(this),thpar=th.parents('.friend-container'),
+                touserid=thpar.find('form input[name=request-id]').val();
+            var msg = {
+                'from': authorizateduserid,
+                'to': touserid,
+                'type': 'system.frienddecline'
+            };
+            try {
+                websocket.send(JSON.stringify(msg));
+            } catch (e) {
+                console.log(e);
+            }
+        }).on('click','.remove-from-friends',function()
+        {
+            var th=$(this),thpar=th.parents('.friend-container'),
+                touserid=thpar.find('form input[name=allfriends-id]').val();
+            var msg = {
+                'from': authorizateduserid,
+                'to': touserid,
+                'type': 'system.removefromfriends'
             };
             try {
                 websocket.send(JSON.stringify(msg));

@@ -544,6 +544,225 @@ class Sock implements MessageComponentInterface {
                         }
 
                         break;
+                        case 'system.frienddecline':
+                            try{
+                                $user=User::model()->findByPk($tst_msg->from);
+                            }
+                            catch(\Exception $e)
+                            {
+                                Yii::app()->db->setActive(false);
+                                Yii::app()->db->setActive(true);
+                                $user=User::model()->findByPk($tst_msg->from);
+                            }
+                            if(isset($tst_msg->to))
+                            {
+                                $iftoexists=User::model()->findByPk($tst_msg->to);
+                                if($user && $iftoexists)
+                                {
+                                    /*let's find this record in friendship table*/
+                                    $friendrequest=Friendship::model()->findByAttributes(array('inviter_id'=>$tst_msg->to,'friend_id'=>$tst_msg->from));
+                                    if($friendrequest)
+                                    {
+                                                    /*and remove from friendship table*/
+                                            $friendrequest->delete();
+                                            $ccc = new CController('friendship');
+                                            $friends = $user->getFriendsList();
+                                            $allusers=User::model()->findAllUsersWithout(array($user->id));
+                                            $curruserinviter=Friendship::model()->getAllUsersByIdIfInviter($user->id);
+                                            $currusernotinviter=Friendship::model()->getAllUsersByIdIfNotInviter($user->id);
+                                            $friendrequest=array();
+                                            for($i=0;$i<count($currusernotinviter);$i++)
+                                            {
+                                                $friendrequest[]=User::model()->findByPk($currusernotinviter[$i]);
+                                            }
+                                            $sortedfriend=User::model()->sortFullNameByAlph($friends);
+
+                                            $currusernotinviter=Friendship::model()->getAllUsersByIdIfNotInviter($user->id);
+                                            $friendrequest=array();
+                                            for($i=0;$i<count($currusernotinviter);$i++)
+                                            {
+                                                $friendrequest[]=User::model()->findByAttributes(array('id'=>$currusernotinviter[$i]));
+                                            }
+
+
+                                            /*to me*/
+                                            $response_arr = array(
+                                                'type' => 'system.addtofriends',
+                                                'error'=>false,
+                                                'from' => $tst_msg->from,
+                                                'to'=>$tst_msg->to,
+                                                'allusershtml'=>$ccc->renderPartial('allusers',array( 'allusers'=>$allusers,
+                                                        'friends'=>$sortedfriend,
+                                                        'curruserinviter'=>$curruserinviter,
+                                                        'currusernotinviter'=>$currusernotinviter),true),
+                                                'allfriendshtml'=>$ccc->renderPartial('allfriends',array('friends'=>$sortedfriend),true),
+                                                'requestshtml'=>$ccc->renderPartial('requests',array('friendrequest'=>$friendrequest),true),
+                                                'recenthtml'=>$ccc->renderPartial('recent',array('friends'=>$sortedfriend),true)
+                                            );
+                                            foreach($this->all_clients as $cli)
+                                            {
+                                                if($cli->user_id==$tst_msg->from)
+                                                {
+                                                    $cli->send(json_encode($response_arr));
+                                                }
+                                            }
+
+                                            /*to inviter*/
+
+                                            $friends = $iftoexists->getFriendsList();
+                                            $allusers=User::model()->findAllUsersWithout(array($iftoexists->id));
+                                            $curruserinviter=Friendship::model()->getAllUsersByIdIfInviter($iftoexists->id);
+                                            $currusernotinviter=Friendship::model()->getAllUsersByIdIfNotInviter($iftoexists->id);
+                                            $friendrequest=array();
+                                            for($i=0;$i<count($currusernotinviter);$i++)
+                                            {
+                                                $friendrequest[]=User::model()->findByPk($currusernotinviter[$i]);
+                                            }
+                                            $sortedfriend=User::model()->sortFullNameByAlph($friends);
+
+                                            $currusernotinviter=Friendship::model()->getAllUsersByIdIfNotInviter($iftoexists->id);
+                                            $friendrequest=array();
+                                            for($i=0;$i<count($currusernotinviter);$i++)
+                                            {
+                                                $friendrequest[]=User::model()->findByAttributes(array('id'=>$currusernotinviter[$i]));
+                                            }
+                                            $response_arr = array(
+                                                'type' => 'system.addtofriends',
+                                                'error'=>false,
+                                                'from' => $tst_msg->from,
+                                                'to'=>$tst_msg->to,
+                                                'allusershtml'=>$ccc->renderPartial('allusers',array( 'allusers'=>$allusers,
+                                                        'friends'=>$sortedfriend,
+                                                        'curruserinviter'=>$curruserinviter,
+                                                        'currusernotinviter'=>$currusernotinviter),true),
+                                                'allfriendshtml'=>$ccc->renderPartial('allfriends',array('friends'=>$sortedfriend),true),
+                                                'requestshtml'=>$ccc->renderPartial('requests',array('friendrequest'=>$friendrequest),true),
+                                                'recenthtml'=>$ccc->renderPartial('recent',array('friends'=>$sortedfriend),true)
+
+                                            );
+                                            foreach($this->all_clients as $cli)
+                                            {
+                                                if($cli->user_id==$tst_msg->to)
+                                                {
+                                                    $cli->send(json_encode($response_arr));
+                                                }
+                                            }
+                                    }
+                                }
+                            }
+                        break;
+                    case 'system.removefromfriends':
+
+                        try{
+                            $user=User::model()->findByPk($tst_msg->from);
+                        }
+                        catch(\Exception $e)
+                        {
+                            Yii::app()->db->setActive(false);
+                            Yii::app()->db->setActive(true);
+                            $user=User::model()->findByPk($tst_msg->from);
+                        }
+                        if(isset($tst_msg->to))
+                        {
+                            $iftoexists=User::model()->findByPk($tst_msg->to);
+                            if($user && $iftoexists)
+                            {
+                                    /*check if this record exist*/
+                                    $indfriend=UserFriend::model()->findByAttributes(array('user_id'=>$tst_msg->from,'friend_id'=>$tst_msg->to));
+                                    if($indfriend)
+                                    {
+                                        $indfriend->delete();
+                                    }
+                                    $friendind=UserFriend::model()->findByAttributes(array('user_id'=>$tst_msg->to,'friend_id'=>$tst_msg->from));
+                                    if($friendind)
+                                    {
+                                        $friendind->delete();
+                                    }
+                                    $ccc = new CController('friendship');
+                                    $friends = $user->getFriendsList();
+                                    $allusers=User::model()->findAllUsersWithout(array($user->id));
+                                    $curruserinviter=Friendship::model()->getAllUsersByIdIfInviter($user->id);
+                                    $currusernotinviter=Friendship::model()->getAllUsersByIdIfNotInviter($user->id);
+                                    $friendrequest=array();
+                                    for($i=0;$i<count($currusernotinviter);$i++)
+                                    {
+                                        $friendrequest[]=User::model()->findByPk($currusernotinviter[$i]);
+                                    }
+                                    $sortedfriend=User::model()->sortFullNameByAlph($friends);
+
+                                    $currusernotinviter=Friendship::model()->getAllUsersByIdIfNotInviter($user->id);
+                                    $friendrequest=array();
+                                    for($i=0;$i<count($currusernotinviter);$i++)
+                                    {
+                                        $friendrequest[]=User::model()->findByAttributes(array('id'=>$currusernotinviter[$i]));
+                                    }
+
+
+                                    /*to me*/
+                                    $response_arr = array(
+                                        'type' => 'system.addtofriends',
+                                        'error'=>false,
+                                        'from' => $tst_msg->from,
+                                        'to'=>$tst_msg->to,
+                                        'allusershtml'=>$ccc->renderPartial('allusers',array( 'allusers'=>$allusers,
+                                                'friends'=>$sortedfriend,
+                                                'curruserinviter'=>$curruserinviter,
+                                                'currusernotinviter'=>$currusernotinviter),true),
+                                        'allfriendshtml'=>$ccc->renderPartial('allfriends',array('friends'=>$sortedfriend),true),
+                                        'requestshtml'=>$ccc->renderPartial('requests',array('friendrequest'=>$friendrequest),true),
+                                        'recenthtml'=>$ccc->renderPartial('recent',array('friends'=>$sortedfriend),true)
+                                    );
+                                    foreach($this->all_clients as $cli)
+                                    {
+                                        if($cli->user_id==$tst_msg->from)
+                                        {
+                                            $cli->send(json_encode($response_arr));
+                                        }
+                                    }
+
+                                    /*to inviter*/
+
+                                    $friends = $iftoexists->getFriendsList();
+                                    $allusers=User::model()->findAllUsersWithout(array($iftoexists->id));
+                                    $curruserinviter=Friendship::model()->getAllUsersByIdIfInviter($iftoexists->id);
+                                    $currusernotinviter=Friendship::model()->getAllUsersByIdIfNotInviter($iftoexists->id);
+                                    $friendrequest=array();
+                                    for($i=0;$i<count($currusernotinviter);$i++)
+                                    {
+                                        $friendrequest[]=User::model()->findByPk($currusernotinviter[$i]);
+                                    }
+                                    $sortedfriend=User::model()->sortFullNameByAlph($friends);
+
+                                    $currusernotinviter=Friendship::model()->getAllUsersByIdIfNotInviter($iftoexists->id);
+                                    $friendrequest=array();
+                                    for($i=0;$i<count($currusernotinviter);$i++)
+                                    {
+                                        $friendrequest[]=User::model()->findByAttributes(array('id'=>$currusernotinviter[$i]));
+                                    }
+                                    $response_arr = array(
+                                        'type' => 'system.addtofriends',
+                                        'error'=>false,
+                                        'from' => $tst_msg->from,
+                                        'to'=>$tst_msg->to,
+                                        'allusershtml'=>$ccc->renderPartial('allusers',array( 'allusers'=>$allusers,
+                                                'friends'=>$sortedfriend,
+                                                'curruserinviter'=>$curruserinviter,
+                                                'currusernotinviter'=>$currusernotinviter),true),
+                                        'allfriendshtml'=>$ccc->renderPartial('allfriends',array('friends'=>$sortedfriend),true),
+                                        'requestshtml'=>$ccc->renderPartial('requests',array('friendrequest'=>$friendrequest),true),
+                                        'recenthtml'=>$ccc->renderPartial('recent',array('friends'=>$sortedfriend),true)
+
+                                    );
+                                    foreach($this->all_clients as $cli)
+                                    {
+                                        if($cli->user_id==$tst_msg->to)
+                                        {
+                                            $cli->send(json_encode($response_arr));
+                                        }
+                                    }
+                            }
+                        }
+                    break;
             }
         }
         $numRecv = count($this->clients) - 1;

@@ -213,6 +213,7 @@ websocket.onmessage = function(ev) {
             }
             break;
         case 'system.addtofriends':
+        case 'system.frienddecline':
                 /*all friends section*/
                 $('#friends-list').empty().append(msg.allfriendshtml);
                 setTimeout(function()
