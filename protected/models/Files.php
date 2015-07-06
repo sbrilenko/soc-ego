@@ -600,4 +600,23 @@ class Files extends CActiveRecord
             }
 
     }
+
+    /*files from DB*/
+    public function FilesfromDb($settings)
+    {
+        $fileswithoufolder=array();
+        $filemodels=Files::model()->findAllByAttributes(array('table'=>$settings['direction']));
+        if($filemodels)
+        {
+            foreach($filemodels as $file)
+            {
+                /*check if file exists*/
+                if(file_exists(Yii::app()->basePath.'/../files/'.$file->image))
+                {
+                    $fileswithoufolder[$file->id]="/files/".$file->image;
+                }
+            }
+        }
+        return json_encode($fileswithoufolder);
+    }
 }

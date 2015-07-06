@@ -23,7 +23,17 @@ class StoreController extends Controller
             {
                 $store=new Store();
                 $store->attributes=$_POST['Store'];
-                if(isset($_FILES['Store']) && !empty($_FILES['Store']['name']['image']))
+                $store->time=strtotime(date("Y-m-d H:i:s"));
+                $store->user=Yii::app()->user->id;
+                if($store->save())
+                {
+                    $this->redirect('/store/index');
+                }
+                else
+                {
+                    $this->render('create',array('message'=>'Store model not saved! Please ask your specialist'));
+                }
+                /*if(isset($_FILES['Store']) && !empty($_FILES['Store']['name']['image']))
                 {
                     $file_ret=Files::model()->create($_FILES['Store'],'image',$title='test',Store::model()->tableName());
                     if(is_array($file_ret))
@@ -48,7 +58,7 @@ class StoreController extends Controller
                 else
                 {
                     $this->render('create',array('message'=>'please put the image'));
-                }
+                }*/
                 $this->redirect('/store/index');
             }
             else
@@ -68,7 +78,20 @@ class StoreController extends Controller
                     $local=Store::model()->findByPk($_POST['Store']['id']);
                     if($local)
                     {
-                        if(isset($_FILES['Store']) && !empty($_FILES['Store']['name']['image']))
+                        $local->attributes=$_POST['Store'];
+                        $local->time=strtotime(date("Y-m-d H:i:s"));
+                        $local->user=Yii::app()->user->id;
+                        if($local->save())
+                        {
+                            $this->redirect('/store/index');
+                            exit();
+                        }
+                        else
+                        {
+                            $this->render('/store/index',array('message'=>'Store model not saved! Please ask your specialist'));
+                            exit();
+                        }
+                        /*if(isset($_FILES['Store']) && !empty($_FILES['Store']['name']['image']))
                         {
                             $file_ret=Files::model()->create($_FILES['Store'],'image',$title='test',Store::model()->tableName(),$local->image);
                             if(is_array($file_ret))
@@ -108,7 +131,7 @@ class StoreController extends Controller
                         $local->attributes=$_POST['Store'];
                         $local->time=strtotime(date("Y-m-d H:i:s"));
                         $local->user=Yii::app()->user->id;
-                        $local->save();
+                        $local->save();*/
                     }
                     else
                     {

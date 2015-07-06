@@ -28,25 +28,34 @@ $form = $this->beginWidget('CActiveForm', array(
         echo $form->error($store_item, 'price'); ?>
         </div>
         <div>
-        <?php echo $form->labelEx($store_item, 'image');
-        echo $form->fileField($store_item, 'image');
-        echo $form->error($store_item, 'image');
-        if($store_item->image>0)
-        {
-            $image=Files::model()->findByPk($store_item->image);
-            if($image)
+            <?php
+
+            $this->widget('application.extensions.folderviewer.folderviewer', array(
+                'options'=>array(
+                    'model'=>$store_item,
+                    'attr'=>'image',
+                    'direction'=>'store',
+                    'ajaxUrl' => '/files/refresh',
+                    'ajaxParams' => array('direction' => 'store'),
+                ),
+                'value'=>$store_item->image,
+            ));
+
+            if($store_item->image>0)
             {
-                if(file_exists(Yii::app()->basePath."/../files/".$image->image))
+                $image_file=Files::model()->findByPk($store_item->image);
+                if($image_file)
                 {
-                    echo "<div><img src='/files/".$image->image."'/></div>";
+                    if(file_exists(Yii::app()->basePath."/../files/".$image_file->image))
+                    {
+                        ?>
+                        <td style="width:75px;">
+                            <img src='/files/<?php echo $image_file->image; ?>'/>
+                        </td>
+                    <?php
+                    }
                 }
-            }
-            else
-            {
-                echo "Image not found";
-            }
-        }
-        ?>
+            } ?>
         </div>
         <div>
         <?php echo $form->labelEx($store_item, 'description');

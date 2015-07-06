@@ -93,7 +93,11 @@ return array(
         ),
         'request'=>array(
             'enableCsrfValidation'=>true,
-            'enableCookieValidation'=>true,
+            //'enableCookieValidation'=>true,
+            'class'=>'application.components.HttpRequest',
+            'noValidationRoutes'=>array(
+                'files/refresh',
+            ),
         ),
         'cache' => array('class' => 'system.caching.CDummyCache'),
         'user'=>array(

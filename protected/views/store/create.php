@@ -22,9 +22,24 @@ $form = $this->beginWidget('CActiveForm', array(
         echo $form->error($store_item, 'price'); ?>
         </div>
         <div>
-        <?php echo $form->labelEx($store_item, 'image');
-        echo $form->fileField($store_item, 'image');
-        echo $form->error($store_item, 'image'); ?>
+        <?php
+        //echo $form->labelEx($store_item, 'image');
+        //echo $form->fileField($store_item, 'image');
+        //echo $form->error($store_item, 'image'); ?>
+        <?php
+
+        $this->widget('application.extensions.folderviewer.folderviewer', array(
+            'options'=>array(
+                'model'=>$store_item,
+                'attr'=>'image',
+                'direction'=>'store',
+                'ajaxUrl' => '/files/refresh',
+                'ajaxParams' => array('direction' => 'store'),
+            ),
+            'value'=>$store_item->image,
+        ));
+
+        ?>
         </div>
         <div>
         <?php echo $form->labelEx($store_item, 'description');
