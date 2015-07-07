@@ -14,7 +14,7 @@ $(document).ready(function()
                 {
                     var newimage=$('<div/>', {
                         class:'content-image',
-                        html:'<input type="hidden" value="'+file+'" name="image-id"><img class="image" src="'+folderviewerimagesfolder[file]+'" />'
+                        html:'<input type="hidden" value="'+file+'" name="image-id"><img title="width:'+folderviewerimagesfolder[file].width+'px\nheight: '+folderviewerimagesfolder[file].height+'px" class="image" src="'+folderviewerimagesfolder[file].src+'" />'
                     })
                     $('.pop-up .nano .nano-content',mainfolderblock).append(newimage)
                     console.log(file,folderviewerimagesfolder[file])

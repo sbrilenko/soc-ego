@@ -613,7 +613,8 @@ class Files extends CActiveRecord
                 /*check if file exists*/
                 if(file_exists(Yii::app()->basePath.'/../files/'.$file->image))
                 {
-                    $fileswithoufolder[$file->id]="/files/".$file->image;
+                    list($width, $height, $type, $attr) = getimagesize(Yii::app()->basePath.'/../files/'.$file->image);
+                    $fileswithoufolder[$file->id]=array('src'=>"/files/".$file->image,'width'=>$width,'height'=>$height);
                 }
             }
         }
