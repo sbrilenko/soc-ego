@@ -49,9 +49,8 @@ $form = $this->beginWidget('CActiveForm', array(
                     if(file_exists(Yii::app()->basePath."/../files/".$image_file->image))
                     {
                         ?>
-                        <td style="width:75px;">
-                            <img src='/files/<?php echo $image_file->image; ?>'/>
-                        </td>
+                        <img class="image" src='/files/<?php echo $image_file->image; ?>'/>
+
                     <?php
                     }
                 }

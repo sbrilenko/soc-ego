@@ -14,7 +14,7 @@ $(document).ready(function()
                 {
                     var newimage=$('<div/>', {
                         class:'content-image',
-                        html:'<input type="hidden" value="'+file+'" name="image-id"><img style="" src="'+folderviewerimagesfolder[file]+'" />'
+                        html:'<input type="hidden" value="'+file+'" name="image-id"><img class="image" src="'+folderviewerimagesfolder[file]+'" />'
                     })
                     $('.pop-up .nano .nano-content',mainfolderblock).append(newimage)
                     console.log(file,folderviewerimagesfolder[file])
@@ -110,8 +110,10 @@ $(document).ready(function()
         putImages()
     }).on('click','.content-image',function()
     {
-        var th=$(this),imageid=th.find('input[name=image-id]').val();
+        var th=$(this),imageid=th.find('input[name=image-id]').val(),imghtml=th.find('img').clone();
         folderviewerbuttonhadler.find('input[name*=image]').val(imageid);
+        folderviewerbuttonhadler.next().remove();
+        imghtml.insertAfter(folderviewerbuttonhadler)
         $('.folderviewer .close-b').trigger('click')
     })
 
