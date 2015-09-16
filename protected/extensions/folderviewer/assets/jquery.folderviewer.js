@@ -12,9 +12,10 @@ $(document).ready(function()
                     $('.pop-up .nano .nano-content').empty()
                 for(file in folderviewerimagesfolder)
                 {
+                    console.log(folderviewerimagesfolder[file].attr)
                     var newimage=$('<div/>', {
                         class:'content-image',
-                        html:'<input type="hidden" value="'+file+'" name="image-id"><img title="width:'+folderviewerimagesfolder[file].width+'px\nheight: '+folderviewerimagesfolder[file].height+'px" class="image" src="'+folderviewerimagesfolder[file].src+'" />'
+                        html:'<input type="hidden" value="'+file+'" name="image-id"><img title="width:'+folderviewerimagesfolder[file].width+'px\nheight: '+folderviewerimagesfolder[file].height+'px\ntype:'+folderviewerimagesfolder[file].type+'" class="image" src="'+folderviewerimagesfolder[file].src+'" />'
                     })
                     $('.pop-up .nano .nano-content',mainfolderblock).append(newimage)
                     console.log(file,folderviewerimagesfolder[file])

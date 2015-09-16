@@ -30,9 +30,13 @@ $form = $this->beginWidget('CActiveForm', array(
 
         $this->widget('application.extensions.folderviewer.folderviewer', array(
             'options'=>array(
+                /*model - need for element name*/
                 'model'=>$store_item,
+                /*name of model field*/
                 'attr'=>'image',
+                /**/
                 'direction'=>'store',
+                /*controller for refresh list of images*/
                 'ajaxUrl' => '/files/refresh',
                 'ajaxParams' => array('direction' => 'store'),
             ),
