@@ -322,4 +322,13 @@ class User extends CActiveRecord
         }
         return $rearray;
     }
+
+    public function isItMyFriend($user)
+    {
+        return (bool)UserFriend::model()->find('user_id = :current_user AND friend_id = :friend_user', [
+            ':current_user' => $this->id,
+            ':friend_user' => $user->id
+
+        ]);
+    }
 }

@@ -132,6 +132,7 @@ class Profile extends CActiveRecord
         if($user_sess)
         {
             $avatar_id=Profile::model()->findByAttributes(array("user_id"=>$user_sess));
+
             if($avatar_id)
             {
                 $file_avatar=Files::model()->findByPk($avatar_id->avatar);

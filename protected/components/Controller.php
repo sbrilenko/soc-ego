@@ -20,4 +20,12 @@ class Controller extends CController
 	 * for more details on how to specify this property.
 	 */
 	public $breadcrumbs=array();
+
+	public $user_id;
+
+	public function init()
+	{
+		$this->user_id = Yii::app()->user->id;
+		parent::init();
+	}
 }

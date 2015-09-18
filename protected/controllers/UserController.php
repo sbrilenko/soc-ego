@@ -145,6 +145,7 @@ class UserController extends Controller
             if($model->save())
             {
                 $profile->user_id=$model->id;
+
                 if(isset($_FILES['Profile']) && !empty($_FILES['Profile']['name']['avatar']))
                 {
                     $file_ret=Files::model()->create($_FILES['Profile'],'avatar','test',Profile::model()->tableName(),$profile->avatar);
@@ -156,6 +157,13 @@ class UserController extends Controller
                     else
                     {
                         $profile->attributes=$_POST['Profile'];
+                        /**
+                         * checking if BDay is not number (we're expecting timestamp)
+                         * if no then let's convert it to timestamp
+                         */
+                        if(!is_numeric($profile->bday)) {
+                            $profile->bday = strtotime($profile->bday);
+                        }
                         $profile->avatar=$file_ret;
                         if($profile->save())
                         {

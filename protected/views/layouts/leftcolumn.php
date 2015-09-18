@@ -1,4 +1,5 @@
-    <div style="overflow: visible;padding: 0">
+<?php $user_id = Yii::app()->controller->user_id; ?>
+<div style="overflow: visible;padding: 0">
         <div class="left-column">
         <div id="header" class="header-top left-column">
             <div id="logo"><a href="/"></a></div>
@@ -6,37 +7,37 @@
             <div class='avatar'>
 <!--                <div class="avatar-back"></div>-->
             <?php
-                echo Profile::model()->getLittleAvatar(Yii::app()->user->id);
+                echo Profile::model()->getLittleAvatar($user_id);
                 ?>
                 <?php if(Yii::app()->controller->id=="site" && Yii::app()->controller->action->id!="index") {?>
                 <div class="avatar-position">
                     <div class="avatar-name-style">
                         <?php
-                        if(isset(Yii::app()->user->id))
+                        if(isset($user_id))
                         {
-                            $user=Profile::model()->findByAttributes(array("user_id"=>Yii::app()->user->id));
+                            $user=Profile::model()->findByAttributes(array("user_id"=>$user_id));
                             echo $user->firstname," ",$user->lastname;
                         }
                         ?>
                     </div>
-                    <div class="avatar-type-style"><?php echo User::model()->findByPk(Yii::app()->user->id)->job_title;?></div>
+                    <div class="avatar-type-style"><?php echo User::model()->findByPk($user_id)->job_title;?></div>
                     <div class="avatar-levelstarsprogress">
                     <?php
-                    if(User::model()->findByPk(Yii::app()->user->id)->level==0)
+                    if(User::model()->findByPk($user_id)->level==0)
                     {
                         ?>
                         <div class="avatar-levelstars active"></div>
                         <div class="avatar-levelstars padd"></div>
                         <div class="avatar-levelstars"></div>
                     <?php
-                    }elseif(User::model()->findByPk(Yii::app()->user->id)->level==1)
+                    }elseif(User::model()->findByPk($user_id)->level==1)
                     {
                         ?>
                         <div class="avatar-levelstars active"></div>
                         <div class="avatar-levelstars active padd"></div>
                         <div class="avatar-levelstars"></div>
                     <?php
-                    }elseif(User::model()->findByPk(Yii::app()->user->id)->level==2)
+                    }elseif(User::model()->findByPk($user_id)->level==2)
                     {
                         ?>
                         <div class="avatar-levelstars active"></div>
@@ -52,9 +53,9 @@
             </div>
                 <div class="day-count">
                     <?php
-                    if(Yii::app()->user->id)
+                    if($user_id)
                     {
-                        $user=User::model()->findByPk(Yii::app()->user->id);
+                        $user=User::model()->findByPk($user_id);
                         if($user && !is_null($user->day_count))
                         {
                             $date1 = new DateTime(date("Y-m-d H:i:s"));
@@ -105,7 +106,7 @@
                     <?php
                     if(true)
                     {
-                        $user_badge=BadgeUser::model()->findAllByAttributes(array("user_id"=>Yii::app()->user->id));
+                        $user_badge=BadgeUser::model()->findAllByAttributes(array("user_id"=>$user_id));
                         if($user_badge)
                         {
                             $frie_count_class="friends-title-count-text";
@@ -251,7 +252,7 @@
                 <div class="friends-search-bar">
                     <?php echo Chtml::textField('user');?>
                     <?php echo Chtml::hiddenField('to_user');?>
-                    <?php echo Chtml::hiddenField('from_user',Yii::app()->user->id);?>
+                    <?php echo Chtml::hiddenField('from_user',$user_id);?>
                 </div>
                 <div class="friends-text">
                     <?php echo Chtml::textArea('text');?>

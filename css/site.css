@@ -655,6 +655,7 @@ a.no-padding:hover .groups-icon,a.no-padding .current .groups-icon
     line-height: 16px;
     color:#666;
     text-transform: uppercase;
+    margin-top:12px;
 }
 .f-l
 {
