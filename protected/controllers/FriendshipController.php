@@ -123,7 +123,7 @@ class FriendshipController extends Controller
 	 * Lists all models.
 	 */
 	public function actionIndex()
-	{	
+	{
 		$this->layout = '//layouts/main';
         $curruser=Yii::app()->user->getId();
         $current_user = User::model()->findByPk($curruser);

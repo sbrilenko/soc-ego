@@ -15,7 +15,7 @@
                       </form>
 <!--                      --><?php //$this->endWidget(); ?>
                       <div class="padding-zero friend-name-container left-pad f-l inline-with-image">
-                          <a href='#' class="f-l">
+                          <a href='<?= $this->createUrl('profile/view', ['id' => $fr->id]) ?>' class="f-l">
                               <?php echo Profile::model()->getLittleAvatar($fr->id,'f-l friend-little-avatar') ?>
                           </a>
                           <div class='f-l'>

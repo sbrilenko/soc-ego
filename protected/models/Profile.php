@@ -139,7 +139,7 @@ class Profile extends CActiveRecord
                 {
                     if(file_exists(Yii::app()->basePath."/../files/".$file_avatar->image))
                     {
-                        $return="<img class='".$class."' src='/files/".$file_avatar->image."'/>";
+                        $return="<img width=\"320\" class='".$class."' src='/files/".$file_avatar->image."'/>";
                     }
                 }
 
