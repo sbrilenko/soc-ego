@@ -702,7 +702,12 @@ class SiteController extends Controller
         {
             $jobtype=JobType::model()->findAll();
             $jobtitle=JobTitle::model()->findAll();
-            $this->render('faq',array('jobtype'=>$jobtype,'jobtitle'=>$jobtitle));
+            $badges = Badges::model()->findAll();
+            $this->render('faq',array(
+                'jobtype' => $jobtype,
+                'jobtitle' => $jobtitle,
+                'badges' => $badges
+            ));
         }
         else $this->redirect('/');
 

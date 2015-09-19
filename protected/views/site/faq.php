@@ -44,13 +44,35 @@
                                     });
                                 }
 
+                            }).on('click','.questions-knowledge-badges .question',function()
+                            {
+                                var th=$(this);
+                                $(".questions-knowledge-badges li .answer").each(function()
+                                {
+                                    if($(this).is(':visible')) $(this).slideUp();
+                                })
+                                if(th.next().is(':visible'))
+                                {
+                                    th.next().slideUp(function()
+                                    {
+                                        $("#questions-knowledge").nanoScroller();
+                                    });
+                                }
+                                else
+                                {
+                                    th.next().slideDown(function()
+                                    {
+                                        $("#questions-knowledge").nanoScroller();
+                                    });
+                                }
+
                             }).on('click','.question-knowledge a',function()
                             {
                                 var th=$(this);
                                 if(!th.hasClass('current'))
                                 {
                                     $('.question-knowledge a').removeClass('current');
-                                    $('#questions-knowledge ul').hide()
+                                    $('#questions-knowledge ul').hide();
                                     th.addClass('current');
                                     if(th.hasClass('knowledge-b'))
                                     {
@@ -66,6 +88,7 @@
                                     {
                                         $('.questions-knowledge-badges').show();
                                     }
+
                                     $("#questions-knowledge").nanoScroller();
                                 }
                             }).on('click','.questions-knowledge-levels li>.question',function()
@@ -222,96 +245,17 @@
 
                     <!--badges -->
                     <ul class="questions-knowledge-badges">
+                        <?php foreach($badges as $badge): ?>
                         <li>
-                            <div class="question">dsfgdfdsfsdfsdfsdfsdf</div>
-                            <div class="answer">sdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsd sdf sdf sdf sdf sdfsd sdfdsd  sd fsdf sdf sdf sdfsdsds fsdf sdf sdfsdf sdf sdfsd  sddf sdf sdf
-                                sdfsd fsdf
-                                sdf
-                                sdf
-                                sdf
-                                sdf
-                                sdf
-                                sd
-                                f sd
-                                sd
-                                f ddf fsdf d
+                            <div class="question">
+                                <div style="display:inline-block">
+                                    <img width="50" src="<?= $badge->getImagePath() ?>"/>
+                                </div>
+                                <div style="display:inline-block;margin-left:20px;position:relative;top:-20px"><?= $badge->title ?></div>
                             </div>
+                            <div style="margin-left:75px" class="answer"><?= $badge->description ?></div>
                         </li>
-                        <li>
-                            <div class="question">dsfgdfdsfsdfsdfsdfsdf</div>
-                            <div class="answer">sdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsd sdf sdf sdf sdf sdfsd sdfdsd  sd fsdf sdf sdf sdfsdsds fsdf sdf sdfsdf sdf sdfsd  sddf sdf sdf
-                                sdfsd fsdf
-                                sdf
-                                sdf
-                                sdf
-                                sdf
-                                sdf
-                                sd
-                                f sd
-                                sd
-                                f ddf fsdf d
-                            </div>
-                        </li>
-                        <li>
-                            <div class="question">dsfgdfdsfsdfsdfsdfsdf</div>
-                            <div class="answer">sdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsd sdf sdf sdf sdf sdfsd sdfdsd  sd fsdf sdf sdf sdfsdsds fsdf sdf sdfsdf sdf sdfsd  sddf sdf sdf
-                                sdfsd fsdf
-                                sdf
-                                sdf
-                                sdf
-                                sdf
-                                sdf
-                                sd
-                                f sd
-                                sd
-                                f ddf fsdf d
-                            </div>
-                        </li>
-                        <li>
-                            <div class="question">dsfgdfdsfsdfsdfsdfsdf</div>
-                            <div class="answer">sdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsd sdf sdf sdf sdf sdfsd sdfdsd  sd fsdf sdf sdf sdfsdsds fsdf sdf sdfsdf sdf sdfsd  sddf sdf sdf
-                                sdfsd fsdf
-                                sdf
-                                sdf
-                                sdf
-                                sdf
-                                sdf
-                                sd
-                                f sd
-                                sd
-                                f ddf fsdf d
-                            </div>
-                        </li>
-                        <li>
-                            <div class="question">dsfgdfdsfsdfsdfsdfsdf</div>
-                            <div class="answer">sdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsd sdf sdf sdf sdf sdfsd sdfdsd  sd fsdf sdf sdf sdfsdsds fsdf sdf sdfsdf sdf sdfsd  sddf sdf sdf
-                                sdfsd fsdf
-                                sdf
-                                sdf
-                                sdf
-                                sdf
-                                sdf
-                                sd
-                                f sd
-                                sd
-                                f ddf fsdf d
-                            </div>
-                        </li>
-                        <li>
-                            <div class="question">dsfgdfdsfsdfsdfsdfsdf</div>
-                            <div class="answer">sdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsd sdf sdf sdf sdf sdfsd sdfdsd  sd fsdf sdf sdf sdfsdsds fsdf sdf sdfsdf sdf sdfsd  sddf sdf sdf
-                                sdfsd fsdf
-                                sdf
-                                sdf
-                                sdf
-                                sdf
-                                sdf
-                                sd
-                                f sd
-                                sd
-                                f ddf fsdf d
-                            </div>
-                        </li>
+                        <?php endforeach; ?>
                     </ul>
                     </div>
                     </div>

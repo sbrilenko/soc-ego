@@ -101,4 +101,21 @@ class Badges extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+	public function getImagePath()
+	{
+		$image_file = Files::model()->findByPk($this->image);
+		if($image_file) {
+			if(file_exists(Yii::app()->basePath."/../files/".$image_file->image)){
+				return '/files/' . $image_file->image;
+			}
+			else {
+				return '/img/default-badges-mini.png';
+			}
+
+		}
+		else {
+			return '/img/default-badges-mini.png';
+		}
+	}
 }
