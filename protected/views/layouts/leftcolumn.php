@@ -127,6 +127,7 @@
 
                                     if($badge_image)
                                     {
+                                        echo '<a href="'. $this->createUrl('faq#badges') .'">';
                                         if(file_exists(Yii::app()->basePath."/../files/".$badge_image->image))
                                         {
 //                                            $name_in_db=str_replace('.png','',$badge_image->image);
@@ -136,6 +137,7 @@
                                         {
                                             echo "<img title='".$badge_id->title."' src='/img/default-badges-mini.png"."'/>";
                                         }
+                                        echo '</a>';
                                     }
                                 }
                                 echo "</li>";

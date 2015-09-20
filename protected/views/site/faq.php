@@ -19,8 +19,19 @@
                     <div class="nano" id="questions-knowledge" style="height:623px;">
                     <div class="nano-content">
                     <script>
+                     function checkHashAndTriggerClick(){
+                         var hash = window.location.hash;
+                         if(hash == '#badges') {
+                             $('.knowledge-bad').trigger('click');
+                         }
+                         if(hash == '#levels') {
+                             $('.knowledge-l').trigger('click');
+                         }
+                     }
+                     
                         $(document).ready(function()
                         {
+
                             $("#questions-knowledge").nanoScroller();
                             $(document).on('click','.questions-knowledge-basic .question',function()
                             {
@@ -130,7 +141,8 @@
                                     });
                                 }
 
-                            })
+                            });
+                            checkHashAndTriggerClick();
                         })
                     </script>
                     <ul class="questions-knowledge-basic">
