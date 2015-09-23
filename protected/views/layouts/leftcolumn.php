@@ -88,7 +88,7 @@
                           <?php foreach($friends as $friend): ?>
                           <tr>
                             <td class="width">
-                              <a href="/user/show/<?php echo $friend->user->id; ?>"><img style="width:57px; border-radius:50px" title="<?php echo $friend->user->profile->firstname . ' ' . $friend->user->profile->lastname?>" src="<?php echo $friend->user->profile->getAvatarUrl(); ?>"></a>
+                              <a href="<?= $this->createUrl('profile/view', ['id' => $friend->user->id]) ?>"><img style="width:57px; border-radius:50px" title="<?php echo $friend->user->profile->firstname . ' ' . $friend->user->profile->lastname?>" src="<?php echo $friend->user->profile->getAvatarUrl(); ?>"></a>
                             </td>
                             <td>
                               <a style="text-decoration:none;" href="/user/show/<?php echo $friend->user->id; ?>"><div class="friends-name"><?php echo $friend->user->profile->firstname . ' ' . $friend->user->profile->lastname; ?></div></a>
