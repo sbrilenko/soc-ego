@@ -421,7 +421,7 @@
                    <div class="before-wall-content">
                     <div class="wall-content nano wall-block-scroll-height">
                     <?php
-                            $comments=Comments::model()->findAllByAttributes(array("parent"=>0,"commented_user_id"=>$model->id),array('order'=>'time ASC'));
+                            $comments=Comments::model()->findAllByAttributes(array("parent"=>0,"commented_user_id"=>$model->id),array('order'=>'time DESC'));
                         if($comments)
                         {
                             echo "<div class='wall nano-content wall-block-scroll-height'>";
@@ -465,7 +465,7 @@
                                             }
                                             else
                                             {
-                                                $(".wall").append(data.html)
+                                                $(".wall").prepend(data.html)
                                                 th.find("textarea[name*=text]").val("");
                                                 th.find('.new-comment-file-b').removeClass('clip');
                                                 th.find('input[type=file]').replaceWith(th.find('input[type=file]').clone());
