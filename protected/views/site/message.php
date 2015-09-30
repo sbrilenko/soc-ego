@@ -56,7 +56,7 @@
                     <?php
                         echo date("d",$com->time),".",date("m",$com->time),".",date("Y",$com->time)," ",date("H",$com->time),":",date("i",$com->time)," | ";
                     ?>
-                    </span><span title="Like" class="like-icon">0
+                    </span><span title="Like" class="like-icon"><?php echo $com->getLikesNumber(); ?>
                         <div style="display: none;">
                         <?php
                         $form = $this->beginWidget('CActiveForm', array(

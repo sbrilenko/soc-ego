@@ -112,4 +112,8 @@ class Comments extends CActiveRecord
     {
 
     }
+
+    public function getLikesNumber () {
+        return count(Likes::model()->findAllByAttributes(array("comments_id"=>$this->id, "like"=>1)));
+    }
 }

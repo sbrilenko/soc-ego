@@ -451,7 +451,7 @@
                                 var fd = new FormData(formElement);
                                 console.log(fd)
                                 $.ajax({
-                                    url: "CommentsAdd",
+                                    url: "../../CommentsAdd",
                                     type: "POST",
                                     data: fd,
                                     enctype: 'multipart/form-data',
@@ -485,7 +485,7 @@
                             var th= $(this);
                             var fd = th.serializeArray();
                             $.ajax({
-                                url: "CommentsCommentsAdd",
+                                url: "../../CommentsCommentsAdd",
                                 type: "POST",
                                 data: fd,
                                 dataType: "json",
@@ -510,7 +510,7 @@
                             var form=th.find('div').clone();
                             var fd = th.find('form').serializeArray();
                             $.ajax({
-                                url: "like",
+                                url: "../../like",
                                 type: "POST",
                                 data: fd,
                                 dataType: "json",
