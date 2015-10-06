@@ -30,7 +30,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/index-responsive.css">
     <?php } ?>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <?php if(isset(Yii::app()->user->id) && Yii::app()->controller->id=="site" && (Yii::app()->controller->action->id=="index" || Yii::app()->controller->action->id=="faq" || Yii::app()->controller->action->id=="groups")) { ?>
+    <?php if(isset(Yii::app()->user->id) && Yii::app()->controller->id=="site" && (Yii::app()->controller->action->id=="index" || Yii::app()->controller->action->id=="faq" || Yii::app()->controller->action->id=="groups") || isset(Yii::app()->user->id) && Yii::app()->controller->id=="profile" && Yii::app()->controller->action->id=="view") { ?>
         <link href="<?php echo Yii::app()->request->baseUrl; ?>/css/nanoscroller.css" rel="stylesheet">
         <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery.nanoscroller.js"></script>
         <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery.mousewheel.js"></script>
