@@ -91,7 +91,7 @@
                               <a href="<?= $this->createUrl('profile/view', ['id' => $friend->user->id]) ?>"><img style="width:57px; border-radius:50px" title="<?php echo $friend->user->profile->firstname . ' ' . $friend->user->profile->lastname?>" src="<?php echo $friend->user->profile->getAvatarUrl(); ?>"></a>
                             </td>
                             <td>
-                              <a style="text-decoration:none;" href="/user/show/<?php echo $friend->user->id; ?>"><div class="friends-name"><?php echo $friend->user->profile->firstname . ' ' . $friend->user->profile->lastname; ?></div></a>
+                              <a style="text-decoration:none;" href="<?= $this->createUrl('profile/view', ['id' => $friend->user->id]) ?>"><div class="friends-name"><?php echo $friend->user->profile->firstname . ' ' . $friend->user->profile->lastname; ?></div></a>
                               <div class="friends-position"><?php echo $friend->user->job_title; ?></div>
                             </td>
                           </tr>

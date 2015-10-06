@@ -469,7 +469,7 @@
                                                 th.find("textarea[name*=text]").val("");
                                                 th.find('.new-comment-file-b').removeClass('clip');
                                                 th.find('input[type=file]').replaceWith(th.find('input[type=file]').clone());
-                                                setTimeout(function(){$(".nano").nanoScroller();$(".nano").nanoScroller({ scroll: 'bottom' });}, 100);
+                                                setTimeout(function(){$(".nano").nanoScroller();$(".nano").nanoScroller();}, 100);
                                             }
                                         }
                                     })

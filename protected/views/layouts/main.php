@@ -41,7 +41,7 @@
                 {
                     $(function()
                     {
-                        $(".nano").nanoScroller({ scroll: 'bottom',flash: true  });
+                        $(".nano").nanoScroller({flash: true  });
                     });
                 }
                 setTimeout(initScrollPanes, 100);
