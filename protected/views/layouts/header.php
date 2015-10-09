@@ -23,7 +23,7 @@
         <li>
             <a href="/messages" class="no-padding">
                 <div class="menu-padding <?php if(Yii::app()->controller->action->id=="messages") echo "current";?>">
-                    <div class="messages-icon"></div><div class="messages-not"></div>
+                    <div class="messages-icon"></div><div class="messages-not" id="newMessagesCount" <?php if (Message::model()->allNotReadMessages(Yii::app()->user->id)>0) {echo "style='display:initial;'";} ?> ><?php echo Message::model()->allNotReadMessages(Yii::app()->user->id);?></div>
                 </div>
             </a></li>
         <li>

@@ -133,6 +133,7 @@ websocket.onmessage = function(ev) {
         break;
         case 'system.friendmessage':
         if(msg.send_to == authorizateduserid) {
+            updateNewMessagesCount();
         // if(!msg.error) {
         //<?php if(Yii::app()->controller->id=="site" && Yii::app()->controller->action->id=="messages") { ?>
 
@@ -144,12 +145,47 @@ websocket.onmessage = function(ev) {
             var form=$(this).find('form');
             if((form.find('input[name*=from_user_id]').val()==msg.from && form.find('input[name*=to_user_id]').val()==msg.send_to) ||
             (form.find('input[name*=from_user_id]').val()==msg.send_to && form.find('input[name*=to_user_id]').val()==msg.from)) {
+            var th = $(this);
 
             $('.message-block-user-time',this).text(msg.date);
-            if (msg.text == '') {
+            if (msg.text === '') {
             $('.message-block-user-message',this).text("Image file");
             } else {
             $('.message-block-user-message',this).text(msg.text);
+            }
+
+
+            if (form.find('input[name*=to_user_id]').val() == $('#send-message-form').find('input[name*=to_user_id]').val()) {
+                $.ajax({
+                    url: "readMessages",
+                    type: "POST",
+                    data: form.serializeArray(),
+                    dataType: "json",
+                    complete: function (data, textStatus) {
+                            updateNewMessagesCount();
+                        }
+                });
+            } else {
+                $.ajax({
+                    url: "GetUnreadMessagesCount",
+                    type: "get",
+                    data: {'from': msg.from},
+                    dataType: "json",
+                    success: function (data, textStatus) {
+                    if(data.error)
+                    {
+                    }
+                    else
+                    {
+                        if (data.count) {
+                            var friendId = '#friend_' + msg.from;
+                            $(friendId + ' .new-messages-holder').addClass('new-messages-number');
+                            $(friendId + ' .new-messages-holder').text(data.count);
+                            th.parent('div').parent('div.messages-friend-container').addClass('not-read-message-st');
+                        }
+                    }
+                    }
+                });
             }
         }
         })
@@ -282,3 +318,25 @@ else
 }
 })
 })
+
+
+function updateNewMessagesCount () {
+    $.ajax({
+        url: "AllUnreadMessagesCount",
+        type: "get",
+        dataType: "json",
+        success: function (data, textStatus) {
+            if(data.error) {
+
+            } else {
+                if (data.count) {
+                    $('#newMessagesCount').show();
+                    $('#newMessagesCount').text(data.count);
+                } else {
+                    $('#newMessagesCount').hide();
+                    $('#newMessagesCount').text('');
+                }
+            }
+        }
+    });
+}
