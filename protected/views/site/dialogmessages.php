@@ -33,6 +33,9 @@
                         </div>
                         <div class="f-r" style="color: #959595; font-size: 12px;"><?php echo date('H:i', $mess['date']);?></div>
                         <div class="clear"></div>
+                        <?php if($mess['image']) { ?>
+                        <div class="comment"><a href="<?php echo $mess['image']; ?>" target="_blank"><img style="margin: 10px auto;" height="100" width="100" src="<?php echo $mess['image']; ?>"></a></div>
+                        <?php }?>
                         <div class="comment"><?php echo $mess['message'];?></div>
                     </div>
                 </td>
@@ -43,11 +46,14 @@
             <tbody>
             <tr><td class="padding-zero wall-avatar-td">&nbsp;</td>
                 <td class="padding-zero" style="padding-left: 10%;">
-                    <div class="message-buble <?php if($mess['read_status']==0 )echo 'not-read-message-st';?>">
-                        <div class="message-buble-triangle-back <?php if($mess['read_status']==0 )echo 'not-read-message-st-triangle-back';?>"></div>
+                    <div class="message-buble">
+                        <div class="message-buble-triangle-back"></div>
                         <div class="comment-owner f-l" style="font-size: 16px; font-weight: 500;"><?php echo $from_name;?></div>
                         <div class="f-r" style="color: #959595; font-size: 12px;"><?php echo date('H:i', $mess['date']);?></div>
                         <div class="clear"></div>
+                        <?php if($mess['image']) { ?>
+                        <div class="comment"><a href="<?php echo $mess['image']; ?>" target="_blank"><img style="margin: 10px auto;" height="100" width="100" src="<?php echo $mess['image']; ?>"></a></div>
+                        <?php }?>
                         <div class="comment"><?php echo $mess['message'];?></div>
                     </div></td></tr>
             </tbody>

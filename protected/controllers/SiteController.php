@@ -605,7 +605,20 @@ class SiteController extends Controller
 
                     foreach($messages as $mess)
                     {
-                        $ret_messages[]=array('from_id'=>$mess->from_user_id,'to_id'=>$mess->to_user_id,'message'=>$mess->message,'read_status'=>$mess->message_read,'date'=>$mess->timestamp);
+                        $message_image=Files::model()->findByPk($mess->image);
+                        if($message_image)
+                        {
+                            if(file_exists(Yii::app()->basePath."/../files/".$message_image->image))
+                            {
+                                $image="/files/".$message_image->image;
+                            }
+                        }
+                        else
+                        {
+                            $image="";
+                        }
+
+                        $ret_messages[]=array('from_id'=>$mess->from_user_id,'to_id'=>$mess->to_user_id,'message'=>$mess->message,'read_status'=>$mess->message_read,'date'=>$mess->timestamp, 'image'=>$image);
                     }
 
                     //dialogmessages
@@ -735,6 +748,30 @@ class SiteController extends Controller
             );
         }
         else $this->redirect('/');
+    }
+
+    public function actionGetUnreadMessagesCount() {
+        if(isset($_GET) && !empty($_GET) && isset($_GET['from'])) {
+            echo json_encode(array("error"=>False,"count"=>Message::model()->notReadMessage($_GET['from'], Yii::app()->user->id)));
+        } else {
+            echo json_encode(array("error"=>true,"message"=>"Wrong data"));
+        }
+    }
+
+    public function actionReadMessages() {
+        if(isset($_POST) && !empty($_POST) && isset($_POST['Message'])) {
+            $message = $_POST['Message'];
+            $from = $message['to_user_id'];
+            Message::model()->readMessages($from, Yii::app()->user->id);
+        } else {
+            echo json_encode(array("error"=>true,"message"=>"Wrong data"));
+        }
+    }
+
+    public function actionAllUnreadMessagesCount() {
+        if (Yii::app()->user->id) {
+            echo json_encode(array("error"=>False,"count"=>Message::model()->allNotReadMessages(Yii::app()->user->id)));
+        }
     }
 
     /*Send New Message AJAX action.*/

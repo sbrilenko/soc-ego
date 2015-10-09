@@ -13,7 +13,7 @@
             });
         }
         setTimeout(initScrollPanes, 100);
-    })
+    });
 </script>
 <div class="main">
 <div class="messages-title">Messages</div>
@@ -38,7 +38,7 @@
                             ?>
                                 <div class="messages-friend-container <?php if($friend['count']>0) echo 'not-read-message-st'?>" >
                                     <div class="padding-zero left-pad white-space-nowrap position-relative">
-                                        <a href="#" class="get-message">
+                                        <a href="#" class="get-message" id="friend_<?php echo htmlspecialchars($friend['id']); ?>">
                                             <div class="message-page-block-messg-spec-pad">
                                             <div class="displ-none">
                                                 <?php $mess=Message::model()->findByPk($friend['message_id']);?>
@@ -65,11 +65,9 @@
                                                 <div class="message-block-user-name"><?php echo htmlspecialchars($friend['full_name']);?><span class="message-new-message <?php if($friend['count']>0) echo "displ-inline"?>" ><?php if($friend['count']>0) echo $friend['count'];?></span></div>
                                                 <div class="message-block-user-position"><?php echo htmlspecialchars(JobType::model()->findByPk($friend['job_type'])->job_type);?></div>
                                             </div>
-                                            <?php if($friend['count']>0) { ?>
                                                 <div class="f-l">
-                                                    <div class="new-messages-number"><?php echo htmlspecialchars($friend['count']) ?></div>
+                                                    <div class="<?php if($friend['count']>0) { ?>new-messages-number <?php }; ?> new-messages-holder"><?php if ($friend['count'] > 0) {echo htmlspecialchars($friend['count']);} ?></div>
                                                 </div>
-                                            <?php }; ?>
                                             <div class="f-r message-block-user-time"><?php echo htmlspecialchars($friend['time']);?></div>
                                             <div class="clear"></div>
                                             <div class="message-block-user-message"><?php echo htmlspecialchars($friend['message']);?></div>
@@ -154,11 +152,12 @@
                             $('.send-message-form').show();
                             $('.send-message-form-placeholder').hide();
                             $('.active-dialog',this).show();
-                            $(this).parent('td').removeClass('.not-read-message-st');
+                            $(this).parent('div').parent('div.not-read-message-st').removeClass('not-read-message-st');
+                            $('.new-messages-holder', this.children).text('');
+                            $('.new-messages-holder', this.children).removeClass('new-messages-number');
 
                             var th=$(this);
                             var form=th.find('form').serializeArray();
-                            console.log(form)
                             $.ajax({
                                 url: "getMessagesHistory",
                                 type: "POST",
@@ -176,6 +175,15 @@
                                         $('#send-message-form input[name*=to_user_id]').val(data.to_id);
                                         setTimeout(function(){$(".nano").nanoScroller();$(".nano").nanoScroller({ scroll: 'bottom' });}, 100);
                                     }
+                                }
+                            })
+                            $.ajax({
+                                url: "readMessages",
+                                type: "POST",
+                                data: form,
+                                dataType: "json",
+                                complete: function (data, textStatus) {
+                                    updateNewMessagesCount();
                                 }
                             })
                             return false;
