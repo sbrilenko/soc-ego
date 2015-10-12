@@ -73,18 +73,61 @@ websocket.onmessage = function(ev) {
                                     if(!msg.error)
                                     {
                                         //if page not messages
-                                        $('.top-menu .messages-icon').next().text(msg.count).show();
-                                        $('.get-message').each(function()
-                                            {
-                                                var form=$(this).find('form');
-                                                if(form.find('input[name*=from_user_id]').val()==msg.from || form.find('input[name*=to_user_id]').val()==msg.from)
-                                                {
+                                        if ($('.dialog-messages').attr('id') == msg.from) {
+                                            // $('.dialog-messages').append(msg.html);
+                                            // setTimeout(function(){$(".nano").nanoScroller();$(".nano").nanoScroller({ scroll: 'bottom' });}, 100);
+                                            var friendId = "#friend_" + msg.from;
+                                            $(friendId).trigger('click');
+                                            console.log(msg);
+                                        }
+                                        $('.get-message').each(function() {
+                                            var form=$(this).find('form');
+                                            if((form.find('input[name*=from_user_id]').val()==msg.from && form.find('input[name*=to_user_id]').val()==msg.to) ||
+                                            (form.find('input[name*=from_user_id]').val()==msg.to && form.find('input[name*=to_user_id]').val()==msg.from)) {
+                                            var th = $(this);
 
-                                                $('.message-block-user-time',this).text(msg.date)
-                                                $('.message-block-user-message',this).text(msg.message)
-                                                $('.message-new-message').text(msg.count).show()
-                                                }
-                                        })
+                                            $('.message-block-user-time',this).text(msg.date);
+                                            if (msg.text === '') {
+                                            $('.message-block-user-message',this).text("Image file");
+                                            } else {
+                                            $('.message-block-user-message',this).text(msg.text);
+                                            }
+
+
+                                            if (form.find('input[name*=to_user_id]').val() == $('#send-message-form').find('input[name*=to_user_id]').val()) {
+                                                $.ajax({
+                                                    url: "readMessages",
+                                                    type: "POST",
+                                                    data: form.serializeArray(),
+                                                    dataType: "json",
+                                                    complete: function (data, textStatus) {
+                                                            updateNewMessagesCount();
+                                                        }
+                                                });
+                                            } else {
+                                                $.ajax({
+                                                    url: "GetUnreadMessagesCount",
+                                                    type: "get",
+                                                    data: {'from': msg.from},
+                                                    dataType: "json",
+                                                    success: function (data, textStatus) {
+                                                    if(data.error)
+                                                    {
+                                                    }
+                                                    else
+                                                    {
+                                                        if (data.count) {
+                                                            var friendId = '#friend_' + msg.from;
+                                                            $(friendId + ' .new-messages-holder').addClass('new-messages-number');
+                                                            $(friendId + ' .new-messages-holder').text(data.count);
+                                                            th.parent('div').parent('div.messages-friend-container').addClass('not-read-message-st');
+                                                        }
+                                                    }
+                                                    }
+                                                });
+                                            }
+                                        }
+                                        });
                                     }
                             }
             else
@@ -188,7 +231,7 @@ websocket.onmessage = function(ev) {
                 });
             }
         }
-        })
+        });
         //<?php } ?>
         // }
         }

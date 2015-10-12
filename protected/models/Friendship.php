@@ -112,7 +112,7 @@ class Friendship extends CActiveRecord
     public function getAllUsersByIdIfInviter($userid)
     {
         $retarray=array();
-        $allrec=$this::model()->findAllBySql('SELECT friend_id FROM '.$this->tableName().' WHERE inviter_id='.$userid);
+        $allrec=$this::model()->findAllBySql('SELECT friend_id FROM '.$this->tableName().' WHERE inviter_id='.$userid.' and status=0');
         if($allrec)
         {
             foreach($allrec as $rec)
@@ -125,7 +125,7 @@ class Friendship extends CActiveRecord
     public function getAllUsersByIdIfNotInviter($userid)
     {
         $retarray=array();
-        $allrec=$this::model()->findAllBySql('SELECT inviter_id FROM '.$this->tableName().' WHERE friend_id='.$userid);
+        $allrec=$this::model()->findAllBySql('SELECT inviter_id FROM '.$this->tableName().' WHERE friend_id='.$userid.' and status=0');
         if($allrec)
         {
             foreach($allrec as $rec)

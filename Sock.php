@@ -452,7 +452,19 @@ class Sock implements MessageComponentInterface {
                                             if($newfriend->save() && $newfriendoth->save())
                                             {
                                                 /*and remove from friendship table*/
-                                                $friendrequest->delete();
+                                                $friendrequest->status = 1;
+                                                $friendrequest->update();
+
+                                                $message=new Message();
+                                                $message->timestamp=strtotime(date('Y-m-d H:i:s'));
+                                                $message->from_user_id=$tst_msg->from;
+                                                $message->to_user_id=$tst_msg->to;
+                                                $message->message='Hi, I accepted your friend request! =)';
+                                                $message->message_read=0;
+                                                $message->answered=0;
+                                                $message->draft=0;
+                                                $message->save();
+
                                                 $ccc = new CController('friendship');
                                                 $friends = $user->getFriendsList();
                                                 $allusers=User::model()->findAllUsersWithout(array($user->id));
@@ -678,6 +690,19 @@ class Sock implements MessageComponentInterface {
                                     {
                                         $friendind->delete();
                                     }
+
+                                    /*Try to delete old friend requests*/
+                                    $friendrequest=Friendship::model()->findByAttributes(array('inviter_id'=>$tst_msg->to,'friend_id'=>$tst_msg->from));
+                                    if($friendrequest)
+                                    {
+                                        $friendrequest->delete();
+                                    }
+                                    $friendrequest=Friendship::model()->findByAttributes(array('inviter_id'=>$tst_msg->from,'friend_id'=>$tst_msg->to));
+                                    if($friendrequest)
+                                    {
+                                        $friendrequest->delete();
+                                    }
+
                                     $ccc = new CController('friendship');
                                     $friends = $user->getFriendsList();
                                     $allusers=User::model()->findAllUsersWithout(array($user->id));
