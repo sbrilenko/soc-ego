@@ -486,18 +486,24 @@ class Sock implements MessageComponentInterface {
 
 
                                                 /*to me*/
+                                                // $response_arr = array(
+                                                //     'type' => 'system.addtofriends',
+                                                //     'error'=>false,
+                                                //     'from' => $tst_msg->from,
+                                                //     'to'=>$tst_msg->to,
+                                                //     'allusershtml'=>$ccc->renderPartial('allusers',array( 'allusers'=>$allusers,
+                                                //             'friends'=>$sortedfriend,
+                                                //             'curruserinviter'=>$curruserinviter,
+                                                //             'currusernotinviter'=>$currusernotinviter),true),
+                                                //     'allfriendshtml'=>$ccc->renderPartial('allfriends',array('friends'=>$sortedfriend),true),
+                                                //     'requestshtml'=>$ccc->renderPartial('requests',array('friendrequest'=>$friendrequest),true),
+                                                //     'recenthtml'=>$ccc->renderPartial('recent',array('friends'=>$sortedfriend),true)
+                                                // );
                                                 $response_arr = array(
                                                     'type' => 'system.addtofriends',
                                                     'error'=>false,
                                                     'from' => $tst_msg->from,
                                                     'to'=>$tst_msg->to,
-                                                    'allusershtml'=>$ccc->renderPartial('allusers',array( 'allusers'=>$allusers,
-                                                            'friends'=>$sortedfriend,
-                                                            'curruserinviter'=>$curruserinviter,
-                                                            'currusernotinviter'=>$currusernotinviter),true),
-                                                    'allfriendshtml'=>$ccc->renderPartial('allfriends',array('friends'=>$sortedfriend),true),
-                                                    'requestshtml'=>$ccc->renderPartial('requests',array('friendrequest'=>$friendrequest),true),
-                                                    'recenthtml'=>$ccc->renderPartial('recent',array('friends'=>$sortedfriend),true)
                                                 );
                                                 foreach($this->all_clients as $cli)
                                                 {
@@ -509,44 +515,44 @@ class Sock implements MessageComponentInterface {
 
                                                 /*to inviter*/
 
-                                                $friends = $iftoexists->getFriendsList();
-                                                $allusers=User::model()->findAllUsersWithout(array($iftoexists->id));
-                                                $curruserinviter=Friendship::model()->getAllUsersByIdIfInviter($iftoexists->id);
-                                                $currusernotinviter=Friendship::model()->getAllUsersByIdIfNotInviter($iftoexists->id);
-                                                $friendrequest=array();
-                                                for($i=0;$i<count($currusernotinviter);$i++)
-                                                {
-                                                    $friendrequest[]=User::model()->findByPk($currusernotinviter[$i]);
-                                                }
-                                                $sortedfriend=User::model()->sortFullNameByAlph($friends);
+                                                // $friends = $iftoexists->getFriendsList();
+                                                // $allusers=User::model()->findAllUsersWithout(array($iftoexists->id));
+                                                // $curruserinviter=Friendship::model()->getAllUsersByIdIfInviter($iftoexists->id);
+                                                // $currusernotinviter=Friendship::model()->getAllUsersByIdIfNotInviter($iftoexists->id);
+                                                // $friendrequest=array();
+                                                // for($i=0;$i<count($currusernotinviter);$i++)
+                                                // {
+                                                //     $friendrequest[]=User::model()->findByPk($currusernotinviter[$i]);
+                                                // }
+                                                // $sortedfriend=User::model()->sortFullNameByAlph($friends);
 
-                                                $currusernotinviter=Friendship::model()->getAllUsersByIdIfNotInviter($iftoexists->id);
-                                                $friendrequest=array();
-                                                for($i=0;$i<count($currusernotinviter);$i++)
-                                                {
-                                                    $friendrequest[]=User::model()->findByAttributes(array('id'=>$currusernotinviter[$i]));
-                                                }
-                                                $response_arr = array(
-                                                    'type' => 'system.addtofriends',
-                                                    'error'=>false,
-                                                    'from' => $tst_msg->from,
-                                                    'to'=>$tst_msg->to,
-                                                    'allusershtml'=>$ccc->renderPartial('allusers',array( 'allusers'=>$allusers,
-                                                            'friends'=>$sortedfriend,
-                                                            'curruserinviter'=>$curruserinviter,
-                                                            'currusernotinviter'=>$currusernotinviter),true),
-                                                    'allfriendshtml'=>$ccc->renderPartial('allfriends',array('friends'=>$sortedfriend),true),
-                                                    'requestshtml'=>$ccc->renderPartial('requests',array('friendrequest'=>$friendrequest),true),
-                                                    'recenthtml'=>$ccc->renderPartial('recent',array('friends'=>$sortedfriend),true)
+                                                // $currusernotinviter=Friendship::model()->getAllUsersByIdIfNotInviter($iftoexists->id);
+                                                // $friendrequest=array();
+                                                // for($i=0;$i<count($currusernotinviter);$i++)
+                                                // {
+                                                //     $friendrequest[]=User::model()->findByAttributes(array('id'=>$currusernotinviter[$i]));
+                                                // }
+                                                // $response_arr = array(
+                                                //     'type' => 'system.addtofriends',
+                                                //     'error'=>false,
+                                                //     'from' => $tst_msg->from,
+                                                //     'to'=>$tst_msg->to,
+                                                //     'allusershtml'=>$ccc->renderPartial('allusers',array( 'allusers'=>$allusers,
+                                                //             'friends'=>$sortedfriend,
+                                                //             'curruserinviter'=>$curruserinviter,
+                                                //             'currusernotinviter'=>$currusernotinviter),true),
+                                                //     'allfriendshtml'=>$ccc->renderPartial('allfriends',array('friends'=>$sortedfriend),true),
+                                                //     'requestshtml'=>$ccc->renderPartial('requests',array('friendrequest'=>$friendrequest),true),
+                                                //     'recenthtml'=>$ccc->renderPartial('recent',array('friends'=>$sortedfriend),true)
 
-                                                );
-                                                foreach($this->all_clients as $cli)
-                                                {
-                                                    if($cli->user_id==$tst_msg->to)
-                                                    {
-                                                        $cli->send(json_encode($response_arr));
-                                                    }
-                                                }
+                                                // );
+                                                // foreach($this->all_clients as $cli)
+                                                // {
+                                                //     if($cli->user_id==$tst_msg->to)
+                                                //     {
+                                                //         $cli->send(json_encode($response_arr));
+                                                //     }
+                                                // }
                                             }
                                         }
 
@@ -598,18 +604,25 @@ class Sock implements MessageComponentInterface {
 
 
                                             /*to me*/
+                                            // $response_arr = array(
+                                            //     'type' => 'system.addtofriends',
+                                            //     'error'=>false,
+                                            //     'from' => $tst_msg->from,
+                                            //     'to'=>$tst_msg->to,
+                                            //     'allusershtml'=>$ccc->renderPartial('allusers',array( 'allusers'=>$allusers,
+                                            //             'friends'=>$sortedfriend,
+                                            //             'curruserinviter'=>$curruserinviter,
+                                            //             'currusernotinviter'=>$currusernotinviter),true),
+                                            //     'allfriendshtml'=>$ccc->renderPartial('allfriends',array('friends'=>$sortedfriend),true),
+                                            //     'requestshtml'=>$ccc->renderPartial('requests',array('friendrequest'=>$friendrequest),true),
+                                            //     'recenthtml'=>$ccc->renderPartial('recent',array('friends'=>$sortedfriend),true)
+                                            // );
                                             $response_arr = array(
-                                                'type' => 'system.addtofriends',
+                                                'type' => 'system.frienddecline',
                                                 'error'=>false,
                                                 'from' => $tst_msg->from,
                                                 'to'=>$tst_msg->to,
-                                                'allusershtml'=>$ccc->renderPartial('allusers',array( 'allusers'=>$allusers,
-                                                        'friends'=>$sortedfriend,
-                                                        'curruserinviter'=>$curruserinviter,
-                                                        'currusernotinviter'=>$currusernotinviter),true),
-                                                'allfriendshtml'=>$ccc->renderPartial('allfriends',array('friends'=>$sortedfriend),true),
-                                                'requestshtml'=>$ccc->renderPartial('requests',array('friendrequest'=>$friendrequest),true),
-                                                'recenthtml'=>$ccc->renderPartial('recent',array('friends'=>$sortedfriend),true)
+                                                'backToSender' => true
                                             );
                                             foreach($this->all_clients as $cli)
                                             {
@@ -621,44 +634,44 @@ class Sock implements MessageComponentInterface {
 
                                             /*to inviter*/
 
-                                            $friends = $iftoexists->getFriendsList();
-                                            $allusers=User::model()->findAllUsersWithout(array($iftoexists->id));
-                                            $curruserinviter=Friendship::model()->getAllUsersByIdIfInviter($iftoexists->id);
-                                            $currusernotinviter=Friendship::model()->getAllUsersByIdIfNotInviter($iftoexists->id);
-                                            $friendrequest=array();
-                                            for($i=0;$i<count($currusernotinviter);$i++)
-                                            {
-                                                $friendrequest[]=User::model()->findByPk($currusernotinviter[$i]);
-                                            }
-                                            $sortedfriend=User::model()->sortFullNameByAlph($friends);
+                                            // $friends = $iftoexists->getFriendsList();
+                                            // $allusers=User::model()->findAllUsersWithout(array($iftoexists->id));
+                                            // $curruserinviter=Friendship::model()->getAllUsersByIdIfInviter($iftoexists->id);
+                                            // $currusernotinviter=Friendship::model()->getAllUsersByIdIfNotInviter($iftoexists->id);
+                                            // $friendrequest=array();
+                                            // for($i=0;$i<count($currusernotinviter);$i++)
+                                            // {
+                                            //     $friendrequest[]=User::model()->findByPk($currusernotinviter[$i]);
+                                            // }
+                                            // $sortedfriend=User::model()->sortFullNameByAlph($friends);
 
-                                            $currusernotinviter=Friendship::model()->getAllUsersByIdIfNotInviter($iftoexists->id);
-                                            $friendrequest=array();
-                                            for($i=0;$i<count($currusernotinviter);$i++)
-                                            {
-                                                $friendrequest[]=User::model()->findByAttributes(array('id'=>$currusernotinviter[$i]));
-                                            }
-                                            $response_arr = array(
-                                                'type' => 'system.addtofriends',
-                                                'error'=>false,
-                                                'from' => $tst_msg->from,
-                                                'to'=>$tst_msg->to,
-                                                'allusershtml'=>$ccc->renderPartial('allusers',array( 'allusers'=>$allusers,
-                                                        'friends'=>$sortedfriend,
-                                                        'curruserinviter'=>$curruserinviter,
-                                                        'currusernotinviter'=>$currusernotinviter),true),
-                                                'allfriendshtml'=>$ccc->renderPartial('allfriends',array('friends'=>$sortedfriend),true),
-                                                'requestshtml'=>$ccc->renderPartial('requests',array('friendrequest'=>$friendrequest),true),
-                                                'recenthtml'=>$ccc->renderPartial('recent',array('friends'=>$sortedfriend),true)
+                                            // $currusernotinviter=Friendship::model()->getAllUsersByIdIfNotInviter($iftoexists->id);
+                                            // $friendrequest=array();
+                                            // for($i=0;$i<count($currusernotinviter);$i++)
+                                            // {
+                                            //     $friendrequest[]=User::model()->findByAttributes(array('id'=>$currusernotinviter[$i]));
+                                            // }
+                                            // $response_arr = array(
+                                            //     'type' => 'system.addtofriends',
+                                            //     'error'=>false,
+                                            //     'from' => $tst_msg->from,
+                                            //     'to'=>$tst_msg->to,
+                                            //     'allusershtml'=>$ccc->renderPartial('allusers',array( 'allusers'=>$allusers,
+                                            //             'friends'=>$sortedfriend,
+                                            //             'curruserinviter'=>$curruserinviter,
+                                            //             'currusernotinviter'=>$currusernotinviter),true),
+                                            //     'allfriendshtml'=>$ccc->renderPartial('allfriends',array('friends'=>$sortedfriend),true),
+                                            //     'requestshtml'=>$ccc->renderPartial('requests',array('friendrequest'=>$friendrequest),true),
+                                            //     'recenthtml'=>$ccc->renderPartial('recent',array('friends'=>$sortedfriend),true)
 
-                                            );
-                                            foreach($this->all_clients as $cli)
-                                            {
-                                                if($cli->user_id==$tst_msg->to)
-                                                {
-                                                    $cli->send(json_encode($response_arr));
-                                                }
-                                            }
+                                            // );
+                                            // foreach($this->all_clients as $cli)
+                                            // {
+                                            //     if($cli->user_id==$tst_msg->to)
+                                            //     {
+                                            //         $cli->send(json_encode($response_arr));
+                                            //     }
+                                            // }
                                     }
                                 }
                             }
@@ -724,19 +737,28 @@ class Sock implements MessageComponentInterface {
 
 
                                     /*to me*/
+                                    // $response_arr = array(
+                                    //     'type' => 'system.addtofriends',
+                                    //     'error'=>false,
+                                    //     'from' => $tst_msg->from,
+                                    //     'to'=>$tst_msg->to,
+                                    //     'allusershtml'=>$ccc->renderPartial('allusers',array( 'allusers'=>$allusers,
+                                    //             'friends'=>$sortedfriend,
+                                    //             'curruserinviter'=>$curruserinviter,
+                                    //             'currusernotinviter'=>$currusernotinviter),true),
+                                    //     'allfriendshtml'=>$ccc->renderPartial('allfriends',array('friends'=>$sortedfriend),true),
+                                    //     'requestshtml'=>$ccc->renderPartial('requests',array('friendrequest'=>$friendrequest),true),
+                                    //     'recenthtml'=>$ccc->renderPartial('recent',array('friends'=>$sortedfriend),true)
+                                    // );
+
                                     $response_arr = array(
-                                        'type' => 'system.addtofriends',
+                                        'type' => 'system.removefromfriends',
                                         'error'=>false,
                                         'from' => $tst_msg->from,
                                         'to'=>$tst_msg->to,
-                                        'allusershtml'=>$ccc->renderPartial('allusers',array( 'allusers'=>$allusers,
-                                                'friends'=>$sortedfriend,
-                                                'curruserinviter'=>$curruserinviter,
-                                                'currusernotinviter'=>$currusernotinviter),true),
-                                        'allfriendshtml'=>$ccc->renderPartial('allfriends',array('friends'=>$sortedfriend),true),
-                                        'requestshtml'=>$ccc->renderPartial('requests',array('friendrequest'=>$friendrequest),true),
-                                        'recenthtml'=>$ccc->renderPartial('recent',array('friends'=>$sortedfriend),true)
+                                        'backToSender' => true
                                     );
+
                                     foreach($this->all_clients as $cli)
                                     {
                                         if($cli->user_id==$tst_msg->from)
@@ -747,44 +769,44 @@ class Sock implements MessageComponentInterface {
 
                                     /*to inviter*/
 
-                                    $friends = $iftoexists->getFriendsList();
-                                    $allusers=User::model()->findAllUsersWithout(array($iftoexists->id));
-                                    $curruserinviter=Friendship::model()->getAllUsersByIdIfInviter($iftoexists->id);
-                                    $currusernotinviter=Friendship::model()->getAllUsersByIdIfNotInviter($iftoexists->id);
-                                    $friendrequest=array();
-                                    for($i=0;$i<count($currusernotinviter);$i++)
-                                    {
-                                        $friendrequest[]=User::model()->findByPk($currusernotinviter[$i]);
-                                    }
-                                    $sortedfriend=User::model()->sortFullNameByAlph($friends);
+                                    // $friends = $iftoexists->getFriendsList();
+                                    // $allusers=User::model()->findAllUsersWithout(array($iftoexists->id));
+                                    // $curruserinviter=Friendship::model()->getAllUsersByIdIfInviter($iftoexists->id);
+                                    // $currusernotinviter=Friendship::model()->getAllUsersByIdIfNotInviter($iftoexists->id);
+                                    // $friendrequest=array();
+                                    // for($i=0;$i<count($currusernotinviter);$i++)
+                                    // {
+                                    //     $friendrequest[]=User::model()->findByPk($currusernotinviter[$i]);
+                                    // }
+                                    // $sortedfriend=User::model()->sortFullNameByAlph($friends);
 
-                                    $currusernotinviter=Friendship::model()->getAllUsersByIdIfNotInviter($iftoexists->id);
-                                    $friendrequest=array();
-                                    for($i=0;$i<count($currusernotinviter);$i++)
-                                    {
-                                        $friendrequest[]=User::model()->findByAttributes(array('id'=>$currusernotinviter[$i]));
-                                    }
-                                    $response_arr = array(
-                                        'type' => 'system.addtofriends',
-                                        'error'=>false,
-                                        'from' => $tst_msg->from,
-                                        'to'=>$tst_msg->to,
-                                        'allusershtml'=>$ccc->renderPartial('allusers',array( 'allusers'=>$allusers,
-                                                'friends'=>$sortedfriend,
-                                                'curruserinviter'=>$curruserinviter,
-                                                'currusernotinviter'=>$currusernotinviter),true),
-                                        'allfriendshtml'=>$ccc->renderPartial('allfriends',array('friends'=>$sortedfriend),true),
-                                        'requestshtml'=>$ccc->renderPartial('requests',array('friendrequest'=>$friendrequest),true),
-                                        'recenthtml'=>$ccc->renderPartial('recent',array('friends'=>$sortedfriend),true)
+                                    // $currusernotinviter=Friendship::model()->getAllUsersByIdIfNotInviter($iftoexists->id);
+                                    // $friendrequest=array();
+                                    // for($i=0;$i<count($currusernotinviter);$i++)
+                                    // {
+                                    //     $friendrequest[]=User::model()->findByAttributes(array('id'=>$currusernotinviter[$i]));
+                                    // }
+                                    // $response_arr = array(
+                                    //     'type' => 'system.addtofriends',
+                                    //     'error'=>false,
+                                    //     'from' => $tst_msg->from,
+                                    //     'to'=>$tst_msg->to,
+                                    //     'allusershtml'=>$ccc->renderPartial('allusers',array( 'allusers'=>$allusers,
+                                    //             'friends'=>$sortedfriend,
+                                    //             'curruserinviter'=>$curruserinviter,
+                                    //             'currusernotinviter'=>$currusernotinviter),true),
+                                    //     'allfriendshtml'=>$ccc->renderPartial('allfriends',array('friends'=>$sortedfriend),true),
+                                    //     'requestshtml'=>$ccc->renderPartial('requests',array('friendrequest'=>$friendrequest),true),
+                                    //     'recenthtml'=>$ccc->renderPartial('recent',array('friends'=>$sortedfriend),true)
 
-                                    );
-                                    foreach($this->all_clients as $cli)
-                                    {
-                                        if($cli->user_id==$tst_msg->to)
-                                        {
-                                            $cli->send(json_encode($response_arr));
-                                        }
-                                    }
+                                    // );
+                                    // foreach($this->all_clients as $cli)
+                                    // {
+                                    //     if($cli->user_id==$tst_msg->to)
+                                    //     {
+                                    //         $cli->send(json_encode($response_arr));
+                                    //     }
+                                    // }
                             }
                         }
                     break;

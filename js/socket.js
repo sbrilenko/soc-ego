@@ -292,39 +292,50 @@ websocket.onmessage = function(ev) {
             }
             break;
         case 'system.addtofriends':
+            window.location.reload();
+            break;
+
         case 'system.frienddecline':
-                /*all friends section*/
-                $('#friends-list').empty().append(msg.allfriendshtml);
-                setTimeout(function()
-                {
-                    $('.friends-all .nano').nanoScroller({flash: true  });
-                }, 100);
+            if(msg.backToSender) {
+                window.location.reload();
+            }
+                // /*all friends section*/
+                // $('#friends-list').empty().append(msg.allfriendshtml);
+                // setTimeout(function()
+                // {
+                //     $('.friends-all .nano').nanoScroller({flash: true  });
+                // }, 100);
 
-                /*all users section*/
-                $('#all-list').empty().append(msg.allusershtml);
-                setTimeout(function()
-                {
-                    $('.friends-all .nano').nanoScroller({flash: true  });
-                }, 100);
+                // /*all users section*/
+                // $('#all-list').empty().append(msg.allusershtml);
+                // setTimeout(function()
+                // {
+                //     $('.friends-all .nano').nanoScroller({flash: true  });
+                // }, 100);
 
-                /*requests section*/
-                $('.friends-requests .nano-content .friend-container').remove();
-                $('.friends-requests .nano-content').append(msg.requestshtml);
-                setTimeout(function()
-                {
-                    $('.friends-requests .nano').nanoScroller({flash: true  });
-                }, 100);
-                /*recent section*/
-                if($('.empty-recent').length>0)
-                {
-                    $('.empty-recent').remove()
-                    $('.friends-block-recent .friends-block').append(msg.recenthtml)
-                }
-                else
-                {
-                    $('.friends-block-recent .recent-block-main').replaceWith(msg.recenthtml)
-                }
+                // /*requests section*/
+                // $('.friends-requests .nano-content .friend-container').remove();
+                // $('.friends-requests .nano-content').append(msg.requestshtml);
+                // setTimeout(function()
+                // {
+                //     $('.friends-requests .nano').nanoScroller({flash: true  });
+                // }, 100);
+                // /*recent section*/
+                // if($('.empty-recent').length>0)
+                // {
+                //     $('.empty-recent').remove()
+                //     $('.friends-block-recent .friends-block').append(msg.recenthtml)
+                // }
+                // else
+                // {
+                //     $('.friends-block-recent .recent-block-main').replaceWith(msg.recenthtml)
+                // }
 
+            break;
+        case 'system.removefromfriends':
+            if(msg.backToSender) {
+                window.location.reload();
+            }
             break;
 }
 };
