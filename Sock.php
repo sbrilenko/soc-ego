@@ -26,7 +26,7 @@ class Sock implements MessageComponentInterface {
             $type = $tst_msg->type;
             switch ($type) {
                 case 'system.init_user_online':
-                    require_once(dirname(__FILE__).'/../yii/framework/yii.php');
+                    require_once(realpath(dirname(__FILE__).'/../yii/framework/yii.php'));
                     if(!Yii::app())
                     {
                         Yii::createWebApplication(dirname(__FILE__).'/protected/config/main.php');
