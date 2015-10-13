@@ -1,4 +1,6 @@
 <div id="mainmenu">
+    <input type="hidden" value="<?php echo Yii::app()->controller->uniqueid; ?>" id="controllerId">
+    <input type="hidden" value="<?php echo Yii::app()->controller->action->id; ?>" id="controllerActionId">
     <ul class="top-menu">
         <li>
             <a href="#" class="no-padding">
@@ -17,7 +19,7 @@
             <a href="/friends" class="no-padding">
                 <div class="menu-padding <?php if(Yii::app()->controller->id=="friendship") echo "current";?>">
                     <div class="friends-icon"></div>
-                    <div class="messages-not yellow"></div>
+                    <div class="messages-not yellow" id="newFriendRequestsCount" <?php if (Friendship::model()->countFriendRequests(Yii::app()->user->id)>0) {echo "style='display:initial;'";} ?> ><?php echo Friendship::model()->countFriendRequests(Yii::app()->user->id);?></div>
                 </div>
             </a></li>
         <li>

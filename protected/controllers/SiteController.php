@@ -894,4 +894,8 @@ class SiteController extends Controller
                 exit();
             }
     }
+
+    public function actionGetFriendRequestsCount() {
+        echo json_encode(array("error"=>False,"count"=>Friendship::model()->countFriendRequests(Yii::app()->user->id)));
+    }
 }

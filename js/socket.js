@@ -30,6 +30,10 @@ websocket.onclose = function(ev) {
 
 //Message Receved
 websocket.onmessage = function(ev) {
+
+    var currentTab = $('#controllerId').val();
+    var action = $('#controllerActionId').val();
+
     console.log('Message ',ev)
     var msg = JSON.parse(ev.data); //PHP sends Json data
     console.log(msg)
@@ -238,6 +242,7 @@ websocket.onmessage = function(ev) {
         break;
         case 'system.bemyfriend':
             if(msg.to == authorizateduserid) {
+                updateFriendRequestsCount();
 
                 $('#all-list .friend-container').each(function()
                 {
@@ -292,13 +297,33 @@ websocket.onmessage = function(ev) {
             }
             break;
         case 'system.addtofriends':
-            window.location.reload();
+
+            if(msg.to == authorizateduserid) {
+
+                if (currentTab == 'friendship' || (currentTab == 'site' && action == 'messages')) {
+                    window.location.reload();
+                } else {
+                    updateNewMessagesCount();
+                }
+
+            } else if (msg.from==authorizateduserid) {
+                window.location.reload();
+            }
+
             break;
 
         case 'system.frienddecline':
-            if(msg.backToSender) {
+
+            if(msg.to == authorizateduserid) {
+
+                if (currentTab == 'friendship') {
+                    window.location.reload();
+                }
+
+            } else if (msg.from==authorizateduserid) {
                 window.location.reload();
             }
+
                 // /*all friends section*/
                 // $('#friends-list').empty().append(msg.allfriendshtml);
                 // setTimeout(function()
@@ -332,10 +357,19 @@ websocket.onmessage = function(ev) {
                 // }
 
             break;
+
         case 'system.removefromfriends':
-            if(msg.backToSender) {
+
+            if(msg.to == authorizateduserid) {
+
+                if (currentTab == 'friendship') {
+                    window.location.reload();
+                }
+
+            } else if (msg.from == authorizateduserid) {
                 window.location.reload();
             }
+
             break;
 }
 };
@@ -389,6 +423,27 @@ function updateNewMessagesCount () {
                 } else {
                     $('#newMessagesCount').hide();
                     $('#newMessagesCount').text('');
+                }
+            }
+        }
+    });
+}
+
+function updateFriendRequestsCount () {
+    $.ajax({
+        url: "GetFriendRequestsCount",
+        type: "get",
+        dataType: "json",
+        success: function (data, textStatus) {
+            if(data.error) {
+
+            } else {
+                if (data.count) {
+                    $('#newFriendRequestsCount').show();
+                    $('#newFriendRequestsCount').text(data.count);
+                } else {
+                    $('#newFriendRequestsCount').hide();
+                    $('#newFriendRequestsCount').text('');
                 }
             }
         }

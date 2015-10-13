@@ -459,7 +459,7 @@ class Sock implements MessageComponentInterface {
                                                 $message->timestamp=strtotime(date('Y-m-d H:i:s'));
                                                 $message->from_user_id=$tst_msg->from;
                                                 $message->to_user_id=$tst_msg->to;
-                                                $message->message='Hi, I accepted your friend request! =)';
+                                                $message->message='Hello! I added you to my friends list! =)';
                                                 $message->message_read=0;
                                                 $message->answered=0;
                                                 $message->draft=0;
@@ -507,7 +507,7 @@ class Sock implements MessageComponentInterface {
                                                 );
                                                 foreach($this->all_clients as $cli)
                                                 {
-                                                    if($cli->user_id==$tst_msg->from)
+                                                    if($cli->user_id==$tst_msg->from || $cli->user_id==$tst_msg->to)
                                                     {
                                                         $cli->send(json_encode($response_arr));
                                                     }
@@ -581,7 +581,7 @@ class Sock implements MessageComponentInterface {
                                     $friendrequest=Friendship::model()->findByAttributes(array('inviter_id'=>$tst_msg->to,'friend_id'=>$tst_msg->from));
                                     if($friendrequest)
                                     {
-                                                    /*and remove from friendship table*/
+                                            /*and remove from friendship table*/
                                             $friendrequest->delete();
                                             $ccc = new CController('friendship');
                                             $friends = $user->getFriendsList();
@@ -622,11 +622,10 @@ class Sock implements MessageComponentInterface {
                                                 'error'=>false,
                                                 'from' => $tst_msg->from,
                                                 'to'=>$tst_msg->to,
-                                                'backToSender' => true
                                             );
                                             foreach($this->all_clients as $cli)
                                             {
-                                                if($cli->user_id==$tst_msg->from)
+                                                if($cli->user_id==$tst_msg->from || $cli->user_id==$tst_msg->to)
                                                 {
                                                     $cli->send(json_encode($response_arr));
                                                 }
@@ -756,12 +755,11 @@ class Sock implements MessageComponentInterface {
                                         'error'=>false,
                                         'from' => $tst_msg->from,
                                         'to'=>$tst_msg->to,
-                                        'backToSender' => true
                                     );
 
                                     foreach($this->all_clients as $cli)
                                     {
-                                        if($cli->user_id==$tst_msg->from)
+                                        if($cli->user_id==$tst_msg->from || $cli->user_id==$tst_msg->to)
                                         {
                                             $cli->send(json_encode($response_arr));
                                         }

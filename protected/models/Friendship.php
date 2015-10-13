@@ -134,4 +134,10 @@ class Friendship extends CActiveRecord
         return $retarray;
     }
 
+    public function countFriendRequests($userid)
+    {
+        $requests = $this::model()->findAll("friend_id=:friend_id AND status=:status", array(':friend_id' => $userid, ':status' => 0));
+        return count($requests);
+    }
+
 }
