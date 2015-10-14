@@ -149,28 +149,28 @@ class Files extends CActiveRecord
     public function profile_rools($file,$name_field)
     {
         /*rools*/
-        $w_h=314;
-        $errors_messages=array();
-        $size=filesize($file['tmp_name'][$name_field]);
-        list($width,$height)=getimagesize($file['tmp_name'][$name_field]);
-        if($width!==$height)
-        {
-            $errors_messages[]="Picture should be square";
-        }
-        elseif($width<$w_h)
-        {
-            $errors_messages[]="Picture width should be more than $w_h px";
-        }
-        elseif($height<$w_h)
-        {
-            $errors_messages[]="Picture height should be more than $w_h px";
-        }
-        elseif ($size > MAX_SIZE*1024)
-            $errors_messages[]="You have exceeded the size limit";
+        // $w_h=314;
+        // $errors_messages=array();
+        // $size=filesize($file['tmp_name'][$name_field]);
+        // list($width,$height)=getimagesize($file['tmp_name'][$name_field]);
+        // if($width!==$height)
+        // {
+        //     $errors_messages[]="Picture should be square";
+        // }
+        // elseif($width<$w_h)
+        // {
+        //     $errors_messages[]="Picture width should be more than $w_h px";
+        // }
+        // elseif($height<$w_h)
+        // {
+        //     $errors_messages[]="Picture height should be more than $w_h px";
+        // }
+        // elseif ($size > MAX_SIZE*1024)
+        //     $errors_messages[]="You have exceeded the size limit";
 
-        if(count($errors_messages)>0)
-            return $errors_messages;
-        else
+        // if(count($errors_messages)>0)
+        //     return $errors_messages;
+        // else
         return true;
     }
     private function badges_img($img,$image,$filename)

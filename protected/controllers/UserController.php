@@ -37,8 +37,10 @@ class UserController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
-				'users'=>array('admin'),
+				'actions'=>array('delete', 'admin'),
+                'users'=>array('@'),
+                'expression'=>'$user->superuser==1',
+				// 'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -221,6 +223,10 @@ class UserController extends Controller
 	public function actionDelete($id)
 	{
 		$this->loadModel($id)->delete();
+        $profile=Profile::model()->findByAttributes(array("user_id"=>$id));
+        if ($profile != null) {
+            $profile->delete();
+        }
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax']))

@@ -87,6 +87,8 @@ if(isset($message)) { ?>
                     format: "dd MM yyyy",
                     autoclose: true,
                     todayBtn: true,
+                    changeYear: true,
+                    yearRange: "-100:+0",
                     pickerPosition: "bottom-left"
                 });
                 $('.was-flag').change(function()
@@ -97,6 +99,16 @@ if(isset($message)) { ?>
                     format: "dd MM yyyy",
                     autoclose: true,
                     todayBtn: true,
+                    changeYear: true,
+                    yearRange: "-100:+0",
+                    pickerPosition: "bottom-left"
+                });
+                $(".work-count").datepicker({
+                    format: "dd MM yyyy",
+                    autoclose: true,
+                    todayBtn: true,
+                    changeYear: true,
+                    yearRange: "-100:+0",
                     pickerPosition: "bottom-left"
                 });
             })
@@ -105,18 +117,18 @@ if(isset($message)) { ?>
 
 	<div class="row">
 		<?php
-        echo $form->labelEx($model,'was_flag'); ?>
-		<?php echo $form->dropDownList($model, 'was_flag',array("0"=>"No","1"=>"Yes"),array("class"=>"was-flag"));  ?>
-		<?php echo $form->error($model,'was_flag'); ?>
+        // echo $form->labelEx($model,'was_flag'); ?>
+		<?php // echo $form->dropDownList($model, 'was_flag',array("0"=>"No","1"=>"Yes"),array("class"=>"was-flag"));  ?>
+		<?php // echo $form->error($model,'was_flag'); ?>
 	</div>
 
 	<div class="row">
         <?php
-        echo $form->labelEx($model, 'work_count');
-        if($model->work_count==0) $day_work_count='';
-        else $day_work_count=date("m/d/Y",$model->work_count);
-        echo $form->textField($model, 'work_count',array('value'=>$day_work_count,'readonly'=>'readonly','class'=>'work-count'));
-        echo $form->error($model, 'work_count'); ?>
+        // echo $form->labelEx($model, 'work_count');
+        // if($model->work_count==0) $day_work_count='';
+        // else $day_work_count=date("m/d/Y",$model->work_count);
+        // echo $form->textField($model, 'work_count',array('value'=>$day_work_count,'readonly'=>'readonly','class'=>'work-count'));
+        // echo $form->error($model, 'work_count'); ?>
 	</div>
 
 	<div class="row">
@@ -208,9 +220,9 @@ if(isset($message)) { ?>
     </div>
 
     <div class="row">
-        <?php echo $form->labelEx($profile,'street'); ?>
-        <?php echo $form->textField($profile,'street'); ?>
-        <?php echo $form->error($profile,'street'); ?>
+        <?php // echo $form->labelEx($profile,'street'); ?>
+        <?php // echo $form->textField($profile,'street'); ?>
+        <?php // echo $form->error($profile,'street'); ?>
     </div>
 
     <div class="row">

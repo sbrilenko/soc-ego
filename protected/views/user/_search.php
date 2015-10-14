@@ -57,13 +57,13 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'avatar'); ?>
-		<?php echo $form->textField($model,'avatar',array('size'=>60,'maxlength'=>255)); ?>
+		<?php //echo $form->label($model,'avatar'); ?>
+		<?php //echo $form->textField($model,'avatar',array('size'=>60,'maxlength'=>255)); ?>
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'notifyType'); ?>
-		<?php echo $form->textField($model,'notifyType',array('size'=>9,'maxlength'=>9)); ?>
+		<?php //echo $form->label($model,'notifyType'); ?>
+		<?php //echo $form->textField($model,'notifyType',array('size'=>9,'maxlength'=>9)); ?>
 	</div>
 
 	<div class="row">

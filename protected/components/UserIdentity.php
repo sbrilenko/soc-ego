@@ -36,6 +36,7 @@ class UserIdentity extends CUserIdentity
         else{
             $this->_id= $model->id;
             $this->setState('id', $model->id);
+            $this->setState('superuser', $model->superuser);
             $this->errorCode=self::ERROR_NONE;
         }
 
