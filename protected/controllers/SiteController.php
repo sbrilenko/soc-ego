@@ -872,7 +872,7 @@ class SiteController extends Controller
                             }
                         }
 
-                        $sender = Profile::model()->findByPk($mess->from_user_id);
+                        $sender = Profile::model()->findByAttributes(array("user_id"=>$mess->from_user_id));
                         $sender_name = $sender->firstname." ".$sender->lastname;
                         $sender_avatar = $sender->getAvatarUrl();
                         echo json_encode(array("error"=>false,

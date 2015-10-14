@@ -189,7 +189,7 @@ class Message extends CActiveRecord
                 } else {
                     $from = $val->from_user_id;
                 }
-                $ret[]=array('count'=>Message::model()->notReadMessage($from, Yii::app()->user->id),'current_user_id'=>Yii::app()->user->id,'message_id'=>$val->id,'icon'=>$icon,'full_name'=>$user_friends->firstname." ".$user_friends->lastname, 'id'=>$from,'job_type'=>User::model()->getJobType($user_friends->id),'time'=>$display_date,'message'=>$val->message,'read'=>$val->message_read);
+                $ret[]=array('count'=>Message::model()->notReadMessage($from, Yii::app()->user->id),'current_user_id'=>Yii::app()->user->id,'message_id'=>$val->id,'icon'=>$icon,'full_name'=>$user_friends->firstname." ".$user_friends->lastname, 'id'=>$from,'job_type'=>User::model()->getJobType($user_friends->user_id),'time'=>$display_date,'message'=>$val->message,'read'=>$val->message_read);
             }
         }
         return $ret;

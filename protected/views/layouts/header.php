@@ -62,7 +62,9 @@
                     </div>
                     <div class="text f-l"><?php
                         $user=Profile::model()->findByAttributes(array("user_id"=>Yii::app()->user->id));
-                        echo $user->firstname," ",$user->lastname;
+                        if ($user) {
+                            echo $user->firstname," ",$user->lastname;
+                        }
                         ?>
                     </div>
                 </div>
