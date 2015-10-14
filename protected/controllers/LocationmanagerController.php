@@ -17,7 +17,7 @@ class LocationManagerController extends Controller
 
     public function actionManager()
     {
-        if(Yii::app()->user->id)
+        if(Yii::app()->user->id && Yii::app()->user->superuser == 1)
         {
             $model=LocationManager::model()->findAll();
             $this->render("/locationmanager/manager",array('message'=>'','model'=>$model));
@@ -54,10 +54,10 @@ class LocationManagerController extends Controller
             $massages='';
             if(Yii::app()->request->isPostRequest)
             {
-                if(isset($_POST['Locationmanager']['locationname']) && !empty($_POST['Locationmanager']['locationname']))
+                if(isset($_POST['LocationManager']['locationname']) && !empty($_POST['LocationManager']['locationname']))
                 {
                     $model=new LocationManager();
-                    $model->attributes=$_POST['Locationmanager'];
+                    $model->attributes=$_POST['LocationManager'];
                     if(!$model->save())
                     {
                         die(var_dump($model->getErrors()));
@@ -85,7 +85,7 @@ class LocationManagerController extends Controller
         {
             if(Yii::app()->request->isPostRequest)
             {
-                foreach($_POST['Locationmanager'] as $locations)
+                foreach($_POST['LocationManager'] as $locations)
                 {
                     if(!empty($locations['id']) && $locations['id']>0)
                     {
