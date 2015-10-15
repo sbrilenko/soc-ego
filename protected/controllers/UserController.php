@@ -102,7 +102,9 @@ class UserController extends Controller
                 }
                 else
                 {
-                    $this->render('create',array('message'=>'please put the image', 'model' => $model));
+                    $profile->save();
+                    $this->redirect('index');
+                    // $this->render('create',array('message'=>'please put the image', 'model' => $model));
                 }
                 if($profile->save())
                 {
