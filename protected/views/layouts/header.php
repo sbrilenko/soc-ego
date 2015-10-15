@@ -49,11 +49,13 @@
             </div>
         </li>
         </ul>
-        <ul class="f-r">
+
         <?php
         if(isset(Yii::app()->user->id)){
         ?>
-        <li>
+
+        <ul class="f-r">
+            <li>
                 <div class="menu-padding" style="padding-right: 0px;">
                     <div class="menu-avatar f-l">
                        <?php
@@ -71,20 +73,35 @@
             </li>
             <li class="tri">
                 <a href="#" class="no-padding">
-                    <div class="menu-padding" style=" padding: 22px 0 22px 22px;">
+                    <div class="menu-padding">
                         <div class="triangle"></div>
                     </div>
                 </a>
                 <div class="triangle-menu">
                     <div class="popup-triangle"></div>
+                    <div class="menu-padding">
+                        <div class="menu-avatar f-l">
+                            <?php
+                            echo Profile::model()->getLittleAvatar(Yii::app()->user->id);
+                            ?>
+                        </div>
+                        <div class="text f-l"><?php
+                            $user=Profile::model()->findByAttributes(array("user_id"=>Yii::app()->user->id));
+                            if ($user) {
+                                echo $user->firstname," ",$user->lastname;
+                            }
+                            ?>
+                        </div>
+                    </div>
                     <a href="#" class="profile-icon">Profile</a>
                     <br /> <br />
                     <a href="/logout" class="logout-icon">Log Out</a>
                 </div>
             </li>
-
+        </ul>
         <?php } ?>
-    </ul>
+
+
 
     <!--    --><?php //$this->widget('zii.widgets.CMenu',array(
 //        'items'=>array(
