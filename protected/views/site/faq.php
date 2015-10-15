@@ -275,24 +275,24 @@
                 </div>
                 <div class="projects-and-wall-mar f-l faq-just-h-page-block"></div>
                 <div class="faq-right-block-width f-l">
-                <div class="faq-h-page-block-right">
+                <!-- <div class="faq-h-page-block-right">
                     <div class="questions-wall-title">have a question?</div>
                    <div class="quest-form-par">
                        <?php
-                       $form = $this->beginWidget('CActiveForm', array(
-                           'id'=>'question-form',
-                           'enableAjaxValidation'=>true,
-                           'enableClientValidation'=>true,
-                           'htmlOptions' => array("class"=>"question-form")
-                       ));
+                       // $form = $this->beginWidget('CActiveForm', array(
+                       //    'id'=>'question-form',
+                       //    'enableAjaxValidation'=>true,
+                       //    'enableClientValidation'=>true,
+                       //    'htmlOptions' => array("class"=>"question-form")
+                       //));
                        ?>
-                       <?php $question=new Questions();?>
-                       <?php echo $form->textArea($question,'question')?>
+                       <?php // $question=new Questions();?>
+                       <?php // echo $form->textArea($question,'question')?>
                        <div class="f-r">
-                            <?php echo CHtml::submitButton('Send',array('class'=>'send-button','placeholder'=>'Enter your question...'));?>
+                            <?php // echo CHtml::submitButton('Send',array('class'=>'send-button','placeholder'=>'Enter your question...'));?>
                        </div>
                        <div class="clear"></div>
-                       <?php $this->endWidget(); ?>
+                       <?php // $this->endWidget(); ?>
                        <script>
                            $(document).ready(function()
                            {
@@ -337,7 +337,7 @@
                             </div>
                         </div>
 
-                    </div>
+                    </div> -->
 
 
 
