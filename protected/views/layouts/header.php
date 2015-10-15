@@ -35,16 +35,17 @@
                 </div>
             </a>
         </li>
-        <li>
+        <!-- <li>
             <a href="/store" class="no-padding">
-                <div class="menu-padding <?php if(Yii::app()->controller->action->id=="store") echo "current";?>">
+                <div class="menu-padding <?php //if(Yii::app()->controller->action->id=="store") echo "current";?>">
                     <div class="store-icon"></div>
                 </div>
-            </a></li>
+            </a>
+        </li> -->
         <li><div class="column"></div></li>
         <li><div class="text">
-                <div class="menu-padding">
-                    <a <?php if(Yii::app()->controller->id=="site" && Yii::app()->controller->action->id=="faq") echo "current";?> href="/faq">FAQ</a>
+                <div class="menu-padding <?php if(Yii::app()->controller->id=="site" && Yii::app()->controller->action->id=="faq") echo "current";?>">
+                    <a href="/faq">FAQ</a>
                 </div>
             </div>
         </li>

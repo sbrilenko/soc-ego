@@ -3173,7 +3173,7 @@ a.get-message,a.get-message:hover,a.get-message:visited
 /*faq*/
 .faq-left-block-width
 {
-    width:65%;
+    width:100%;
 }
 .faq-right-block-width
 {
@@ -3601,7 +3601,7 @@ a.get-message,a.get-message:hover,a.get-message:visited
 }
 
 .friends-block-all {
-    width: 35%;
+    width: 45%;
     float: left;
 }
 
@@ -3618,12 +3618,12 @@ a.get-message,a.get-message:hover,a.get-message:visited
 }
 
 .friends-block-requests {
-    width: 35%;
+    width: 45%;
     float: left;
 }
 
 .friends-block-recent {
-    width: 35%;
+    width: 45%;
     float: left;
     margin-top: 1%;
 }

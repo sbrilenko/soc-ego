@@ -151,7 +151,7 @@
                     ?>
 
                 </div>
-            <?php } elseif(Yii::app()->controller->id=="site" && Yii::app()->controller->action->id=="messages") { ?>
+            <?php } elseif(Yii::app()->controller->id=="site" && Yii::app()->controller->action->id=="messages" && false) { ?>
                 <div class="friends">
                     <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
                     <script>
