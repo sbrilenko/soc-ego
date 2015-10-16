@@ -1,3 +1,49 @@
+@media only screen and (max-width:1130px) {
+    #mainmenu ul.f-r li.tri .menu-padding
+    {
+        padding: 22px 0;
+    }
+    #mainmenu .triangle
+    {
+        background: url('../img/left-columb-icon.png') no-repeat;
+        width: 18px;
+        height: 17px;
+        position: relative;
+        cursor: pointer;
+        vertical-align: middle;
+        border: 0;
+        margin: 0;
+    }
+    #mainmenu ul.f-r li:not(.tri)
+    {
+        display: none;
+    }
+    #mainmenu ul.f-r li.tri .triangle-menu .menu-padding
+    {
+        display: block;
+        padding: 0;
+    }
+    #mainmenu ul li .triangle-menu .menu-avatar
+    {
+        position: relative;
+        height: 30px;
+        text-align: center;
+        float: none;
+        padding: 0;
+        width: auto;
+    }
+    #mainmenu ul li .triangle-menu  .text
+    {
+        float: none;
+        padding: 15px 0;
+    }
+    #mainmenu ul li .triangle-menu .menu-avatar>img
+    {
+        position: static;
+        margin-top: 0;
+    }
+
+}
 @media only screen and (min-width:460px) and (max-width:1200px) {
     .block-height
     {
@@ -9,18 +55,18 @@
         padding: 10px 0;
     }
 
-    #mainmenu ul.top-menu li {
-        max-width: 12%;
-    }
+    /*#mainmenu ul.top-menu li {*/
+        /*max-width: 12%;*/
+    /*}*/
 
     #mainmenu ul.top-menu {
         max-width: 60%;
     }
 
-    #mainmenu ul li .menu-padding.current {
-        padding-left: 30%;
-        padding-right: 30%;
-    }
+    /*#mainmenu ul li .menu-padding.current {*/
+        /*padding-left: 30%;*/
+        /*padding-right: 30%;*/
+    /*}*/
 }
 @media only screen and (min-width:1200px) and (max-width:1376px){
     .block-height
