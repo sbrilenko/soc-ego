@@ -65,7 +65,7 @@
     echo $form->dropDownList($model, 'pm',$users_pm_array);
     if(count($users_pm)==0)
     {
-        echo "<a href='/user/user/create'>Add user</a>";
+        echo "<a href='/user/create'>Add user</a>";
     }
     ?>
     <?php echo $form->error($model,'pm'); ?>
