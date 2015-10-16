@@ -52,7 +52,7 @@
 <div class="row">
     <?php echo $form->labelEx($model,'pm'); ?>
     <?php
-    $users_pm=User::model()->findAllByAttributes(array("job_type"=>"PM"));
+    $users_pm=User::model()->getPMs();
     $users_pm_array=array();
     if($users_pm)
     {

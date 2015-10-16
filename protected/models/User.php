@@ -331,4 +331,25 @@ class User extends CActiveRecord
 
         ]);
     }
+
+    public function getPMs()
+    {
+        $pm_id = JobType::model()->findByAttributes(array('job_type'=>'PM'));
+        if ($pm_id) {
+            return User::model()->findAllByAttributes(array('job_type'=>1));
+        } else {
+            return array();
+        }
+    }
+
+    public function removeFromGroups()
+    {
+        $participants = Participants::model()->findAllByAttributes(array('user_id'=>$this->id));
+        if ($participants) {
+            foreach($participants as $index=>$part)
+            {
+                $part->delete();
+            }
+        }
+    }
 }

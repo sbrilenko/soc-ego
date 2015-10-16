@@ -1,3 +1,3 @@
-<?php $this->renderPartial('application.views.user._view', array(
+<?php $this->renderPartial('_participant_item', array(
 			'data' => $data->user)); ?>
 

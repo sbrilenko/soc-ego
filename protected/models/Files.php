@@ -148,6 +148,8 @@ class Files extends CActiveRecord
     }
     public function profile_rools($file,$name_field)
     {
+        // TODO: I think we need to crop image rather than display error for user.
+
         /*rools*/
         // $w_h=314;
         // $errors_messages=array();
@@ -308,29 +310,31 @@ class Files extends CActiveRecord
 
     private function usergroup_rools($file,$name_field)
     {
-        $w_h=57;
-        $errors_messages=array();
-        $size=filesize($file['tmp_name'][$name_field]);
-        list($width,$height)=getimagesize($file['tmp_name'][$name_field]);
-        if($width!==$height)
-        {
-            $errors_messages[]="Picture should be square";
-        }
-        elseif($width<$w_h)
-        {
-            $errors_messages[]="Picture width should be more than $w_h px";
-        }
-        elseif($height<$w_h)
-        {
-            $errors_messages[]="Picture height should be more than $w_h px";
-        }
-        elseif ($size > MAX_SIZE*1024)
-            $errors_messages[]="You have exceeded the size limit";
+        // TODO: I think we need to crop image rather than display error for user.
 
-        if(count($errors_messages)>0)
-            return $errors_messages;
-        else
-            return true;
+        // $w_h=57;
+        // $errors_messages=array();
+        // $size=filesize($file['tmp_name'][$name_field]);
+        // list($width,$height)=getimagesize($file['tmp_name'][$name_field]);
+        // if($width!==$height)
+        // {
+        //     $errors_messages[]="Picture should be square";
+        // }
+        // elseif($width<$w_h)
+        // {
+        //     $errors_messages[]="Picture width should be more than $w_h px";
+        // }
+        // elseif($height<$w_h)
+        // {
+        //     $errors_messages[]="Picture height should be more than $w_h px";
+        // }
+        // elseif ($size > MAX_SIZE*1024)
+        //     $errors_messages[]="You have exceeded the size limit";
+
+        // if(count($errors_messages)>0)
+        //     return $errors_messages;
+        // else
+        return true;
     }
     private function comments_rools($file,$name_field)
     {

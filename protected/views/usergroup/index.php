@@ -1,8 +1,8 @@
 <?php
-echo "<div class='badge-add-b'>";
-echo CHtml::link('Create new group', array(
-    '//usergroup/create'), array('class' => 'btn'));
-echo "</div>";
+//echo "<div class='badge-add-b'>";
+//echo CHtml::link('Create new group', array(
+//    '//usergroup/create'), array('class' => 'btn'));
+//echo "</div>";
 //$this->breadcrumbs=array(
 //    Yum::t('Usergroups')=>array(Yii::t('app', 'index')),
 //    Yum::t( 'Manage'),

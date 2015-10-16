@@ -3039,7 +3039,7 @@ a.get-message,a.get-message:hover,a.get-message:visited
 }
 .profile-main-page-img
 {
-    padding: 0;width:36px;height:36px;
+    padding: 0;width:36px;height:36px;border-radius: 36px;
 }
 .projects-and-wall-mar,.message-and-dialog-mar
 {

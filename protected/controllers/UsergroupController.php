@@ -158,7 +158,7 @@ class UsergroupController extends Controller {
                 if(Yii::app()->request->isPostRequest && isset($_POST['Usergroup']))
                 {
                     $group=new Usergroup();
-                    $old_image=$group->image;
+                    //$old_image=$group->image;
                     $group->attributes=$_POST['Usergroup'];
                     if(isset($_FILES['Usergroup']) && !empty($_FILES['Usergroup']['name']['image']))
                     {
@@ -167,7 +167,9 @@ class UsergroupController extends Controller {
                         {
                             $group->image=$file_ret;
                         }
-                        else $group->image=$old_image;
+                        // else {
+                        //     $group->image=$old_image;
+                        // }
 
                         /*participants*/
                         $group->time_create=strtotime(date("Y-m-d H:i:s"));
@@ -183,6 +185,7 @@ class UsergroupController extends Controller {
                                         $new_particial=new Participants();
                                         $new_particial->user_id=$index;
                                         $new_particial->group_id=$group->id;
+                                        $new_particial->status=1;
                                         $new_particial->time=strtotime(date("Y-m-d H:i:s"));
                                         $new_particial->save();
                                     }
@@ -192,14 +195,14 @@ class UsergroupController extends Controller {
                         }
                         else
                         {
-                            $this->render('create', array('model'=>$group, 'message'=>'', 'errors'=>$group->getErrors()));
+                            $this->render('create',array("message"=>"Fields with * are required.", "errors"=>array()));
                         }
                     }
                     else
-                        $this->render('create',array("messages"=>"Fields with * are required.", "errors"=>array()));
+                        $this->render('create',array("message"=>"Fields with * are required.", "errors"=>array()));
                 }
                 else
-                    $this->render('create',array("messages"=>"Fields with * are required.", "errors"=>array()));
+                    $this->render('create',array("message"=>"Fields with * are required.", "errors"=>array()));
             }
             else
             {
@@ -223,11 +226,13 @@ class UsergroupController extends Controller {
                     if(isset($_FILES['Usergroup']) && !empty($_FILES['Usergroup']['name']['image']))
                     {
                         $file_ret=Files::model()->create($_FILES['Usergroup'],'image',$title='test',Usergroup::model()->tableName(),null);
-                        if(is_array($file_ret))
-                        {
-                            $this->render('update',array('model'=>$group,'message'=>$file_ret[0]));
-                            exit();
+                        if(!is_array($file_ret)) {
+                            $group->image=$file_ret;
                         }
+                        // {
+                        //     $this->render('update',array('model'=>$group,'message'=>$file_ret[0]));
+                        //     exit();
+                        // }
                     }
                     else $group->image=$old_image;
                     $group->time_create=strtotime(date("Y-m-d H:i:s"));
@@ -239,12 +244,13 @@ class UsergroupController extends Controller {
                         {
                             foreach($all_part as $index=>$val)
                             {
-                                $val->status=0;
-                                $val->save();
+                                $val->delete();
+                                // $val->save();
                             }
                         }
                         if(count($_POST['Usergroup']['participants'])>0)
                         {
+                            //die(var_dump($_POST['Usergroup']['participants']));
                             foreach($_POST['Usergroup']['participants'] as $index=>$part)
                             {
                                 if($part=="1")
@@ -256,7 +262,7 @@ class UsergroupController extends Controller {
                                         $isset->time=strtotime(date("Y-m-d H:i:s"));
                                         if($isset->save())
                                         {
-                                            $this->redirect('index');
+                                            // $this->redirect('index');
                                         }
                                         else{
                                             $this->render('update',array('model'=>$group,'message'=>"Not saved"));
@@ -281,6 +287,7 @@ class UsergroupController extends Controller {
 
                                 }
                             }
+                            $this->redirect(array('index', 'id'=>$id));
                         }
                     }
                     else
@@ -300,11 +307,13 @@ class UsergroupController extends Controller {
         }
 	}
 
-	public function actionDelete()
+	public function actionDelete($id)
 	{
 		if(Yii::app()->request->isPostRequest)
 		{
-			$this->loadModel()->delete();
+            $model = $this->loadModel($id);
+            $model->removeParticipants();
+			$model->delete();
 
 			if(!isset($_GET['ajax']))
 			{

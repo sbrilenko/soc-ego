@@ -131,4 +131,13 @@ class Usergroup extends CActiveRecord
         return new CArrayDataProvider($this->related_messages);
     }
 
+    public function removeParticipants() {
+        $participants = Participants::model()->findAllByAttributes(array('group_id'=>$this->id));
+
+        foreach($participants as $index=>$part)
+        {
+            $part->delete();
+        }
+    }
+
 }

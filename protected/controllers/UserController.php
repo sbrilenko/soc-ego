@@ -224,7 +224,9 @@ class UserController extends Controller
 	 */
 	public function actionDelete($id)
 	{
-		$this->loadModel($id)->delete();
+		$model = $this->loadModel($id);
+        $model->removeFromGroups();
+        $model->delete();
         $profile=Profile::model()->findByAttributes(array("user_id"=>$id));
         if ($profile != null) {
             $profile->delete();
